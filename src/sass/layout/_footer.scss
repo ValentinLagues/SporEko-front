@@ -1,20 +1,33 @@
 .footer {
+  position: relative;
+  height: 7vh;
   display: flex;
   flex-direction: row;
   background-color: rgb(180, 180, 180);
 
   &__footerContainer {
     width: 100%;
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: space-around;
     list-style: none;
 
     &__footerIcons {
+      width: 100%;
       font-size: 8vw;
+      text-align: center;
+      justify-content: center;
     }
   }
+
+  li {
+    width: 20%;
+  }
+
   a {
+    text-align: center;
+    justify-content: center;
     display: flex;
     flex-direction: column;
     text-decoration: none;
@@ -25,8 +38,15 @@
     }
   }
 
-  &.btn {
-    width: 80%;
+  & #vendre {
+    padding-top: 32px;
+  }
+
+  & .btn {
     border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    top: -3.5vh;
   }
 }

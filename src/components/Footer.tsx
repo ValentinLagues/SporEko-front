@@ -17,20 +17,19 @@ const Footer = () => {
           <BsSearch className="footer__footerContainer__footerIcons" />
           <a href="/search">Rechercher</a>
         </li>
-      </ul>
-      <button className="btn">
-        <BsPlusLg className="footer__button" />
-      </button>
-      <ul className="footer__footerContainer">
+        <li id="vendre">Vendre</li>
         <li>
           <FiMail className="footer__footerContainer__footerIcons" />
           <a href="/messages">Messages</a>{' '}
         </li>
         <li>
           <CgProfile className="footer__footerContainer__footerIcons" />
-          <a href="/mon_compte">Mon compte</a>{' '}
+          <a href="/compte">Compte</a>{' '}
         </li>
       </ul>
+      <button className="btn">
+        <BsPlusLg className="footer__button" />
+      </button>
     </div>
   );
 };

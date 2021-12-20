@@ -65,6 +65,8 @@
 }
 
 .footer {
+  position: relative;
+  height: 7vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -77,6 +79,7 @@
 
 .footer__footerContainer {
   width: 100%;
+  text-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -89,10 +92,23 @@
 }
 
 .footer__footerContainer__footerIcons {
+  width: 100%;
   font-size: 8vw;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.footer li {
+  width: 20%;
 }
 
 .footer a {
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -108,9 +124,17 @@
   color: chartreuse;
 }
 
-.footer.btn {
-  width: 80%;
+.footer #vendre {
+  padding-top: 32px;
+}
+
+.footer .btn {
   border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+          transform: translate(-50%);
+  top: -3.5vh;
 }
 
 .connectionPage {
