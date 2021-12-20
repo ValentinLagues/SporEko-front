@@ -1,0 +1,42 @@
+.header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  background-color: #b4b4b4;
+}
+
+.header img {
+  width: 15%;
+}
+
+.header ul {
+  width: 80%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.header a {
+  text-decoration: none;
+  color: black;
+}
+
+.header a:hover {
+  color: chartreuse;
+}
+
+#searchHome {
+  width: 30rem;
+  padding: .8em;
+  border-radius: 10px;
+}
+/*# sourceMappingURL=header.css.map */

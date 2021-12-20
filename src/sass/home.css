@@ -1,0 +1,11 @@
+.homeContainer {
+  margin-top: 5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-bottom: solid black 2px;
+}
+/*# sourceMappingURL=home.css.map */
