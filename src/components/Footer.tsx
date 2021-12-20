@@ -8,26 +8,26 @@ import { GrFavorite } from 'react-icons/gr';
 const Footer = () => {
   return (
     <div className="footer">
-      <ul className="footerContainer">
+      <ul className="footer__footerContainer">
         <li>
-          <GrFavorite className="footer__footerIcons" />
-          <a href="/favourites">Favoris</a>{' '}
+          <GrFavorite className="footer__footerContainer__footerIcons" />
+          <a href="/favorites">Favoris</a>{' '}
         </li>
         <li>
-          <BsSearch className="footer__footerIcons" />
+          <BsSearch className="footer__footerContainer__footerIcons" />
           <a href="/search">Rechercher</a>
         </li>
       </ul>
       <button>
         <BsPlusLg className="footer__button" />
       </button>
-      <ul className="footerContainer">
+      <ul className="footer__footerContainer">
         <li>
-          <FiMail className="footer__footerIcons" />
+          <FiMail className="footer__footerContainer__footerIcons" />
           <a href="/messages">Messages</a>{' '}
         </li>
         <li>
-          <CgProfile className="footer__footerIcons" />
+          <CgProfile className="footer__footerContainer__footerIcons" />
           <a href="/mon_compte">Mon compte</a>{' '}
         </li>
       </ul>
