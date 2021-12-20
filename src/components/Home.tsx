@@ -1,4 +1,6 @@
 import React from 'react';
+
+import Connection from './Connection';
 import Header from './Header';
 
 const Home = () => {
@@ -10,6 +12,7 @@ const Home = () => {
       <div className="homeContainer">
         <h1>Bienvenue chez SporEko</h1>
       </div>
+      <Connection />
     </div>
   );
 };
