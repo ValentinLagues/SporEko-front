@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Loupe from '../../../resources/loupe.png';
+
 const Home = () => {
   return (
     <div className="home">
@@ -9,6 +11,9 @@ const Home = () => {
         </h1>
         <p>Dépensez moins, pour vous dépensez plus!</p>
         <form>
+          <button onClick={() => console.log('search')}>
+            <img src={Loupe} alt="loupe" />
+          </button>
           <input className="btn" type="text" placeholder="Recherchez sur SPOREKO" />
         </form>
       </div>

@@ -91,15 +91,19 @@
 }
 
 .home__Container form {
+  position: relative;
   text-align: center;
+}
+
+.home__Container form img {
+  position: absolute;
+  top: 22%;
+  left: 12%;
+  width: 5vw;
 }
 
 .home__Container form input {
   text-align: center;
-  background-image: url('../../../resources/loupe.png');
-  background-repeat: no-repeat;
-  background-position: 6%;
-  background-size: 4vw;
   width: 60vw;
   padding: 1.5vh;
 }
