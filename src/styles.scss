@@ -1,6 +1,8 @@
+@import './sass/bases/variables';
+@import './sass/bases/bases';
+@import './sass/components/btn';
+
 @import './sass/layout/header';
 @import './sass/pages/home';
 @import './sass/layout/footer';
-
-// font-family: 'Outfit', sans-serif;
-// font-family: 'Quicksand', sans-serif;
+@import './sass/pages/connection';

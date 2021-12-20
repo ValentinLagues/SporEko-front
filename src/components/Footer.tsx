@@ -18,7 +18,7 @@ const Footer = () => {
           <a href="/search">Rechercher</a>
         </li>
       </ul>
-      <button>
+      <button className="btn">
         <BsPlusLg className="footer__button" />
       </button>
       <ul className="footer__footerContainer">
