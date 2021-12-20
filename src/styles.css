@@ -53,15 +53,55 @@
   border-radius: 10px;
 }
 
-.homeContainer {
-  margin-top: 5rem;
+.home {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  border-bottom: solid black 2px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100vw;
+  height: 90vh;
+  background-image: url("../../../resources/homeBck.jpg");
+  background-size: 110vw 95vh;
+  background-position: 50% 30%;
+}
+
+.home__Container h1 {
+  font-family: 'Outfit', sans-serif;
+  font-style: italic;
+  font-weight: lighter;
+  font-size: 20vw;
+}
+
+.home__Container p {
+  margin-bottom: 20px;
+  font-weight: bolder;
+}
+
+.home__Container span {
+  color: green;
+  font-weight: lighter;
+  font-style: italic;
+}
+
+.home__Container form {
+  text-align: center;
+}
+
+.home__Container form input {
+  text-align: center;
+  background-image: url("../../../resources/loupe.png");
+  background-repeat: no-repeat;
+  background-position: 6%;
+  background-size: 4vw;
+  width: 60vw;
+  padding: 1.5vh;
 }
 
 .connectionPage {

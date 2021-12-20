@@ -1,7 +1,43 @@
-.homeContainer {
-    margin-top: 5rem;
-    display: flex;
-    justify-content: center;
-    border-bottom: solid black 2px;
-    
+.home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100vw;
+  height: 90vh;
+  background-image: url('../../../resources/homeBck.jpg');
+  background-size: 110vw 95vh;
+  background-position: 50% 30%;
+
+  &__Container {
+    & h1 {
+      font-family: 'Outfit', sans-serif;
+      font-style: italic;
+      font-weight: lighter;
+      font-size: 20vw;
+    }
+
+    & p {
+      margin-bottom: 20px;
+      font-weight: bolder;
+    }
+
+    & span {
+      color: green;
+      font-weight: lighter;
+      font-style: italic;
+    }
+    & form {
+      text-align: center;
+      & input {
+        text-align: center;
+        background-image: url('../../../resources/loupe.png');
+        background-repeat: no-repeat;
+        background-position: 6%;
+        background-size: 4vw;
+        width: 60vw;
+        padding: 1.5vh;
+      }
+    }
+  }
 }
