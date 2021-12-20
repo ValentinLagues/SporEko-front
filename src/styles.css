@@ -4,9 +4,11 @@
 }
 
 .btn {
-  background-color: #604b5c;
+  background-color: #cff44d;
   border-radius: 30px;
   padding: 2vh;
+  color: black;
+  border: none;
 }
 
 .header {
@@ -132,7 +134,6 @@
   margin: 3vh auto;
   height: 5vh;
   width: 95vw;
-  color: white;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

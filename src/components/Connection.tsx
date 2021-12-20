@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { FaChevronRight } from 'react-icons/fa';
 import { CgProfile } from 'react-icons/cg';
-import { RiLockPasswordLine } from 'react-icons/ri';
+import { FaChevronRight } from 'react-icons/fa';
 import { HiEye } from 'react-icons/hi';
+import { RiLockPasswordLine } from 'react-icons/ri';
 
 const Connection = () => {
   const [hiEye, setHiEye] = useState(true);
