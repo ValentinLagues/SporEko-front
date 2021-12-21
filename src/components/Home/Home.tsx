@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Loupe from '../../../resources/loupe.png';
 
 const Home = () => {
+  const [search, setSearch] = useState('Off');
+
   return (
     <div className="home">
       <div className="home__Container">
         <h1>
           Spor<span>E</span>ko
         </h1>
-        <p>Dépensez moins, pour vous dépensez plus!</p>
+        <p>Dépensez moins, pour vous dépenser plus!</p>
         <form>
-          <button onClick={() => console.log('search')}>
+          <button onClick={() => setSearch('On')}>
             <img src={Loupe} alt="loupe" />
           </button>
           <input className="btn" type="text" placeholder="Recherchez sur SPOREKO" />
