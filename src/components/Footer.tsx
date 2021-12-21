@@ -10,24 +10,32 @@ const Footer = () => {
     <div className="footer">
       <ul className="footer__footerContainer">
         <li>
-          <GrFavorite className="footer__footerContainer__footerIcons" />
-          <a href="/favorites">Favoris</a>{' '}
+          <a href="/favorites">
+            <GrFavorite className="footer__footerContainer__footerIcons" />
+            Favoris
+          </a>{' '}
         </li>
         <li>
-          <BsSearch className="footer__footerContainer__footerIcons" />
-          <a href="/search">Rechercher</a>
+          <a href="/search">
+            <BsSearch className="footer__footerContainer__footerIcons" />
+            Rechercher
+          </a>
         </li>
         <li id="vendre">Vendre</li>
         <li>
-          <FiMail className="footer__footerContainer__footerIcons" />
-          <a href="/messages">Messages</a>{' '}
+          <a href="/messages">
+            <FiMail className="footer__footerContainer__footerIcons" />
+            Messages
+          </a>{' '}
         </li>
         <li>
-          <CgProfile className="footer__footerContainer__footerIcons" />
-          <a href="/compte">Compte</a>{' '}
+          <a href="/compte">
+            <CgProfile className="footer__footerContainer__footerIcons" />
+            Compte
+          </a>{' '}
         </li>
       </ul>
-      <button className="btn">
+      <button type="submit" className="btn">
         <BsPlusLg className="footer__button" />
       </button>
     </div>
