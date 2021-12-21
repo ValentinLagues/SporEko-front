@@ -1,15 +1,20 @@
 import React from 'react';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
+import Connection from './components/connection/Connection';
 import Home from './components/home/Home';
 import Footer from './components/layout/Footer';
-import Header from './components/layout/Header';
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <Home />
-      <Footer />
+      <HashRouter basename="/">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/connection" element={<Connection />} />
+        </Routes>
+        <Footer />
+      </HashRouter>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { BsPlusLg } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
 import { FiMail } from 'react-icons/fi';
 import { GrFavorite } from 'react-icons/gr';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -16,10 +17,10 @@ const Footer = () => {
           </a>{' '}
         </li>
         <li>
-          <a href="/search">
+          <Link to="/">
             <BsSearch className="footer__footerContainer__footerIcons" />
             Rechercher
-          </a>
+          </Link>
         </li>
         <li id="vendre">Vendre</li>
         <li>
@@ -29,14 +30,14 @@ const Footer = () => {
           </a>{' '}
         </li>
         <li>
-          <a href="/compte">
+          <Link to="/Connection">
             <CgProfile className="footer__footerContainer__footerIcons" />
             Compte
-          </a>{' '}
+          </Link>{' '}
         </li>
       </ul>
-      <button type="submit" className="btn">
-        <BsPlusLg className="footer__button" />
+      <button type="button" className="footer__button">
+        <BsPlusLg className="btn" />
       </button>
     </div>
   );
