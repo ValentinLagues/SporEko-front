@@ -60,52 +60,80 @@
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+  border-bottom: solid black 2px;
+}
+
+.footer {
+  position: relative;
+  height: 7vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  background-color: #b4b4b4;
+}
+
+.footer__footerContainer {
+  width: 100%;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  width: 100vw;
-  height: 90vh;
-  background-image: url('../../../resources/homeBck.jpg');
-  background-size: 110vw 95vh;
-  background-position: 50% 30%;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  list-style: none;
 }
 
-.home__Container h1 {
-  font-family: 'Outfit', sans-serif;
-  font-style: italic;
-  font-weight: lighter;
-  font-size: 20vw;
-}
-
-.home__Container p {
-  margin-bottom: 20px;
-  font-weight: bolder;
-}
-
-.home__Container span {
-  color: green;
-  font-weight: lighter;
-  font-style: italic;
-}
-
-.home__Container form {
-  position: relative;
+.footer__footerContainer__footerIcons {
+  width: 100%;
+  font-size: 8vw;
   text-align: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
-.home__Container form img {
+.footer li {
+  width: 20%;
+}
+
+.footer a {
+  text-align: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  text-decoration: none;
+  color: black;
+}
+
+.footer a:hover {
+  color: chartreuse;
+}
+
+.footer #vendre {
+  padding-top: 30px;
+}
+
+.footer .btn {
+  border-radius: 50%;
   position: absolute;
-  top: 22%;
-  left: 12%;
-  width: 5vw;
-}
-
-.home__Container form input {
-  text-align: center;
-  width: 60vw;
-  padding: 1.5vh;
+  left: 50%;
+  -webkit-transform: translate(-50%);
+  transform: translate(-50%);
+  top: -3.5vh;
 }
 
 .connectionPage {
