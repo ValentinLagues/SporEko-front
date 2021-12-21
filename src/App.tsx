@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Footer from './components/Footer';
-import Header from './components/Header';
-import Home from './components/Home';
+import Home from './components/home/Home';
+import Footer from './components/layout/Footer';
+import Header from './components/layout/Header';
 
 function App() {
   return (

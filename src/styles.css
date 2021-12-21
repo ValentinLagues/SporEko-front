@@ -53,8 +53,7 @@
   border-radius: 10px;
 }
 
-.homeContainer {
-  margin-top: 5rem;
+.home {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
