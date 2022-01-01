@@ -18,6 +18,7 @@ const Connection = () => {
             <CgProfile className="inputIcon" />
             <input type="email" placeholder="blabla@email.com" />
           </div>
+          <hr />
           <div>
             <RiLockPasswordLine className="inputIcon" />
             <input type={`${hiEye ? 'password' : 'text'}`} placeholder="*************" />

@@ -66,7 +66,7 @@
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   width: 100vw;
-  height: 93vh;
+  height: 95vh;
   background-image: url('../../../resources/homeBck.jpg');
   background-size: 110vw 95vh;
   background-position: 50% 30%;
@@ -109,7 +109,8 @@
 }
 
 .footer {
-  position: relative;
+  position: fixed;
+  bottom: 0;
   height: 7vh;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -118,7 +119,7 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: row;
   flex-direction: row;
-  background-color: #b4b4b4;
+  background-color: black;
 }
 
 .footer__footerContainer {
@@ -161,11 +162,11 @@
   -ms-flex-direction: column;
   flex-direction: column;
   text-decoration: none;
-  color: black;
+  color: #cff44d;
 }
 
 .footer a:hover {
-  color: chartreuse;
+  color: #7c7c7c;
 }
 
 .footer #vendre {
@@ -219,6 +220,9 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
@@ -232,18 +236,22 @@
 
 .connectionPage__form__inputsContainer div {
   width: 100%;
-  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .connectionPage__form__inputsContainer .inputIcon {
-  position: absolute;
   left: 2vw;
-  top: 2vw;
 }
 
 .connectionPage__form__inputsContainer .inputIcon.right {
   left: auto;
   right: 2vw;
+  top: 5vw;
 }
 
 .connectionPage__form__inputsContainer input {

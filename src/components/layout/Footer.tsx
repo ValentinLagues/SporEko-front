@@ -3,7 +3,7 @@ import { BsSearch } from 'react-icons/bs';
 import { BsPlusLg } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
 import { FiMail } from 'react-icons/fi';
-import { GrFavorite } from 'react-icons/gr';
+import { FiHeart } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -12,9 +12,9 @@ const Footer = () => {
       <ul className="footer__footerContainer">
         <li>
           <a href="/favorites">
-            <GrFavorite className="footer__footerContainer__footerIcons" />
+            <FiHeart className="footer__footerContainer__footerIcons" />
             Favoris
-          </a>{' '}
+          </a>
         </li>
         <li>
           <Link to="/">
@@ -27,13 +27,13 @@ const Footer = () => {
           <a href="/messages">
             <FiMail className="footer__footerContainer__footerIcons" />
             Messages
-          </a>{' '}
+          </a>
         </li>
         <li>
           <Link to="/Connection">
             <CgProfile className="footer__footerContainer__footerIcons" />
             Compte
-          </Link>{' '}
+          </Link>
         </li>
       </ul>
       <button type="button" className="footer__button">
