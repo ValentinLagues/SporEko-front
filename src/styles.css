@@ -66,8 +66,13 @@
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   width: 100vw;
+<<<<<<< HEAD
   height: 90vh;
   background-image: url("../../../resources/homeBck.jpg");
+=======
+  height: 95vh;
+  background-image: url('../../../resources/homeBck.jpg');
+>>>>>>> fcf6002e7d6c7ced089aca3748a4d616bc4cbc0e
   background-size: 110vw 95vh;
   background-position: 50% 30%;
 }
@@ -99,8 +104,89 @@
   padding: 1.5vh;
 }
 
+.footer {
+  position: fixed;
+  bottom: 0;
+  height: 7vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  background-color: black;
+}
+
+.footer__footerContainer {
+  width: 100vw;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  list-style: none;
+}
+
+.footer__footerContainer__footerIcons {
+  width: 100%;
+  font-size: 8vw;
+  text-align: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.footer li {
+  width: 20%;
+}
+
+.footer a {
+  text-align: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  text-decoration: none;
+  color: #cff44d;
+}
+
+.footer a:hover {
+  color: #7c7c7c;
+}
+
+.footer #vendre {
+  padding-top: 30px;
+}
+
+.footer__button {
+  border: none;
+  background-color: transparent;
+  -webkit-transform: translate(-50%);
+  transform: translate(-50%);
+  top: -3.5vh;
+  position: absolute;
+  left: 50%;
+}
+
+.footer__button .btn {
+  padding: 2.6vh;
+  border-radius: 50%;
+}
+
 .connectionPage {
   text-align: center;
+  margin-bottom: 8.9vh;
 }
 
 .connectionPage h1 {
@@ -130,6 +216,9 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -143,18 +232,22 @@
 
 .connectionPage__form__inputsContainer div {
   width: 100%;
-  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .connectionPage__form__inputsContainer .inputIcon {
-  position: absolute;
   left: 2vw;
-  top: 2vw;
 }
 
 .connectionPage__form__inputsContainer .inputIcon.right {
   left: auto;
   right: 2vw;
+  top: 5vw;
 }
 
 .connectionPage__form__inputsContainer input {

@@ -1,5 +1,6 @@
 .connectionPage {
   text-align: center;
+  margin-bottom: 8.9vh;
 
   & h1 {
     color: black;
@@ -25,6 +26,7 @@
 
     &__inputsContainer {
       display: flex;
+      justify-content: center;
       flex-direction: column;
       background-color: white;
       border-radius: 10px;
@@ -33,16 +35,17 @@
 
       & div {
         width: 100%;
-        position: relative;
+        display: flex;
+        align-items: center;
       }
 
       & .inputIcon {
-        position: absolute;
         left: 2vw;
-        top: 2vw;
+
         &.right {
           left: auto;
           right: 2vw;
+          top: 5vw;
         }
       }
 
