@@ -10,11 +10,8 @@
   background-position: 50% 30%;
 
   &__Container {
-    & h1 {
-      font-family: 'Outfit', sans-serif;
-      font-style: italic;
-      font-weight: lighter;
-      font-size: 20vw;
+    & img {
+      width: 80vw;
     }
 
     & p {
@@ -22,11 +19,6 @@
       font-weight: bolder;
     }
 
-    & span {
-      color: green;
-      font-weight: lighter;
-      font-style: italic;
-    }
     & form {
       position: relative;
       text-align: center;
