@@ -37,7 +37,9 @@ const Footer = () => {
         </li>
       </ul>
       <button type="button" className="footer__button">
-        <BsPlusLg className="btn" />
+        <Link to="/offerForm">
+          <BsPlusLg className="btn" />
+        </Link>
       </button>
     </div>
   );
