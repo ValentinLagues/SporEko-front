@@ -5,7 +5,6 @@
   flex-wrap: wrap;
   width: 100vw;
   height: 95vh;
-  background-image: url('../../../resources/homeBck.jpg');
   background-size: 110vw 95vh;
   background-position: 50% 30%;
 
@@ -15,24 +14,24 @@
     }
 
     & p {
+      text-align: center;
       margin-bottom: 20px;
       font-weight: bolder;
+      color: $colorBlack;
     }
 
     & form {
-      position: relative;
       text-align: center;
-      & img {
-        position: absolute;
-        top: 22%;
-        left: 12%;
-        width: 5vw;
-      }
-      & input {
-        text-align: center;
-        width: 60vw;
-        padding: 1.5vh;
-      }
+    }
+    & input {
+      background-image: url('../../../resources/loupe.png');
+      background-repeat: no-repeat;
+      background-size: 2vh 2vh;
+      background-position: 6%;
+      background-color: $colorSporEko;
+      text-align: center;
+      width: 60vw;
+      padding: 1.5vh;
     }
   }
 }

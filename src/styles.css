@@ -66,13 +66,7 @@
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   width: 100vw;
-<<<<<<< HEAD
-  height: 90vh;
-  background-image: url("../../../resources/homeBck.jpg");
-=======
   height: 95vh;
-  background-image: url('../../../resources/homeBck.jpg');
->>>>>>> fcf6002e7d6c7ced089aca3748a4d616bc4cbc0e
   background-size: 110vw 95vh;
   background-position: 50% 30%;
 }
@@ -82,23 +76,22 @@
 }
 
 .home__Container p {
+  text-align: center;
   margin-bottom: 20px;
   font-weight: bolder;
+  color: black;
 }
 
 .home__Container form {
-  position: relative;
   text-align: center;
 }
 
-.home__Container form img {
-  position: absolute;
-  top: 22%;
-  left: 12%;
-  width: 5vw;
-}
-
-.home__Container form input {
+.home__Container input {
+  background-image: url("../../../resources/loupe.png");
+  background-repeat: no-repeat;
+  background-size: 2vh 2vh;
+  background-position: 6%;
+  background-color: #cff44d;
   text-align: center;
   width: 60vw;
   padding: 1.5vh;
@@ -113,9 +106,9 @@
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  background-color: black;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  background-color: darkgrey;
 }
 
 .footer__footerContainer {
@@ -125,10 +118,10 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -ms-flex-pack: distribute;
-  justify-content: space-around;
+      justify-content: space-around;
   list-style: none;
 }
 
@@ -137,32 +130,33 @@
   font-size: 8vw;
   text-align: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .footer li {
   width: 20%;
+  color: black;
 }
 
 .footer a {
   text-align: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   text-decoration: none;
-  color: #cff44d;
+  color: black;
 }
 
 .footer a:hover {
-  color: #7c7c7c;
+  color: lightgrey;
 }
 
 .footer #vendre {
@@ -170,12 +164,12 @@
 }
 
 .footer__button {
+  position: absolute;
   border: none;
   background-color: transparent;
   -webkit-transform: translate(-50%);
-  transform: translate(-50%);
+          transform: translate(-50%);
   top: -3.5vh;
-  position: absolute;
   left: 50%;
 }
 
@@ -186,7 +180,7 @@
 
 .connectionPage {
   text-align: center;
-  margin-bottom: 8.9vh;
+  height: 90vh;
 }
 
 .connectionPage h1 {
@@ -217,8 +211,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -236,8 +230,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .connectionPage__form__inputsContainer .inputIcon {
