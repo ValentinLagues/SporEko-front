@@ -1,23 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { BsPlusLg } from 'react-icons/bs';
 import { FaRunning } from 'react-icons/fa';
 import { FaWalking } from 'react-icons/fa';
-import { FaChevronRight } from 'react-icons/fa';
 import { IoFitness } from 'react-icons/io5';
 import { MdDirectionsBike } from 'react-icons/md';
 
 const OfferForm = () => {
-  const display = (val) => {
-    const classes = val.split(' ');
-    const selected = classes[classes.length - 1];
-    console.log(selected);
-    const selectToDisplay = document.getElementById(selected);
-    selectToDisplay.classList.remove('displayNone');
-  };
+  const [sportsList, setSportsList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+  const [brandList, setBrandList] = useState([]);
+  const [textileList, setTextileList] = useState([]);
+  const [conditionList, setConditionList] = useState([]);
+  const [colorList, setColorList] = useState([]);
+
+  const [category, setCategory] = useState('');
+  const [brand, setBrand] = useState('');
+  const [textile, setTextile] = useState('');
+  const [condition, setCondition] = useState('');
+  const [color, setColor] = useState('');
+
+  useEffect(() => {
+    axios.get('http://localhost:7000/sports').then((res) => setSportsList(res.data));
+    axios
+      .get('http://localhost:7000/categories')
+      .then((res) => setCategoryList(res.data));
+    axios.get('http://localhost:7000/brands').then((res) => setBrandList(res.data));
+    axios.get('http://localhost:7000/textiles').then((res) => setTextileList(res.data));
+    axios
+      .get('http://localhost:7000/conditions')
+      .then((res) => setConditionList(res.data));
+    axios.get('http://localhost:7000/colors').then((res) => setColorList(res.data));
+  }, []);
 
   return (
     <div className="offerForm">
       <form className="offerForm__form" action="">
+        <div>
+          {sportsList &&
+            sportsList.map((sport, index) => <span key={index}>{sport.name}</span>)}
+        </div>
         <div className="offerForm__sportIcons">
           <FaRunning className="offerForm__sportIcons__icon" />
           <MdDirectionsBike className="offerForm__sportIcons__icon" />
@@ -42,64 +64,84 @@ const OfferForm = () => {
           </label>
           <textarea className="offerForm__input" rows={5} id="description" />
         </div>
-        <div
-          role="button"
-          onKeyPress={(e) => display(e.target.className)}
-          onClick={(e) => display(e.target.className)}
-          tabIndex={0}
-          className="offerForm__selectContainer">
-          <label className="offerForm__selectLabel categories" htmlFor="category">
-            Categorie <FaChevronRight className="chevronRight" />
-          </label>
+        <div>
           <select
-            className="offerForm__select displayNone"
-            name="category"
+            onChange={(e) => setCategory(e.target.value)}
+            value={category}
+            className="offerForm__select"
+            name="categories"
             id="categories">
-            <option value="">Categorie</option>
-            <option value="1">Autre</option>
-            <option value="2">Homme</option>
-            <option value="3">Femme</option>
-            <option value="4">Enfant</option>
-            <option value="5">Accessoire</option>
+            <option value="">Catégorie</option>
+            {categoryList &&
+              categoryList.map((category, index) => (
+                <option key={index} value={index + 1}>
+                  {category.name}
+                </option>
+              ))}
           </select>
         </div>
         <div>
-          <label className="offerForm__selectLabel" htmlFor="brand">
-            Marque <FaChevronRight className="chevronRight" />
-          </label>
-          <select className="offerForm__select displayNone" name="brand" id="brand">
-            <option value=""></option>
-            <option value="1">Autre</option>
-            <option value="2">Homme</option>
-            <option value="3">Femme</option>
-            <option value="4">Enfant</option>
-            <option value="5">Accessoire</option>
-          </select>
-        </div>
-        <div>
-          <label className="offerForm__selectLabel" htmlFor="textile">
-            Matière <FaChevronRight className="chevronRight" />
-          </label>
-          <select className="offerForm__select displayNone" name="textile" id="textile">
-            <option value=""></option>
-            <option value="1">Autre</option>
-            <option value="2">Cuir</option>
-            <option value="3">Coton</option>
-          </select>
-        </div>
-        <div>
-          <label className="offerForm__selectLabel" htmlFor="conditions">
-            État <FaChevronRight className="chevronRight" />
-          </label>
           <select
-            className="offerForm__select displayNone"
+            onChange={(e) => setBrand(e.target.value)}
+            value={brand}
+            className="offerForm__select"
+            name="brand"
+            id="brands">
+            <option value="">Marque</option>
+            {brandList &&
+              brandList.map((brand, index) => (
+                <option key={index} value={index + 1}>
+                  {brand.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        <div>
+          <select
+            onChange={(e) => setTextile(e.target.value)}
+            value={textile}
+            className="offerForm__select"
+            name="textile"
+            id="textiles">
+            <option value="">Matière</option>
+            {textileList &&
+              textileList.map((textile, index) => (
+                <option key={index} value={index + 1}>
+                  {textile.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        <div>
+          <select
+            onChange={(e) => setCondition(e.target.value)}
+            value={condition}
+            className="offerForm__select"
             name="condition"
             id="conditions">
-            <option value=""></option>
-            <option value="1">Comme neuf</option>
-            <option value="2">Bon état</option>
-            <option value="3">État moyen</option>
-            <option value="4">Mauvais état</option>
+            <option value="">État</option>
+            {conditionList &&
+              conditionList.map((condition, index) => (
+                <option key={index} value={index + 1}>
+                  {condition.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        <div>
+          <select
+            onChange={(e) => setColor(e.target.value)}
+            value={color}
+            className="offerForm__select"
+            name="color"
+            id="colors">
+            <option value="">Couleur</option>
+            {colorList &&
+              colorList.map((color, index) => (
+                <option key={index} value={index + 1}>
+                  {color.name}
+                </option>
+              ))}
           </select>
         </div>
       </form>
