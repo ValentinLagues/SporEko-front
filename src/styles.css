@@ -301,4 +301,70 @@
   color: red;
   font-weight: bold;
 }
+
+.offerForm {
+  color: gray;
+  margin-bottom: 10vh;
+}
+
+.offerForm__form {
+  padding: 20px;
+}
+
+.offerForm__sportIcons {
+  text-align: center;
+}
+
+.offerForm__sportIcons__icon {
+  color: #3a3a3a;
+  padding: 10px;
+  font-size: 40px;
+  border: 1px solid black;
+  border-radius: 50%;
+  margin: 8px;
+}
+
+.offerForm #addPhotoContainer {
+  text-align: center;
+  margin: 30px auto;
+}
+
+.offerForm #labelPhoto1 {
+  margin: auto;
+  padding: 15px 20px;
+  font-weight: bold;
+  border-radius: 30px;
+  -webkit-box-shadow: 2px 2px 10px lightgray;
+  box-shadow: 2px 2px 10px lightgray;
+  width: 60%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.offerForm #photo1 {
+  visibility: hidden;
+}
+
+.offerForm__input {
+  width: 100%;
+  margin-bottom: 30px;
+  display: block;
+  border: none;
+  border-bottom: 2px solid lightgray;
+}
+
+.offerForm__select {
+  border: none;
+  -webkit-box-shadow: 2px 2px 10px lightgray;
+  box-shadow: 2px 2px 10px lightgray;
+  padding: 8px;
+  width: 100%;
+}
 /*# sourceMappingURL=styles.css.map */
