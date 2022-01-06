@@ -1,6 +1,10 @@
 import React from 'react';
 
+<<<<<<< HEAD:src/components/Home/Home.tsx
 import Logo from '../../../resources/Logo_dark.png';
+=======
+import Loupe from '../../../../resources/loupe.png';
+>>>>>>> 6f8bb38907107544fb6a169767e00eaed7d6048d:src/components/mobile/Home/Home.tsx
 
 const Home = () => {
   return (
