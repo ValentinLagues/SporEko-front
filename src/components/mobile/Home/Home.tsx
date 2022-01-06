@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Logo from '../../../../resources/Logo_black.png';
+import Logo from '../../../../resources/Logo_dark.png';
 
 const Home = () => {
   return (
