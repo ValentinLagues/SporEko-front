@@ -3,6 +3,8 @@ import { CgProfile } from 'react-icons/cg';
 import { FaChevronRight } from 'react-icons/fa';
 import { HiEye } from 'react-icons/hi';
 import { RiLockPasswordLine } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
+
 
 const Connection = () => {
   const [hiEye, setHiEye] = useState(true);
@@ -31,7 +33,7 @@ const Connection = () => {
       </form>
       <div className="connectionPage__span">
         <span className="connectionPage__span--bold">Devenir un SporEko ?</span>
-        <span className="connectionPage__span--red"> Créer un compte </span>
+        <span  ><Link to= "/create-account" className="connectionPage__span--red" > Créer un compte</Link> </span>
       </div>
     </main>
   );
