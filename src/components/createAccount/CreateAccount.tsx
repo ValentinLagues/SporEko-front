@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaChevronRight } from 'react-icons/fa';
 
 const CreateAccount = () => {
   return (
@@ -7,18 +6,40 @@ const CreateAccount = () => {
       <h2 className="create-account__h2">Créez votre compte</h2>
       <div className="create-account__h2__border"></div>
       <div className="create-account__left">
-        <div className='create-account__left__input-radio'>
-        <h3 >Profil</h3>
-        <input className='create-account__left__input-radio__radio' type="radio" name="profil" />
-        Particulier
-        <input className='create-account__left__input-radio__radio' type="radio" name="profil" />
-        Professionnel
+        <div className="create-account__left__input-radio">
+          <h3>Profil</h3>
+          <input
+            className="create-account__left__input-radio__radio"
+            type="radio"
+            name="profil"
+          />
+          Particulier
+          <input
+            className="create-account__left__input-radio__radio"
+            type="radio"
+            name="profil"
+          />
+          Professionnel
         </div>
         <h3>Genre</h3>
-        <input className='create-account__left__input-radio__radio' type="radio" name="genre" /> M
-        <input className='create-account__left__input-radio__radio' type="radio" name="genre" /> Mme
-        <input className='create-account__left__input-radio__radio' type="radio" name="genre" /> Autre
-        
+        <input
+          className="create-account__left__input-radio__radio"
+          type="radio"
+          name="genre"
+        />{' '}
+        M
+        <input
+          className="create-account__left__input-radio__radio"
+          type="radio"
+          name="genre"
+        />{' '}
+        Mme
+        <input
+          className="create-account__left__input-radio__radio"
+          type="radio"
+          name="genre"
+        />{' '}
+        Autre
         <div className="create-account__register">
           <div className="create-account__register__title1">
             <label htmlFor="pseudo">Pseudo*</label>
@@ -32,7 +53,7 @@ const CreateAccount = () => {
               placeholder="John64"
             />
           </div>
-        </div>      
+        </div>
         <div className="create-account__register">
           <div className="create-account__register__title1">
             <label htmlFor="Prénom">Prénom*</label>
