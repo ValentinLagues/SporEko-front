@@ -67,42 +67,31 @@
       flex-wrap: wrap;
   width: 100vw;
   height: 95vh;
-  background-image: url("../../../resources/homeBck.jpg");
   background-size: 110vw 95vh;
   background-position: 50% 30%;
 }
 
-.home__Container h1 {
-  font-family: 'Outfit', sans-serif;
-  font-style: italic;
-  font-weight: lighter;
-  font-size: 20vw;
+.home__Container img {
+  width: 80vw;
 }
 
 .home__Container p {
+  text-align: center;
   margin-bottom: 20px;
   font-weight: bolder;
-}
-
-.home__Container span {
-  color: green;
-  font-weight: lighter;
-  font-style: italic;
+  color: black;
 }
 
 .home__Container form {
-  position: relative;
   text-align: center;
 }
 
-.home__Container form img {
-  position: absolute;
-  top: 22%;
-  left: 12%;
-  width: 5vw;
-}
-
-.home__Container form input {
+.home__Container input {
+  background-image: url("../../../resources/loupe.png");
+  background-repeat: no-repeat;
+  background-size: 2vh 2vh;
+  background-position: 6%;
+  background-color: #cff44d;
   text-align: center;
   width: 60vw;
   padding: 1.5vh;
@@ -119,7 +108,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  background-color: black;
+  background-color: darkgrey;
 }
 
 .footer__footerContainer {
@@ -147,6 +136,7 @@
 
 .footer li {
   width: 20%;
+  color: black;
 }
 
 .footer a {
@@ -162,11 +152,11 @@
       -ms-flex-direction: column;
           flex-direction: column;
   text-decoration: none;
-  color: #cff44d;
+  color: black;
 }
 
 .footer a:hover {
-  color: #7c7c7c;
+  color: lightgrey;
 }
 
 .footer #vendre {
@@ -174,12 +164,12 @@
 }
 
 .footer__button {
+  position: absolute;
   border: none;
   background-color: transparent;
   -webkit-transform: translate(-50%);
           transform: translate(-50%);
   top: -3.5vh;
-  position: absolute;
   left: 50%;
 }
 
@@ -190,7 +180,7 @@
 
 .connectionPage {
   text-align: center;
-  margin-bottom: 8.9vh;
+  height: 90vh;
 }
 
 .connectionPage h1 {
