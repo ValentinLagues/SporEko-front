@@ -211,7 +211,7 @@ const CreateAccount = () => {
         </div>
       </div>
       <button type="submit" className="btn createAccount__form__submit">
-        Se connecter
+        S&rsquo;inscrire
       </button>
     </div>
   );

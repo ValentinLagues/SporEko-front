@@ -17,8 +17,8 @@
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   background-color: #b4b4b4;
 }
 
@@ -32,10 +32,10 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -ms-flex-pack: distribute;
-  justify-content: space-around;
+      justify-content: space-around;
 }
 
 .header a {
@@ -58,51 +58,40 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
   width: 100vw;
   height: 95vh;
-  background-image: url('../../../resources/homeBck.jpg');
   background-size: 110vw 95vh;
   background-position: 50% 30%;
 }
 
-.home__Container h1 {
-  font-family: 'Outfit', sans-serif;
-  font-style: italic;
-  font-weight: lighter;
-  font-size: 20vw;
+.home__Container img {
+  width: 80vw;
 }
 
 .home__Container p {
+  text-align: center;
   margin-bottom: 20px;
   font-weight: bolder;
-}
-
-.home__Container span {
-  color: green;
-  font-weight: lighter;
-  font-style: italic;
+  color: black;
 }
 
 .home__Container form {
-  position: relative;
   text-align: center;
 }
 
-.home__Container form img {
-  position: absolute;
-  top: 22%;
-  left: 12%;
-  width: 5vw;
-}
-
-.home__Container form input {
+.home__Container input {
+  background-image: url("../../../resources/loupe.png");
+  background-repeat: no-repeat;
+  background-size: 2vh 2vh;
+  background-position: 6%;
+  background-color: #cff44d;
   text-align: center;
   width: 60vw;
   padding: 1.5vh;
@@ -117,9 +106,9 @@
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  background-color: black;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  background-color: darkgrey;
 }
 
 .footer__footerContainer {
@@ -129,10 +118,10 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -ms-flex-pack: distribute;
-  justify-content: space-around;
+      justify-content: space-around;
   list-style: none;
 }
 
@@ -141,32 +130,33 @@
   font-size: 8vw;
   text-align: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .footer li {
   width: 20%;
+  color: black;
 }
 
 .footer a {
   text-align: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   text-decoration: none;
-  color: #cff44d;
+  color: black;
 }
 
 .footer a:hover {
-  color: #7c7c7c;
+  color: lightgrey;
 }
 
 .footer #vendre {
@@ -174,12 +164,12 @@
 }
 
 .footer__button {
+  position: absolute;
   border: none;
   background-color: transparent;
   -webkit-transform: translate(-50%);
-  transform: translate(-50%);
+          transform: translate(-50%);
   top: -3.5vh;
-  position: absolute;
   left: 50%;
 }
 
@@ -190,7 +180,7 @@
 
 .connectionPage {
   text-align: center;
-  margin-bottom: 8.9vh;
+  height: 90vh;
 }
 
 .connectionPage h1 {
@@ -221,17 +211,17 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   background-color: white;
   border-radius: 10px;
   padding: 20px;
   -webkit-box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
-  box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
+          box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
 }
 
 .connectionPage__form__inputsContainer div {
@@ -240,8 +230,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .connectionPage__form__inputsContainer .inputIcon {
@@ -270,14 +260,14 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   position: relative;
   -webkit-box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
-  box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
+          box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
 }
 
 .connectionPage__form .chevronRightIcon {
@@ -333,8 +323,8 @@
 .create-account__register {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -344,7 +334,7 @@
 
 .create-account__register__title1 {
   -webkit-box-shadow: inset 0 0 0 1px #1a1a1a;
-  box-shadow: inset 0 0 0 1px #1a1a1a;
+          box-shadow: inset 0 0 0 1px #1a1a1a;
   border-style: solid;
   border-left-width: 1px;
   border-bottom-width: 0;
@@ -353,7 +343,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  font-size: 0.9rem;
+  font-size: .90rem;
   letter-spacing: 0;
   line-height: 1rem;
   padding-left: 8px;
@@ -361,13 +351,13 @@
   padding-top: 4px;
   padding-bottom: 4px;
   -ms-flex-item-align: start;
-  align-self: flex-start;
+      align-self: flex-start;
 }
 
 .create-account__register__title2 {
   position: relative;
   -webkit-box-shadow: inset 0 0 0 1px #1a1a1a;
-  box-shadow: inset 0 0 0 1px #1a1a1a;
+          box-shadow: inset 0 0 0 1px #1a1a1a;
   border-style: solid;
   border-left-width: 1px;
   border-bottom-width: 0;
@@ -382,7 +372,7 @@
   border-radius: 0;
   padding: 10px 12px;
   -webkit-box-sizing: inherit;
-  box-sizing: inherit;
+          box-sizing: inherit;
   width: 100%;
 }
 
@@ -394,14 +384,14 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   position: relative;
   -webkit-box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
-  box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
+          box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
   padding: 1rem;
 }
 
@@ -412,5 +402,206 @@
   padding: 1vw;
   position: absolute;
   right: 2vw;
+}
+
+.offerForm {
+  color: gray;
+  margin-bottom: 10vh;
+}
+
+.offerForm__form {
+  padding: 20px;
+}
+
+.offerForm .iconRequired {
+  color: red;
+  font-size: 10px;
+}
+
+.offerForm__sports {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+}
+
+.offerForm__sports__item {
+  width: 50vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.offerForm__sports__item__img {
+  width: 30px;
+  margin: auto 5vw;
+}
+
+.offerForm__sports__item__span {
+  font-size: 9px;
+}
+
+.offerForm #addPhotoContainer {
+  text-align: center;
+  margin: 30px auto;
+}
+
+.offerForm #labelPhoto1 {
+  margin: auto;
+  padding: 15px 20px;
+  font-weight: bold;
+  border-radius: 30px;
+  -webkit-box-shadow: 2px 2px 10px lightgray;
+          box-shadow: 2px 2px 10px lightgray;
+  width: 60%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.offerForm #photo1 {
+  visibility: hidden;
+}
+
+.offerForm__input {
+  width: 100%;
+  margin-bottom: 30px;
+  display: block;
+  border: none;
+  border-bottom: 2px solid lightgray;
+}
+
+.offerForm__select {
+  border: none;
+  -webkit-box-shadow: 2px 2px 10px lightgray;
+          box-shadow: 2px 2px 10px lightgray;
+  padding: 8px;
+  width: 100%;
+}
+
+.offerForm__price {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px auto;
+}
+
+.offerForm__price label {
+  padding-left: 12px;
+  min-width: 70%;
+}
+
+.offerForm__price input {
+  max-width: 22%;
+  margin-bottom: 0;
+}
+
+.offerForm__switchContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px auto;
+}
+
+.offerForm__switchContainer__span {
+  max-width: 70%;
+}
+
+.offerForm__switchContainer .switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+}
+
+.offerForm__switchContainer .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.offerForm__switchContainer .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.offerForm__switchContainer .slider:before {
+  position: absolute;
+  content: '';
+  height: 18px;
+  width: 18px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.offerForm__switchContainer .slider.round {
+  border-radius: 34px;
+}
+
+.offerForm__switchContainer .slider.round:before {
+  border-radius: 50%;
+}
+
+.offerForm__switchContainer input:checked + .slider {
+  background-color: #cff44d;
+}
+
+.offerForm__switchContainer input:focus + .slider {
+  -webkit-box-shadow: 0 0 1px #cff44d;
+          box-shadow: 0 0 1px #cff44d;
+}
+
+.offerForm__switchContainer input:checked + .slider:before {
+  -webkit-transform: translateX(24px);
+  transform: translateX(24px);
+}
+
+.offerForm__submitContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+.offerForm__submitContainer .btn {
+  width: 40%;
+  font-size: larger;
+  padding: 1.5vh;
 }
 /*# sourceMappingURL=styles.css.map */

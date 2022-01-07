@@ -4,7 +4,7 @@
   height: 7vh;
   display: flex;
   flex-direction: row;
-  background-color: rgb(0, 0, 0);
+  background-color: $colorDarkGrey;
 
   &__footerContainer {
     width: 100vw;
@@ -24,6 +24,7 @@
 
   li {
     width: 20%;
+    color: $colorBlack;
   }
 
   a {
@@ -32,10 +33,10 @@
     display: flex;
     flex-direction: column;
     text-decoration: none;
-    color: rgb(207, 244, 77);
+    color: $colorBlack;
 
     &:hover {
-      color: rgb(124, 124, 124);
+      color: $colorLightGrey;
     }
   }
 
@@ -43,11 +44,11 @@
     padding-top: 30px;
   }
   &__button {
+    position: absolute;
     border: none;
     background-color: transparent;
     transform: translate(-50%);
     top: -3.5vh;
-    position: absolute;
     left: 50%;
     & .btn {
       padding: 2.6vh;
