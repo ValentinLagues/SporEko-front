@@ -17,8 +17,8 @@
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   background-color: #b4b4b4;
 }
 
@@ -32,10 +32,10 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -ms-flex-pack: distribute;
-  justify-content: space-around;
+      justify-content: space-around;
 }
 
 .header a {
@@ -58,16 +58,16 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
   width: 100vw;
   height: 95vh;
-  background-image: url('../../../resources/homeBck.jpg');
+  background-image: url("../../../resources/homeBck.jpg");
   background-size: 110vw 95vh;
   background-position: 50% 30%;
 }
@@ -117,8 +117,8 @@
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   background-color: black;
 }
 
@@ -129,10 +129,10 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -ms-flex-pack: distribute;
-  justify-content: space-around;
+      justify-content: space-around;
   list-style: none;
 }
 
@@ -141,8 +141,8 @@
   font-size: 8vw;
   text-align: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .footer li {
@@ -152,15 +152,15 @@
 .footer a {
   text-align: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   text-decoration: none;
   color: #cff44d;
 }
@@ -177,7 +177,7 @@
   border: none;
   background-color: transparent;
   -webkit-transform: translate(-50%);
-  transform: translate(-50%);
+          transform: translate(-50%);
   top: -3.5vh;
   position: absolute;
   left: 50%;
@@ -221,17 +221,17 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   background-color: white;
   border-radius: 10px;
   padding: 20px;
   -webkit-box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
-  box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
+          box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
 }
 
 .connectionPage__form__inputsContainer div {
@@ -240,8 +240,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .connectionPage__form__inputsContainer .inputIcon {
@@ -270,14 +270,14 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   position: relative;
   -webkit-box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
-  box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
+          box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
 }
 
 .connectionPage__form .chevronRightIcon {
@@ -304,11 +304,7 @@
 
 .offerForm {
   color: gray;
-  margin-bottom: 100vh;
-  /* The switch - the box around the slider */
-  /* Hide default HTML checkbox */
-  /* The slider */
-  /* Rounded sliders */
+  margin-bottom: 10vh;
 }
 
 .offerForm__form {
@@ -334,11 +330,11 @@
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .offerForm__sports__item__img {
@@ -361,17 +357,17 @@
   font-weight: bold;
   border-radius: 30px;
   -webkit-box-shadow: 2px 2px 10px lightgray;
-  box-shadow: 2px 2px 10px lightgray;
+          box-shadow: 2px 2px 10px lightgray;
   width: 60%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .offerForm #photo1 {
@@ -389,25 +385,62 @@
 .offerForm__select {
   border: none;
   -webkit-box-shadow: 2px 2px 10px lightgray;
-  box-shadow: 2px 2px 10px lightgray;
+          box-shadow: 2px 2px 10px lightgray;
   padding: 8px;
   width: 100%;
 }
 
-.offerForm .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
+.offerForm__price {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px auto;
 }
 
-.offerForm .switch input {
+.offerForm__price label {
+  padding-left: 12px;
+  min-width: 70%;
+}
+
+.offerForm__price input {
+  max-width: 22%;
+  margin-bottom: 0;
+}
+
+.offerForm__switchContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 10px auto;
+}
+
+.offerForm__switchContainer__span {
+  max-width: 70%;
+}
+
+.offerForm__switchContainer .switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+}
+
+.offerForm__switchContainer .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.offerForm .slider {
+.offerForm__switchContainer .slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -419,11 +452,11 @@
   transition: 0.4s;
 }
 
-.offerForm .slider:before {
+.offerForm__switchContainer .slider:before {
   position: absolute;
   content: '';
-  height: 26px;
-  width: 26px;
+  height: 18px;
+  width: 18px;
   left: 4px;
   bottom: 4px;
   background-color: white;
@@ -431,25 +464,42 @@
   transition: 0.4s;
 }
 
-.offerForm input:checked + .slider {
-  background-color: #2196f3;
-}
-
-.offerForm input:focus + .slider {
-  -webkit-box-shadow: 0 0 1px #2196f3;
-  box-shadow: 0 0 1px #2196f3;
-}
-
-.offerForm input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-.offerForm .slider.round {
+.offerForm__switchContainer .slider.round {
   border-radius: 34px;
 }
 
-.offerForm .slider.round:before {
+.offerForm__switchContainer .slider.round:before {
   border-radius: 50%;
+}
+
+.offerForm__switchContainer input:checked + .slider {
+  background-color: #cff44d;
+}
+
+.offerForm__switchContainer input:focus + .slider {
+  -webkit-box-shadow: 0 0 1px #cff44d;
+          box-shadow: 0 0 1px #cff44d;
+}
+
+.offerForm__switchContainer input:checked + .slider:before {
+  -webkit-transform: translateX(24px);
+  transform: translateX(24px);
+}
+
+.offerForm__submitContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+.offerForm__submitContainer .btn {
+  width: 40%;
+  font-size: larger;
+  padding: 1.5vh;
 }
 /*# sourceMappingURL=styles.css.map */
