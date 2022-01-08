@@ -1,0 +1,142 @@
+.offerForm {
+  color: gray;
+  margin-bottom: 10vh;
+  &__form {
+    padding: 20px;
+  }
+  & .iconRequired {
+    color: red;
+    font-size: 10px;
+  }
+  &__sports {
+    display: flex;
+    overflow: hidden;
+    &__item {
+      width: 50vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &__img {
+        width: 30px;
+        margin: auto 5vw;
+      }
+      &__span {
+        font-size: 9px;
+      }
+    }
+  }
+  & #addPhotoContainer {
+    text-align: center;
+    margin: 30px auto;
+  }
+  & #labelPhoto1 {
+    margin: auto;
+    padding: 15px 20px;
+    font-weight: bold;
+    border-radius: 30px;
+    box-shadow: 2px 2px 10px lightgray;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  & #photo1 {
+    visibility: hidden;
+  }
+  &__input {
+    width: 100%;
+    margin-bottom: 30px;
+    display: block;
+    border: none;
+    border-bottom: 2px solid lightgray;
+  }
+  &__select {
+    border: none;
+    box-shadow: 2px 2px 10px lightgray;
+    padding: 8px;
+    width: 100%;
+  }
+  &__price {
+    display: flex;
+    align-items: center;
+    margin: 10px auto;
+    & label {
+      padding-left: 12px;
+      min-width: 70%;
+    }
+    & input {
+      max-width: 22%;
+      margin-bottom: 0;
+    }
+  }
+  &__switchContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px auto;
+    &__span {
+      max-width: 70%;
+    }
+    & .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 25px;
+      & input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+    }
+    & .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+      &:before {
+        position: absolute;
+        content: '';
+        height: 18px;
+        width: 18px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+      &.round {
+        border-radius: 34px;
+        &:before {
+          border-radius: 50%;
+        }
+      }
+    }
+    & input:checked + .slider {
+      background-color: $colorSporEko;
+    }
+    & input:focus + .slider {
+      box-shadow: 0 0 1px $colorSporEko;
+    }
+    & input:checked + .slider:before {
+      -webkit-transform: translateX(24px);
+      -ms-transform: translateX(24px);
+      transform: translateX(24px);
+    }
+  }
+  &__submitContainer {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+    padding-top: 10px;
+    & .btn {
+      width: 40%;
+      font-size: larger;
+      padding: 1.5vh;
+    }
+  }
+}

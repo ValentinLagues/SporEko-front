@@ -1,50 +1,32 @@
-import './App.css';
+import React from 'react';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
-import React, { useState } from 'react';
-
-import logo from './logo.svg';
+import Connection from './components/mobile/connection/Connection';
+import CreateAccount from './components/mobile/createAccount/CreateAccount';
+import Home from './components/mobile/Home/Home';
+import Footer from './components/mobile/layout/Footer';
+import OfferForm from './components/mobile/offerForm/OfferForm';
+import ModificationProfil from './components/mobile/profile/ModificationProfil';
+import Profile from './components/mobile/profile/Profile';
+import Settings from './components/mobile/profile/Settings';
+import Shipement from './components/mobile/profile/Shipement';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className="header">
-          🚀 Vite + React + Typescript 🤘 & <br />
-          Eslint 🔥+ Prettier
-        </p>
-
-        <div className="body">
-          <button onClick={() => setCount((count) => count + 1)}>
-            🪂 Click me : {count}
-          </button>
-
-          <p> Don&apos;t forgot to install Eslint and Prettier in Your Vscode.</p>
-
-          <p>
-            Mess up the code in <code>App.tsx </code> and save the file.
-          </p>
-          <p>
-            <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer">
-              Learn React
-            </a>
-            {' | '}
-            <a
-              className="App-link"
-              href="https://vitejs.dev/guide/features.html"
-              target="_blank"
-              rel="noopener noreferrer">
-              Vite Docs
-            </a>
-          </p>
-        </div>
-      </header>
+      <HashRouter basename="/">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/connection" element={<Connection />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/offerForm" element={<OfferForm />} />
+          <Route path="/profil" element={<Profile />} />
+          <Route path="/parametre" element={<Settings />} />
+          <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
+          <Route path="/mode-envoi" element={<Shipement />} />
+        </Routes>
+        <Footer />
+      </HashRouter>
     </div>
   );
 }
