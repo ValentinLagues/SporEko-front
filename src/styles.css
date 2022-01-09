@@ -380,6 +380,11 @@
   width: 100%;
 }
 
+.offerForm__select.conditionnal {
+  width: 80%;
+  margin-left: 20%;
+}
+
 .offerForm__price {
   display: -webkit-box;
   display: -ms-flexbox;
