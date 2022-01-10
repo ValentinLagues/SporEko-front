@@ -24,8 +24,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .profile__intro__logoRun {
@@ -42,14 +42,14 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   border-radius: 50%;
   -webkit-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
 
@@ -61,13 +61,13 @@
 .profile__intro__name {
   width: 55vw;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
   color: white;
   font-size: 1.2em;
 }
@@ -95,13 +95,13 @@
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   border-radius: 10px;
   -webkit-box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
-  box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
+          box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
 }
 
 .profile__content1__icons {
@@ -115,8 +115,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   text-decoration: none;
   padding: 1vh 5vw;
   font-size: 2vh;
@@ -127,7 +127,7 @@
   font-size: 1.1em;
   cursor: pointer;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .profile__content1__link hr {
@@ -145,13 +145,13 @@
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   border-radius: 10px;
   -webkit-box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
-  box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
+          box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
 }
 
 .profile__content2__icons {
@@ -165,8 +165,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   text-decoration: none;
   padding: 1vh 5vw;
   font-size: 2vh;
@@ -177,7 +177,7 @@
   font-size: 1.1em;
   cursor: pointer;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .profile__content2__link hr {
@@ -202,8 +202,8 @@
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   background-color: #b4b4b4;
 }
 
@@ -217,10 +217,10 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -ms-flex-pack: distribute;
-  justify-content: space-around;
+      justify-content: space-around;
 }
 
 .header a {
@@ -243,13 +243,13 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
   width: 100vw;
   height: 95vh;
   background-size: 110vw 95vh;
@@ -272,7 +272,7 @@
 }
 
 .home__Container input {
-  background-image: url('../../../resources/loupe.png');
+  background-image: url("../../../resources/loupe.png");
   background-repeat: no-repeat;
   background-size: 2vh 2vh;
   background-position: 6%;
@@ -291,8 +291,8 @@
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   background-color: darkgrey;
 }
 
@@ -303,10 +303,10 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -ms-flex-pack: distribute;
-  justify-content: space-around;
+      justify-content: space-around;
   list-style: none;
 }
 
@@ -315,8 +315,8 @@
   font-size: 8vw;
   text-align: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .footer li {
@@ -327,15 +327,15 @@
 .footer a {
   text-align: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   text-decoration: none;
   color: black;
 }
@@ -353,7 +353,7 @@
   border: none;
   background-color: transparent;
   -webkit-transform: translate(-50%);
-  transform: translate(-50%);
+          transform: translate(-50%);
   top: -3.5vh;
   left: 50%;
 }
@@ -396,17 +396,17 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   background-color: white;
   border-radius: 10px;
   padding: 20px;
   -webkit-box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
-  box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
+          box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
 }
 
 .connectionPage__form__inputsContainer div {
@@ -415,8 +415,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .connectionPage__form__inputsContainer .inputIcon {
@@ -445,14 +445,14 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   position: relative;
   -webkit-box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
-  box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
+          box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
 }
 
 .connectionPage__form .chevronRightIcon {
@@ -508,8 +508,8 @@
 .create-account__register {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -519,7 +519,7 @@
 
 .create-account__register__title1 {
   -webkit-box-shadow: inset 0 0 0 1px #1a1a1a;
-  box-shadow: inset 0 0 0 1px #1a1a1a;
+          box-shadow: inset 0 0 0 1px #1a1a1a;
   border-style: solid;
   border-left-width: 1px;
   border-bottom-width: 0;
@@ -528,7 +528,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  font-size: 0.9rem;
+  font-size: .90rem;
   letter-spacing: 0;
   line-height: 1rem;
   padding-left: 8px;
@@ -536,13 +536,13 @@
   padding-top: 4px;
   padding-bottom: 4px;
   -ms-flex-item-align: start;
-  align-self: flex-start;
+      align-self: flex-start;
 }
 
 .create-account__register__title2 {
   position: relative;
   -webkit-box-shadow: inset 0 0 0 1px #1a1a1a;
-  box-shadow: inset 0 0 0 1px #1a1a1a;
+          box-shadow: inset 0 0 0 1px #1a1a1a;
   border-style: solid;
   border-left-width: 1px;
   border-bottom-width: 0;
@@ -557,7 +557,7 @@
   border-radius: 0;
   padding: 10px 12px;
   -webkit-box-sizing: inherit;
-  box-sizing: inherit;
+          box-sizing: inherit;
   width: 100%;
 }
 
@@ -569,14 +569,14 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   position: relative;
   -webkit-box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
-  box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
+          box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
   padding: 1rem;
 }
 
@@ -591,7 +591,7 @@
 
 .offerForm {
   color: gray;
-  margin-bottom: 10vh;
+  margin-bottom: 100vh;
 }
 
 .offerForm__form {
@@ -617,11 +617,11 @@
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .offerForm__sports__item__img {
@@ -644,17 +644,17 @@
   font-weight: bold;
   border-radius: 30px;
   -webkit-box-shadow: 2px 2px 10px lightgray;
-  box-shadow: 2px 2px 10px lightgray;
+          box-shadow: 2px 2px 10px lightgray;
   width: 60%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .offerForm #photo1 {
@@ -672,9 +672,14 @@
 .offerForm__select {
   border: none;
   -webkit-box-shadow: 2px 2px 10px lightgray;
-  box-shadow: 2px 2px 10px lightgray;
+          box-shadow: 2px 2px 10px lightgray;
   padding: 8px;
   width: 100%;
+}
+
+.offerForm__select.conditionnal {
+  width: 80%;
+  margin-left: 20%;
 }
 
 .offerForm__price {
@@ -682,8 +687,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin: 10px auto;
 }
 
@@ -702,11 +707,11 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin: 10px auto;
 }
 
@@ -765,7 +770,7 @@
 
 .offerForm__switchContainer input:focus + .slider {
   -webkit-box-shadow: 0 0 1px #cff44d;
-  box-shadow: 0 0 1px #cff44d;
+          box-shadow: 0 0 1px #cff44d;
 }
 
 .offerForm__switchContainer input:checked + .slider:before {
@@ -778,8 +783,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   padding-right: 10px;
   padding-top: 10px;
 }
@@ -803,8 +808,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .settings__intro__logoRun {
@@ -821,14 +826,14 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   border-radius: 50%;
   -webkit-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+          box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
 
@@ -840,13 +845,13 @@
 .settings__intro__name {
   width: 55vw;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
   color: white;
   font-size: 1.2em;
 }
@@ -874,13 +879,13 @@
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   border-radius: 10px;
   -webkit-box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
-  box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
+          box-shadow: 2px 2px 10px rgba(161, 161, 161, 0.534);
 }
 
 .settings__content__icons {
@@ -894,8 +899,8 @@
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   text-decoration: none;
   padding: 1vh 5vw;
   font-size: 2vh;
@@ -906,7 +911,7 @@
   font-size: 1.1em;
   cursor: pointer;
   -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .settings__content__link hr {
