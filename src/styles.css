@@ -542,7 +542,7 @@
 
 .offerForm {
   color: gray;
-  margin-bottom: 10vh;
+  margin-bottom: 100vh;
 }
 
 .offerForm__form {
@@ -626,6 +626,11 @@
   box-shadow: 2px 2px 10px lightgray;
   padding: 8px;
   width: 100%;
+}
+
+.offerForm__select.conditionnal {
+  width: 80%;
+  margin-left: 20%;
 }
 
 .offerForm__price {
