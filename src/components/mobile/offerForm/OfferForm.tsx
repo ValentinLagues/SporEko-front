@@ -41,7 +41,7 @@ const OfferForm = () => {
     axios.get(`${urlBack}colissimos`).then((res) => setColissimoList(res.data));
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: Event) => {
     e.preventDefault();
     setOffer(
       ((offer.title = title),
