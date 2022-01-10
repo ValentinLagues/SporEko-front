@@ -4,8 +4,8 @@ import { FiTruck } from 'react-icons/fi';
 import { FiLogOut } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
-import Photo from '../../../../resources/homeBck.jpg';
 import LogoRun from '../../../../resources/LogoRun.png';
+import PhotoDefault from '../../../../resources/photoDefault.png';
 
 const Settings = () => {
   return (
@@ -15,7 +15,7 @@ const Settings = () => {
           <img src={LogoRun} alt="Logo" className="settings__intro__logoRun" />
         </Link>
         <div className="settings__intro__photo">
-          <img src={Photo} alt="Avatar" />
+          <img src={PhotoDefault} alt="Avatar" />
         </div>
         <div className="settings__intro__name">
           <h3>Alexandra Flahaut</h3>
