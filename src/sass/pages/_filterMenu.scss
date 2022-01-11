@@ -1,0 +1,76 @@
+.filterMenu {
+  width: 70%;
+  margin-left: 26%;
+  height: 800vh;
+  padding: 2%;
+  color: $colorText;
+  font-weight: bold;
+  box-shadow: $boxShadow;
+  & h2 {
+    font-size: 12px;
+    color: $colorDarkGrey;
+  }
+
+  & #resetBtn {
+    border: none;
+    background-color: transparent;
+    color: rgba(255, 0, 0, 0.7);
+    font-size: 10px;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    &--right {
+      padding: 10px;
+      padding-top: 0;
+      text-align: end;
+    }
+  }
+
+  & select {
+    border: none;
+    background-color: transparent;
+    text-align: end;
+    color: $colorDarkGrey;
+  }
+
+  & .iconChevronDownContainer {
+    color: $colorDarkGrey;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    &__icon {
+      font-size: larger;
+    }
+  }
+
+  #colors {
+    position: relative;
+  }
+  & .colorList {
+    background-color: blueviolet;
+    position: absolute;
+    top: 5vh;
+    right: 3vw;
+    width: 40%;
+    margin-left: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__item {
+      display: flex;
+      width: 100%;
+      background-color: aqua;
+      justify-content: flex-end;
+    }
+  }
+  & .colorBtn {
+    margin: 5px 15px;
+    width: 5vw;
+    height: 5vw;
+    border-radius: 50%;
+    border: 1px solid black;
+  }
+}
