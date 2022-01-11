@@ -7,7 +7,10 @@ import { Link } from 'react-router-dom';
 import LogoRun from '../../../../resources/LogoRun.png';
 import PhotoDefault from '../../../../resources/photoDefault.png';
 
-const Settings = () => {
+type Props = { userIn?: boolean };
+
+const Settings: React.FC<Props> = ({ userIn = false }) => {
+  console.log(userIn);
   return (
     <div className="settings">
       <div className="settings__intro">

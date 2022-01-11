@@ -27,12 +27,12 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
   const [id, setId] = useState<number>(0);
   const [pseudo, setPseudo] = useState<string>('');
   const [admin, setAdmin] = useState<boolean>(false);
-  const removeCookie = useCookies(['user_token'])[2];
+  const deleteCookie = useCookies(['user_token'])[2];
   const logout = (): void => {
     setId(0);
     setPseudo('');
     setAdmin(false);
-    removeCookie('user_token');
+    deleteCookie('user_token');
   };
 
   return (

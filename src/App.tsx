@@ -23,7 +23,7 @@ function App() {
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/offerForm" element={<OfferForm />} />
           <Route path="/profil" element={<Profile userIn={id != 0} />} />
-          <Route path="/parametre" element={<Settings />} />
+          <Route path="/parametres" element={<Settings />} />
           <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
           <Route path="/mode-envoi" element={<Shipement />} />
         </Routes>
