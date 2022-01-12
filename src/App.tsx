@@ -4,6 +4,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import Connection from './components/mobile/connection/Connection';
 import CreateAccount from './components/mobile/createAccount/CreateAccount';
 import Home from './components/mobile/Home/Home';
+import Error from './components/mobile/layout/Error';
 import Footer from './components/mobile/layout/Footer';
 import OfferForm from './components/mobile/offerForm/OfferForm';
 import ModificationProfil from './components/mobile/profile/ModificationProfil';
@@ -22,11 +23,17 @@ function App() {
           <Route path="/connection" element={<Connection />} />
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/offerForm" element={<OfferForm />} />
-          <Route path="/profil" element={<Profile userIn={id != 0} />} />
-          <Route path="/parametres" element={<Settings />} />
-          <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
-          <Route path="/mode-envoi" element={<Shipement />} />
         </Routes>
+        {id != 0 ? (
+          <Routes>
+            <Route path="/profil" element={<Profile userIn={id != 0} />} />
+            <Route path="/parametres" element={<Settings />} />
+            <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
+            <Route path="/mode-envoi" element={<Shipement />} />
+          </Routes>
+        ) : (
+          <Error />
+        )}
         <Footer userIn={id != 0} />
       </HashRouter>
     </div>
