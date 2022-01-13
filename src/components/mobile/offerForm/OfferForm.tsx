@@ -10,7 +10,7 @@ interface Offer {
   description: string;
   id_sport: number;
   id_gender: number;
-  ischild: number;
+  id_child: number | null;
   id_category: number;
   id_clothes: number;
   id_shoe: number;
@@ -46,7 +46,6 @@ interface Offer {
   picture17: string;
   picture18: string;
   picture19: string;
-  picture20: string;
 }
 
 interface Sport {
@@ -56,8 +55,12 @@ interface Sport {
 
 interface Gender {
   id_gender: number;
-  adult_name: string;
-  child_name: string;
+  name: string;
+}
+
+interface Child {
+  id_child: number;
+  name: string;
 }
 
 interface Category {
@@ -115,6 +118,7 @@ const urlBack = 'http://localhost:8000/';
 const OfferForm = () => {
   const [sportList, setSportList] = useState<Sport[]>([]);
   const [genderList, setGenderList] = useState<Gender[]>([]);
+  const [childList, setChildList] = useState<Child[]>([]);
   const [categoryList, setCategoryList] = useState<Category[]>([]);
   const [clothesList, setClothesList] = useState<Clothes[]>([]);
   const [shoeList, setShoeList] = useState<Shoe[]>([]);
@@ -154,6 +158,7 @@ const OfferForm = () => {
   useEffect(() => {
     axios.get(`${urlBack}sports`).then((res) => setSportList(res.data));
     axios.get(`${urlBack}genders`).then((res) => setGenderList(res.data));
+    axios.get(`${urlBack}children`).then((res) => setChildList(res.data));
     axios.get(`${urlBack}categories`).then((res) => setCategoryList(res.data));
     axios.get(`${urlBack}clothes`).then((res) => setClothesList(res.data));
     axios.get(`${urlBack}shoes`).then((res) => setShoeList(res.data));
@@ -211,7 +216,6 @@ const OfferForm = () => {
       picture17: 'adresse interne de la photo',
       picture18: 'adresse interne de la photo',
       picture19: 'adresse interne de la photo',
-      picture20: 'adresse interne de la photo',
     } as Offer;
     console.log(newOffer);
     setOffer(newOffer);

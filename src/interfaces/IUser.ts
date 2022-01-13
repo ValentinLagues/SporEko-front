@@ -1,7 +1,9 @@
 export default interface IUser {
   id: number;
+  token: string;
   pseudo: string;
   admin: number;
+  userIn: boolean;
 }
 export default interface IUserLog {
   id_user: number;
