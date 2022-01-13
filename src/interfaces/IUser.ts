@@ -3,6 +3,7 @@ export default interface IUser {
   token: string;
   pseudo: string;
   admin: number;
+  userIn: boolean;
 }
 export default interface IUserLog {
   id_user: number;

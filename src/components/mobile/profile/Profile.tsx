@@ -14,16 +14,12 @@ import LogoRun from '../../../../resources/LogoRun.png';
 import PhotoDefault from '../../../../resources/photoDefault.png';
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import IUserLog from '../../../interfaces/IUser';
-import Error from '../layout/Error';
 
-type Props = { userIn?: boolean };
-
-const Profile: React.FC<Props> = ({ userIn = false }) => {
+const Profile = () => {
   const [user, setUser] = useState<IUserLog | any>('');
   const urlBack = 'http://localhost:8000/';
 
   const { id, logout } = useContext(CurrentUserContext);
-
   const navigate: NavigateFunction = useNavigate();
   function redirectHome() {
     navigate('/');
@@ -71,10 +67,6 @@ const Profile: React.FC<Props> = ({ userIn = false }) => {
             <FiSettings className="profile__content__icons" />
             Paramètre
           </Link>
-          {/*  <Link to="/sportif" className="profile__content__link">
-      <FiMeh className="profile__content__icons" />
-      Invite un sportif
-    </Link> */}
         </div>
         <div className="profile__content">
           <Link to="/mode-envoi" className="profile__content__link">
@@ -109,8 +101,6 @@ const Profile: React.FC<Props> = ({ userIn = false }) => {
           </p>
         </div>
       </>
-
-      {!userIn && <Error />}
     </div>
   );
 };

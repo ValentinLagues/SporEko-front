@@ -13,10 +13,8 @@ const Connection = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>();
-
   const [hiEye, setHiEye] = useState<boolean>(true);
-
-  const { setId, setAdmin, setPseudo } = useContext(CurrentUserContext);
+  const { setAccepted } = useContext(CurrentUserContext);
 
   const navigate: NavigateFunction = useNavigate();
   function redirectHome() {
@@ -42,9 +40,10 @@ const Connection = () => {
       .then((response) => response.data)
       .then((data) => {
         setErrorMessage('');
-        setId(data.id);
-        setPseudo(data.pseudo);
-        setAdmin(data.admin === 1);
+        sessionStorage.setItem('pseudo', data.pseudo);
+        sessionStorage.setItem('idBool', '1');
+        sessionStorage.setItem('id', `${data.id}`);
+        setAccepted(true);
         redirectHome();
       })
       .catch((err) => {

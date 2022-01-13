@@ -2,49 +2,48 @@ import React, { createContext, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
 type UserContent = {
-  id: number;
-  setId: React.Dispatch<React.SetStateAction<number>>;
-  pseudo: string;
-  setPseudo: React.Dispatch<React.SetStateAction<string>>;
-  admin: boolean;
-  setAdmin: React.Dispatch<React.SetStateAction<boolean>>;
+  accepted: boolean;
+  setAccepted: React.Dispatch<React.SetStateAction<boolean>>;
+  pseudo: string | null;
+  id: string | null;
+  admin: string | null;
   logout: () => void;
 };
 
 type Props = { children: JSX.Element };
 
 const CurrentUserContext = createContext<UserContent>({
-  id: 0,
-  setId: () => {},
+  accepted: false,
+  setAccepted: () => {},
   pseudo: '',
-  setPseudo: () => {},
+  id: '',
+  admin: '',
   logout: () => {},
-  admin: false,
-  setAdmin: () => {},
 });
 
 export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
-  const [id, setId] = useState<number>(0);
-  const [pseudo, setPseudo] = useState<string>('');
-  const [admin, setAdmin] = useState<boolean>(false);
+  const [accepted, setAccepted] = useState<boolean>(false);
+  const pseudo = sessionStorage.getItem('pseudo');
+  const id = sessionStorage.getItem('id');
+  const admin = sessionStorage.getItem('admin');
   const deleteCookie = useCookies(['user_token'])[2];
+
   const logout = (): void => {
-    setId(0);
-    setPseudo('');
-    setAdmin(false);
+    localStorage.clear();
+    sessionStorage.clear();
+    setAccepted(false);
     deleteCookie('user_token');
   };
 
   return (
     <CurrentUserContext.Provider
       value={{
-        id,
-        setId,
+        accepted,
+        setAccepted,
         pseudo,
-        setPseudo,
-        logout,
+        id,
         admin,
-        setAdmin,
+        logout,
       }}>
       {children}
     </CurrentUserContext.Provider>
