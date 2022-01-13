@@ -2,51 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
 
-// interface Offer {
-//   id_user_seller: number;
-//   picture1: string;
-//   title: string;
-//   description: string;
-//   id_sport: number;
-//   id_gender: number;
-//   id_child: number | null;
-//   id_category: number;
-//   id_clothes: number;
-//   id_shoe: number;
-//   id_accessory: number;
-//   id_brand: number;
-//   id_textile: number;
-//   id_size: number;
-//   id_color1: number;
-//   id_color2: number;
-//   id_condition: number;
-//   price: number;
-//   id_weight: number;
-//   hand_delivery: number;
-//   colissimo_delivery: number;
-//   mondial_relay_delivery: number;
-//   isarchived: number;
-//   isdraft: number;
-//   picture2: string;
-//   picture3: string;
-//   picture4: string;
-//   picture5: string;
-//   picture6: string;
-//   picture7: string;
-//   picture8: string;
-//   picture9: string;
-//   picture10: string;
-//   picture11: string;
-//   picture12: string;
-//   picture13: string;
-//   picture14: string;
-//   picture15: string;
-//   picture16: string;
-//   picture17: string;
-//   picture18: string;
-//   picture19: string;
-// }
-
 interface Sport {
   id_sport: number;
   name: string;
@@ -140,12 +95,11 @@ const FilterMenu = () => {
   const [textile, setTextile] = useState('');
   const [colorListShow, setColorListShow] = useState(false);
   const [color1, setColor1] = useState<number | null>(null);
+  const [colorName, setColorName] = useState('');
   const [brand, setBrand] = useState('');
   const [size, setSize] = useState('');
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState<number | null>(null);
   const [orderBy, setOrderBy] = useState('');
-
-  // const [offers, setOffers] = useState<Offer[]>();
 
   useEffect(() => {
     axios.get(`${urlBack}sports`).then((res) => setSportList(res.data));
@@ -162,55 +116,28 @@ const FilterMenu = () => {
     axios.get(`${urlBack}sizes`).then((res) => setSizeList(res.data));
   }, []);
 
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const newOffer = {
-  //     id_user_seller: 1,
-  //     picture1: 'adresse interne de la photo',
-  //     title,
-  //     description,
-  //     id_sport: parseInt(sport),
-  //     id_gender: parseInt(gender),
-  //     id_child: child ? Number(child) : null,
-  //     id_category: parseInt(category),
-  //     id_clothes: clothes ? Number(clothes) : null,
-  //     id_shoe: shoe ? Number(shoe) : null,
-  //     id_accessory: accessory ? Number(accessory) : null,
-  //     id_brand: brand ? parseInt(brand) : null,
-  //     id_textile: textile ? parseInt(textile) : null,
-  //     id_size: size ? parseInt(size) : null,
-  //     id_color1: color1 ? parseInt(color1) : null,
-  //     id_color2: color2 ? parseInt(color2) : null,
-  //     id_condition: parseInt(condition),
-  //     price: Number(price),
-  //     id_weight: parseInt(weight),
-  //     hand_delivery: handDelivery,
-  //     colissimo_delivery: 0,
-  //     mondial_relay_delivery: 0,
-  //     isarchived: 0,
-  //     isdraft: isDraft,
-  //     picture2: 'adresse interne de la photo',
-  //     picture3: 'adresse interne de la photo',
-  //     picture4: 'adresse interne de la photo',
-  //     picture5: 'adresse interne de la photo',
-  //     picture6: 'adresse interne de la photo',
-  //     picture7: 'adresse interne de la photo',
-  //     picture8: 'adresse interne de la photo',
-  //     picture9: 'adresse interne de la photo',
-  //     picture10: 'adresse interne de la photo',
-  //     picture11: 'adresse interne de la photo',
-  //     picture12: 'adresse interne de la photo',
-  //     picture13: 'adresse interne de la photo',
-  //     picture14: 'adresse interne de la photo',
-  //     picture15: 'adresse interne de la photo',
-  //     picture16: 'adresse interne de la photo',
-  //     picture17: 'adresse interne de la photo',
-  //     picture18: 'adresse interne de la photo',
-  //     picture19: 'adresse interne de la photo',
-  //   } as Offer;
-  //   console.log(newOffer);
-  //   setOffers(newOffer);
-  // };
+  const handleReset = () => {
+    setSport('');
+    setGender('');
+    setChild(null);
+    setGenderIsChild(false);
+    setCategory('');
+    setClothes(null);
+    setCategoryIsClothes(false);
+    setShoe(null);
+    setCategoryIsShoe(false);
+    setAccessory(null);
+    setCategoryIsAccessory(false);
+    setCondition('');
+    setTextile('');
+    setColorListShow(false);
+    setColor1(null);
+    setColorName('');
+    setBrand('');
+    setSize('');
+    setPrice(null);
+    setOrderBy('');
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -266,18 +193,28 @@ const FilterMenu = () => {
       oneValue = true;
     }
     if (price) {
-      const prices = price.split(' ');
-      const minPrice = prices[0];
-      const maxPrice = prices[1];
-      if (maxPrice === '+') {
-        filters += oneValue ? `&minPrice=${minPrice}` : `?minPrice=${minPrice}`;
+      if (price === 100) {
+        filters += oneValue ? `&minPrice=${price}` : `?minPrice=${price}`;
         oneValue = true;
       } else {
         filters += oneValue
-          ? `&minPrice=${minPrice}&maxPrice=${maxPrice}`
-          : `?minPrice=${minPrice}&maxPrice=${maxPrice}`;
+          ? `&minPrice=${0}&maxPrice=${price}`
+          : `?0=${0}&maxPrice=${price}`;
         oneValue = true;
       }
+
+      // const prices = price.split(' ');
+      // const minPrice = prices[0];
+      // const maxPrice = prices[1];
+      // if (maxPrice === '+') {
+      //   filters += oneValue ? `&minPrice=${minPrice}` : `?minPrice=${minPrice}`;
+      //   oneValue = true;
+      // } else {
+      //   filters += oneValue
+      //     ? `&minPrice=${minPrice}&maxPrice=${maxPrice}`
+      //     : `?minPrice=${minPrice}&maxPrice=${maxPrice}`;
+      //   oneValue = true;
+      // }
     }
     if (orderBy) {
       const sort = orderBy;
@@ -289,16 +226,12 @@ const FilterMenu = () => {
 
   colorList &&
     colorList.map((color) => (color.style = { backgroundColor: color.color_code }));
-  // colorList.map((color) => {
-  //   // (color.id_color = color.id_color),
-  //     (color.style = { backgroundColor: color.color_code });
-  // });
 
   return (
-    <form onSubmit={(e: React.FormEvent) => handleSubmit(e)} className="filterMenu">
+    <form onSubmit={(e) => handleSubmit(e)} className="filterMenu" id="filterMenuMobile">
       <div className="filterMenu__item">
         <h2>FILTRES</h2>
-        <button id="resetBtn" type="reset">
+        <button onClick={() => handleReset()} id="resetBtn" type="reset">
           ANNULER FILTRES
         </button>
       </div>
@@ -480,20 +413,21 @@ const FilterMenu = () => {
         id="colors">
         <span>Couleur</span>
         <div className="iconChevronDownContainer">
-          Toutes <HiChevronDown className="iconChevronDownContainer__icon" />
+          {color1 ? colorName : 'Toutes'}{' '}
+          <HiChevronDown className="iconChevronDownContainer__icon" />
         </div>
         {colorListShow && (
           <div className="colorList">
             {colorList.map((color, index) => (
-              <div key={index} className="colorList__item">
+              <div
+                onKeyPress={() => (setColor1(color.id_color), setColorName(color.name))}
+                role="button"
+                tabIndex={0}
+                onClick={() => (setColor1(color.id_color), setColorName(color.name))}
+                key={index}
+                className="colorList__item">
                 <div>{color.name}</div>
-                <div
-                  onKeyPress={() => setColor1(color.id_color)}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => setColor1(color.id_color)}
-                  className={color.id_color === 1 ? '' : 'colorBtn'}
-                  style={color.style}></div>
+                <div className="colorList__item__colorShip" style={color.style}></div>
               </div>
             ))}
           </div>
@@ -533,25 +467,20 @@ const FilterMenu = () => {
             ))}
         </select>
       </div>
-      <div className="filterMenu__item">
-        <label htmlFor="price">Prix</label>
-        <select
-          onChange={(e) => setPrice(e.target.value)}
-          value={price}
-          name=""
-          id="price">
-          <option value="">Tous</option>
-          <option value="0 50">0 - 50€</option>
-          <option value="50 100">50 - 100€</option>
-          <option value="100 +">Plus de 100€</option>
-          <option value="">Personnaliser</option>
-        </select>
-        {/* <input
+      <div className="filterMenu__item price">
+        <div className="filterMenu__item price__label">
+          <label htmlFor="price">Prix</label>
+          <span className="priceText">
+            {price ? (price < 100 ? `Moins de ${price}€` : `Plus de ${price}€`) : 'Tous'}
+          </span>
+        </div>
+        <input
           type="range"
-          value={price}
-          onChange={(e) => setPrice((Number(e.target.value) * maxPrice) / 100)}
+          value={Number(price)}
+          onChange={(e) => {
+            e.target.value === '0' ? setPrice(null) : setPrice(Number(e.target.value));
+          }}
         />
-        Moins de {price}€ */}
       </div>
       <div className="filterMenu__item">
         <label htmlFor="orderBy">Classer par</label>
@@ -566,7 +495,7 @@ const FilterMenu = () => {
           <option value="creation_date ASC">le moins récent</option>
         </select>
       </div>
-      <div>
+      <div className="filterMenu__submitContainer">
         <button className="btn" type="submit">
           Rechercher
         </button>
