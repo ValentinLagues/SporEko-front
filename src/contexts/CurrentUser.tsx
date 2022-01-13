@@ -14,7 +14,7 @@ type UserContent = {
   logout: () => void;
 };
 
-type Props = { children: JSX.Element };
+type Props = { children: Element };
 
 const CurrentUserContext = createContext<UserContent>({
   user: {},

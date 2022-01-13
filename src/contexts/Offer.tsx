@@ -21,12 +21,8 @@ type OfferContent = {
   setIschild: React.Dispatch<React.SetStateAction<boolean>>;
   id_category: number;
   setId_category: React.Dispatch<React.SetStateAction<number>>;
-  id_clothes: number;
-  setId_clothes: React.Dispatch<React.SetStateAction<number>>;
-  id_shoe: number;
-  setId_shoe: React.Dispatch<React.SetStateAction<number>>;
-  id_accessory: number;
-  setId_accessory: React.Dispatch<React.SetStateAction<number>>;
+  id_item: number;
+  setId_item: React.Dispatch<React.SetStateAction<number>>;
   id_brand: number;
   setId_brand: React.Dispatch<React.SetStateAction<number>>;
   id_textile: number;
@@ -120,12 +116,8 @@ const OfferContext = createContext<OfferContent>({
   setIschild: () => {},
   id_category: 0,
   setId_category: () => {},
-  id_clothes: 0,
-  setId_clothes: () => {},
-  id_shoe: 0,
-  setId_shoe: () => {},
-  id_accessory: 0,
-  setId_accessory: () => {},
+  id_item: 0,
+  setId_item: () => {},
   id_brand: 0,
   setId_brand: () => {},
   id_textile: 0,
@@ -207,9 +199,7 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
   const [id_gender, setId_gender] = useState<number>(0);
   const [ischild, setIschild] = useState<boolean>(false);
   const [id_category, setId_category] = useState<number>(0);
-  const [id_clothes, setId_clothes] = useState<number>(0);
-  const [id_shoe, setId_shoe] = useState<number>(0);
-  const [id_accessory, setId_accessory] = useState<number>(0);
+  const [id_item, setId_item] = useState<number>(0);
   const [id_brand, setId_brand] = useState<number>(0);
   const [id_textile, setId_textile] = useState<number>(0);
   const [id_size, setId_size] = useState<number>(0);
@@ -268,12 +258,8 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
         setIschild,
         id_category,
         setId_category,
-        id_clothes,
-        setId_clothes,
-        id_shoe,
-        setId_shoe,
-        id_accessory,
-        setId_accessory,
+        id_item,
+        setId_item,
         id_brand,
         setId_brand,
         id_textile,
