@@ -9,9 +9,7 @@ export default interface IOffers {
   id_gender: number;
   ischild: number;
   id_category: number;
-  id_clothes: number;
-  id_shoe: number;
-  id_accessory: number;
+  id_item: number;
   id_brand: number;
   id_textile: number;
   id_size: number;
