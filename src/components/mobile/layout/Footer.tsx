@@ -6,15 +6,17 @@ import { FiMail } from 'react-icons/fi';
 import { FiHeart } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
-const Footer = () => {
+type Props = { userIn?: boolean };
+
+const Footer: React.FC<Props> = ({ userIn = false }) => {
   return (
     <div className="footer">
       <ul className="footer__footerContainer">
         <li>
-          <a href="/favorites">
+          <Link to="/product-description">
             <FiHeart className="footer__footerContainer__footerIcons" />
             Favoris
-          </a>
+          </Link>
         </li>
         <li>
           <Link to="/">
@@ -24,16 +26,24 @@ const Footer = () => {
         </li>
         <li id="vendre">Vendre</li>
         <li>
-          <a href="/messages">
+          <Link to="/messages">
             <FiMail className="footer__footerContainer__footerIcons" />
             Messages
-          </a>
+          </Link>
         </li>
         <li>
-          <Link to="/Connection">
-            <CgProfile className="footer__footerContainer__footerIcons" />
-            Compte
-          </Link>
+          {!userIn && (
+            <Link to="/connection">
+              <CgProfile className="footer__footerContainer__footerIcons" />
+              Compte
+            </Link>
+          )}
+          {userIn && (
+            <Link to="/profil">
+              <CgProfile className="footer__footerContainer__footerIcons" />
+              Profil
+            </Link>
+          )}
         </li>
       </ul>
       <button type="button" className="footer__button">

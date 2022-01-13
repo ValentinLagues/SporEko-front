@@ -1,0 +1,72 @@
+.product-description {
+    text-align: center;
+    // height: 150vh;
+    // ligne indispensable pour scroller mon annonce 
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding: 30px 0;
+        background-color: yellow;
+      
+
+
+    &__container-picture {
+        background-color: blue; 
+        width: 100%;  
+    }
+
+        &__container-picture__big-picture {
+                margin: 1rem;
+                width: 80vw;
+            }
+
+        &__container-picture__all-picture {
+            width: 30vw;
+        }   
+        
+    &__container-text {
+        background-color: pink;
+        width: 100%;
+        max-width: 500px;
+        min-width: 290px;
+        margin: 25px;
+    }  
+    
+        &__container-text__container1 {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;  
+        }
+
+            &__container-text__container1__price {
+                background-color: aquamarine
+            }   
+
+        &__container-text__container2__brand{
+            text-align: left;
+        }
+
+        &__container-text__container3 {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;  
+            margin-top: 15px;
+        }
+
+        &__container-text__container4 {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;  
+            margin-top: 15px;
+        }
+
+        &__container-text__container4 {
+            text-align: left;
+        }
+
+        
+
+
+
+       
+};
