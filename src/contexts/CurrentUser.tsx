@@ -1,7 +1,11 @@
 import React, { createContext, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
+import IUserLog from '../interfaces/IUser';
+
 type UserContent = {
+  user: string[] | any;
+  setUser: React.Dispatch<React.SetStateAction<object>>;
   accepted: boolean;
   setAccepted: React.Dispatch<React.SetStateAction<boolean>>;
   pseudo: string | null;
@@ -13,6 +17,8 @@ type UserContent = {
 type Props = { children: JSX.Element };
 
 const CurrentUserContext = createContext<UserContent>({
+  user: {},
+  setUser: () => {},
   accepted: false,
   setAccepted: () => {},
   pseudo: '',
@@ -23,6 +29,7 @@ const CurrentUserContext = createContext<UserContent>({
 
 export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
   const [accepted, setAccepted] = useState<boolean>(false);
+  const [user, setUser] = useState<IUserLog | any>('');
   const pseudo = sessionStorage.getItem('pseudo');
   const id = sessionStorage.getItem('id');
   const admin = sessionStorage.getItem('admin');
@@ -38,6 +45,8 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
   return (
     <CurrentUserContext.Provider
       value={{
+        user,
+        setUser,
         accepted,
         setAccepted,
         pseudo,
