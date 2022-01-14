@@ -1,6 +1,20 @@
 * {
   padding: 0;
   margin: 0;
+  font-family: 'Quicksand', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Outfit', sans-serif;
+}
+
+@media screen and (max-width: 720px) {
+  * {
+    font-size: 4vw;
+  }
 }
 
 .btn {
@@ -110,6 +124,7 @@
 }
 
 .profile__content__link {
+  position: relative;
   color: black;
   border-radius: 10px;
   display: -webkit-box;
@@ -135,8 +150,8 @@
   margin: 0 5vw;
   width: 70vw;
   margin-top: 7vh;
-  opacity: 1;
-  position: fixed;
+  opacity: 0.2;
+  position: absolute;
 }
 
 .profile__deconexion p {
@@ -189,6 +204,13 @@
   border-radius: 10px;
 }
 
+.error {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../../../resources/404.jpg');
+  background-size: 100vw 100vh;
+}
+
 .home {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -205,6 +227,10 @@
   height: 95vh;
   background-size: 110vw 95vh;
   background-position: 50% 30%;
+}
+
+.home__Container {
+  text-align: center;
 }
 
 .home__Container img {
@@ -430,7 +456,7 @@
 
 .create-account {
   margin: 4rem;
-  width: 290px;
+  width: 300px;
   min-height: 550px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -916,6 +942,7 @@
 }
 
 .settings__content__link {
+  position: relative;
   color: black;
   border-radius: 10px;
   display: -webkit-box;
@@ -942,7 +969,7 @@
   width: 70vw;
   opacity: 0.2;
   margin-top: 7vh;
-  position: fixed;
+  position: absolute;
 }
 
 .settings__content__deconexion p {
