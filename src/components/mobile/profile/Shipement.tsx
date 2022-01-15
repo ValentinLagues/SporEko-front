@@ -1,6 +1,6 @@
 import React from 'react';
 
-import HeaderProfil from './HeaderProfil';
+import HeaderProfil from '../layout/HeaderProfil';
 
 const Shipement = () => {
   return (

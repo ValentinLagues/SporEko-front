@@ -7,8 +7,8 @@ import { FiShield } from 'react-icons/fi';
 import { FiEdit } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
-import HeaderProfil from './HeaderProfil';
-import LogOut from './LogOut';
+import HeaderProfil from '../layout/HeaderProfil';
+import LogOut from '../layout/LogOut';
 
 const Profile = () => {
   return (

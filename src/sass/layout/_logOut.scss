@@ -1,0 +1,10 @@
+.logOut {
+  /* LogOut style component */
+  &__button p {
+    background-color: $colorWhite;
+    margin: 5vh 15vw 0 45vw;
+    width: 40vw;
+    text-align: right;
+    cursor: pointer;
+  }
+}
