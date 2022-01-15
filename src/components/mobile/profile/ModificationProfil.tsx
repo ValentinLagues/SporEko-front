@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
-
+import { HiEye } from 'react-icons/hi';
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import IUserLog from '../../../interfaces/IUser';
 import HeaderProfil from '../layout/HeaderProfil';
@@ -11,7 +11,7 @@ const ModificationProfil = () => {
   const [lastname, setLastName] = useState<string>('');
   const [firstname, setFirstname] = useState<string>('');
   const [adress, setAdress] = useState<string>('');
-  const [adress_complement, setAdress_complement] = useState<string>('');
+  const [adress_complement, setAdress_complement] = useState<string>();
   const [zipcode, setZipcode] = useState<number>();
   const [city, setCity] = useState<string>('');
   const [picture, setPicture] = useState<string>('');
@@ -21,17 +21,37 @@ const ModificationProfil = () => {
   const [birthday, setBirthday] = useState<string>('');
   const [id_gender, setId_gender] = useState<string>('');
   const [id_athletic, setId_athletic] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [hash_password, setPassword] = useState<string>('');
   const [verifyPassword, setVerifyPassword] = useState<string>('');
   const [hiEye, setHiEye] = useState<boolean>(true);
-  const urlBack = 'http://localhost:8000/';
+  const [hiEye2, setHiEye2] = useState<boolean>(true);
+  const urlBack = import.meta.env.VITE_URL_BACK;
+  const userPost = {
+    pseudo,
+    lastname,
+    firstname,
+    adress,
+    adress_complement,
+    zipcode,
+    city,
+    picture,
+    id_country,
+    phone,
+    email,
+    birthday,
+    id_gender,
+    id_athletic,
+    hash_password,
+    verifyPassword,
+  };
+  console.log(userPost);
 
   const updatedUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (password === verifyPassword) {
+    if (hash_password === verifyPassword) {
       axios
-        .post<IUserLog>(
-          `${urlBack}users/${id}`,
+        .put<IUserLog>(
+          `${urlBack}/users/${id}`,
           {
             lastname,
             firstname,
@@ -39,19 +59,18 @@ const ModificationProfil = () => {
             zipcode,
             city,
             email,
-            password,
+            hash_password,
             picture,
             id_gender,
             id_country,
             adress_complement,
             id_athletic,
             birthday,
-            picture,
             phone,
             pseudo,
           },
           {
-            method: 'POST',
+            method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
             },
@@ -75,6 +94,7 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <label htmlFor="Pseudo">Pseudo:&nbsp;</label>
           <input
+            defaultValue={user.pseudo}
             name="Pseudo"
             type="text"
             placeholder={user.pseudo}
@@ -173,6 +193,7 @@ const ModificationProfil = () => {
               setPassword(e.currentTarget.value)
             }
           />
+          <HiEye className="inputIcon right" onClick={() => setHiEye(!hiEye)} />
           <hr />
         </div>
         <div className="modificationProfil__container__content">
@@ -180,17 +201,19 @@ const ModificationProfil = () => {
           <input
             name="MDP verification"
             placeholder="***********"
-            type={`${hiEye ? 'password' : 'text'}`}
+            type={`${hiEye2 ? 'password' : 'text'}`}
             value={user.password}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
               setVerifyPassword(e.currentTarget.value)
             }
           />
+          <HiEye className="inputIcon right" onClick={() => setHiEye2(!hiEye2)} />
           <hr />
         </div>
         <div className="modificationProfil__container__content">
           <label htmlFor="Téléphone">Téléphone:&nbsp;</label>
           <input
+            defaultValue={user.phone}
             name="Téléphone"
             type="text"
             placeholder={user.phone}
