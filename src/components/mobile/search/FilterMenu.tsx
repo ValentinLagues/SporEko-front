@@ -7,34 +7,15 @@ interface Sport {
   name: string;
 }
 
-interface Gender {
-  id_gender: number;
-  name: string;
-}
-
-interface Child {
-  id_child: number;
-  name: string;
-}
-
 interface Category {
   id_category: number;
   name: string;
 }
 
-interface Clothes {
-  id_clothes: number;
+interface Item {
+  id_item: number;
   name: string;
-}
-
-interface Shoe {
-  id_shoe: number;
-  name: string;
-}
-
-interface Accessory {
-  id_accessory: number;
-  name: string;
+  id_category: number;
 }
 
 interface Condition {
@@ -68,12 +49,8 @@ const urlBack = 'http://localhost:8000/';
 
 const FilterMenu = () => {
   const [sportList, setSportList] = useState<Sport[]>([]);
-  const [genderList, setGenderList] = useState<Gender[]>([]);
-  const [childList, setChildList] = useState<Child[]>([]);
   const [categoryList, setCategoryList] = useState<Category[]>([]);
-  const [clothesList, setClothesList] = useState<Clothes[]>([]);
-  const [shoeList, setShoeList] = useState<Shoe[]>([]);
-  const [accessoryList, setAccessoryList] = useState<Accessory[]>([]);
+  const [itemList, setItemList] = useState<Item[]>([]);
   const [conditionList, setConditionList] = useState<Condition[]>([]);
   const [textileList, setTextileList] = useState<Textile[]>([]);
   const [colorList, setColorList] = useState<Color[]>([]);
@@ -81,16 +58,13 @@ const FilterMenu = () => {
   const [sizeList, setSizeList] = useState<Size[]>([]);
 
   const [sport, setSport] = useState('');
-  const [gender, setGender] = useState('');
-  const [child, setChild] = useState<number | null>(null);
+  const [gender, setGender] = useState<number | null>(null);
+  const [genderAdult, setGenderAdult] = useState<number | null>(null);
+  const [genderChild, setGenderChild] = useState<number | null>(null);
   const [genderIsChild, setGenderIsChild] = useState(false);
   const [category, setCategory] = useState('');
-  const [clothes, setClothes] = useState<number | null>(null);
+  const [item, setItem] = useState('');
   const [categoryIsClothes, setCategoryIsClothes] = useState(false);
-  const [shoe, setShoe] = useState<number | null>(null);
-  const [categoryIsShoe, setCategoryIsShoe] = useState(false);
-  const [accessory, setAccessory] = useState<number | null>(null);
-  const [categoryIsAccessory, setCategoryIsAccessory] = useState(false);
   const [condition, setCondition] = useState('');
   const [textile, setTextile] = useState('');
   const [colorListShow, setColorListShow] = useState(false);
@@ -103,12 +77,8 @@ const FilterMenu = () => {
 
   useEffect(() => {
     axios.get(`${urlBack}sports`).then((res) => setSportList(res.data));
-    axios.get(`${urlBack}genders`).then((res) => setGenderList(res.data));
-    axios.get(`${urlBack}children`).then((res) => setChildList(res.data));
     axios.get(`${urlBack}categories`).then((res) => setCategoryList(res.data));
-    axios.get(`${urlBack}clothes`).then((res) => setClothesList(res.data));
-    axios.get(`${urlBack}shoes`).then((res) => setShoeList(res.data));
-    axios.get(`${urlBack}accessories`).then((res) => setAccessoryList(res.data));
+    axios.get(`${urlBack}items`).then((res) => setItemList(res.data));
     axios.get(`${urlBack}conditions`).then((res) => setConditionList(res.data));
     axios.get(`${urlBack}textiles`).then((res) => setTextileList(res.data));
     axios.get(`${urlBack}colors`).then((res) => setColorList(res.data));
@@ -116,18 +86,22 @@ const FilterMenu = () => {
     axios.get(`${urlBack}sizes`).then((res) => setSizeList(res.data));
   }, []);
 
+  useEffect(() => {
+    category &&
+      axios.get(`${urlBack}categories/${category}/items`).then((res) => {
+        setItemList(res.data);
+      });
+  }, [category]);
+
   const handleReset = () => {
     setSport('');
-    setGender('');
-    setChild(null);
+    setGender(null);
+    setGenderAdult(null);
+    setGenderChild(null);
     setGenderIsChild(false);
     setCategory('');
-    setClothes(null);
+    setItem('');
     setCategoryIsClothes(false);
-    setShoe(null);
-    setCategoryIsShoe(false);
-    setAccessory(null);
-    setCategoryIsAccessory(false);
     setCondition('');
     setTextile('');
     setColorListShow(false);
@@ -152,24 +126,16 @@ const FilterMenu = () => {
       filters += oneValue ? `&id_gender=${gender}` : `?id_gender=${gender}`;
       oneValue = true;
     }
-    if (child) {
-      filters += oneValue ? `&id_child=${child}` : `?id_child=${child}`;
+    if (genderIsChild) {
+      filters += oneValue ? `&ischild=${1}` : `?ischild=${1}`;
       oneValue = true;
     }
     if (category) {
       filters += oneValue ? `&id_category=${category}` : `?id_category=${category}`;
       oneValue = true;
     }
-    if (clothes) {
-      filters += oneValue ? `&id_clothes=${clothes}` : `?id_clothes=${clothes}`;
-      oneValue = true;
-    }
-    if (shoe) {
-      filters += oneValue ? `&id_shoe=${shoe}` : `?id_shoe=${shoe}`;
-      oneValue = true;
-    }
-    if (accessory) {
-      filters += oneValue ? `&id_accessory=${accessory}` : `?id_accessory=${accessory}`;
+    if (item) {
+      filters += oneValue ? `&id_item=${item}` : `?id_item=${item}`;
       oneValue = true;
     }
     if (condition) {
@@ -193,39 +159,36 @@ const FilterMenu = () => {
       oneValue = true;
     }
     if (price) {
+      console.log(price);
       if (price === 100) {
         filters += oneValue ? `&minPrice=${price}` : `?minPrice=${price}`;
         oneValue = true;
+      } else if (price > 50) {
+        filters += oneValue
+          ? `&minPrice=50&maxPrice=${price}`
+          : `?&minPrice=50&maxPrice=${price}`;
+        oneValue = true;
       } else {
         filters += oneValue
-          ? `&minPrice=${0}&maxPrice=${price}`
-          : `?0=${0}&maxPrice=${price}`;
+          ? `&minPrice=0&maxPrice=${price}`
+          : `?&minPrice=0&maxPrice=${price}`;
         oneValue = true;
       }
-
-      // const prices = price.split(' ');
-      // const minPrice = prices[0];
-      // const maxPrice = prices[1];
-      // if (maxPrice === '+') {
-      //   filters += oneValue ? `&minPrice=${minPrice}` : `?minPrice=${minPrice}`;
-      //   oneValue = true;
-      // } else {
-      //   filters += oneValue
-      //     ? `&minPrice=${minPrice}&maxPrice=${maxPrice}`
-      //     : `?minPrice=${minPrice}&maxPrice=${maxPrice}`;
-      //   oneValue = true;
-      // }
     }
     if (orderBy) {
       const sort = orderBy;
       filters += oneValue ? `&sort=${sort}` : `?sort=${sort}`;
       oneValue = true;
     }
+    console.log(filters);
     axios.get(`${urlBack}offers${filters}`).then((rep) => console.log(rep.data));
   };
 
   colorList &&
     colorList.map((color) => (color.style = { backgroundColor: color.color_code }));
+
+  console.log(category);
+  console.log(typeof category);
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="filterMenu" id="filterMenuMobile">
@@ -256,37 +219,32 @@ const FilterMenu = () => {
         <label htmlFor="genders">Genre</label>
         <select
           onChange={(e) => {
-            setGender(e.target.value);
-            e.target.value === '3'
-              ? (setGenderIsChild(true), setChild(1))
-              : setGenderIsChild(false);
+            setGenderAdult(Number(e.target.value));
+            e.target.value === '4'
+              ? (setGenderIsChild(true), setGender(null))
+              : (setGenderIsChild(false), setGender(Number(e.target.value)));
           }}
-          value={gender}
-          className=""
-          name="genders"
-          id="genders">
-          {genderList &&
-            genderList.map((gender, index) => (
-              <option key={index} value={gender.id_gender}>
-                {gender.name}
-              </option>
-            ))}
+          value={Number(genderAdult)}
+          name=""
+          id="">
+          <option value={''}>Tous</option>
+          <option value={1}>Femme</option>
+          <option value={2}>Homme</option>
+          <option value={4}>Enfant</option>
         </select>
       </div>
       {genderIsChild && (
         <div className="filterMenu__item--right">
           <select
-            onChange={(e) => setChild(Number(e.target.value))}
-            value={child === null ? '' : child}
-            className=""
-            name="children"
-            id="children">
-            {childList &&
-              childList.map((child, index) => (
-                <option key={index} value={child.id_child}>
-                  {child.name}
-                </option>
-              ))}
+            onChange={(e) => {
+              setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
+            }}
+            value={Number(genderChild)}
+            name=""
+            id="">
+            <option value="">Tous</option>
+            <option value={1}>Fille</option>
+            <option value={2}>Garçon</option>
           </select>
         </div>
       )}
@@ -296,14 +254,8 @@ const FilterMenu = () => {
           onChange={(e) => {
             setCategory(e.target.value);
             e.target.value === '1'
-              ? (setCategoryIsClothes(true), setClothes(1))
+              ? setCategoryIsClothes(true)
               : setCategoryIsClothes(false);
-            e.target.value === '2'
-              ? (setCategoryIsShoe(true), setShoe(1))
-              : setCategoryIsShoe(false);
-            e.target.value === '3'
-              ? (setCategoryIsAccessory(true), setAccessory(1))
-              : setCategoryIsAccessory(false);
           }}
           value={category}
           className=""
@@ -318,70 +270,37 @@ const FilterMenu = () => {
             ))}
         </select>
       </div>
+      <div className="filterMenu__item">
+        <label htmlFor="items">Article</label>
+        <select
+          onChange={(e) => setItem(e.target.value)}
+          value={item}
+          className=""
+          name="items"
+          id="items">
+          <option value="">Tous</option>
+          {itemList &&
+            itemList.map((item, index) => (
+              <option key={index} value={item.id_item}>
+                {item.name}
+              </option>
+            ))}
+        </select>
+      </div>
+
       {categoryIsClothes && (
-        <>
-          <div className="filterMenu__item--right">
-            <select
-              onChange={(e) => setClothes(Number(e.target.value))}
-              value={clothes === null ? '' : clothes}
-              className=""
-              name="clothes"
-              id="clothes">
-              {clothesList &&
-                clothesList.map((clothes, index) => (
-                  <option key={index} value={clothes.id_clothes}>
-                    {clothes.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-          <div className="filterMenu__item--right">
-            <select
-              onChange={(e) => setTextile(e.target.value)}
-              value={textile}
-              className=""
-              name="textile"
-              id="textile">
-              <option value="">Toutes matières</option>
-              {textileList &&
-                textileList.map((textile, index) => (
-                  <option key={index} value={textile.id_textile}>
-                    {textile.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-        </>
-      )}
-      {categoryIsShoe && (
         <div className="filterMenu__item--right">
           <select
-            onChange={(e) => setShoe(Number(e.target.value))}
-            value={shoe === null ? '' : shoe}
+            onChange={(e) => setTextile(e.target.value)}
+            value={textile}
             className=""
-            name="shoe"
-            id="shoe">
-            {shoeList &&
-              shoeList.map((shoe, index) => (
-                <option key={index} value={shoe.id_shoe}>
-                  {shoe.name}
-                </option>
-              ))}
-          </select>
-        </div>
-      )}
-      {categoryIsAccessory && (
-        <div className="filterMenu__item--right">
-          <select
-            onChange={(e) => setAccessory(Number(e.target.value))}
-            value={accessory === null ? '' : accessory}
-            className=""
-            name="accessory"
-            id="accessory">
-            {accessoryList &&
-              accessoryList.map((accessory, index) => (
-                <option key={index} value={accessory.id_accessory}>
-                  {accessory.name}
+            name="textile"
+            id="textile">
+            <option value="">Toutes matières</option>
+            {textileList &&
+              textileList.map((textile, index) => (
+                <option key={index} value={textile.id_textile}>
+                  {textile.name}
                 </option>
               ))}
           </select>
@@ -471,7 +390,13 @@ const FilterMenu = () => {
         <div className="filterMenu__item price__label">
           <label htmlFor="price">Prix</label>
           <span className="priceText">
-            {price ? (price < 100 ? `Moins de ${price}€` : `Plus de ${price}€`) : 'Tous'}
+            {price
+              ? price < 50
+                ? `Moins de ${price}€`
+                : price < 100
+                ? `Entre 50 et ${price}€`
+                : `Plus de ${price}€`
+              : 'Tous'}
           </span>
         </div>
         <input

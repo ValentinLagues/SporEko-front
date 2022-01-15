@@ -35,6 +35,7 @@
         display: flex;
         justify-content: space-between;
         padding: 0;
+        padding-right: 5px;
         margin-bottom: 10px;
         & .priceText {
           color: $colorDarkGrey;
@@ -92,6 +93,7 @@
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
+    margin-right: 10px;
     & .btn {
       padding: 8px 15px;
     }
