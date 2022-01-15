@@ -359,7 +359,7 @@ h4 {
 }
 
 .connectionPage__span {
-  margin-top: 20vh;
+  margin-top: 15vh;
 }
 
 .connectionPage__span--bold {
@@ -803,6 +803,150 @@ h4 {
   opacity: 0.2;
   margin-top: 7vh;
   position: absolute;
+}
+
+.filterMenu {
+  width: 70%;
+  margin-left: 26%;
+  padding: 2%;
+  padding-bottom: 20vh;
+  color: black;
+  font-weight: bold;
+  -webkit-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+          box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
+  background-color: white;
+}
+
+.filterMenu h2 {
+  font-size: 12px;
+  color: darkgrey;
+}
+
+.filterMenu #resetBtn {
+  border: none;
+  background-color: transparent;
+  color: rgba(255, 0, 0, 0.7);
+  font-size: 10px;
+}
+
+.filterMenu__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 10px;
+}
+
+.filterMenu__item--right {
+  padding: 10px;
+  padding-top: 0;
+  text-align: end;
+}
+
+.filterMenu__item.price {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.filterMenu__item.price__label {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 0;
+  padding-right: 5px;
+  margin-bottom: 10px;
+}
+
+.filterMenu__item.price__label .priceText {
+  color: darkgrey;
+  font-weight: normal;
+}
+
+.filterMenu select {
+  border: none;
+  background-color: transparent;
+  text-align: end;
+  color: darkgrey;
+}
+
+.filterMenu .iconChevronDownContainer {
+  color: darkgrey;
+  font-weight: normal;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.filterMenu .iconChevronDownContainer__icon {
+  font-size: larger;
+}
+
+.filterMenu #colors {
+  position: relative;
+}
+
+.filterMenu #colors .colorList {
+  position: absolute;
+  top: 5vh;
+  right: 0;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.filterMenu #colors .colorList__item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  background-color: white;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.filterMenu #colors .colorList__item__colorShip {
+  margin: 5px 10px 5px 20px;
+  width: 5vw;
+  height: 5vw;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.filterMenu__submitContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.filterMenu__submitContainer .btn {
+  padding: 8px 15px;
 }
 
 .logOut {
