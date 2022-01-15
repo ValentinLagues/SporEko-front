@@ -22,19 +22,19 @@ const HeaderProfil = () => {
   }, []);
 
   return (
-    <div className="profile">
-      <div className="profile__intro">
+    <div className="headerProfil">
+      <div className="headerProfil__intro">
         <Link to="/">
-          <img src={LogoRun} alt="Logo" className="profile__intro__logoRun" />
+          <img src={LogoRun} alt="Logo" className="headerProfil__intro__logoRun" />
         </Link>
-        <div className="profile__intro__photo">
+        <div className="headerProfil__intro__photo">
           <img src={user ? user.picture : PhotoDefault} alt="Avatar" />
         </div>
-        <div className="profile__intro__name">
+        <div className="headerProfil__intro__name">
           <h3>
             {user.firstname} {user.lastname}
           </h3>
-          <Link to="/profil" className="profile__intro__name__link">
+          <Link to="/profil" className="headerProfil__intro__name__link">
             Voir mon profil
           </Link>
         </div>
