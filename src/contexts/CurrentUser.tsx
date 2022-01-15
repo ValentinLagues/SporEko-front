@@ -1,50 +1,58 @@
 import React, { createContext, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
+import IUserLog from '../interfaces/IUser';
+
 type UserContent = {
-  id: number;
-  setId: React.Dispatch<React.SetStateAction<number>>;
-  pseudo: string;
-  setPseudo: React.Dispatch<React.SetStateAction<string>>;
-  admin: boolean;
-  setAdmin: React.Dispatch<React.SetStateAction<boolean>>;
+  user: string[] | any;
+  setUser: React.Dispatch<React.SetStateAction<object>>;
+  accepted: boolean;
+  setAccepted: React.Dispatch<React.SetStateAction<boolean>>;
+  pseudo: string | null;
+  id: string | null;
+  admin: string | null;
   logout: () => void;
 };
 
 type Props = { children: Element };
 
 const CurrentUserContext = createContext<UserContent>({
-  id: 0,
-  setId: () => {},
+  user: {},
+  setUser: () => {},
+  accepted: false,
+  setAccepted: () => {},
   pseudo: '',
-  setPseudo: () => {},
+  id: '',
+  admin: '',
   logout: () => {},
-  admin: false,
-  setAdmin: () => {},
 });
 
 export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
-  const [id, setId] = useState<number>(0);
-  const [pseudo, setPseudo] = useState<string>('');
-  const [admin, setAdmin] = useState<boolean>(false);
-  const removeCookie = useCookies(['user_token'])[2];
+  const [accepted, setAccepted] = useState<boolean>(false);
+  const [user, setUser] = useState<IUserLog | any>('');
+  const pseudo = sessionStorage.getItem('pseudo');
+  const id = sessionStorage.getItem('id');
+  const admin = sessionStorage.getItem('admin');
+  const deleteCookie = useCookies(['user_token'])[2];
+
   const logout = (): void => {
-    setId(0);
-    setPseudo('');
-    setAdmin(false);
-    removeCookie('user_token');
+    localStorage.clear();
+    sessionStorage.clear();
+    setAccepted(false);
+    deleteCookie('user_token');
   };
 
   return (
     <CurrentUserContext.Provider
       value={{
-        id,
-        setId,
+        user,
+        setUser,
+        accepted,
+        setAccepted,
         pseudo,
-        setPseudo,
-        logout,
+        id,
         admin,
-        setAdmin,
+        logout,
       }}>
       {children}
     </CurrentUserContext.Provider>

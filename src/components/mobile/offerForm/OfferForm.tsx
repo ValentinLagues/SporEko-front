@@ -113,7 +113,7 @@ interface Weight {
   name: string;
 }
 
-const urlBack = 'http://localhost:8000/';
+const urlBack = import.meta.env.VITE_URL_BACK;
 
 const OfferForm = () => {
   const [sportList, setSportList] = useState<Sport[]>([]);
@@ -156,19 +156,19 @@ const OfferForm = () => {
   const [offer, setOffer] = useState<Offer>();
 
   useEffect(() => {
-    axios.get(`${urlBack}sports`).then((res) => setSportList(res.data));
-    axios.get(`${urlBack}genders`).then((res) => setGenderList(res.data));
-    axios.get(`${urlBack}children`).then((res) => setChildList(res.data));
-    axios.get(`${urlBack}categories`).then((res) => setCategoryList(res.data));
-    axios.get(`${urlBack}clothes`).then((res) => setClothesList(res.data));
-    axios.get(`${urlBack}shoes`).then((res) => setShoeList(res.data));
-    axios.get(`${urlBack}accessories`).then((res) => setAccessoryList(res.data));
-    axios.get(`${urlBack}brands`).then((res) => setBrandList(res.data));
-    axios.get(`${urlBack}textiles`).then((res) => setTextileList(res.data));
-    axios.get(`${urlBack}colors`).then((res) => setColorList(res.data));
-    axios.get(`${urlBack}conditions`).then((res) => setConditionList(res.data));
-    axios.get(`${urlBack}sizes`).then((res) => setSizeList(res.data));
-    axios.get(`${urlBack}weights`).then((res) => setWeightList(res.data));
+    axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
+    axios.get(`${urlBack}/genders`).then((res) => setGenderList(res.data));
+    axios.get(`${urlBack}/children`).then((res) => setChildList(res.data));
+    axios.get(`${urlBack}/categories`).then((res) => setCategoryList(res.data));
+    axios.get(`${urlBack}/clothes`).then((res) => setClothesList(res.data));
+    axios.get(`${urlBack}/shoes`).then((res) => setShoeList(res.data));
+    axios.get(`${urlBack}/accessories`).then((res) => setAccessoryList(res.data));
+    axios.get(`${urlBack}/brands`).then((res) => setBrandList(res.data));
+    axios.get(`${urlBack}/textiles`).then((res) => setTextileList(res.data));
+    axios.get(`${urlBack}/colors`).then((res) => setColorList(res.data));
+    axios.get(`${urlBack}/conditions`).then((res) => setConditionList(res.data));
+    axios.get(`${urlBack}/sizes`).then((res) => setSizeList(res.data));
+    axios.get(`${urlBack}/weights`).then((res) => setWeightList(res.data));
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -217,12 +217,12 @@ const OfferForm = () => {
       picture18: 'adresse interne de la photo',
       picture19: 'adresse interne de la photo',
     } as Offer;
-    console.log(newOffer);
     setOffer(newOffer);
   };
 
   useEffect(() => {
-    offer && axios.post<Offer>(`${urlBack}offers`, offer).then((rep) => console.log(rep));
+    offer &&
+      axios.post<Offer>(`${urlBack}/offers`, offer).then((rep) => console.log(rep));
   }, [offer]);
 
   return (

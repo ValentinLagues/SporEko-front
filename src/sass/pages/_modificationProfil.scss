@@ -1,0 +1,54 @@
+.modificationProfil {
+  text-align: center;
+  height: 165vh;
+  &__container {
+    width: 90vw;
+    margin-bottom: 20vh;
+    margin: 2vh 5vw;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 10px;
+    box-shadow: $boxShadow;
+
+    &__content {
+      position: relative;
+      flex-wrap: nowrap;
+      color: $colorText;
+      display: flex;
+      align-items: center;
+      padding: 1vh 5vw;
+      text-align: left;
+      height: 5vh;
+      font-size: 1.1em;
+      &__icons {
+        margin-left: 5vw;
+      }
+      & input {
+        width: 50vw;
+        margin-left: 2vw;
+        height: 4vh;
+        border: none;
+      }
+      & select {
+        align-content: flex-end;
+        width: 45vw;
+        margin-left: 2vw;
+        height: 4vh;
+        border: none;
+      }
+      & hr {
+        margin: 0 5vw;
+        width: 70vw;
+        margin-top: 7vh;
+        opacity: 0.6;
+        position: absolute;
+      }
+    }
+    & button {
+      margin: 5vh auto;
+      padding: 2vh;
+      border-radius: 10px;
+      box-shadow: $boxShadow;
+    }
+  }
+}
