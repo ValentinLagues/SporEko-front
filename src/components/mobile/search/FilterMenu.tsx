@@ -45,7 +45,7 @@ interface Size {
   name: string;
 }
 
-const urlBack = 'http://localhost:8000/';
+const urlBack = import.meta.env.VITE_URL_BACK;
 
 const FilterMenu = () => {
   const [sportList, setSportList] = useState<Sport[]>([]);
@@ -76,19 +76,19 @@ const FilterMenu = () => {
   const [orderBy, setOrderBy] = useState('');
 
   useEffect(() => {
-    axios.get(`${urlBack}sports`).then((res) => setSportList(res.data));
-    axios.get(`${urlBack}categories`).then((res) => setCategoryList(res.data));
-    axios.get(`${urlBack}items`).then((res) => setItemList(res.data));
-    axios.get(`${urlBack}conditions`).then((res) => setConditionList(res.data));
-    axios.get(`${urlBack}textiles`).then((res) => setTextileList(res.data));
-    axios.get(`${urlBack}colors`).then((res) => setColorList(res.data));
-    axios.get(`${urlBack}brands`).then((res) => setBrandList(res.data));
-    axios.get(`${urlBack}sizes`).then((res) => setSizeList(res.data));
+    axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
+    axios.get(`${urlBack}/categories`).then((res) => setCategoryList(res.data));
+    axios.get(`${urlBack}/items`).then((res) => setItemList(res.data));
+    axios.get(`${urlBack}/conditions`).then((res) => setConditionList(res.data));
+    axios.get(`${urlBack}/textiles`).then((res) => setTextileList(res.data));
+    axios.get(`${urlBack}/colors`).then((res) => setColorList(res.data));
+    axios.get(`${urlBack}/brands`).then((res) => setBrandList(res.data));
+    axios.get(`${urlBack}/sizes`).then((res) => setSizeList(res.data));
   }, []);
 
   useEffect(() => {
     category &&
-      axios.get(`${urlBack}categories/${category}/items`).then((res) => {
+      axios.get(`${urlBack}/categories/${category}/items`).then((res) => {
         setItemList(res.data);
       });
   }, [category]);
@@ -159,7 +159,6 @@ const FilterMenu = () => {
       oneValue = true;
     }
     if (price) {
-      console.log(price);
       if (price === 100) {
         filters += oneValue ? `&minPrice=${price}` : `?minPrice=${price}`;
         oneValue = true;
@@ -180,15 +179,11 @@ const FilterMenu = () => {
       filters += oneValue ? `&sort=${sort}` : `?sort=${sort}`;
       oneValue = true;
     }
-    console.log(filters);
-    axios.get(`${urlBack}offers${filters}`).then((rep) => console.log(rep.data));
+    axios.get(`${urlBack}/offers${filters}`).then((rep) => console.log(rep.data));
   };
 
   colorList &&
     colorList.map((color) => (color.style = { backgroundColor: color.color_code }));
-
-  console.log(category);
-  console.log(typeof category);
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="filterMenu" id="filterMenuMobile">

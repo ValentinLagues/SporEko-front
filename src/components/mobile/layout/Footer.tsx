@@ -11,10 +11,10 @@ const Footer = () => {
     <div className="footer">
       <ul className="footer__footerContainer">
         <li>
-          <a href="/favorites">
+          <Link to="/favorites">
             <FiHeart className="footer__footerContainer__footerIcons" />
             Favoris
-          </a>
+          </Link>
         </li>
         <li>
           <Link to="/search">
@@ -24,16 +24,23 @@ const Footer = () => {
         </li>
         <li id="vendre">Vendre</li>
         <li>
-          <a href="/messages">
+          <Link to="/messages">
             <FiMail className="footer__footerContainer__footerIcons" />
             Messages
-          </a>
+          </Link>
         </li>
         <li>
-          <Link to="/Connection">
-            <CgProfile className="footer__footerContainer__footerIcons" />
-            Compte
-          </Link>
+          {sessionStorage.getItem('idBool') ? (
+            <Link to="/profil">
+              <CgProfile className="footer__footerContainer__footerIcons" />
+              Profil
+            </Link>
+          ) : (
+            <Link to="/connection">
+              <CgProfile className="footer__footerContainer__footerIcons" />
+              Compte
+            </Link>
+          )}
         </li>
       </ul>
       <button type="button" className="footer__button">

@@ -217,7 +217,6 @@ const OfferForm = () => {
       picture18: 'adresse interne de la photo',
       picture19: 'adresse interne de la photo',
     } as Offer;
-    console.log(newOffer);
     setOffer(newOffer);
   };
 
