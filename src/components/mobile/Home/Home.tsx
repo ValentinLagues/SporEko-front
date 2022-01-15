@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Logo from '../../../../resources/Logo_dark.png';
-import FilterMenu from '../search/FilterMenu';
 
 const Home = () => {
   return (
@@ -14,7 +13,6 @@ const Home = () => {
           <input className="btn" type="text" placeholder="Recherchez sur SPOREKO" />
         </form>
       </div>
-      <FilterMenu />
     </div>
   );
 };

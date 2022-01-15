@@ -998,6 +998,7 @@ h4 {
   -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 0;
+  padding-right: 5px;
   margin-bottom: 10px;
 }
 
@@ -1079,6 +1080,7 @@ h4 {
   -ms-flex-pack: end;
   justify-content: flex-end;
   margin-top: 10px;
+  margin-right: 10px;
 }
 
 .filterMenu__submitContainer .btn {
