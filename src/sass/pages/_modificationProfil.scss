@@ -20,6 +20,9 @@
       text-align: left;
       height: 5vh;
       font-size: 1.1em;
+      &__icons {
+        margin-left: 5vw;
+      }
       & input {
         width: 50vw;
         margin-left: 2vw;
@@ -27,7 +30,8 @@
         border: none;
       }
       & select {
-        width: 40vw;
+        align-content: flex-end;
+        width: 45vw;
         margin-left: 2vw;
         height: 4vh;
         border: none;
