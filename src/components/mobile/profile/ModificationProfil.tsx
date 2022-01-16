@@ -17,6 +17,7 @@ import {
   FiUserMinus,
 } from 'react-icons/fi';
 import { HiEye } from 'react-icons/hi';
+import { ImCancelCircle, ImCheckmark } from 'react-icons/im';
 
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import IUserLog from '../../../interfaces/IUser';
@@ -34,7 +35,7 @@ const ModificationProfil = () => {
   const [adress_complement, setAdress_complement] = useState<string>();
   const [zipcode, setZipcode] = useState<number | undefined>();
   const [city, setCity] = useState<string | undefined>();
-  const [picture, setPicture] = useState<number | undefined>();
+  const [images, setImages] = useState<string>('');
   const [id_country, setId_country] = useState<string | undefined>();
   const [phone, setPhone] = useState<string | undefined>();
   const [email, setEmail] = useState<string | undefined>();
@@ -45,11 +46,44 @@ const ModificationProfil = () => {
   const [verifyPassword, setVerifyPassword] = useState<string | undefined>();
   const [hiEye, setHiEye] = useState<boolean>(true);
   const [hiEye2, setHiEye2] = useState<boolean>(true);
+  const [goodEntry, setGoodEntry] = useState<number>(0);
 
   const urlBack = import.meta.env.VITE_URL_BACK;
 
-  const updatedUser = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // Useeffect for verify the concordance of password
+  useEffect(() => {
+    if (password === verifyPassword) {
+      setGoodEntry(1);
+    } else {
+      setGoodEntry(2);
+    }
+  }, [password, verifyPassword]);
+
+  // Axios call for upload img
+
+  /* console log */
+  console.log(images);
+  if (images != undefined && images != '') {
+    const formData = new FormData();
+    formData.append('images', images);
+    axios
+      .put<IUserLog>(
+        `${urlBack}/users/image/${id}`,
+        formData,
+
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          withCredentials: true,
+        },
+      )
+      .then((res) => res.data)
+      .catch((err) => console.error(err.message));
+  }
+  // Axios call for update user informations
+
+  const updatedUser = () => {
     if (password === verifyPassword) {
       axios
         .put<IUserLog>(
@@ -62,7 +96,6 @@ const ModificationProfil = () => {
             adress_complement,
             city,
             zipcode,
-            picture,
             id_country,
             email,
             password,
@@ -71,14 +104,13 @@ const ModificationProfil = () => {
             id_gender,
             id_athletic,
           },
+
           {
             withCredentials: true,
           },
         )
         .then((res) => res.data)
-        .catch((err) => err);
-    } else {
-      <p>Mot de passe incorrect</p>;
+        .catch((err) => console.log({ ...err }));
     }
   };
 
@@ -168,7 +200,6 @@ const ModificationProfil = () => {
           />
           <hr />
         </div>
-
         <div className="modificationProfil__container__content">
           <FiMap className="modificationProfil__container__content__icons" />
           <select name="Pays" onChange={(e) => setId_country(e.target.value)}>
@@ -198,6 +229,13 @@ const ModificationProfil = () => {
           <hr />
         </div>
         <div className="modificationProfil__container__content">
+          {goodEntry === 1 ? (
+            <ImCheckmark style={{ right: '16vw', position: 'absolute' }} />
+          ) : goodEntry === 2 ? (
+            <ImCancelCircle style={{ right: '16vw', position: 'absolute' }} />
+          ) : (
+            ''
+          )}
           <FiLock className="modificationProfil__container__content__icons" />
           <input
             name="MDP"
@@ -206,7 +244,7 @@ const ModificationProfil = () => {
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
               setPassword(e.currentTarget.value)
             }
-          />
+          />{' '}
           <HiEye className="inputIcon right" onClick={() => setHiEye(!hiEye)} />
           <hr />
         </div>
@@ -237,7 +275,9 @@ const ModificationProfil = () => {
           <FiCalendar className="modificationProfil__container__content__icons" />
           <input
             name="Date de naissance"
+            placeholder="10/06/1979"
             type="date"
+            pattern="[0-3][0-9]/[0-1][0-2]/[0-3][0-9]{*3}"
             onChange={(e) => setBirthday(e.target.value)}
           />
           <hr />
@@ -285,8 +325,13 @@ const ModificationProfil = () => {
         </div>
         <div className="modificationProfil__container__content">
           <FiFile className="modificationProfil__container__content__icons" />
-          <input name="Photo" type="file" onClick={(e) => setPicture(e.target.value)} />
-          <hr />
+          <input
+            name="images"
+            type="file"
+            onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              setImages(e.target.files[0])
+            }
+          />
         </div>
         <button type="submit">Modifier vos données</button>
       </form>
