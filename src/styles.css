@@ -1050,7 +1050,7 @@ h4 {
 
 .modificationProfil {
   text-align: center;
-  height: 165vh;
+  height: 170vh;
 }
 
 .modificationProfil__container {
@@ -1069,6 +1069,7 @@ h4 {
 
 .modificationProfil__container__content {
   position: relative;
+  width: 100vw;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
   color: black;
@@ -1089,7 +1090,7 @@ h4 {
 }
 
 .modificationProfil__container__content input {
-  width: 50vw;
+  width: 60vw;
   margin-left: 2vw;
   height: 4vh;
   border: none;
