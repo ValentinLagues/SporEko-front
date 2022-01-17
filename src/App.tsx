@@ -34,7 +34,6 @@ function App() {
             <Route path="/mode-envoi" element={<Shipement />} />
           </Routes>
         )}
-
         <Footer />
       </HashRouter>
     </div>
