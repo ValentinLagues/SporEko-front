@@ -569,36 +569,6 @@ h4 {
   font-size: 10px;
 }
 
-.offerForm__sports {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  overflow: hidden;
-}
-
-.offerForm__sports__item {
-  width: 50vw;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.offerForm__sports__item__img {
-  width: 30px;
-  margin: auto 5vw;
-}
-
-.offerForm__sports__item__span {
-  font-size: 9px;
-}
-
 .offerForm #addPhotoContainer {
   text-align: center;
   margin: 30px auto;
@@ -648,7 +618,8 @@ h4 {
   margin-left: 20%;
 }
 
-.offerForm__price {
+.offerForm__price,
+.offerForm__weight {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -658,14 +629,32 @@ h4 {
   margin: 10px auto;
 }
 
-.offerForm__price label {
+.offerForm__price label,
+.offerForm__weight label {
   padding-left: 12px;
   min-width: 70%;
 }
 
-.offerForm__price input {
+.offerForm__price input,
+.offerForm__weight input {
   max-width: 22%;
   margin-bottom: 0;
+}
+
+.offerForm__deliveries {
+  -webkit-box-shadow: 2px 2px 10px lightgray;
+  box-shadow: 2px 2px 10px lightgray;
+  padding: 5px;
+}
+
+.offerForm .delivererList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .offerForm__switchContainer {
@@ -678,7 +667,7 @@ h4 {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  margin: 10px auto;
+  padding: 5px;
 }
 
 .offerForm__switchContainer__span {
