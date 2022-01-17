@@ -28,7 +28,7 @@ const HeaderProfil = () => {
           <img src={LogoRun} alt="Logo" className="headerProfil__intro__logoRun" />
         </Link>
         <div className="headerProfil__intro__photo">
-          <img src={user ? user.picture : PhotoDefault} alt="Avatar" />
+          <img src={user.picture != null ? user.picture : PhotoDefault} alt="Avatar" />
         </div>
         <div className="headerProfil__intro__name">
           <h3>
