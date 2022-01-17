@@ -1,0 +1,101 @@
+.filterMenu {
+  width: 70%;
+  margin-left: 26%;
+  // height: 800vh;
+  padding: 2%;
+  padding-bottom: 20vh;
+  color: $colorText;
+  font-weight: bold;
+  box-shadow: $boxShadow;
+  background-color: $colorWhite;
+  & h2 {
+    font-size: 12px;
+    color: $colorDarkGrey;
+  }
+
+  & #resetBtn {
+    border: none;
+    background-color: transparent;
+    color: rgba(255, 0, 0, 0.7);
+    font-size: 10px;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    &--right {
+      padding: 10px;
+      padding-top: 0;
+      text-align: end;
+    }
+    &.price {
+      flex-direction: column;
+      &__label {
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+        padding-right: 5px;
+        margin-bottom: 10px;
+        & .priceText {
+          color: $colorDarkGrey;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+
+  & select {
+    border: none;
+    background-color: transparent;
+    text-align: end;
+    color: $colorDarkGrey;
+  }
+
+  & .iconChevronDownContainer {
+    color: $colorDarkGrey;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    &__icon {
+      font-size: larger;
+    }
+  }
+
+  #colors {
+    position: relative;
+    & .colorList {
+      position: absolute;
+      top: 5vh;
+      right: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &__item {
+        display: flex;
+        width: 100%;
+        background-color: $colorWhite;
+        justify-content: flex-end;
+        align-items: center;
+        &__colorShip {
+          margin: 5px 10px 5px 20px;
+          width: 5vw;
+          height: 5vw;
+          border-radius: 50%;
+          border: 1px solid black;
+        }
+      }
+    }
+  }
+
+  &__submitContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    margin-right: 10px;
+    & .btn {
+      padding: 8px 15px;
+    }
+  }
+}

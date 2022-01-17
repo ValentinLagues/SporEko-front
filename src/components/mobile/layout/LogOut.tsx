@@ -11,7 +11,7 @@ const LogOut = () => {
     navigate('/');
   }
   return (
-    <div className="">
+    <div className="logOut">
       <div
         role="button"
         tabIndex={0}
@@ -19,7 +19,7 @@ const LogOut = () => {
           logout();
           redirectHome();
         }}
-        className="profile__deconexion"
+        className="logOut__button"
         onClick={() => {
           logout();
           redirectHome();
