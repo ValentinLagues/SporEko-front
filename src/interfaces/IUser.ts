@@ -1,5 +1,6 @@
 export default interface IUser {
   id: number;
+  userImage: string;
   token: string;
   pseudo: string;
   admin: number;
