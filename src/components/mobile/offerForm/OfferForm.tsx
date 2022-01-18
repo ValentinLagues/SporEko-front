@@ -1,20 +1,20 @@
 import axios from 'axios';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { MdStarRate } from 'react-icons/md';
 
+import CurrentUserContext from '../../../contexts/CurrentUser';
 import IBrand from '../../../interfaces/IBrand';
 import ICategory from '../../../interfaces/ICategory';
-import IItem from '../../../interfaces/IItem';
 import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
+import IDeliverer from '../../../interfaces/IDeliverer';
+import IItem from '../../../interfaces/IItem';
 import IOffer from '../../../interfaces/IOffer';
+import IOffer_Deliverer from '../../../interfaces/IOffer_deliverer';
 import ISize from '../../../interfaces/ISize';
 import ISport from '../../../interfaces/ISport';
 import ITextile from '../../../interfaces/ITextile';
-import IDeliverer from '../../../interfaces/IDeliverer';
-import IOffer_Deliverer from '../../../interfaces/IOffer_deliverer';
-import CurrentUserContext from '../../../contexts/CurrentUser';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
@@ -31,6 +31,7 @@ const OfferForm = () => {
   const [sizeList, setSizeList] = useState<ISize[]>([]);
   const [delivererList, setDelivererList] = useState<IDeliverer[]>([]);
 
+  const [pictures, setPictures] = useState<string>('');
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [sport, setSport] = useState('');
@@ -151,6 +152,7 @@ const OfferForm = () => {
   return (
     <div className="offerForm">
       <form
+        encType="multipart/form-data"
         id="offerForm"
         onSubmit={(e: React.FormEvent) => handleSubmit(e)}
         className="offerForm__form"
@@ -159,7 +161,15 @@ const OfferForm = () => {
           <label id="labelPhoto1" htmlFor="photo1">
             <BsPlusLg /> AJOUTER PHOTOS
           </label>
-          <input type="file" id="photo1" name="photo1" />
+          <input
+            onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              setPictures(e.target.files)
+            }
+            multiple
+            type="file"
+            id="photo1"
+            name="pictures"
+          />
         </div>
         <div>
           <label className="offerForm__label" htmlFor="title">
