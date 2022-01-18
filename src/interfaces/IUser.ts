@@ -1,5 +1,6 @@
 export default interface IUser {
   id: number;
+  userImage: string;
   token: string;
   pseudo: string;
   admin: number;
@@ -28,5 +29,5 @@ export default interface IUserLog {
   creation_date: string;
   pseudo: string;
   authentified_by_facebook: number;
-  isprofessional: number;
+  is_professional: number;
 }

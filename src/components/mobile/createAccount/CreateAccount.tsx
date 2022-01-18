@@ -46,11 +46,7 @@ const CreateAccount = () => {
       password,
       id_country: Number(country),
       id_gender: Number(gender),
-      isprofessional: Number(profil),
-      authentified_by_facebook: 0,
-      isadmin: 0,
-      isarchived: 0,
-      // pas sur
+      is_professional: Number(profil),
     } as IUserLog;
     setUser(newUser);
   };
