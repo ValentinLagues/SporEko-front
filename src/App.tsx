@@ -13,6 +13,8 @@ import Shipement from './components/mobile/profile/Shipement';
 import FilterMenu from './components/mobile/search/FilterMenu';
 import CurrentUserContext from './contexts/CurrentUser';
 
+import ConfirmOrder from './components/mobile/confirmOrder/confirmOrder';
+
 function App() {
   const { id, accepted } = useContext(CurrentUserContext);
 
@@ -21,6 +23,7 @@ function App() {
       <HashRouter basename="/">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/favorites" element={<ConfirmOrder />} />
           <Route path="/search" element={<FilterMenu />} />
           <Route path="/connection" element={<Connection />} />
           <Route path="/create-account" element={<CreateAccount />} />
