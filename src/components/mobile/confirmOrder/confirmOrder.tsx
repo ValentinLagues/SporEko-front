@@ -1,33 +1,34 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-import IOffer from '../../../interfaces/IOffer';
-import IUserLog from '../../../interfaces/IUser';
-import OfferContext from '../../../contexts/Offer';
-// import { BiPackage, BiCheckShield } from 'react-icons/bi';
-import { AiOutlineLock } from 'react-icons/ai';
-import CurrentUserContext from '../../../contexts/CurrentUser';
+import React, { useEffect, useState } from 'react';
 
-interface IOffer_Deliverer {
-  id_offer_deliverer: number;
-  id_offer: number;
-  id_deliverer: number;
-}
+// import { BiPackage, BiCheckShield } from 'react-icons/bi';
+// import { AiOutlineLock } from 'react-icons/ai';
+// import CurrentUserContext from '../../../contexts/CurrentUser';
+// import OfferContext from '../../../contexts/Offer';
+import IOffer from '../../../interfaces/IOffer';
+// import IUserLog from '../../../interfaces/IUser';
+
+// interface IOffer_Deliverer {
+//   id_offer_deliverer: number;
+//   id_offer: number;
+//   id_deliverer: number;
+// }
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
 const ConfirmOrder = () => {
   // const { id_offer } = useContext(OfferContext);
-  const { id } = useContext(CurrentUserContext);
+  // const { id } = useContext(CurrentUserContext);
   const [confirmOrder, setConfirmOrder] = useState<IOffer>();
-  const [confirmAdress, setConfirmAdress] = useState<IUserLog>();
-  const [confirmDeliverer, setConfirmDeliverer] = useState<IOffer_Deliverer>();
-  const [order, setOrder] = useState('');
-  const [adress, setAdress] = useState('');
-  const [deliverer, setDeliverer] = useState('');
+  // const [confirmAdress, setConfirmAdress] = useState<IUserLog>();
+  // const [confirmDeliverer, setConfirmDeliverer] = useState<IOffer_Deliverer>();
+  // const [order, setOrder] = useState('');
+  // const [adress, setAdress] = useState('');
+  // const [deliverer, setDeliverer] = useState('');
 
   useEffect(() => {
-    axios.get(`${urlBack}/offers/1`).then((res) => setConfirmOrder(res.data)),
-      axios.get(`${urlBack}/users/${id}`).then((res) => setConfirmAdress(res.data));
+    axios.get(`${urlBack}/offers/1`).then((res) => setConfirmOrder(res.data));
+    // axios.get(`${urlBack}/users/${id}`).then((res) => setConfirmAdress(res.data));
     // axios
     //   .get(`${urlBack}/offer_deliverers`)
     //   .then((res) => setConfirmDeliverer(res.data));
