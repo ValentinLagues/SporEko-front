@@ -31,8 +31,7 @@ const OfferForm = () => {
   const [sizeList, setSizeList] = useState<ISize[]>([]);
   const [delivererList, setDelivererList] = useState<IDeliverer[]>([]);
 
-  const [picture1, setPicture1] = useState<Array<string>>([]);
-  // const [formData, setFormData] = useState<File>();
+  const [pictures, setPictures] = useState<Array<string>>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [sport, setSport] = useState('');
@@ -82,18 +81,17 @@ const OfferForm = () => {
     } else {
       deliverersArray.push(id);
     }
-    // console.log(deliverersArray);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // console.log(deliverersArray);
+
     setChosenDeliverers(deliverersArray);
     deliverersArray = [];
     const newOffer = {
       id_user_seller: Number(id),
       title,
-      picture1,
+      picture1: pictures[0],
       description,
       id_sport: parseInt(sport),
       id_gender: gender,
@@ -111,25 +109,25 @@ const OfferForm = () => {
       hand_delivery: handDelivery,
       is_archived: 0,
       is_draft: isDraft,
-      picture2: 'adresse interne de la photo',
-      picture3: 'adresse interne de la photo',
-      picture4: 'adresse interne de la photo',
-      picture5: 'adresse interne de la photo',
-      picture6: 'adresse interne de la photo',
-      picture7: 'adresse interne de la photo',
-      picture8: 'adresse interne de la photo',
-      picture9: 'adresse interne de la photo',
-      picture10: 'adresse interne de la photo',
-      picture11: 'adresse interne de la photo',
-      picture12: 'adresse interne de la photo',
-      picture13: 'adresse interne de la photo',
-      picture14: 'adresse interne de la photo',
-      picture15: 'adresse interne de la photo',
-      picture16: 'adresse interne de la photo',
-      picture17: 'adresse interne de la photo',
-      picture18: 'adresse interne de la photo',
-      picture19: 'adresse interne de la photo',
-      picture20: 'adresse interne de la photo',
+      picture2: pictures[1],
+      picture3: pictures[2],
+      picture4: pictures[3],
+      picture5: pictures[4],
+      picture6: pictures[5],
+      picture7: pictures[6],
+      picture8: pictures[7],
+      picture9: pictures[8],
+      picture10: pictures[9],
+      picture11: pictures[10],
+      picture12: pictures[11],
+      picture13: pictures[12],
+      picture14: pictures[13],
+      picture15: pictures[14],
+      picture16: pictures[15],
+      picture17: pictures[16],
+      picture18: pictures[17],
+      picture19: pictures[18],
+      picture20: pictures[19],
     } as unknown as IOffer;
     setOffer(newOffer);
   };
@@ -137,13 +135,11 @@ const OfferForm = () => {
   // Function axios to change picture of user
   const handleFileInput = (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
-    const file: File = (target.files as FileList)[0];
+    const file: File = target.files as FileList;
     const formData = new FormData();
-    formData.append('imagesOffers', file);
-    // formData.append('imagesOffers', files2);
+    const arrayFiles = Array.from(file);
+    arrayFiles.map((el) => formData.append('imagesOffers', el));
 
-    console.log(file);
-    console.log(formData);
     axios
       .post(
         `${urlBack}/offers/images`,
@@ -155,11 +151,9 @@ const OfferForm = () => {
           },
         },
       )
-      .then((res) => setPicture1(res.data))
+      .then((res) => setPictures(res.data))
       .catch((err) => console.error(err.message));
   };
-
-  console.log(picture1);
 
   useEffect(() => {
     offer &&
@@ -167,8 +161,6 @@ const OfferForm = () => {
         .post<IOffer>(`${urlBack}/offers`, offer)
         .then((rep) => {
           const id_offer = rep.data.id_offer;
-          // console.log(id_offer);
-          // console.log(chosenDeliverers);
           chosenDeliverers.map((deliverer) => {
             const id_deliverer = deliverer;
             axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
@@ -193,6 +185,7 @@ const OfferForm = () => {
             <BsPlusLg /> AJOUTER PHOTOS
           </label>
           <input
+            multiple
             type="file"
             id="photo1"
             name="imagesOffers"
