@@ -87,7 +87,7 @@ const ModificationProfil = () => {
     const file: File = (target.files as FileList)[0];
     const formData = new FormData();
     formData.append('imageUser', file);
-
+    console.log(formData);
     axios
       .put<IUserLog>(
         `${urlBack}/users/image/${id}`,

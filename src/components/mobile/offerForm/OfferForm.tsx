@@ -31,6 +31,8 @@ const OfferForm = () => {
   const [sizeList, setSizeList] = useState<ISize[]>([]);
   const [delivererList, setDelivererList] = useState<IDeliverer[]>([]);
 
+  const [picture1, setPicture1] = useState<Array<string>>([]);
+  // const [formData, setFormData] = useState<File>();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [sport, setSport] = useState('');
@@ -50,7 +52,7 @@ const OfferForm = () => {
   const [size, setSize] = useState('');
   const [weight, setWeight] = useState(0);
   const [handDelivery, setHandDelivery] = useState(0);
-  const [chosenDeliverers, setChodenDeliverers] = useState<Array<number>>([]);
+  const [chosenDeliverers, setChosenDeliverers] = useState<Array<number>>([]);
   const [isDraft, setIsDraft] = useState(0);
   const [offer, setOffer] = useState<IOffer>();
 
@@ -80,22 +82,22 @@ const OfferForm = () => {
     } else {
       deliverersArray.push(id);
     }
-    console.log(deliverersArray);
+    // console.log(deliverersArray);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(deliverersArray);
-    setChodenDeliverers(deliverersArray);
+    // console.log(deliverersArray);
+    setChosenDeliverers(deliverersArray);
     deliverersArray = [];
     const newOffer = {
       id_user_seller: Number(id),
-      picture1: 'adresse interne de la photo',
       title,
+      picture1,
       description,
       id_sport: parseInt(sport),
       id_gender: gender,
-      ischild: genderIsChild ? 1 : 0,
+      is_child: genderIsChild ? 1 : 0,
       id_category: parseInt(category),
       id_item: parseInt(item),
       id_brand: brand ? parseInt(brand) : null,
@@ -107,8 +109,8 @@ const OfferForm = () => {
       price: Number(price),
       weight: Number(weight),
       hand_delivery: handDelivery,
-      isarchived: 0,
-      isdraft: isDraft,
+      is_archived: 0,
+      is_draft: isDraft,
       picture2: 'adresse interne de la photo',
       picture3: 'adresse interne de la photo',
       picture4: 'adresse interne de la photo',
@@ -128,29 +130,60 @@ const OfferForm = () => {
       picture18: 'adresse interne de la photo',
       picture19: 'adresse interne de la photo',
       picture20: 'adresse interne de la photo',
-    } as IOffer;
+    } as unknown as IOffer;
     setOffer(newOffer);
   };
 
+  // Function axios to change picture of user
+  const handleFileInput = (event: React.ChangeEvent) => {
+    const target = event.target as HTMLInputElement;
+    const file: File = (target.files as FileList)[0];
+    const formData = new FormData();
+    formData.append('imagesOffers', file);
+    // formData.append('imagesOffers', files2);
+
+    console.log(file);
+    console.log(formData);
+    axios
+      .post(
+        `${urlBack}/offers/images`,
+        formData,
+
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      )
+      .then((res) => setPicture1(res.data))
+      .catch((err) => console.error(err.message));
+  };
+
+  console.log(picture1);
+
   useEffect(() => {
     offer &&
-      axios.post<IOffer>(`${urlBack}/offers`, offer).then((rep) => {
-        const id_offer = rep.data.id_offer;
-        console.log(id_offer);
-        console.log(chosenDeliverers);
-        chosenDeliverers.map((deliverer) => {
-          const id_deliverer = deliverer;
-          axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
-            id_offer,
-            id_deliverer,
+      axios
+        .post<IOffer>(`${urlBack}/offers`, offer)
+        .then((rep) => {
+          const id_offer = rep.data.id_offer;
+          // console.log(id_offer);
+          // console.log(chosenDeliverers);
+          chosenDeliverers.map((deliverer) => {
+            const id_deliverer = deliverer;
+            axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
+              id_offer,
+              id_deliverer,
+            });
           });
-        });
-      });
+        })
+        .catch((err) => console.log({ ...err }));
   }, [offer]);
 
   return (
     <div className="offerForm">
       <form
+        encType="multipart/form-data"
         id="offerForm"
         onSubmit={(e: React.FormEvent) => handleSubmit(e)}
         className="offerForm__form"
@@ -159,7 +192,12 @@ const OfferForm = () => {
           <label id="labelPhoto1" htmlFor="photo1">
             <BsPlusLg /> AJOUTER PHOTOS
           </label>
-          <input type="file" id="photo1" name="photo1" />
+          <input
+            type="file"
+            id="photo1"
+            name="imagesOffers"
+            onChange={(e) => handleFileInput(e)}
+          />
         </div>
         <div>
           <label className="offerForm__label" htmlFor="title">
@@ -314,7 +352,7 @@ const OfferForm = () => {
             {sizeList &&
               sizeList.map((size, index) => (
                 <option key={index} value={size.id_size}>
-                  {size.name}
+                  {size.size_fr}
                 </option>
               ))}
           </select>
