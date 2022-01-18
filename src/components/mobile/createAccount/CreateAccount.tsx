@@ -1,50 +1,77 @@
-// import axios from 'axios';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { CgProfile } from 'react-icons/cg';
+import { FiMap } from 'react-icons/fi';
 import { HiEye, HiOutlineUserRemove } from 'react-icons/hi';
 import { ImKey } from 'react-icons/im';
 import { MdOutlineEmail } from 'react-icons/md';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 
-// import IUserLog from '../../../interfaces/IUser';
+import IUserLog from '../../../interfaces/IUser';
 
-// const urlBack = 'http://localhost:8000/';
+interface Country {
+  id_country: number;
+  name: string;
+}
+
+const urlBack = import.meta.env.VITE_URL_BACK;
 
 const CreateAccount = () => {
   const [hiEye, setHiEye] = useState(true);
+  const [hiEye2, setHiEye2] = useState(true);
   const [pseudo, setPseudo] = useState('');
   const [lastname, setLastname] = useState('');
   const [firstname, setFirstname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  // const [country, setCountry] = useState('');
-  // const [profil, setProfil] = useState('');
-  // const [gender, setGender] = useState('');
-  // const [user, setUser] = useState('');
+  const [country, setCountry] = useState('');
+  const [profil, setProfil] = useState<Number>(0);
+  const [gender, setGender] = useState<Number>();
+  const [countriesList, setCountriesList] = useState<Country[]>([]);
+  const [user, setUser] = useState<IUserLog>();
 
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   const newUser = {
-  //     pseudo,
-  //     lastname,
-  //     firstname,
-  //     email,
-  //     password,
-  //   } as IUserLog;
-  //   console.log(newUser);
-  //   setUser(IUser);
-  // };
+  useEffect(() => {
+    axios.get(`${urlBack}/countries`).then((res) => setCountriesList(res.data));
+  }, []);
 
-  // useEffect(() => {
-  //   user && axios.post<IUserLog>(`${urlBack}users`, user).then((rep) => console.log(rep));
-  // }, [user]);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newUser = {
+      pseudo,
+      lastname,
+      firstname,
+      email,
+      password,
+      id_country: Number(country),
+      id_gender: Number(gender),
+      isprofessional: Number(profil),
+      authentified_by_facebook: 0,
+      isadmin: 0,
+      isarchived: 0,
+      // pas sur
+    } as IUserLog;
+    setUser(newUser);
+  };
+  console.log(profil);
 
+  useEffect(() => {
+    user &&
+      axios
+        .post<IUserLog>(`${urlBack}/users`, user)
+        .then((req) => console.log(req))
+        .catch((err) => console.log(err));
+  }, [user]);
+  // console.log(country)
   return (
     <div className="create-account">
       <h2>Créez votre compte</h2>
-      <form id="create-account" className="create-account__form" action="">
+      <form
+        id="create-account"
+        onSubmit={(e: React.FormEvent) => handleSubmit(e)}
+        className="create-account__form"
+        action="">
         <div className="create-account__form__inputsContainer">
           <div className="create-account__form__inputsContainer__input">
             <HiOutlineUserRemove className="inputIcon" />
@@ -52,9 +79,10 @@ const CreateAccount = () => {
               value={pseudo}
               onChange={(e) => setPseudo(e.target.value)}
               name="Pseudo"
+              title="Ce champ est obligatoire"
               type="text"
               id="pseudo"
-              placeholder="Choisissez un pseudo"
+              placeholder="Choisissez un pseudo*"
             />
           </div>
           <div className="create-account__form__inputsContainer__input">
@@ -63,9 +91,10 @@ const CreateAccount = () => {
               value={lastname}
               onChange={(e) => setLastname(e.target.value)}
               name="Prénom"
+              title="Ce champ est obligatoire"
               type="text"
               id="prenom"
-              placeholder="Votre prénom"
+              placeholder="Votre prénom*"
             />
           </div>
           <div className="create-account__form__inputsContainer__input">
@@ -74,9 +103,10 @@ const CreateAccount = () => {
               value={firstname}
               onChange={(e) => setFirstname(e.target.value)}
               name="Nom"
+              title="Ce champ est obligatoire"
               type="text"
               id="nom"
-              placeholder="Votre nom"
+              placeholder="Votre nom*"
             />
           </div>
           <div className="create-account__form__inputsContainer__input">
@@ -85,20 +115,25 @@ const CreateAccount = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               name="email"
+              title="Ce champ est obligatoire"
               type="email"
               id="email"
-              placeholder="Votre email"
+              placeholder="Votre email*"
             />
           </div>
           <div className="create-account__form__inputsContainer__input">
             <RiLockPasswordLine className="inputIcon" />
             <input
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                setPassword(e.currentTarget.value)
+              }
               name="mot de passe"
+              minLength={8}
               type={`${hiEye ? 'password' : 'text'}`}
               id="password"
-              placeholder="Mot de passe"
+              title="Ce champ est obligatoire"
+              placeholder="Mot de passe*"
             />
             <HiEye className="inputIcon right" onClick={() => setHiEye(!hiEye)} />
           </div>
@@ -106,63 +141,109 @@ const CreateAccount = () => {
             <ImKey className="inputIcon" />
             <input
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                setConfirmPassword(e.currentTarget.value)
+              }
               name="confirmation mot de passe"
-              type={`${hiEye ? 'password' : 'text'}`}
-              id="password"
-              placeholder="Confirmation mot de passe"
+              type={`${hiEye2 ? 'password' : 'text'}`}
+              id="confirmPassword"
+              title="Ce champ est obligatoire"
+              placeholder="Confirmation mot de passe*"
             />
-            <HiEye className="inputIcon right" onClick={() => setHiEye(!hiEye)} />
+            <HiEye className="inputIcon right" onClick={() => setHiEye2(!hiEye2)} />
+          </div>
+          <div className="create-account__form__inputsContainer__input">
+            <FiMap className="inputIcon" />
+            <select
+              onChange={(e) => setCountry(e.target.value)}
+              value={country}
+              title="Ce champ est obligatoire"
+              name="countries"
+              id="countries">
+              <option value="">Pays*</option>
+              {countriesList &&
+                countriesList.map((country, index) => (
+                  <option key={index} value={country.id_country}>
+                    {country.name}
+                  </option>
+                ))}
+            </select>
           </div>
         </div>
+        <div className="btn__container">
+          <h3 className="btn__container__title" title="Ce champ est obligatoire">
+            Profil
+          </h3>
+          <div className="btn__container__profil">
+            <input
+              value="Particulier"
+              onChange={() => setProfil(Number(0))}
+              type="radio"
+              id=""
+              name="profil"
+            />
+            Particulier
+          </div>
+          <div className="btn__container__profil">
+            <input
+              value="Professionnel"
+              onChange={() => setProfil(Number(1))}
+              type="radio"
+              id=""
+              name="profil"
+            />
+            Professionnel
+          </div>
+        </div>
+        <div className="btn__container">
+          <h3 className="btn__container__title" title="Ce champ est obligatoire">
+            Genre
+          </h3>
+          <div className="btn__container__genre">
+            <input
+              value="Femme"
+              onChange={() => setGender(Number(1))}
+              type="radio"
+              id=""
+              name="genre"
+            />{' '}
+            Femme
+          </div>
+          <div className="btn__container__genre">
+            <input
+              value="Homme"
+              onChange={() => setGender(Number(2))}
+              type="radio"
+              id=""
+              name="genre"
+            />{' '}
+            Homme
+          </div>
+          <div className="btn__container__genre">
+            <input
+              value="Neutre"
+              onChange={() => setGender(Number(3))}
+              type="radio"
+              id=""
+              name="genre"
+            />{' '}
+            Neutre
+          </div>
+        </div>
+        <div className="checkboxCgv__createAccount">
+          <input className="checkboxCgv__createAccount__input" type="checkbox" />
+          <div className="checkboxCgv__createAccount__label">
+            En créant votre compte vous acceptez notre
+            <a href="#!">politique de confidentialité</a>
+          </div>
+        </div>
+        <button type="submit" className="btn__createAccount">
+          S&rsquo;inscrire
+        </button>
+        <div className="containerSignin">
+          Vous avez déjà un compte? <Link to="/connection">Connectez-vous</Link>
+        </div>
       </form>
-      <div>
-        <select
-          // onChange={(e) => setCountry(e.target.value)}
-          // value={country}
-          className="offerForm__select"
-          name="countries"
-          id="countries">
-          <option value="">Pays</option>
-        </select>
-      </div>
-      <div className="btn__container">
-        <h3 className="btn__container__title">Profil</h3>
-        <div className="btn__container__profil">
-          <input type="radio" id="" name="profil" checked />
-          <label htmlFor="radio-one">Particulier</label>
-        </div>
-        <div className="btn__container__profil">
-          <input type="radio" id="" name="profil" />
-          Professionnel
-        </div>
-      </div>
-      <div className="btn__container">
-        <h3 className="btn__container__title">Genre</h3>
-        <div className="btn__container__genre">
-          <input type="radio" id="" name="genre" /> Homme
-        </div>
-        <div className="btn__container__genre">
-          <input type="radio" id="" name="genre" /> Femme
-        </div>
-        <div className="btn__container__genre">
-          <input type="radio" id="" name="genre" /> Neutre
-        </div>
-      </div>
-      <div className="checkboxCgv__createAccount">
-        <input className="checkboxCgv__createAccount__input" type="checkbox" />
-        <label className="checkboxCgv__createAccount__label">
-          {' '}
-          En créant votre compte vous acceptez notre{' '}
-          <a href="#!">politique de confidentialité</a>
-        </label>
-      </div>
-      <button type="submit" className="btn__createAccount">
-        S&rsquo;inscrire
-      </button>
-      <div className="containerSignin">
-        Vous avez déjà un compte? <Link to="/connection">Connectez-vous</Link>
-      </div>
     </div>
   );
 };

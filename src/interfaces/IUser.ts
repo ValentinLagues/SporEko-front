@@ -28,4 +28,5 @@ export default interface IUserLog {
   creation_date: string;
   pseudo: string;
   authentified_by_facebook: number;
+  isprofessional: number;
 }
