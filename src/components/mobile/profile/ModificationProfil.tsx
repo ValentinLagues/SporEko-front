@@ -87,22 +87,21 @@ const ModificationProfil = () => {
     const file: File = (target.files as FileList)[0];
     const formData = new FormData();
     formData.append('imageUser', file);
-    if (file != undefined) {
-      axios
-        .put<IUserLog>(
-          `${urlBack}/users/image/${id}`,
-          formData,
 
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-            withCredentials: true,
+    axios
+      .put<IUserLog>(
+        `${urlBack}/users/image/${id}`,
+        formData,
+
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
           },
-        )
-        .then((res) => res.data)
-        .catch((err) => console.error(err.message));
-    }
+          withCredentials: true,
+        },
+      )
+      .then((res) => res.data)
+      .catch((err) => console.error(err.message));
   };
 
   // Axios call for update user informations
