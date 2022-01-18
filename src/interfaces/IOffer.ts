@@ -1,4 +1,4 @@
-export default interface IOffers {
+export default interface IOffer {
   id_offer: number;
   creation_date: Date;
   id_user_seller: number;
@@ -17,7 +17,7 @@ export default interface IOffers {
   id_color2: number;
   id_condition: number;
   price: number;
-  id_weight: number;
+  weight: number;
   hand_delivery: number;
   colissimo_delivery: number;
   mondial_relay_delivery: number;

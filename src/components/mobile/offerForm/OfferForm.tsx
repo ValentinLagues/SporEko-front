@@ -1,148 +1,46 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { MdStarRate } from 'react-icons/md';
 
-interface Offer {
-  id_user_seller: number;
-  picture1: string;
-  title: string;
-  description: string;
-  id_sport: number;
-  id_gender: number;
-  id_child: number | null;
-  id_category: number;
-  id_clothes: number;
-  id_shoe: number;
-  id_accessory: number;
-  id_brand: number;
-  id_textile: number;
-  id_size: number;
-  id_color1: number;
-  id_color2: number;
-  id_condition: number;
-  price: number;
-  id_weight: number;
-  hand_delivery: number;
-  colissimo_delivery: number;
-  mondial_relay_delivery: number;
-  isarchived: number;
-  isdraft: number;
-  picture2: string;
-  picture3: string;
-  picture4: string;
-  picture5: string;
-  picture6: string;
-  picture7: string;
-  picture8: string;
-  picture9: string;
-  picture10: string;
-  picture11: string;
-  picture12: string;
-  picture13: string;
-  picture14: string;
-  picture15: string;
-  picture16: string;
-  picture17: string;
-  picture18: string;
-  picture19: string;
-}
-
-interface Sport {
-  id_sport: number;
-  name: string;
-}
-
-interface Gender {
-  id_gender: number;
-  name: string;
-}
-
-interface Child {
-  id_child: number;
-  name: string;
-}
-
-interface Category {
-  id_category: number;
-  name: string;
-}
-
-interface Clothes {
-  id_clothes: number;
-  name: string;
-}
-
-interface Shoe {
-  id_shoe: number;
-  name: string;
-}
-
-interface Accessory {
-  id_accessory: number;
-  name: string;
-}
-
-interface Brand {
-  id_brand: number;
-  name: string;
-}
-
-interface Textile {
-  id_textile: number;
-  name: string;
-}
-
-interface Color {
-  id_color: number;
-  name: string;
-}
-
-interface Condition {
-  id_condition: number;
-  name: string;
-}
-
-interface Size {
-  id_size: number;
-  name: string;
-}
-
-interface Weight {
-  id_weight: number;
-  name: string;
-}
+import IBrand from '../../../interfaces/IBrand';
+import ICategory from '../../../interfaces/ICategory';
+import IItem from '../../../interfaces/IItem';
+import IColor from '../../../interfaces/IColor';
+import ICondition from '../../../interfaces/ICondition';
+import IOffer from '../../../interfaces/IOffer';
+import ISize from '../../../interfaces/ISize';
+import ISport from '../../../interfaces/ISport';
+import ITextile from '../../../interfaces/ITextile';
+import IDeliverer from '../../../interfaces/IDeliverer';
+import IOffer_Deliverer from '../../../interfaces/IOffer_deliverer';
+import CurrentUserContext from '../../../contexts/CurrentUser';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
 const OfferForm = () => {
-  const [sportList, setSportList] = useState<Sport[]>([]);
-  const [genderList, setGenderList] = useState<Gender[]>([]);
-  const [childList, setChildList] = useState<Child[]>([]);
-  const [categoryList, setCategoryList] = useState<Category[]>([]);
-  const [clothesList, setClothesList] = useState<Clothes[]>([]);
-  const [shoeList, setShoeList] = useState<Shoe[]>([]);
-  const [accessoryList, setAccessoryList] = useState<Accessory[]>([]);
-  const [brandList, setBrandList] = useState<Brand[]>([]);
-  const [textileList, setTextileList] = useState<Textile[]>([]);
-  const [colorList, setColorList] = useState<Color[]>([]);
-  const [conditionList, setConditionList] = useState<Condition[]>([]);
-  const [sizeList, setSizeList] = useState<Size[]>([]);
-  const [weightList, setWeightList] = useState<Weight[]>([]);
+  const { id } = useContext(CurrentUserContext);
+
+  const [sportList, setSportList] = useState<ISport[]>([]);
+  const [categoryList, setCategoryList] = useState<ICategory[]>([]);
+  const [itemList, setItemList] = useState<IItem[]>([]);
+  const [brandList, setBrandList] = useState<IBrand[]>([]);
+  const [textileList, setTextileList] = useState<ITextile[]>([]);
+  const [colorList, setColorList] = useState<IColor[]>([]);
+  const [conditionList, setConditionList] = useState<ICondition[]>([]);
+  const [sizeList, setSizeList] = useState<ISize[]>([]);
+  const [delivererList, setDelivererList] = useState<IDeliverer[]>([]);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [sport, setSport] = useState('');
-  const [gender, setGender] = useState('');
-  const [child, setChild] = useState<number | null>(null);
+  const [gender, setGender] = useState<number | null>(null);
+  const [genderAdult, setGenderAdult] = useState<number | null>(null);
+  const [genderChild, setGenderChild] = useState<number | null>(null);
   const [genderIsChild, setGenderIsChild] = useState(false);
   const [category, setCategory] = useState('');
-  const [clothes, setClothes] = useState<number | null>(null);
+  const [item, setItem] = useState('');
   const [categoryIsClothes, setCategoryIsClothes] = useState(false);
-  const [shoe, setShoe] = useState<number | null>(null);
-  const [categoryIsShoe, setCategoryIsShoe] = useState(false);
-  const [accessory, setAccessory] = useState<number | null>(null);
-  const [categoryIsAccessory, setCategoryIsAccessory] = useState(false);
   const [brand, setBrand] = useState('');
   const [textile, setTextile] = useState('');
   const [color1, setColor1] = useState('');
@@ -150,41 +48,56 @@ const OfferForm = () => {
   const [condition, setCondition] = useState('');
   const [price, setPrice] = useState(0);
   const [size, setSize] = useState('');
-  const [weight, setWeight] = useState('');
+  const [weight, setWeight] = useState(0);
   const [handDelivery, setHandDelivery] = useState(0);
+  const [chosenDeliverers, setChodenDeliverers] = useState<Array<number>>([]);
   const [isDraft, setIsDraft] = useState(0);
-  const [offer, setOffer] = useState<Offer>();
+  const [offer, setOffer] = useState<IOffer>();
 
   useEffect(() => {
     axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
-    axios.get(`${urlBack}/genders`).then((res) => setGenderList(res.data));
-    axios.get(`${urlBack}/children`).then((res) => setChildList(res.data));
     axios.get(`${urlBack}/categories`).then((res) => setCategoryList(res.data));
-    axios.get(`${urlBack}/clothes`).then((res) => setClothesList(res.data));
-    axios.get(`${urlBack}/shoes`).then((res) => setShoeList(res.data));
-    axios.get(`${urlBack}/accessories`).then((res) => setAccessoryList(res.data));
+    axios.get(`${urlBack}/items`).then((res) => setItemList(res.data));
     axios.get(`${urlBack}/brands`).then((res) => setBrandList(res.data));
     axios.get(`${urlBack}/textiles`).then((res) => setTextileList(res.data));
     axios.get(`${urlBack}/colors`).then((res) => setColorList(res.data));
     axios.get(`${urlBack}/conditions`).then((res) => setConditionList(res.data));
     axios.get(`${urlBack}/sizes`).then((res) => setSizeList(res.data));
-    axios.get(`${urlBack}/weights`).then((res) => setWeightList(res.data));
+    axios.get(`${urlBack}/deliverers`).then((res) => setDelivererList(res.data));
   }, []);
+
+  useEffect(() => {
+    category &&
+      axios.get(`${urlBack}/categories/${category}/items`).then((res) => {
+        setItemList(res.data);
+      });
+  }, [category]);
+
+  let deliverersArray: number[] = [];
+  const handleChosenDeliverers = (id: number) => {
+    if (deliverersArray.includes(id)) {
+      deliverersArray.splice(deliverersArray.indexOf(id), 1);
+    } else {
+      deliverersArray.push(id);
+    }
+    console.log(deliverersArray);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(deliverersArray);
+    setChodenDeliverers(deliverersArray);
+    deliverersArray = [];
     const newOffer = {
-      id_user_seller: 1,
+      id_user_seller: Number(id),
       picture1: 'adresse interne de la photo',
       title,
       description,
       id_sport: parseInt(sport),
-      id_gender: parseInt(gender),
-      id_child: child ? Number(child) : null,
+      id_gender: gender,
+      ischild: genderIsChild ? 1 : 0,
       id_category: parseInt(category),
-      id_clothes: clothes ? Number(clothes) : null,
-      id_shoe: shoe ? Number(shoe) : null,
-      id_accessory: accessory ? Number(accessory) : null,
+      id_item: parseInt(item),
       id_brand: brand ? parseInt(brand) : null,
       id_textile: textile ? parseInt(textile) : null,
       id_size: size ? parseInt(size) : null,
@@ -192,10 +105,8 @@ const OfferForm = () => {
       id_color2: color2 ? parseInt(color2) : null,
       id_condition: parseInt(condition),
       price: Number(price),
-      id_weight: parseInt(weight),
+      weight: Number(weight),
       hand_delivery: handDelivery,
-      colissimo_delivery: 0,
-      mondial_relay_delivery: 0,
       isarchived: 0,
       isdraft: isDraft,
       picture2: 'adresse interne de la photo',
@@ -216,13 +127,25 @@ const OfferForm = () => {
       picture17: 'adresse interne de la photo',
       picture18: 'adresse interne de la photo',
       picture19: 'adresse interne de la photo',
-    } as Offer;
+      picture20: 'adresse interne de la photo',
+    } as IOffer;
     setOffer(newOffer);
   };
 
   useEffect(() => {
     offer &&
-      axios.post<Offer>(`${urlBack}/offers`, offer).then((rep) => console.log(rep));
+      axios.post<IOffer>(`${urlBack}/offers`, offer).then((rep) => {
+        const id_offer = rep.data.id_offer;
+        console.log(id_offer);
+        console.log(chosenDeliverers);
+        chosenDeliverers.map((deliverer) => {
+          const id_deliverer = deliverer;
+          axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
+            id_offer,
+            id_deliverer,
+          });
+        });
+      });
   }, [offer]);
 
   return (
@@ -283,38 +206,33 @@ const OfferForm = () => {
         <div>
           <select
             onChange={(e) => {
-              setGender(e.target.value);
+              setGenderAdult(Number(e.target.value));
               e.target.value === '4'
-                ? (setGenderIsChild(true), setChild(1))
-                : setGenderIsChild(false);
+                ? (setGenderIsChild(true), setGender(null))
+                : (setGenderIsChild(false), setGender(Number(e.target.value)));
             }}
-            value={gender}
+            value={Number(genderAdult)}
             className="offerForm__select"
             name="genders"
             id="genders">
             <option value="">Genre</option>
-            {genderList &&
-              genderList.map((gender, index) => (
-                <option key={index} value={gender.id_gender}>
-                  {gender.name}
-                </option>
-              ))}
+            <option value={1}>Femme</option>
+            <option value={2}>Homme</option>
+            <option value={4}>Enfant</option>
+            <option value={3}>Tous</option>
           </select>
         </div>
         {genderIsChild && (
           <div>
             <select
-              onChange={(e) => setChild(Number(e.target.value))}
-              value={child === null ? '' : child}
-              className="offerForm__select conditionnal"
-              name="children"
-              id="children">
-              {childList &&
-                childList.map((child, index) => (
-                  <option key={index} value={child.id_child}>
-                    {child.name}
-                  </option>
-                ))}
+              onChange={(e) => {
+                setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
+              }}
+              value={Number(genderChild)}
+              className="offerForm__select conditionnal">
+              <option value="">Tous</option>
+              <option value={1}>Fille</option>
+              <option value={2}>Garçon</option>
             </select>
           </div>
         )}
@@ -322,20 +240,12 @@ const OfferForm = () => {
           <select
             onChange={(e) => {
               setCategory(e.target.value);
-              e.target.value === '2'
-                ? (setCategoryIsClothes(true), setClothes(1))
+              e.target.value === '1'
+                ? setCategoryIsClothes(true)
                 : setCategoryIsClothes(false);
-              e.target.value === '3'
-                ? (setCategoryIsShoe(true), setShoe(1))
-                : setCategoryIsShoe(false);
-              e.target.value === '4'
-                ? (setCategoryIsAccessory(true), setAccessory(1))
-                : setCategoryIsAccessory(false);
             }}
             value={category}
-            className="offerForm__select"
-            name="categories"
-            id="categories">
+            className="offerForm__select">
             <option value="">Catégorie</option>
             {categoryList &&
               categoryList.map((category, index) => (
@@ -345,52 +255,33 @@ const OfferForm = () => {
               ))}
           </select>
         </div>
+        <div>
+          <select
+            onChange={(e) => setItem(e.target.value)}
+            value={item}
+            className="offerForm__select">
+            <option value="">Article</option>
+            {itemList &&
+              itemList.map((item, index) => (
+                <option key={index} value={item.id_item}>
+                  {item.name}
+                </option>
+              ))}
+          </select>
+        </div>
         {categoryIsClothes && (
           <div>
             <select
-              onChange={(e) => setClothes(Number(e.target.value))}
-              value={clothes === null ? '' : clothes}
+              onChange={(e) => setTextile(e.target.value)}
+              value={textile}
               className="offerForm__select conditionnal"
-              name="clothes"
-              id="clothes">
-              {clothesList &&
-                clothesList.map((clothes, index) => (
-                  <option key={index} value={clothes.id_clothes}>
-                    {clothes.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-        )}
-        {categoryIsShoe && (
-          <div>
-            <select
-              onChange={(e) => setShoe(Number(e.target.value))}
-              value={shoe === null ? '' : shoe}
-              className="offerForm__select conditionnal"
-              name="shoe"
-              id="shoe">
-              {shoeList &&
-                shoeList.map((shoe, index) => (
-                  <option key={index} value={shoe.id_shoe}>
-                    {shoe.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-        )}
-        {categoryIsAccessory && (
-          <div>
-            <select
-              onChange={(e) => setAccessory(Number(e.target.value))}
-              value={accessory === null ? '' : accessory}
-              className="offerForm__select conditionnal"
-              name="accessory"
-              id="accessory">
-              {accessoryList &&
-                accessoryList.map((accessory, index) => (
-                  <option key={index} value={accessory.id_accessory}>
-                    {accessory.name}
+              name="textile"
+              id="textile">
+              <option value="">Toutes matières</option>
+              {textileList &&
+                textileList.map((textile, index) => (
+                  <option key={index} value={textile.id_textile}>
+                    {textile.name}
                   </option>
                 ))}
             </select>
@@ -412,24 +303,6 @@ const OfferForm = () => {
               ))}
           </select>
         </div>
-        {categoryIsClothes && (
-          <div>
-            <select
-              onChange={(e) => setTextile(e.target.value)}
-              value={textile}
-              className="offerForm__select"
-              name="textile"
-              id="textile">
-              <option value="">Matière</option>
-              {textileList &&
-                textileList.map((textile, index) => (
-                  <option key={index} value={textile.id_textile}>
-                    {textile.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-        )}
         <div>
           <select
             onChange={(e) => setSize(e.target.value)}
@@ -509,37 +382,58 @@ const OfferForm = () => {
           />
           €
         </div>
-        <div>
-          <select
-            onChange={(e) => setWeight(e.target.value)}
-            value={weight}
-            className="offerForm__select"
-            name="weight"
-            id="weight">
-            <option value="">Format du produit</option>
-            {weightList &&
-              weightList.map((weight, index) => (
-                <option key={index} value={weight.id_weight}>
-                  {weight.name}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div className="offerForm__switchContainer">
-          <span className="offerForm__switchContainer__span">
-            Autoriser la remise en main propre
-          </span>
-          <label className="switch">
-            <input
-              checked={handDelivery ? true : false}
-              onChange={() => {
-                handDelivery ? setHandDelivery(0) : setHandDelivery(1);
-              }}
-              type="checkbox"
-              name="handDelivery"
-            />
-            <span className="slider round"></span>
+        <div className="offerForm__weight">
+          <label className="offerForm__label" htmlFor="weight">
+            Poids du produit{' '}
+            {!handDelivery ? <MdStarRate className="iconRequired" /> : ''}
           </label>
+          <input
+            value={weight}
+            onChange={(e) => setWeight(Number(e.target.value))}
+            className="offerForm__input"
+            type="number"
+            step={1}
+            id="weight"
+            name="weight"
+          />
+          g
+        </div>
+        <div className="offerForm__deliveries">
+          <span className="offerForm__switchContainer__span">Modes de livraison :</span>
+          <div className="delivererList">
+            <div className="offerForm__switchContainer">
+              <span className="offerForm__switchContainer__span">
+                Remise en main propre:
+              </span>
+              <label className="switch">
+                <input
+                  checked={handDelivery ? true : false}
+                  onChange={() => {
+                    handDelivery ? setHandDelivery(0) : setHandDelivery(1);
+                  }}
+                  type="checkbox"
+                  name="handDelivery"
+                />
+                <span className="slider round"></span>
+              </label>
+            </div>
+            {delivererList &&
+              delivererList.map((deliverer) => (
+                <div key={deliverer.id_deliverer} className="offerForm__switchContainer">
+                  <span className="offerForm__switchContainer__span">
+                    {deliverer.name}
+                  </span>
+                  <label className="switch">
+                    <input
+                      onChange={() => handleChosenDeliverers(deliverer.id_deliverer)}
+                      id={deliverer.name}
+                      type="checkbox"
+                    />
+                    <span className="slider round"></span>
+                  </label>
+                </div>
+              ))}
+          </div>
         </div>
         <div className="offerForm__switchContainer">
           <span className="offerForm__switchContainer__span">
