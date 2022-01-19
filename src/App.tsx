@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import ConfirmOrder from './components/mobile/confirmOrder/ConfirmOrder';
+import Search from './components/mobile/search/Search';
+
 import Connection from './components/mobile/connection/Connection';
 import CreateAccount from './components/mobile/createAccount/CreateAccount';
 import Home from './components/mobile/Home/Home';
@@ -24,6 +26,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/favorites" element={<ConfirmOrder />} />
           <Route path="/search" element={<FilterMenu />} />
+          <Route path="/messages" element={<Search />} />
           <Route path="/connection" element={<Connection />} />
           <Route path="/create-account" element={<CreateAccount />} />
         </Routes>
