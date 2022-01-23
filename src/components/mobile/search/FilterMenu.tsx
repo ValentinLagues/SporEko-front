@@ -2,60 +2,26 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
 
-interface Sport {
-  id_sport: number;
-  name: string;
-}
-
-interface Category {
-  id_category: number;
-  name: string;
-}
-
-interface Item {
-  id_item: number;
-  name: string;
-  id_category: number;
-}
-
-interface Condition {
-  id_condition: number;
-  name: string;
-}
-
-interface Textile {
-  id_textile: number;
-  name: string;
-}
-
-interface Color {
-  id_color: number;
-  name: string;
-  color_code: string;
-  style: object;
-}
-
-interface Brand {
-  id_brand: number;
-  name: string;
-}
-
-interface Size {
-  id_size: number;
-  name: string;
-}
+import IBrand from '../../../interfaces/IBrand';
+import ICategory from '../../../interfaces/ICategory';
+import IItem from '../../../interfaces/IItem';
+import IColor from '../../../interfaces/IColor';
+import ICondition from '../../../interfaces/ICondition';
+import ISize from '../../../interfaces/ISize';
+import ISport from '../../../interfaces/ISport';
+import ITextile from '../../../interfaces/ITextile';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
 const FilterMenu = () => {
-  const [sportList, setSportList] = useState<Sport[]>([]);
-  const [categoryList, setCategoryList] = useState<Category[]>([]);
-  const [itemList, setItemList] = useState<Item[]>([]);
-  const [conditionList, setConditionList] = useState<Condition[]>([]);
-  const [textileList, setTextileList] = useState<Textile[]>([]);
-  const [colorList, setColorList] = useState<Color[]>([]);
-  const [brandList, setBrandList] = useState<Brand[]>([]);
-  const [sizeList, setSizeList] = useState<Size[]>([]);
+  const [sportList, setSportList] = useState<ISport[]>([]);
+  const [categoryList, setCategoryList] = useState<ICategory[]>([]);
+  const [itemList, setItemList] = useState<IItem[]>([]);
+  const [conditionList, setConditionList] = useState<ICondition[]>([]);
+  const [textileList, setTextileList] = useState<ITextile[]>([]);
+  const [colorList, setColorList] = useState<IColor[]>([]);
+  const [brandList, setBrandList] = useState<IBrand[]>([]);
+  const [sizeList, setSizeList] = useState<ISize[]>([]);
 
   const [sport, setSport] = useState('');
   const [gender, setGender] = useState<number | null>(null);
@@ -64,6 +30,7 @@ const FilterMenu = () => {
   const [genderIsChild, setGenderIsChild] = useState(false);
   const [category, setCategory] = useState('');
   const [item, setItem] = useState('');
+  // const [sizeType, setSizeType] = useState<number | null>(null);
   const [categoryIsClothes, setCategoryIsClothes] = useState(false);
   const [condition, setCondition] = useState('');
   const [textile, setTextile] = useState('');
@@ -78,7 +45,7 @@ const FilterMenu = () => {
   useEffect(() => {
     axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
     axios.get(`${urlBack}/categories`).then((res) => setCategoryList(res.data));
-    axios.get(`${urlBack}/items`).then((res) => setItemList(res.data));
+    // axios.get(`${urlBack}/items`).then((res) => setItemList(res.data));
     axios.get(`${urlBack}/conditions`).then((res) => setConditionList(res.data));
     axios.get(`${urlBack}/textiles`).then((res) => setTextileList(res.data));
     axios.get(`${urlBack}/colors`).then((res) => setColorList(res.data));
@@ -87,11 +54,34 @@ const FilterMenu = () => {
   }, []);
 
   useEffect(() => {
-    category &&
-      axios.get(`${urlBack}/categories/${category}/items`).then((res) => {
-        setItemList(res.data);
-      });
+    category
+      ? axios.get(`${urlBack}/categories/${category}/items`).then((res) => {
+          setItemList(res.data);
+        })
+      : axios.get(`${urlBack}/items`).then((res) => setItemList(res.data));
   }, [category]);
+
+  useEffect(() => {
+    let filters = ``;
+    let oneValue = false;
+
+    if (gender) {
+      filters += `?id_gender=${gender}`;
+      oneValue = true;
+    }
+    if (genderIsChild) {
+      filters += oneValue ? `&is_child=1` : `?is_child=1`;
+      oneValue = true;
+    }
+    if (!genderIsChild) {
+      filters += oneValue ? `&is_child=0` : `?is_child=0`;
+      oneValue = true;
+    }
+    item &&
+      axios.get(`${urlBack}/items/${item}/sizes${filters}`).then((res) => {
+        setSizeList(res.data);
+      });
+  }, [item, gender, genderIsChild, category]);
 
   const handleReset = () => {
     setSport('');
@@ -216,7 +206,7 @@ const FilterMenu = () => {
           onChange={(e) => {
             setGenderAdult(Number(e.target.value));
             e.target.value === '4'
-              ? (setGenderIsChild(true), setGender(null))
+              ? (setGenderIsChild(true), setGender(null), setGenderChild(null))
               : (setGenderIsChild(false), setGender(Number(e.target.value)));
           }}
           value={Number(genderAdult)}
@@ -248,6 +238,7 @@ const FilterMenu = () => {
         <select
           onChange={(e) => {
             setCategory(e.target.value);
+            e.target.value === '' ? setItem('') : '';
             e.target.value === '1'
               ? setCategoryIsClothes(true)
               : setCategoryIsClothes(false);
@@ -364,23 +355,51 @@ const FilterMenu = () => {
             ))}
         </select>
       </div>
-      <div className="filterMenu__item">
-        <label htmlFor="textile">Taille</label>
-        <select
-          onChange={(e) => setSize(e.target.value)}
-          value={size}
-          className=""
-          name="sizes"
-          id="sizes">
-          <option value="">Toutes</option>
-          {sizeList &&
-            sizeList.map((size, index) => (
-              <option key={index} value={size.id_size}>
-                {size.name}
-              </option>
-            ))}
-        </select>
-      </div>
+      {item && (
+        <div className="filterMenu__item">
+          <label htmlFor="textile">Taille</label>
+          <select
+            onChange={(e) => setSize(e.target.value)}
+            value={size}
+            className=""
+            name="sizes"
+            id="sizes">
+            <option value="">Toutes</option>
+            {sizeList &&
+              sizeList.map((size, index) => (
+                <option key={index} value={size.id_size}>
+                  {
+                    category === '2' && !genderIsChild
+                      ? `${size.size_eu}`
+                      : category === '2' && genderIsChild
+                      ? `${size.size_eu}/${size.size_foot}`
+                      : category === '1' && !genderIsChild
+                      ? `${size.size_int}/${size.size_eu}/${size.size_uk}`
+                      : category === '1' && genderIsChild
+                      ? `${size.age_child}/${size.height}`
+                      : ''
+
+                    // category === '2' && !genderIsChild
+                    //   ? `${size.size_eu}/${size.size_uk}/${size.size_us}`
+                    //   : category === '2' && genderIsChild
+                    //   ? `${size.size_eu}/${size.size_uk}/${size.size_us}/${size.size_foot}`
+                    //   : size.id_size_type === 2 && !genderIsChild
+                    //   ? `${size.size_int}/${size.size_eu}/${size.size_fr}/${size.size_uk}/${size.size_chest}`
+                    //   : size.id_size_type === 3 && !genderIsChild
+                    //   ? `${size.size_int}/${size.size_eu}/${size.size_fr}/${size.size_uk}/${size.size_pool}/${size.size_jeans}`
+                    //   : size.id_size_type === 4 && !genderIsChild
+                    //   ? `${size.size_int}/${size.hand_turn}/${size.size_glove}`
+                    //   : size.id_size_type === 5 && !genderIsChild
+                    //   ? `${size.size_int}/${size.height}/${size.crotch}/${size.size_bike_inches}/${size.size_bike}`
+                    //   : size.id_size_type === 5 && genderIsChild
+                    //   ? `${size.size_int}/${size.age_child}/${size.height}/${size.size_wheel}`
+                    //   : `${size.age_child}/${size.height}/`
+                  }
+                </option>
+              ))}
+          </select>
+        </div>
+      )}
       <div className="filterMenu__item price">
         <div className="filterMenu__item price__label">
           <label htmlFor="price">Prix</label>
