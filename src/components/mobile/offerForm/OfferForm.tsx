@@ -1,25 +1,25 @@
 import axios from 'axios';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { MdStarRate } from 'react-icons/md';
 
+import CurrentUserContext from '../../../contexts/CurrentUser';
 import IBrand from '../../../interfaces/IBrand';
 import ICategory from '../../../interfaces/ICategory';
-import IItem from '../../../interfaces/IItem';
 import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
+import IDeliverer from '../../../interfaces/IDeliverer';
+import IItem from '../../../interfaces/IItem';
 import IOffer from '../../../interfaces/IOffer';
+import IOffer_Deliverer from '../../../interfaces/IOffer_deliverer';
 import ISize from '../../../interfaces/ISize';
 import ISport from '../../../interfaces/ISport';
 import ITextile from '../../../interfaces/ITextile';
-import IDeliverer from '../../../interfaces/IDeliverer';
-import IOffer_Deliverer from '../../../interfaces/IOffer_deliverer';
-import CurrentUserContext from '../../../contexts/CurrentUser';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
 const OfferForm = () => {
-  const { id } = useContext(CurrentUserContext);
+  const { idUser } = useContext(CurrentUserContext);
 
   const [sportList, setSportList] = useState<ISport[]>([]);
   const [categoryList, setCategoryList] = useState<ICategory[]>([]);
@@ -31,6 +31,7 @@ const OfferForm = () => {
   const [sizeList, setSizeList] = useState<ISize[]>([]);
   const [delivererList, setDelivererList] = useState<IDeliverer[]>([]);
 
+  const [pictures, setPictures] = useState<Array<string>>([]);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [sport, setSport] = useState('');
@@ -50,7 +51,7 @@ const OfferForm = () => {
   const [size, setSize] = useState('');
   const [weight, setWeight] = useState(0);
   const [handDelivery, setHandDelivery] = useState(0);
-  const [chosenDeliverers, setChodenDeliverers] = useState<Array<number>>([]);
+  const [chosenDeliverers, setChosenDeliverers] = useState<Array<number>>([]);
   const [isDraft, setIsDraft] = useState(0);
   const [offer, setOffer] = useState<IOffer>();
 
@@ -80,22 +81,21 @@ const OfferForm = () => {
     } else {
       deliverersArray.push(id);
     }
-    console.log(deliverersArray);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(deliverersArray);
-    setChodenDeliverers(deliverersArray);
+
+    setChosenDeliverers(deliverersArray);
     deliverersArray = [];
     const newOffer = {
-      id_user_seller: Number(id),
-      picture1: 'adresse interne de la photo',
+      id_user_seller: Number(idUser),
       title,
+      picture1: pictures[0],
       description,
       id_sport: parseInt(sport),
       id_gender: gender,
-      ischild: genderIsChild ? 1 : 0,
+      is_child: genderIsChild ? 1 : 0,
       id_category: parseInt(category),
       id_item: parseInt(item),
       id_brand: brand ? parseInt(brand) : null,
@@ -107,50 +107,76 @@ const OfferForm = () => {
       price: Number(price),
       weight: Number(weight),
       hand_delivery: handDelivery,
-      isarchived: 0,
-      isdraft: isDraft,
-      picture2: 'adresse interne de la photo',
-      picture3: 'adresse interne de la photo',
-      picture4: 'adresse interne de la photo',
-      picture5: 'adresse interne de la photo',
-      picture6: 'adresse interne de la photo',
-      picture7: 'adresse interne de la photo',
-      picture8: 'adresse interne de la photo',
-      picture9: 'adresse interne de la photo',
-      picture10: 'adresse interne de la photo',
-      picture11: 'adresse interne de la photo',
-      picture12: 'adresse interne de la photo',
-      picture13: 'adresse interne de la photo',
-      picture14: 'adresse interne de la photo',
-      picture15: 'adresse interne de la photo',
-      picture16: 'adresse interne de la photo',
-      picture17: 'adresse interne de la photo',
-      picture18: 'adresse interne de la photo',
-      picture19: 'adresse interne de la photo',
-      picture20: 'adresse interne de la photo',
-    } as IOffer;
+      is_archived: 0,
+      is_draft: isDraft,
+      picture2: pictures[1],
+      picture3: pictures[2],
+      picture4: pictures[3],
+      picture5: pictures[4],
+      picture6: pictures[5],
+      picture7: pictures[6],
+      picture8: pictures[7],
+      picture9: pictures[8],
+      picture10: pictures[9],
+      picture11: pictures[10],
+      picture12: pictures[11],
+      picture13: pictures[12],
+      picture14: pictures[13],
+      picture15: pictures[14],
+      picture16: pictures[15],
+      picture17: pictures[16],
+      picture18: pictures[17],
+      picture19: pictures[18],
+      picture20: pictures[19],
+    } as unknown as IOffer;
     setOffer(newOffer);
+  };
+
+  // Function axios to add pictures on offer.
+  const handleFileInput = (event: React.ChangeEvent) => {
+    const target = event.target as HTMLInputElement;
+    const file = target.files as FileList;
+    const formData = new FormData();
+    const arrayFiles = Array.from(file);
+    arrayFiles.map((el) => formData.append('imagesOffers', el));
+    // formData.append('imagesOffers', file);
+
+    axios
+      .post(
+        `${urlBack}/offers/images`,
+        formData,
+
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        },
+      )
+      .then((res) => setPictures(res.data))
+      .catch((err) => console.error({ ...err }));
   };
 
   useEffect(() => {
     offer &&
-      axios.post<IOffer>(`${urlBack}/offers`, offer).then((rep) => {
-        const id_offer = rep.data.id_offer;
-        console.log(id_offer);
-        console.log(chosenDeliverers);
-        chosenDeliverers.map((deliverer) => {
-          const id_deliverer = deliverer;
-          axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
-            id_offer,
-            id_deliverer,
+      axios
+        .post<IOffer>(`${urlBack}/offers`, offer)
+        .then((rep) => {
+          const id_offer = rep.data.id_offer;
+          chosenDeliverers.map((deliverer) => {
+            const id_deliverer = deliverer;
+            axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
+              id_offer,
+              id_deliverer,
+            });
           });
-        });
-      });
+        })
+        .catch((err) => console.log({ ...err }));
   }, [offer]);
 
   return (
     <div className="offerForm">
       <form
+        encType="multipart/form-data"
         id="offerForm"
         onSubmit={(e: React.FormEvent) => handleSubmit(e)}
         className="offerForm__form"
@@ -159,7 +185,13 @@ const OfferForm = () => {
           <label id="labelPhoto1" htmlFor="photo1">
             <BsPlusLg /> AJOUTER PHOTOS
           </label>
-          <input type="file" id="photo1" name="photo1" />
+          <input
+            multiple
+            type="file"
+            id="photo1"
+            name="imagesOffers"
+            onChange={(e) => handleFileInput(e)}
+          />
         </div>
         <div>
           <label className="offerForm__label" htmlFor="title">
@@ -188,13 +220,18 @@ const OfferForm = () => {
           />
         </div>
         <div>
+          <div className="offerForm__items">
+            <MdStarRate className="iconRequired" />
+          </div>
           <select
             onChange={(e) => setSport(e.target.value)}
             value={sport}
             className="offerForm__select"
             name="sports"
             id="sports">
-            <option value="">Sport</option>
+            <option value="" id="sport">
+              Sport
+            </option>
             {sportList &&
               sportList.map((sport, index) => (
                 <option key={index} value={sport.id_sport}>
@@ -204,6 +241,9 @@ const OfferForm = () => {
           </select>
         </div>
         <div>
+          <div className="offerForm__items">
+            <MdStarRate className="iconRequired" />
+          </div>
           <select
             onChange={(e) => {
               setGenderAdult(Number(e.target.value));
@@ -237,6 +277,9 @@ const OfferForm = () => {
           </div>
         )}
         <div>
+          <div className="offerForm__items">
+            <MdStarRate className="iconRequired" />
+          </div>
           <select
             onChange={(e) => {
               setCategory(e.target.value);
@@ -256,6 +299,9 @@ const OfferForm = () => {
           </select>
         </div>
         <div>
+          <div className="offerForm__items">
+            <MdStarRate className="iconRequired" />
+          </div>
           <select
             onChange={(e) => setItem(e.target.value)}
             value={item}
@@ -314,7 +360,7 @@ const OfferForm = () => {
             {sizeList &&
               sizeList.map((size, index) => (
                 <option key={index} value={size.id_size}>
-                  {size.name}
+                  {size.size_fr}
                 </option>
               ))}
           </select>
@@ -352,6 +398,9 @@ const OfferForm = () => {
           </select>
         </div>
         <div>
+          <div className="offerForm__items">
+            <MdStarRate className="iconRequired" />
+          </div>
           <select
             onChange={(e) => setCondition(e.target.value)}
             value={condition}
@@ -399,7 +448,9 @@ const OfferForm = () => {
           g
         </div>
         <div className="offerForm__deliveries">
-          <span className="offerForm__switchContainer__span">Modes de livraison :</span>
+          <span className="offerForm__switchContainer__span">
+            Modes de livraison : <MdStarRate className="iconRequired" />
+          </span>
           <div className="delivererList">
             <div className="offerForm__switchContainer">
               <span className="offerForm__switchContainer__span">

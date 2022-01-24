@@ -9,7 +9,7 @@ type UserContent = {
   accepted: boolean;
   setAccepted: React.Dispatch<React.SetStateAction<boolean>>;
   pseudo: string | null;
-  id: string | null;
+  idUser: string | null;
   admin: string | null;
   logout: () => void;
 };
@@ -22,7 +22,7 @@ const CurrentUserContext = createContext<UserContent>({
   accepted: false,
   setAccepted: () => {},
   pseudo: '',
-  id: '',
+  idUser: '',
   admin: '',
   logout: () => {},
 });
@@ -31,7 +31,7 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
   const [accepted, setAccepted] = useState<boolean>(false);
   const [user, setUser] = useState<IUserLog | any>('');
   const pseudo = sessionStorage.getItem('pseudo');
-  const id = sessionStorage.getItem('id');
+  const idUser = sessionStorage.getItem('id');
   const admin = sessionStorage.getItem('admin');
   const deleteCookie = useCookies(['user_token'])[2];
 
@@ -50,7 +50,7 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
         accepted,
         setAccepted,
         pseudo,
-        id,
+        idUser,
         admin,
         logout,
       }}>
