@@ -24,7 +24,6 @@ const Search = () => {
   const [genderIsChild, setGenderIsChild] = useState(false);
   const [category, setCategory] = useState('');
   const [categoryIsClothes, setCategoryIsClothes] = useState(false);
-  const [orderBy, setOrderBy] = useState('');
 
   useEffect(() => {
     axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
@@ -40,7 +39,6 @@ const Search = () => {
     setGenderChild(null);
     setGenderIsChild(false);
     setCategory('');
-    setOrderBy('');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -153,24 +151,6 @@ const Search = () => {
                 </option>
               ))}
           </select>
-        </div>
-        <div className="filterMenu__item">
-          <label htmlFor="orderBy">Classer par</label>
-          <select
-            onChange={(e) => setOrderBy(e.target.value)}
-            value={orderBy}
-            name="orderBy"
-            id="orderBy">
-            <option value="price ASC">prix croissant</option>
-            <option value="price DESC">prix décroissant</option>
-            <option value="">le plus récent</option>
-            <option value="creation_date ASC">le moins récent</option>
-          </select>
-        </div>
-        <div className="filterMenu__submitContainer">
-          <button className="btn" type="submit">
-            Rechercher
-          </button>
         </div>
       </form>
     </div>
