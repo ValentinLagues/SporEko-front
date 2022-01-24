@@ -1,6 +1,6 @@
 .create-account {
-    margin: 4rem;   
-    width: 300px;
+    margin: 3.5rem;   
+    // width: 300px;
     min-height: 550px;
     display: flex;
     flex-direction: column;
@@ -20,7 +20,7 @@
     }
 
     &__form {
-        padding: 2vw;
+        // padding: 1vw;
         text-align: center;
     }
 
@@ -43,15 +43,14 @@
           }
 
     & .inputIcon {
-        left: 2vw;
-        font-size: 1.8rem;
-        margin-right: 0.5rem;
+        left: 1vw;
+        font-size: 1.2rem;
+        margin-right: 0.2rem;
 
         &.right {
           left: auto;
           font-size: 1rem;
           right: 2vw;
-          top: 5vw;
           position: absolute;   
           align-items: center;
           }
@@ -60,13 +59,27 @@
     & input {
         position: relative;
         height: 3vh;
-        padding-left: 7vw;
+        font-size: 0.8rem;;
+        padding-left: 1vw;
         border-radius: 0;
-        padding: 10px 12px;
+        padding: 8px 10px;
         box-sizing: inherit;
-        width: 80%;
+        width: 95%;
         border-radius: 9px;
       }
+      
+
+    & select {
+      position: relative;
+      height: 3vh;
+      padding-left: 1vw;
+      font-size: 0.8rem;
+      border-radius: 0;
+      padding: 8px 10px;
+      box-sizing: inherit;
+      width: 95%;
+      border-radius: 9px;
+    }  
 
       &__form__inputsContainer__radio{
         width: 100%;
@@ -83,8 +96,8 @@
       }
     
   .btn__container{
-    margin-left: 1rem;
     margin-top: 0.8rem;
+    text-align: left;
   }
 
   .btn__container__profil{ 
@@ -113,7 +126,7 @@
 }
 
  input[type="radio"] {
-  display: none;
+  // display: none;
 }
 
   .checkboxCgv__createAccount {
@@ -135,12 +148,14 @@
       margin: 1rem 
     }
 
+    
+
   .containerSignin {
     margin-bottom: 2rem;
-  }  
-      
+  } 
 
-
-    
+ 
+  
+  
 }
 

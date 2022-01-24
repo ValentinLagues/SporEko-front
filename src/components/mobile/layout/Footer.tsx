@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { BsPlusLg } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
-import { FiHome, FiMail } from 'react-icons/fi';
+import { FiHome } from 'react-icons/fi';
 import { FiHeart } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
