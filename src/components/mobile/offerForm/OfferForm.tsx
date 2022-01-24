@@ -195,7 +195,7 @@ const OfferForm = () => {
         </div>
         <div>
           <label className="offerForm__label" htmlFor="title">
-            Titre <MdStarRate className="iconRequired" />
+            <MdStarRate className="iconRequired" /> Titre
           </label>
           <input
             value={title}
@@ -208,7 +208,7 @@ const OfferForm = () => {
         </div>
         <div>
           <label className="offerForm__label" htmlFor="description">
-            Description <MdStarRate className="iconRequired" />
+            <MdStarRate className="iconRequired" /> Description
           </label>
           <textarea
             value={description}
@@ -219,8 +219,8 @@ const OfferForm = () => {
             name="description"
           />
         </div>
-        <div>
-          <div className="offerForm__items">
+        <div className="offerForm__items">
+          <div className="offerForm__items__asterisk">
             <MdStarRate className="iconRequired" />
           </div>
           <select
@@ -240,8 +240,8 @@ const OfferForm = () => {
               ))}
           </select>
         </div>
-        <div>
-          <div className="offerForm__items">
+        <div className="offerForm__items">
+          <div className="offerForm__items__asterisk">
             <MdStarRate className="iconRequired" />
           </div>
           <select
@@ -276,8 +276,8 @@ const OfferForm = () => {
             </select>
           </div>
         )}
-        <div>
-          <div className="offerForm__items">
+        <div className="offerForm__items">
+          <div className="offerForm__items__asterisk">
             <MdStarRate className="iconRequired" />
           </div>
           <select
@@ -298,8 +298,8 @@ const OfferForm = () => {
               ))}
           </select>
         </div>
-        <div>
-          <div className="offerForm__items">
+        <div className="offerForm__items">
+          <div className="offerForm__items__asterisk">
             <MdStarRate className="iconRequired" />
           </div>
           <select
@@ -397,8 +397,8 @@ const OfferForm = () => {
               ))}
           </select>
         </div>
-        <div>
-          <div className="offerForm__items">
+        <div className="offerForm__items">
+          <div className="offerForm__items__asterisk">
             <MdStarRate className="iconRequired" />
           </div>
           <select
@@ -418,7 +418,7 @@ const OfferForm = () => {
         </div>
         <div className="offerForm__price">
           <label className="offerForm__label" htmlFor="price">
-            Prix hors frais de port <MdStarRate className="iconRequired" />
+            <MdStarRate className="iconRequired" /> Prix hors frais de port
           </label>
           <input
             value={price}
@@ -433,8 +433,8 @@ const OfferForm = () => {
         </div>
         <div className="offerForm__weight">
           <label className="offerForm__label" htmlFor="weight">
-            Poids du produit{' '}
-            {!handDelivery ? <MdStarRate className="iconRequired" /> : ''}
+            {!handDelivery ? <MdStarRate className="iconRequired" /> : ''} Poids du
+            produit
           </label>
           <input
             value={weight}
@@ -445,11 +445,10 @@ const OfferForm = () => {
             id="weight"
             name="weight"
           />
-          g
         </div>
         <div className="offerForm__deliveries">
           <span className="offerForm__switchContainer__span">
-            Modes de livraison : <MdStarRate className="iconRequired" />
+            <MdStarRate className="iconRequired" /> Modes de livraison :
           </span>
           <div className="delivererList">
             <div className="offerForm__switchContainer">
