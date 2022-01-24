@@ -1,25 +1,25 @@
 import axios from 'axios';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { MdStarRate } from 'react-icons/md';
 
+import CurrentUserContext from '../../../contexts/CurrentUser';
 import IBrand from '../../../interfaces/IBrand';
 import ICategory from '../../../interfaces/ICategory';
-import IItem from '../../../interfaces/IItem';
 import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
+import IDeliverer from '../../../interfaces/IDeliverer';
+import IItem from '../../../interfaces/IItem';
 import IOffer from '../../../interfaces/IOffer';
+import IOffer_Deliverer from '../../../interfaces/IOffer_deliverer';
 import ISize from '../../../interfaces/ISize';
 import ISport from '../../../interfaces/ISport';
 import ITextile from '../../../interfaces/ITextile';
-import IDeliverer from '../../../interfaces/IDeliverer';
-import IOffer_Deliverer from '../../../interfaces/IOffer_deliverer';
-import CurrentUserContext from '../../../contexts/CurrentUser';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
 const OfferForm = () => {
-  const { id } = useContext(CurrentUserContext);
+  const { idUser } = useContext(CurrentUserContext);
 
   const [sportList, setSportList] = useState<ISport[]>([]);
   const [categoryList, setCategoryList] = useState<ICategory[]>([]);
@@ -89,7 +89,7 @@ const OfferForm = () => {
     setChosenDeliverers(deliverersArray);
     deliverersArray = [];
     const newOffer = {
-      id_user_seller: Number(id),
+      id_user_seller: Number(idUser),
       title,
       picture1: pictures[0],
       description,
@@ -132,13 +132,14 @@ const OfferForm = () => {
     setOffer(newOffer);
   };
 
-  // Function axios to change picture of user
+  // Function axios to add pictures on offer.
   const handleFileInput = (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
-    const file: File = target.files as FileList;
+    const file = target.files as FileList;
     const formData = new FormData();
     const arrayFiles = Array.from(file);
     arrayFiles.map((el) => formData.append('imagesOffers', el));
+    // formData.append('imagesOffers', file);
 
     axios
       .post(
@@ -152,7 +153,7 @@ const OfferForm = () => {
         },
       )
       .then((res) => setPictures(res.data))
-      .catch((err) => console.error(err.message));
+      .catch((err) => console.error({ ...err }));
   };
 
   useEffect(() => {
@@ -219,13 +220,18 @@ const OfferForm = () => {
           />
         </div>
         <div>
+          <div className="offerForm__items">
+            <MdStarRate className="iconRequired" />
+          </div>
           <select
             onChange={(e) => setSport(e.target.value)}
             value={sport}
             className="offerForm__select"
             name="sports"
             id="sports">
-            <option value="">Sport</option>
+            <option value="" id="sport">
+              Sport
+            </option>
             {sportList &&
               sportList.map((sport, index) => (
                 <option key={index} value={sport.id_sport}>
@@ -235,6 +241,9 @@ const OfferForm = () => {
           </select>
         </div>
         <div>
+          <div className="offerForm__items">
+            <MdStarRate className="iconRequired" />
+          </div>
           <select
             onChange={(e) => {
               setGenderAdult(Number(e.target.value));
@@ -268,6 +277,9 @@ const OfferForm = () => {
           </div>
         )}
         <div>
+          <div className="offerForm__items">
+            <MdStarRate className="iconRequired" />
+          </div>
           <select
             onChange={(e) => {
               setCategory(e.target.value);
@@ -287,6 +299,9 @@ const OfferForm = () => {
           </select>
         </div>
         <div>
+          <div className="offerForm__items">
+            <MdStarRate className="iconRequired" />
+          </div>
           <select
             onChange={(e) => setItem(e.target.value)}
             value={item}
@@ -383,6 +398,9 @@ const OfferForm = () => {
           </select>
         </div>
         <div>
+          <div className="offerForm__items">
+            <MdStarRate className="iconRequired" />
+          </div>
           <select
             onChange={(e) => setCondition(e.target.value)}
             value={condition}
@@ -430,7 +448,9 @@ const OfferForm = () => {
           g
         </div>
         <div className="offerForm__deliveries">
-          <span className="offerForm__switchContainer__span">Modes de livraison :</span>
+          <span className="offerForm__switchContainer__span">
+            Modes de livraison : <MdStarRate className="iconRequired" />
+          </span>
           <div className="delivererList">
             <div className="offerForm__switchContainer">
               <span className="offerForm__switchContainer__span">

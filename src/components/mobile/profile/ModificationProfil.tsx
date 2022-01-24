@@ -24,7 +24,8 @@ import IUserLog from '../../../interfaces/IUser';
 import HeaderProfil from '../layout/HeaderProfil';
 
 const ModificationProfil = () => {
-  const { user, id } = useContext(CurrentUserContext);
+  const { user, idUser } = useContext(CurrentUserContext);
+
   const [gender, setGender] = useState<Array<any>>([]);
   const [athletic, setAthletic] = useState<Array<any>>([]);
   const [country, setCountry] = useState<Array<any>>([]);
@@ -47,10 +48,10 @@ const ModificationProfil = () => {
   const [hiEye2, setHiEye2] = useState<boolean>(true);
   const [goodEntryVerifyPassword, setGoodEntryVerifyPassword] = useState<number>(0);
   const [goodEntryPassword, setGoodEntryPassword] = useState<number>(0);
+  const [messageError, setMessageError] = useState<string>('');
   const [message, setMessage] = useState<string>('');
 
   const urlBack = import.meta.env.VITE_URL_BACK;
-
   // UseEffect to admin right format of password .
   useEffect(() => {
     if (password?.length != undefined && password.length > 7) {
@@ -87,10 +88,9 @@ const ModificationProfil = () => {
     const file: File = (target.files as FileList)[0];
     const formData = new FormData();
     formData.append('imageUser', file);
-    console.log(formData);
     axios
       .put<IUserLog>(
-        `${urlBack}/users/image/${id}`,
+        `${urlBack}/users/image/${idUser}`,
         formData,
 
         {
@@ -100,8 +100,18 @@ const ModificationProfil = () => {
           withCredentials: true,
         },
       )
-      .then((res) => res.data)
-      .catch((err) => console.error(err.message));
+      .then((res) => {
+        res.data;
+        setMessage('Photo sauvegardée');
+        setMessageError('');
+      })
+      .catch((err) => {
+        console.error(err);
+        setMessage('');
+        setMessageError(
+          "Le fichier est trop volumineux ou n'est pas au bon format (jpeg/jpg/png)",
+        );
+      });
   };
 
   // Axios call for update user informations
@@ -109,7 +119,7 @@ const ModificationProfil = () => {
     if (password === verifyPassword) {
       axios
         .put<IUserLog>(
-          `${urlBack}/users/${id}`,
+          `${urlBack}/users/${idUser}`,
           {
             pseudo,
             lastname,
@@ -131,12 +141,15 @@ const ModificationProfil = () => {
             withCredentials: true,
           },
         )
-        .then((res) => res.data)
+        .then((res) => {
+          res.data;
+          setMessage('Vos données, on été mise à jour');
+        })
         .catch((err) => {
           if (err.response.data.message === 'Pseudo already exists') {
-            setMessage("Ce pseudo n'est pas disponible!");
+            setMessageError("Ce pseudo n'est pas disponible!");
           } else if (err.response.data.message === 'Email already exists') {
-            setMessage('Cette adresse e-mail est déjà utilisée');
+            setMessageError('Cette adresse e-mail est déjà utilisée');
           } else {
             console.log(err.response.data.message);
           }
@@ -399,7 +412,8 @@ const ModificationProfil = () => {
         </div>
 
         <button type="submit">Modifier vos données</button>
-        <p>{message}</p>
+        {message != '' && <p style={{ color: 'green' }}>{message}</p>}
+        {messageError != '' && <p style={{ color: 'red' }}>{messageError}</p>}
       </form>
     </div>
   );
