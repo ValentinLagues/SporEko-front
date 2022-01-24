@@ -31,7 +31,6 @@
       &__icons {
         margin-left: 5vw;
       }
-
       & label {
         font-size: 2.5vh;
         width: 80vw;
@@ -45,7 +44,7 @@
         height: 4vh;
         border: none;
       }
-      & input::placeholder {
+      & & input::placeholder {
         opacity: 0.6;
       }
 

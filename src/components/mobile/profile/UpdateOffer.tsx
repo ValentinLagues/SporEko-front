@@ -1,7 +1,7 @@
 import React from 'react';
 
 const UpdateOffer = () => {
-  return <div>update offer</div>;
+  return <div></div>;
 };
 
 export default UpdateOffer;
