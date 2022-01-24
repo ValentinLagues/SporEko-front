@@ -32,8 +32,8 @@ const ModificationProfil = () => {
   const [pseudo, setPseudo] = useState<string | undefined>(user.pseudo);
   const [lastname, setLastName] = useState<string | undefined>(user.lastname);
   const [firstname, setFirstname] = useState<string | undefined>();
-  const [adress, setAdress] = useState<string | undefined>();
-  const [adress_complement, setAdress_complement] = useState<string>();
+  const [address, setAddress] = useState<string | undefined>();
+  const [address_complement, setAddress_complement] = useState<string>();
   const [zipcode, setZipcode] = useState<number | undefined>();
   const [city, setCity] = useState<string | undefined>();
   const [id_country, setId_country] = useState<string | undefined>();
@@ -115,26 +115,27 @@ const ModificationProfil = () => {
   };
 
   // Axios call for update user informations
-  const updatedUser = () => {
+  const updatedUser = (e: React.FormEvent<HTMLFormElement>) => {
     if (password === verifyPassword) {
+      e.preventDefault;
       axios
         .put<IUserLog>(
           `${urlBack}/users/${idUser}`,
           {
-            pseudo,
             lastname,
             firstname,
-            adress,
-            adress_complement,
-            city,
+            address,
             zipcode,
-            id_country,
+            city,
             email,
             password,
-            phone,
-            birthday,
             id_gender,
+            id_country,
+            address_complement,
             id_athletic,
+            birthday,
+            phone,
+            pseudo,
           },
 
           {
@@ -142,7 +143,7 @@ const ModificationProfil = () => {
           },
         )
         .then((res) => {
-          res.data;
+          console.log(res);
           setMessage('Vos données, on été mise à jour');
         })
         .catch((err) => {
@@ -151,7 +152,7 @@ const ModificationProfil = () => {
           } else if (err.response.data.message === 'Email already exists') {
             setMessageError('Cette adresse e-mail est déjà utilisée');
           } else {
-            console.log(err.response.data.message);
+            console.log({ ...err });
           }
         });
     }
@@ -168,7 +169,7 @@ const ModificationProfil = () => {
       <HeaderProfil />
       <form
         action=""
-        onSubmit={() => updatedUser()}
+        onSubmit={(e) => updatedUser(e)}
         className="modificationProfil__container">
         {/*------------------------Input pseudo----------------------------- */}
         <div className="modificationProfil__container__content">
@@ -209,8 +210,8 @@ const ModificationProfil = () => {
           <input
             name="Adresse"
             type="text"
-            placeholder={user.adress ? user.adress : 'Votre adresse'}
-            onChange={(e) => setAdress(e.target.value)}
+            placeholder={user.address ? user.address : 'Votre adresse'}
+            onChange={(e) => setAddress(e.target.value)}
           />
           <hr />
         </div>
@@ -225,9 +226,9 @@ const ModificationProfil = () => {
             name="Adresse complément"
             type="text"
             placeholder={
-              user.adress_complement ? user.adress_complement : "Complément d'adresse"
+              user.address_complement ? user.address_complement : "Complément d'adresse"
             }
-            onChange={(e) => setAdress_complement(e.target.value)}
+            onChange={(e) => setAddress_complement(e.target.value)}
           />
           <hr />
         </div>
