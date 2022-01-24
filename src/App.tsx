@@ -11,7 +11,9 @@ import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
 import Shipement from './components/mobile/profile/Shipement';
 import FilterMenu from './components/mobile/search/FilterMenu';
+import AllOffers from './components/mobile/allOffers/AllOffers';
 import CurrentUserContext from './contexts/CurrentUser';
+import OfferDetails from './components/mobile/offerDetails/OfferDetails';
 
 function App() {
   const { id, accepted } = useContext(CurrentUserContext);
@@ -24,6 +26,8 @@ function App() {
           <Route path="/search" element={<FilterMenu />} />
           <Route path="/connection" element={<Connection />} />
           <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/offers" element={<AllOffers />} />
+          <Route path="/offers/:id" element={<OfferDetails />} />
         </Routes>
         {(id || accepted) && (
           <Routes>
