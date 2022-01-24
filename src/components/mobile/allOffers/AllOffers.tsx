@@ -52,10 +52,10 @@ const AllOffers = () => {
                 <Link
                   to={`/offers/${offer.id_offer}`}
                   className="allOffers__offer__detail__linkOfferDetails">
-                  <img
+                  {/* <img
                     src={offer.picture1}
                     alt={`Main Picture of ${offer.id_user_seller}`}
-                  />
+                  /> */}
                 </Link>
               </li>
               <li className="allOffers__offer__detail__price">
