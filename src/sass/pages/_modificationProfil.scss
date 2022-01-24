@@ -1,6 +1,6 @@
 .modificationProfil {
   text-align: center;
-  height: 170vh;
+  height: 180vh;
   &__container {
     width: 90vw;
     margin-bottom: 20vh;
@@ -10,27 +10,47 @@
     border-radius: 10px;
     box-shadow: $boxShadow;
 
+    & p {
+      text-align: center;
+      width: 100vw;
+      height: 10vh;
+      font-size: 2.5vh;
+      padding: 0 1vw;
+    }
+
     &__content {
       position: relative;
       width: 100vw;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       color: $colorText;
       display: flex;
       align-items: center;
       padding: 1vh 5vw;
       text-align: left;
       height: 5vh;
-      font-size: 1.1em;
       &__icons {
         margin-left: 5vw;
       }
+
+      & label {
+        font-size: 2.5vh;
+        width: 80vw;
+        height: 5vh;
+        text-align: center;
+      }
       & input {
+        font-size: 2.5vh;
         width: 60vw;
         margin-left: 2vw;
         height: 4vh;
         border: none;
       }
+      & input::placeholder {
+        opacity: 0.6;
+      }
+
       & select {
+        font-size: 2.5vh;
         align-content: flex-end;
         width: 45vw;
         margin-left: 2vw;
@@ -46,7 +66,8 @@
       }
     }
     & button {
-      margin: 5vh auto;
+      font-size: 2.5vh;
+      margin: 8vh auto 3vh auto;
       padding: 2vh;
       border-radius: 10px;
       box-shadow: $boxShadow;

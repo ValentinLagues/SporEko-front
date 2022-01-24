@@ -16,7 +16,7 @@ import FilterMenu from './components/mobile/search/FilterMenu';
 import CurrentUserContext from './contexts/CurrentUser';
 
 function App() {
-  const { id, accepted } = useContext(CurrentUserContext);
+  const { idUser, accepted } = useContext(CurrentUserContext);
 
   return (
     <div className="App">
@@ -29,7 +29,7 @@ function App() {
           <Route path="/offers" element={<AllOffers />} />
           <Route path="/offers/:id" element={<OfferDetails />} />
         </Routes>
-        {(id || accepted) && (
+        {(idUser || accepted) && (
           <Routes>
             <Route path="/offerForm" element={<OfferForm />} />
             <Route path="/profil" element={<Profile />} />

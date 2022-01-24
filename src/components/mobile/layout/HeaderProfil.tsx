@@ -10,11 +10,11 @@ import IUserLog from '../../../interfaces/IUser';
 const HeaderProfil = () => {
   const urlBack = 'http://localhost:8000/';
 
-  const { id, setUser, user } = useContext(CurrentUserContext);
+  const { idUser, setUser, user } = useContext(CurrentUserContext);
 
   useEffect(() => {
     axios
-      .get<IUserLog>(`${urlBack}users/${id}`, { withCredentials: true })
+      .get<IUserLog>(`${urlBack}users/${idUser}`, { withCredentials: true })
       .then((res) => {
         setUser(res.data);
       })
@@ -28,7 +28,14 @@ const HeaderProfil = () => {
           <img src={LogoRun} alt="Logo" className="headerProfil__intro__logoRun" />
         </Link>
         <div className="headerProfil__intro__photo">
-          <img src={user ? user.picture : PhotoDefault} alt="Avatar" />
+          <img
+            src={user.picture}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = PhotoDefault;
+            }}
+            alt="Avatar"
+          />
         </div>
         <div className="headerProfil__intro__name">
           <h3>
