@@ -11,6 +11,7 @@ import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
 import Shipement from './components/mobile/profile/Shipement';
 import FilterMenu from './components/mobile/search/FilterMenu';
+import UpdateOffer from './components/mobile/profile/UpdateOffer';
 import CurrentUserContext from './contexts/CurrentUser';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route path="/parametres" element={<Settings />} />
             <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
             <Route path="/mode-envoi" element={<Shipement />} />
+            <Route path="/modififer-votre-annonce" element={<UpdateOffer />} />
           </Routes>
         )}
 
