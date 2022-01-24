@@ -50,7 +50,7 @@ const ModificationProfil = () => {
   const [goodEntryPassword, setGoodEntryPassword] = useState<number>(0);
   const [messageError, setMessageError] = useState<string>('');
   const [message, setMessage] = useState<string>('');
-
+  console.log(firstname);
   const urlBack = import.meta.env.VITE_URL_BACK;
   // UseEffect to admin right format of password .
   useEffect(() => {
@@ -122,20 +122,20 @@ const ModificationProfil = () => {
         .put<IUserLog>(
           `${urlBack}/users/${idUser}`,
           {
-            lastname,
-            firstname,
-            address,
-            zipcode,
-            city,
-            email,
-            password,
-            id_gender,
-            id_country,
-            address_complement,
-            id_athletic,
-            birthday,
-            phone,
-            pseudo,
+            lastname: lastname,
+            firstname: firstname,
+            address: address,
+            zipcode: zipcode,
+            city: city,
+            email: email,
+            password: password,
+            id_gender: id_gender,
+            id_country: id_country,
+            address_complement: address_complement,
+            id_athletic: id_athletic,
+            birthday: birthday,
+            phone: phone,
+            pseudo: pseudo,
           },
 
           {
@@ -143,7 +143,7 @@ const ModificationProfil = () => {
           },
         )
         .then((res) => {
-          console.log(res);
+          res;
           setMessage('Vos données, on été mise à jour');
         })
         .catch((err) => {
@@ -167,15 +167,11 @@ const ModificationProfil = () => {
   return (
     <div className="modificationProfil">
       <HeaderProfil />
-      <form
-        action=""
-        onSubmit={(e) => updatedUser(e)}
-        className="modificationProfil__container">
+      <form onSubmit={(e) => updatedUser(e)} className="modificationProfil__container">
         {/*------------------------Input pseudo----------------------------- */}
         <div className="modificationProfil__container__content">
           <FiUserMinus className="modificationProfil__container__content__icons" />
           <input
-            name="Pseudo"
             type="text"
             placeholder={user.pseudo ? user.pseudo : 'Votre pseudo'}
             onChange={(e) => setPseudo(e.target.value)}
@@ -186,8 +182,8 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiMeh className="modificationProfil__container__content__icons" />
           <input
-            name="Prénom"
             type="text"
+            defaultValue={firstname}
             placeholder={user.firstname ? user.firstname : 'Votre Prénom'}
             onChange={(e) => setFirstname(e.target.value)}
           />
@@ -197,7 +193,6 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiMeh className="modificationProfil__container__content__icons" />
           <input
-            name="Nom"
             type="text"
             placeholder={user.lastname ? user.lastname : 'Votre nom'}
             onChange={(e) => setLastName(e.target.value)}
@@ -208,7 +203,6 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiHome className="modificationProfil__container__content__icons" />
           <input
-            name="Adresse"
             type="text"
             placeholder={user.address ? user.address : 'Votre adresse'}
             onChange={(e) => setAddress(e.target.value)}
@@ -223,7 +217,6 @@ const ModificationProfil = () => {
           </div>
 
           <input
-            name="Adresse complément"
             type="text"
             placeholder={
               user.address_complement ? user.address_complement : "Complément d'adresse"
@@ -236,7 +229,6 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiMapPin className="modificationProfil__container__content__icons" />
           <input
-            name="Ville"
             type="text"
             placeholder={user.city ? user.city : 'Ville'}
             onChange={(e) => setCity(e.target.value)}
@@ -247,7 +239,6 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiMapPin className="modificationProfil__container__content__icons" />
           <input
-            name="Code postal"
             type="number"
             min="0"
             max="99999"
@@ -259,7 +250,7 @@ const ModificationProfil = () => {
         {/*------------------------Select Country----------------------------- */}
         <div className="modificationProfil__container__content">
           <FiMap className="modificationProfil__container__content__icons" />
-          <select name="Pays" onChange={(e) => setId_country(e.target.value)}>
+          <select onChange={(e) => setId_country(e.target.value)}>
             {country
               .filter((el) => el.id_country == user.id_country)
               .map((el, index) => (
@@ -279,7 +270,6 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiMail className="modificationProfil__container__content__icons" />
           <input
-            name="Email"
             type="email"
             placeholder={user.email ? user.email : 'Entrez votre email'}
             onChange={(e) => setEmail(e.target.value)}
@@ -300,7 +290,6 @@ const ModificationProfil = () => {
           )}
           <FiLock className="modificationProfil__container__content__icons" />
           <input
-            name="MDP"
             placeholder="Modifier votre mot de passe"
             type={`${hiEye ? 'password' : 'text'}`}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
@@ -316,7 +305,7 @@ const ModificationProfil = () => {
             <ImCheckmark
               style={{ right: '16vw', position: 'absolute', color: 'green' }}
             />
-          )}{' '}
+          )}
           {goodEntryVerifyPassword === 2 && (
             <ImCancelCircle
               style={{ right: '16vw', position: 'absolute', color: 'red' }}
@@ -324,7 +313,6 @@ const ModificationProfil = () => {
           )}
           <FiKey className="modificationProfil__container__content__icons" />
           <input
-            name="MDP verification"
             placeholder="Confirmer votre mot de passe"
             type={`${hiEye2 ? 'password' : 'text'}`}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
@@ -338,7 +326,6 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiPhone className="modificationProfil__container__content__icons" />
           <input
-            name="Téléphone"
             type="tel"
             placeholder={user.phone ? user.phone : 'Entrer votre téléphone'}
             onChange={(e) => setPhone(e.target.value)}
@@ -350,7 +337,6 @@ const ModificationProfil = () => {
           <FiCalendar className="modificationProfil__container__content__icons" />
           <input
             placeholder={user.birthday}
-            name="Date de naissance"
             type="date"
             onChange={(e) => setBirthday(e.target.value)}
           />
@@ -360,7 +346,7 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <BiRun className="modificationProfil__container__content__icons" />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <select name="Sportif" onChange={(e) => setId_athletic(e.target.value)}>
+          <select onChange={(e) => setId_athletic(e.target.value)}>
             {athletic
               .filter((el) => el.id_athletic == user.id_athletic)
               .map((el, index) => (
@@ -383,7 +369,7 @@ const ModificationProfil = () => {
             <BsGenderAmbiguous />
           </div>
           {/*------------------------Select gender----------------------------- */}
-          <select name="Genre" onChange={(e) => setId_gender(e.currentTarget.value)}>
+          <select onChange={(e) => setId_gender(e.currentTarget.value)}>
             {gender
               .filter((el) => el.id_gender == user.id_gender)
               .map((el, index) => (
@@ -405,7 +391,6 @@ const ModificationProfil = () => {
           <FiFile className="modificationProfil__container__content__icons" />
           <input
             id="imageUser"
-            name="imageUser"
             type="file"
             style={{ height: 'auto', fontSize: '2.2vh' }}
             onChange={(e) => handleFileInput(e)}
