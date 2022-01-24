@@ -31,6 +31,8 @@ const Search = () => {
     axios.get(`${urlBack}/categories`).then((res) => setCategoryList(res.data));
   }, []);
 
+  console.log(categoryIsClothes);
+
   const handleReset = () => {
     setSport('');
     setGender(null);

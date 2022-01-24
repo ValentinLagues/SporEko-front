@@ -2,8 +2,6 @@ import React, { useContext } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import ConfirmOrder from './components/mobile/confirmOrder/ConfirmOrder';
-import Search from './components/mobile/search/Search';
-
 import Connection from './components/mobile/connection/Connection';
 import CreateAccount from './components/mobile/createAccount/CreateAccount';
 import Home from './components/mobile/Home/Home';
@@ -14,6 +12,7 @@ import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
 import Shipement from './components/mobile/profile/Shipement';
 import FilterMenu from './components/mobile/search/FilterMenu';
+import Search from './components/mobile/search/Search';
 import CurrentUserContext from './contexts/CurrentUser';
 
 function App() {

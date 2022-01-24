@@ -1,15 +1,15 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
+import ICondition from '../../../interfaces/ICondition';
+import IDeliverer from '../../../interfaces/IDeliverer';
 // import { BiPackage, BiCheckShield } from 'react-icons/bi';
 // import { AiOutlineLock } from 'react-icons/ai';
 // import CurrentUserContext from '../../../contexts/CurrentUser';
 // import OfferContext from '../../../contexts/Offer';
 import IOffer from '../../../interfaces/IOffer';
-import IUserLog from '../../../interfaces/IUser';
 import ISize from '../../../interfaces/ISize';
-import IDeliverer from '../../../interfaces/IDeliverer';
-import ICondition from '../../../interfaces/ICondition';
+import IUserLog from '../../../interfaces/IUser';
 
 interface IOffer_Deliverer {
   id_offer_deliverer: number;
@@ -45,6 +45,7 @@ const ConfirmOrder = () => {
       axios.get(`${urlBack}/deliverers`).then((res) => setDeliverersList(res.data));
     });
   }, []);
+  console.log(confirmDeliverer);
   console.log(deliverersList);
   return (
     <div className="confirmorder">
