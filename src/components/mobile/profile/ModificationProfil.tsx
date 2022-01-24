@@ -50,7 +50,7 @@ const ModificationProfil = () => {
   const [goodEntryPassword, setGoodEntryPassword] = useState<number>(0);
   const [messageError, setMessageError] = useState<string>('');
   const [message, setMessage] = useState<string>('');
-  console.log(firstname);
+
   const urlBack = import.meta.env.VITE_URL_BACK;
   // UseEffect to admin right format of password .
   useEffect(() => {
@@ -144,12 +144,15 @@ const ModificationProfil = () => {
         )
         .then((res) => {
           res;
+          setMessageError('');
           setMessage('Vos données, on été mise à jour');
         })
         .catch((err) => {
           if (err.response.data.message === 'Pseudo already exists') {
+            setMessage('');
             setMessageError("Ce pseudo n'est pas disponible!");
           } else if (err.response.data.message === 'Email already exists') {
+            setMessage('');
             setMessageError('Cette adresse e-mail est déjà utilisée');
           } else {
             console.log({ ...err });
@@ -183,7 +186,6 @@ const ModificationProfil = () => {
           <FiMeh className="modificationProfil__container__content__icons" />
           <input
             type="text"
-            defaultValue={firstname}
             placeholder={user.firstname ? user.firstname : 'Votre Prénom'}
             onChange={(e) => setFirstname(e.target.value)}
           />
