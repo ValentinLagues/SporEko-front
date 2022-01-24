@@ -4,9 +4,9 @@ import { HiChevronDown } from 'react-icons/hi';
 
 import IBrand from '../../../interfaces/IBrand';
 import ICategory from '../../../interfaces/ICategory';
-import IItem from '../../../interfaces/IItem';
 import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
+import IItem from '../../../interfaces/IItem';
 import ISize from '../../../interfaces/ISize';
 import ISport from '../../../interfaces/ISport';
 import ITextile from '../../../interfaces/ITextile';
@@ -30,7 +30,6 @@ const FilterMenu = () => {
   const [genderIsChild, setGenderIsChild] = useState(false);
   const [category, setCategory] = useState('');
   const [item, setItem] = useState('');
-  // const [sizeType, setSizeType] = useState<number | null>(null);
   const [categoryIsClothes, setCategoryIsClothes] = useState(false);
   const [condition, setCondition] = useState('');
   const [textile, setTextile] = useState('');
@@ -45,7 +44,6 @@ const FilterMenu = () => {
   useEffect(() => {
     axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
     axios.get(`${urlBack}/categories`).then((res) => setCategoryList(res.data));
-    // axios.get(`${urlBack}/items`).then((res) => setItemList(res.data));
     axios.get(`${urlBack}/conditions`).then((res) => setConditionList(res.data));
     axios.get(`${urlBack}/textiles`).then((res) => setTextileList(res.data));
     axios.get(`${urlBack}/colors`).then((res) => setColorList(res.data));
