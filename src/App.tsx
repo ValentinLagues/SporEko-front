@@ -14,7 +14,7 @@ import FilterMenu from './components/mobile/search/FilterMenu';
 import CurrentUserContext from './contexts/CurrentUser';
 
 function App() {
-  const { id, accepted } = useContext(CurrentUserContext);
+  const { idUser, accepted } = useContext(CurrentUserContext);
 
   return (
     <div className="App">
@@ -25,7 +25,7 @@ function App() {
           <Route path="/connection" element={<Connection />} />
           <Route path="/create-account" element={<CreateAccount />} />
         </Routes>
-        {(id || accepted) && (
+        {(idUser || accepted) && (
           <Routes>
             <Route path="/offerForm" element={<OfferForm />} />
             <Route path="/profil" element={<Profile />} />
