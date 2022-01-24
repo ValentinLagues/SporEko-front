@@ -1,0 +1,76 @@
+.modificationProfil {
+  text-align: center;
+  height: 180vh;
+  &__container {
+    width: 90vw;
+    margin-bottom: 20vh;
+    margin: 2vh 5vw;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 10px;
+    box-shadow: $boxShadow;
+
+    & p {
+      color: rgba(255, 0, 0, 0.616);
+      text-align: center;
+      width: 100vw;
+      height: 10vh;
+      font-size: 2.5vh;
+    }
+
+    &__content {
+      position: relative;
+      width: 100vw;
+      flex-wrap: wrap;
+      color: $colorText;
+      display: flex;
+      align-items: center;
+      padding: 1vh 5vw;
+      text-align: left;
+      height: 5vh;
+      &__icons {
+        margin-left: 5vw;
+      }
+
+      & label {
+        font-size: 2.5vh;
+        width: 80vw;
+        height: 5vh;
+        text-align: center;
+      }
+      & input {
+        font-size: 2.5vh;
+        width: 60vw;
+        margin-left: 2vw;
+        height: 4vh;
+        border: none;
+      }
+      & input::placeholder {
+        opacity: 0.6;
+      }
+
+      & select {
+        font-size: 2.5vh;
+        align-content: flex-end;
+        width: 45vw;
+        margin-left: 2vw;
+        height: 4vh;
+        border: none;
+      }
+      & hr {
+        margin: 0 5vw;
+        width: 70vw;
+        margin-top: 7vh;
+        opacity: 0.6;
+        position: absolute;
+      }
+    }
+    & button {
+      font-size: 2.5vh;
+      margin: 8vh auto 3vh auto;
+      padding: 2vh;
+      border-radius: 10px;
+      box-shadow: $boxShadow;
+    }
+  }
+}

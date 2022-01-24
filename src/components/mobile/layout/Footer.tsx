@@ -6,9 +6,7 @@ import { FiMail } from 'react-icons/fi';
 import { FiHeart } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
-type Props = { userIn?: boolean };
-
-const Footer: React.FC<Props> = ({ userIn = false }) => {
+const Footer = () => {
   return (
     <div className="footer">
       <ul className="footer__footerContainer">
@@ -19,7 +17,7 @@ const Footer: React.FC<Props> = ({ userIn = false }) => {
           </Link>
         </li>
         <li>
-          <Link to="/">
+          <Link to="/search">
             <BsSearch className="footer__footerContainer__footerIcons" />
             Rechercher
           </Link>
@@ -32,16 +30,15 @@ const Footer: React.FC<Props> = ({ userIn = false }) => {
           </Link>
         </li>
         <li>
-          {!userIn && (
-            <Link to="/connection">
-              <CgProfile className="footer__footerContainer__footerIcons" />
-              Compte
-            </Link>
-          )}
-          {userIn && (
+          {sessionStorage.getItem('idBool') ? (
             <Link to="/profil">
               <CgProfile className="footer__footerContainer__footerIcons" />
               Profil
+            </Link>
+          ) : (
+            <Link to="/connection">
+              <CgProfile className="footer__footerContainer__footerIcons" />
+              Compte
             </Link>
           )}
         </li>

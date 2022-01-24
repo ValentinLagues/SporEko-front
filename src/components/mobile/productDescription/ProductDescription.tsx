@@ -1,11 +1,25 @@
+// import axios from 'axios';
 import React from 'react';
 
 import TestImage from '../../../../resources/testFicheProduit.jpg';
+// import OfferContext from '../../../contexts/Offer';
+// import Ioffer from '../../../interfaces/IOffer';
+
+// const urlBack = import.meta.env.VITE_URL_BACK;
 
 const ProductDescription = () => {
+  //   const [offer, setOffer] = useState();
+  //   const [size, setSize] = useState();
+  //   const [sellerAddress, setSellerAddress] = useState();
+
+  // useEffect(()=> {
+  //   axios
+  //     .get()
+  // })
   return (
     <div className="product-description">
       <div className="product-description__container-picture">
+        {/* --------------------Container photo principale----------------- */}
         <img
           className="product-description__container-picture__big-picture"
           src={TestImage}

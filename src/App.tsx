@@ -11,25 +11,33 @@ import ModificationProfil from './components/mobile/profile/ModificationProfil';
 import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
 import Shipement from './components/mobile/profile/Shipement';
+import FilterMenu from './components/mobile/search/FilterMenu';
 import CurrentUserContext from './contexts/CurrentUser';
 
 function App() {
-  const { id } = useContext(CurrentUserContext);
+  const { id, accepted } = useContext(CurrentUserContext);
+
   return (
     <div className="App">
       <HashRouter basename="/">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/search" element={<FilterMenu />} />
           <Route path="/connection" element={<Connection />} />
           <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/offerForm" element={<OfferForm />} />
-          <Route path="/profil" element={<Profile userIn={id != 0} />} />
-          <Route path="/parametre" element={<Settings />} />
-          <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
-          <Route path="/mode-envoi" element={<Shipement />} />
-          <Route path="/product-description" element={<ProductDescription />} />
         </Routes>
-        <Footer userIn={id != 0} />
+        {(id || accepted) && (
+          <Routes>
+            <Route path="/offerForm" element={<OfferForm />} />
+            <Route path="/profil" element={<Profile />} />
+            <Route path="/parametres" element={<Settings />} />
+            <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
+            <Route path="/mode-envoi" element={<Shipement />} />
+            <Route path="/product-description" element={<ProductDescription />} />
+          </Routes>
+        )}
+
+        <Footer />
       </HashRouter>
     </div>
   );
