@@ -21,13 +21,12 @@ const Connection = () => {
     navigate('/');
   }
 
-  const urlBack = 'http://localhost:8000/';
-
+  const urlBack = import.meta.env.VITE_URL_BACK;
   const login = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     axios
       .post<IUser>(
-        `${urlBack}login`,
+        `${urlBack}/login`,
         { email, password },
         {
           method: 'POST',
@@ -41,7 +40,6 @@ const Connection = () => {
       .then((data) => {
         setErrorMessage('');
         sessionStorage.setItem('pseudo', data.pseudo);
-        sessionStorage.setItem('idBool', '1');
         sessionStorage.setItem('id', `${data.id}`);
         setAccepted(true);
         redirectHome();
@@ -95,7 +93,7 @@ const Connection = () => {
         {errorMessage && <div>{errorMessage}</div>}
       </form>
       <div className="connectionPage__span">
-        <span className="connectionPage__span--bold">Devenir un SporEko ?</span>
+        <span className="connectionPage__span--bold">Devenir un SporEko ? </span>
         <span>
           <Link to="/create-account" className="connectionPage__span--red">
             Créer un compte

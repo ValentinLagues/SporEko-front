@@ -1,8 +1,13 @@
 .offerForm {
   color: gray;
-  margin-bottom: 100vh;
+  margin-bottom: 10vh;
   &__form {
     padding: 20px;
+  }
+  &__items {
+    position: absolute;
+    margin-top: 6px;
+    margin-left: 88vw;
   }
   & .iconRequired {
     color: red;
