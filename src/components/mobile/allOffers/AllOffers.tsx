@@ -5,7 +5,7 @@ import { AiFillHeart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 import CurrentUserContext from '../../../contexts/CurrentUser';
-import IFavorite from '../../../interfaces/IFavorites';
+import IFavorite from '../../../interfaces/IFavorite';
 import IOffer from '../../../interfaces/IOffer';
 
 const AllOffers = () => {
@@ -23,11 +23,11 @@ const AllOffers = () => {
       .then((res) => console.log(res.data));
   };
 
-  // const deleteFavorite = (id: any) => {
-  //   axios
-  //     .delete(`${urlBack}/favorites`, { id_user: id })
-  //     .then((res) => console.log(res.data));
-  // };
+  const deleteFavorite = (id: any) => {
+    axios
+      .delete(`${urlBack}/favorites`, { id_user: id })
+      .then((res) => console.log(res.data));
+  };
 
   // useEffect offers, sports, users //
   const urlBack = import.meta.env.VITE_URL_BACK;
@@ -52,10 +52,10 @@ const AllOffers = () => {
                 <Link
                   to={`/offers/${offer.id_offer}`}
                   className="allOffers__offer__detail__linkOfferDetails">
-                  {/* <img
+                  <img
                     src={offer.picture1}
                     alt={`Main Picture of ${offer.id_user_seller}`}
-                  /> */}
+                  />
                 </Link>
               </li>
               <li className="allOffers__offer__detail__price">
