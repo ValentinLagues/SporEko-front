@@ -4,6 +4,16 @@
   font-family: 'Quicksand', sans-serif;
 }
 
+li {
+  list-style: none;
+}
+
+a {
+  outline: none;
+  text-decoration: none;
+  color: $colorText;
+}
+
 h1,
 h2,
 h3,

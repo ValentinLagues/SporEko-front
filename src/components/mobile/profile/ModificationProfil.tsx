@@ -20,6 +20,7 @@ import { HiEye } from 'react-icons/hi';
 import { ImCancelCircle, ImCheckmark } from 'react-icons/im';
 
 import CurrentUserContext from '../../../contexts/CurrentUser';
+import IUser from '../../../interfaces/IUser';
 import IUserLog from '../../../interfaces/IUser';
 import HeaderProfil from '../layout/HeaderProfil';
 
@@ -32,8 +33,8 @@ const ModificationProfil = () => {
   const [pseudo, setPseudo] = useState<string | undefined>(user.pseudo);
   const [lastname, setLastName] = useState<string | undefined>(user.lastname);
   const [firstname, setFirstname] = useState<string | undefined>();
-  const [adress, setAdress] = useState<string | undefined>();
-  const [adress_complement, setAdress_complement] = useState<string>();
+  const [address, setAddress] = useState<string | undefined>();
+  const [address_complement, setAddress_complement] = useState<string>();
   const [zipcode, setZipcode] = useState<number | undefined>();
   const [city, setCity] = useState<string | undefined>();
   const [id_country, setId_country] = useState<string | undefined>();
@@ -50,6 +51,7 @@ const ModificationProfil = () => {
   const [goodEntryPassword, setGoodEntryPassword] = useState<number>(0);
   const [messageError, setMessageError] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+  const [updateUser, setUpdateUser] = useState<IUser>();
 
   const urlBack = import.meta.env.VITE_URL_BACK;
   // UseEffect to admin right format of password .
@@ -83,6 +85,7 @@ const ModificationProfil = () => {
   }, [password, verifyPassword]);
 
   // Function axios to change picture of user
+
   const handleFileInput = (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
@@ -114,48 +117,55 @@ const ModificationProfil = () => {
       });
   };
 
-  // Axios call for update user informations
   const updatedUser = () => {
     if (password === verifyPassword) {
-      axios
-        .put<IUserLog>(
-          `${urlBack}/users/${idUser}`,
-          {
-            pseudo,
-            lastname,
-            firstname,
-            adress,
-            adress_complement,
-            city,
-            zipcode,
-            id_country,
-            email,
-            password,
-            phone,
-            birthday,
-            id_gender,
-            id_athletic,
-          },
-
-          {
-            withCredentials: true,
-          },
-        )
-        .then((res) => {
-          res.data;
-          setMessage('Vos données, on été mise à jour');
-        })
-        .catch((err) => {
-          if (err.response.data.message === 'Pseudo already exists') {
-            setMessageError("Ce pseudo n'est pas disponible!");
-          } else if (err.response.data.message === 'Email already exists') {
-            setMessageError('Cette adresse e-mail est déjà utilisée');
-          } else {
-            console.log(err.response.data.message);
-          }
-        });
+      const newUpdateUser = {
+        lastname,
+        firstname,
+        address,
+        zipcode,
+        city,
+        email,
+        password,
+        id_gender,
+        id_country,
+        address_complement,
+        id_athletic,
+        birthday,
+        phone,
+        pseudo,
+      } as unknown as IUser;
+      setUpdateUser(newUpdateUser);
     }
   };
+  // Axios call for update user informations
+  useEffect(() => {
+    axios
+      .put<IUserLog>(
+        `${urlBack}/users/${idUser}`,
+        updateUser,
+
+        {
+          withCredentials: true,
+        },
+      )
+      .then((res) => {
+        res;
+        setMessageError('');
+        setMessage('Vos données, on été mise à jour');
+      })
+      .catch((err) => {
+        if (err.response.data.message === 'Pseudo already exists') {
+          setMessage('');
+          setMessageError("Ce pseudo n'est pas disponible!");
+        } else if (err.response.data.message === 'Email already exists') {
+          setMessage('');
+          setMessageError('Cette adresse e-mail est déjà utilisée');
+        } else {
+          console.log({ ...err });
+        }
+      });
+  }, [updateUser]);
 
   useEffect(() => {
     axios.get(`${urlBack}/genders`).then((res) => setGender(res.data));
@@ -166,15 +176,11 @@ const ModificationProfil = () => {
   return (
     <div className="modificationProfil">
       <HeaderProfil />
-      <form
-        action=""
-        onSubmit={() => updatedUser()}
-        className="modificationProfil__container">
+      <form onSubmit={() => updatedUser()} className="modificationProfil__container">
         {/*------------------------Input pseudo----------------------------- */}
         <div className="modificationProfil__container__content">
           <FiUserMinus className="modificationProfil__container__content__icons" />
           <input
-            name="Pseudo"
             type="text"
             placeholder={user.pseudo ? user.pseudo : 'Votre pseudo'}
             onChange={(e) => setPseudo(e.target.value)}
@@ -185,7 +191,6 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiMeh className="modificationProfil__container__content__icons" />
           <input
-            name="Prénom"
             type="text"
             placeholder={user.firstname ? user.firstname : 'Votre Prénom'}
             onChange={(e) => setFirstname(e.target.value)}
@@ -196,7 +201,6 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiMeh className="modificationProfil__container__content__icons" />
           <input
-            name="Nom"
             type="text"
             placeholder={user.lastname ? user.lastname : 'Votre nom'}
             onChange={(e) => setLastName(e.target.value)}
@@ -207,10 +211,9 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiHome className="modificationProfil__container__content__icons" />
           <input
-            name="Adresse"
             type="text"
-            placeholder={user.adress ? user.adress : 'Votre adresse'}
-            onChange={(e) => setAdress(e.target.value)}
+            placeholder={user.address ? user.address : 'Votre adresse'}
+            onChange={(e) => setAddress(e.target.value)}
           />
           <hr />
         </div>
@@ -222,12 +225,11 @@ const ModificationProfil = () => {
           </div>
 
           <input
-            name="Adresse complément"
             type="text"
             placeholder={
-              user.adress_complement ? user.adress_complement : "Complément d'adresse"
+              user.address_complement ? user.address_complement : "Complément d'adresse"
             }
-            onChange={(e) => setAdress_complement(e.target.value)}
+            onChange={(e) => setAddress_complement(e.target.value)}
           />
           <hr />
         </div>
@@ -235,7 +237,6 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiMapPin className="modificationProfil__container__content__icons" />
           <input
-            name="Ville"
             type="text"
             placeholder={user.city ? user.city : 'Ville'}
             onChange={(e) => setCity(e.target.value)}
@@ -246,7 +247,6 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiMapPin className="modificationProfil__container__content__icons" />
           <input
-            name="Code postal"
             type="number"
             min="0"
             max="99999"
@@ -258,7 +258,7 @@ const ModificationProfil = () => {
         {/*------------------------Select Country----------------------------- */}
         <div className="modificationProfil__container__content">
           <FiMap className="modificationProfil__container__content__icons" />
-          <select name="Pays" onChange={(e) => setId_country(e.target.value)}>
+          <select onChange={(e) => setId_country(e.target.value)}>
             {country
               .filter((el) => el.id_country == user.id_country)
               .map((el, index) => (
@@ -278,7 +278,6 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiMail className="modificationProfil__container__content__icons" />
           <input
-            name="Email"
             type="email"
             placeholder={user.email ? user.email : 'Entrez votre email'}
             onChange={(e) => setEmail(e.target.value)}
@@ -299,7 +298,6 @@ const ModificationProfil = () => {
           )}
           <FiLock className="modificationProfil__container__content__icons" />
           <input
-            name="MDP"
             placeholder="Modifier votre mot de passe"
             type={`${hiEye ? 'password' : 'text'}`}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
@@ -315,7 +313,7 @@ const ModificationProfil = () => {
             <ImCheckmark
               style={{ right: '16vw', position: 'absolute', color: 'green' }}
             />
-          )}{' '}
+          )}
           {goodEntryVerifyPassword === 2 && (
             <ImCancelCircle
               style={{ right: '16vw', position: 'absolute', color: 'red' }}
@@ -323,7 +321,6 @@ const ModificationProfil = () => {
           )}
           <FiKey className="modificationProfil__container__content__icons" />
           <input
-            name="MDP verification"
             placeholder="Confirmer votre mot de passe"
             type={`${hiEye2 ? 'password' : 'text'}`}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
@@ -337,7 +334,6 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <FiPhone className="modificationProfil__container__content__icons" />
           <input
-            name="Téléphone"
             type="tel"
             placeholder={user.phone ? user.phone : 'Entrer votre téléphone'}
             onChange={(e) => setPhone(e.target.value)}
@@ -349,7 +345,6 @@ const ModificationProfil = () => {
           <FiCalendar className="modificationProfil__container__content__icons" />
           <input
             placeholder={user.birthday}
-            name="Date de naissance"
             type="date"
             onChange={(e) => setBirthday(e.target.value)}
           />
@@ -359,7 +354,7 @@ const ModificationProfil = () => {
         <div className="modificationProfil__container__content">
           <BiRun className="modificationProfil__container__content__icons" />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <select name="Sportif" onChange={(e) => setId_athletic(e.target.value)}>
+          <select onChange={(e) => setId_athletic(e.target.value)}>
             {athletic
               .filter((el) => el.id_athletic == user.id_athletic)
               .map((el, index) => (
@@ -382,7 +377,7 @@ const ModificationProfil = () => {
             <BsGenderAmbiguous />
           </div>
           {/*------------------------Select gender----------------------------- */}
-          <select name="Genre" onChange={(e) => setId_gender(e.currentTarget.value)}>
+          <select onChange={(e) => setId_gender(e.currentTarget.value)}>
             {gender
               .filter((el) => el.id_gender == user.id_gender)
               .map((el, index) => (
@@ -404,7 +399,6 @@ const ModificationProfil = () => {
           <FiFile className="modificationProfil__container__content__icons" />
           <input
             id="imageUser"
-            name="imageUser"
             type="file"
             style={{ height: 'auto', fontSize: '2.2vh' }}
             onChange={(e) => handleFileInput(e)}
