@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
-import { MdStarRate } from 'react-icons/md';
+// import { MdStarRate } from 'react-icons/md';
 
 import CurrentOfferContext from '../../../../contexts/Offer';
 import IBrand from '../../../../interfaces/IBrand';
@@ -9,13 +9,13 @@ import ICategory from '../../../../interfaces/ICategory';
 import IColor from '../../../../interfaces/IColor';
 import ICondition from '../../../../interfaces/ICondition';
 import IDeliverer from '../../../../interfaces/IDeliverer';
+import IGender from '../../../../interfaces/IGender';
 import IItem from '../../../../interfaces/IItem';
 import IOffer from '../../../../interfaces/IOffer';
 import IOffer_Deliverer from '../../../../interfaces/IOffer_deliverer';
 import ISize from '../../../../interfaces/ISize';
 import ISport from '../../../../interfaces/ISport';
 import ITextile from '../../../../interfaces/ITextile';
-import IGender from '../../../../interfaces/IGender';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
@@ -223,8 +223,8 @@ const UpdateOffer = () => {
               <img key={index} src={picture} alt="annonce" />
             ))}
           {offerSell.length &&
-            offerSell.map((picture: { picture: string | undefined }) => (
-              <img src={picture.picture} alt="annonce" />
+            offerSell.map((picture: { picture: string | undefined }, index: number) => (
+              <img key={index} src={picture.picture} alt="annonce" />
             ))}
         </div>
         {/* ---------------------------Input for title offer------------------------ */}

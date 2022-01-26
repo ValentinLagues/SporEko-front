@@ -78,7 +78,7 @@ const Search = () => {
         className="search__menu"
         id="filterMenuMobile">
         <div className="search__menu__item">
-          <label htmlFor="sports">Sport</label>
+          <label htmlFor="sports">Quel sport recherchez-vous ?</label>
           <select
             onChange={(e) => setSport(e.target.value)}
             value={sport}
@@ -127,7 +127,7 @@ const Search = () => {
             </select>
           </div>
         )}
-        <div className="searchMenu__item">
+        <div className="search__menu__item">
           <label htmlFor="categories">Catégorie</label>
           <select
             onChange={(e) => {
