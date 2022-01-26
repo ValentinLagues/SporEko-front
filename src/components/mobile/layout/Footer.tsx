@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { BsPlusLg } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
-import { FiMail } from 'react-icons/fi';
+import { FiHome } from 'react-icons/fi';
 import { FiHeart } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
+import CurrentUserContext from '../../../contexts/CurrentUser';
+
 const Footer = () => {
+  const { idUser } = useContext(CurrentUserContext);
   return (
     <div className="footer">
       <ul className="footer__footerContainer">
@@ -24,13 +27,13 @@ const Footer = () => {
         </li>
         <li id="vendre">Vendre</li>
         <li>
-          <Link to="/messages">
-            <FiMail className="footer__footerContainer__footerIcons" />
-            Messages
+          <Link to="/">
+            <FiHome className="footer__footerContainer__footerIcons" />
+            Home
           </Link>
         </li>
         <li>
-          {sessionStorage.getItem('idBool') ? (
+          {idUser ? (
             <Link to="/profil">
               <CgProfile className="footer__footerContainer__footerIcons" />
               Profil
