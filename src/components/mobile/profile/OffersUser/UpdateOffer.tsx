@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
-// import { MdStarRate } from 'react-icons/md';
 
+// import { MdStarRate } from 'react-icons/md';
 import CurrentOfferContext from '../../../../contexts/Offer';
 import IBrand from '../../../../interfaces/IBrand';
 import ICategory from '../../../../interfaces/ICategory';
