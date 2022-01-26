@@ -2,11 +2,12 @@ import React, { useContext } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import AllOffers from './components/mobile/allOffers/AllOffers';
-import ConfirmOrder from './components/mobile/confirmOrder/ConfirmOrder';
+// import ConfirmOrder from './components/mobile/confirmOrder/ConfirmOrder';
 import Connection from './components/mobile/connection/Connection';
 import CreateAccount from './components/mobile/createAccount/CreateAccount';
 import Home from './components/mobile/Home/Home';
 import Footer from './components/mobile/layout/Footer';
+import Header from './components/mobile/layout/Header';
 import OfferDetails from './components/mobile/offerDetails/OfferDetails';
 import OfferForm from './components/mobile/offerForm/OfferForm';
 import ModificationProfil from './components/mobile/profile/ModificationProfil';
@@ -24,6 +25,7 @@ function App() {
   return (
     <div className="App">
       <HashRouter basename="/">
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/favorites" element={<Search />} />

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+
 import IOffer from '../../../interfaces/IOffer';
 
 interface Sport {
@@ -33,7 +34,7 @@ const Search = () => {
     axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
     axios.get(`${urlBack}/categories`).then((res) => setCategoryList(res.data));
   }, []);
-
+  console.log(categoryIsClothes);
   console.log(offerList);
   console.log(offer);
 
