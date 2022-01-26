@@ -198,6 +198,7 @@ const UpdateOffer = () => {
             onChange={(e) => handleFileInput(e)}
           />
         </div>
+
         <div>
           <label className="offerForm__label" htmlFor="title">
             <MdStarRate className="iconRequired" /> Titre
