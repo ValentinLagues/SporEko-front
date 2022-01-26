@@ -6,15 +6,17 @@ import AllOffers from './components/mobile/allOffers/AllOffers';
 import Connection from './components/mobile/connection/Connection';
 import CreateAccount from './components/mobile/createAccount/CreateAccount';
 import Home from './components/mobile/Home/Home';
-import Footer from './components/mobile/layout/Footer';
 import Header from './components/mobile/layout/Header';
-import OfferDetails from './components/mobile/offerDetails/OfferDetails';
+import Footer from './components/mobile/layout/Footer';
 import OfferForm from './components/mobile/offerForm/OfferForm';
+// import OfferDetails from './components/mobile/offerDetails/OfferDetails';
 import ModificationProfil from './components/mobile/profile/ModificationProfil';
+import OffersUser from './components/mobile/profile/OffersUser/OffersUser';
+import UpdateOffer from './components/mobile/profile/OffersUser/UpdateOffer';
 import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
 import Shipement from './components/mobile/profile/Shipement';
-import UpdateOffer from './components/mobile/profile/UpdateOffer';
+// import UpdateOffer from './components/mobile/profile/UpdateOffer';
 import FilterMenu from './components/mobile/search/FilterMenu';
 import Search from './components/mobile/search/Search';
 import CurrentUserContext from './contexts/CurrentUser';
@@ -29,11 +31,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/favorites" element={<Search />} />
+          <Route path="/annonces" element={<AllOffers />} />
           <Route path="/search" element={<FilterMenu />} />
           <Route path="/connection" element={<Connection />} />
           <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/offers" element={<AllOffers />} />
-          <Route path="/offers/:id" element={<OfferDetails />} />
+          <Route path={idUser || accepted ? '' : '*'} element={<Connection />} />
         </Routes>
         {(idUser || accepted) && (
           <Routes>
@@ -42,9 +44,11 @@ function App() {
             <Route path="/parametres" element={<Settings />} />
             <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
             <Route path="/mode-envoi" element={<Shipement />} />
-            <Route path="/modififer-votre-annonce" element={<UpdateOffer />} />
+            <Route path="/modifier-votre-annonce" element={<UpdateOffer />} />
+            <Route path="/mes-ventes-et-achats" element={<OffersUser />} />
           </Routes>
         )}
+
         <Footer />
       </HashRouter>
     </div>

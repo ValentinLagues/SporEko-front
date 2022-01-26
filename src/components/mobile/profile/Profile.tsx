@@ -15,7 +15,7 @@ const Profile = () => {
     <div className="profile">
       <HeaderProfil />
       <div className="profile__content">
-        <Link to="/ventes-achats" className="profile__content__link">
+        <Link to="/mes-ventes-et-achats" className="profile__content__link">
           <FiList className="profile__content__icons" />
           Mes ventes et achats
           <hr />
