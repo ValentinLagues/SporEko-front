@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import IOffer from '../../../interfaces/IOffer';
 
 interface Sport {
   id_sport: number;
@@ -16,6 +17,7 @@ const urlBack = import.meta.env.VITE_URL_BACK;
 const Search = () => {
   const [sportList, setSportList] = useState<Sport[]>([]);
   const [categoryList, setCategoryList] = useState<Category[]>([]);
+  const [offerList, setOfferList] = useState<IOffer[]>([]);
 
   const [sport, setSport] = useState('');
   const [gender, setGender] = useState<number | null>(null);
@@ -24,22 +26,16 @@ const Search = () => {
   const [genderIsChild, setGenderIsChild] = useState(false);
   const [category, setCategory] = useState('');
   const [categoryIsClothes, setCategoryIsClothes] = useState(false);
+  const [offer, setOffer] = useState('');
 
   useEffect(() => {
+    axios.get(`${urlBack}/offers`).then((res) => setOfferList(res.data));
     axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
     axios.get(`${urlBack}/categories`).then((res) => setCategoryList(res.data));
   }, []);
 
-  console.log(categoryIsClothes);
-
-  const handleReset = () => {
-    setSport('');
-    setGender(null);
-    setGenderAdult(null);
-    setGenderChild(null);
-    setGenderIsChild(false);
-    setCategory('');
-  };
+  console.log(offerList);
+  console.log(offer);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,21 +62,21 @@ const Search = () => {
   };
 
   return (
-    <div>
-      <form>
-        <input className="btn" type="text" placeholder="Recherchez sur SPOREKO" />
+    <div className="search">
+      <form className="search__bar">
+        <input
+          className="btn"
+          type="text"
+          placeholder="Entrez votre recherche"
+          value={offer}
+          onChange={(e) => setOffer(e.target.value)}
+        />
       </form>
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="filterMenu"
+        className="search__menu"
         id="filterMenuMobile">
-        <div className="filterMenu__item">
-          <h2>FILTRES</h2>
-          <button onClick={() => handleReset()} id="resetBtn" type="reset">
-            ANNULER FILTRES
-          </button>
-        </div>
-        <div className="filterMenu__item">
+        <div className="search__menu__item">
           <label htmlFor="sports">Sport</label>
           <select
             onChange={(e) => setSport(e.target.value)}
@@ -97,7 +93,7 @@ const Search = () => {
               ))}
           </select>
         </div>
-        <div className="filterMenu__item">
+        <div className="search__menu__item">
           <label htmlFor="genders">Genre</label>
           <select
             onChange={(e) => {
@@ -116,7 +112,7 @@ const Search = () => {
           </select>
         </div>
         {genderIsChild && (
-          <div className="filterMenu__item--right">
+          <div className="search__menu__item--right">
             <select
               onChange={(e) => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
@@ -130,7 +126,7 @@ const Search = () => {
             </select>
           </div>
         )}
-        <div className="filterMenu__item">
+        <div className="searchMenu__item">
           <label htmlFor="categories">Catégorie</label>
           <select
             onChange={(e) => {

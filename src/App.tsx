@@ -26,9 +26,8 @@ function App() {
       <HashRouter basename="/">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/favorites" element={<ConfirmOrder />} />
+          <Route path="/favorites" element={<Search />} />
           <Route path="/search" element={<FilterMenu />} />
-          <Route path="/messages" element={<Search />} />
           <Route path="/connection" element={<Connection />} />
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path="/offers" element={<AllOffers />} />
