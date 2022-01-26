@@ -3,23 +3,23 @@ import React, { useContext, useEffect, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 import { MdStarRate } from 'react-icons/md';
 
-import CurrentUserContext from '../../../contexts/CurrentUser';
-import IBrand from '../../../interfaces/IBrand';
-import ICategory from '../../../interfaces/ICategory';
-import IColor from '../../../interfaces/IColor';
-import ICondition from '../../../interfaces/ICondition';
-import IDeliverer from '../../../interfaces/IDeliverer';
-import IItem from '../../../interfaces/IItem';
-import IOffer from '../../../interfaces/IOffer';
-import IOffer_Deliverer from '../../../interfaces/IOffer_deliverer';
-import ISize from '../../../interfaces/ISize';
-import ISport from '../../../interfaces/ISport';
-import ITextile from '../../../interfaces/ITextile';
+import CurrentOfferContext from '../../../../contexts/Offer';
+import IBrand from '../../../../interfaces/IBrand';
+import ICategory from '../../../../interfaces/ICategory';
+import IColor from '../../../../interfaces/IColor';
+import ICondition from '../../../../interfaces/ICondition';
+import IDeliverer from '../../../../interfaces/IDeliverer';
+import IItem from '../../../../interfaces/IItem';
+import IOffer from '../../../../interfaces/IOffer';
+import IOffer_Deliverer from '../../../../interfaces/IOffer_deliverer';
+import ISize from '../../../../interfaces/ISize';
+import ISport from '../../../../interfaces/ISport';
+import ITextile from '../../../../interfaces/ITextile';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
-const OfferForm = () => {
-  const { idUser } = useContext(CurrentUserContext);
+const UpdateOffer = () => {
+  const { idOfferSell } = useContext(CurrentOfferContext);
 
   const [sportList, setSportList] = useState<ISport[]>([]);
   const [categoryList, setCategoryList] = useState<ICategory[]>([]);
@@ -30,27 +30,28 @@ const OfferForm = () => {
   const [conditionList, setConditionList] = useState<ICondition[]>([]);
   const [sizeList, setSizeList] = useState<ISize[]>([]);
   const [delivererList, setDelivererList] = useState<IDeliverer[]>([]);
+  const [offerSell, setOfferSell] = useState<IOffer | any>([]);
 
   const [pictures, setPictures] = useState<Array<string>>([]);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [sport, setSport] = useState('');
+  const [title, setTitle] = useState<string | undefined>();
+  const [description, setDescription] = useState<string | undefined>();
+  const [sport, setSport] = useState<string | undefined>();
   const [gender, setGender] = useState<number | null>(null);
   const [genderAdult, setGenderAdult] = useState<number | null>(null);
   const [genderChild, setGenderChild] = useState<number | null>(null);
-  const [genderIsChild, setGenderIsChild] = useState(false);
-  const [category, setCategory] = useState('');
-  const [item, setItem] = useState('');
+  const [genderIsChild, setGenderIsChild] = useState<boolean>(false);
+  const [category, setCategory] = useState<string | undefined>();
+  const [item, setItem] = useState<string | undefined>();
   const [categoryIsClothes, setCategoryIsClothes] = useState(false);
-  const [brand, setBrand] = useState('');
-  const [textile, setTextile] = useState('');
-  const [color1, setColor1] = useState('');
-  const [color2, setColor2] = useState('');
-  const [condition, setCondition] = useState('');
-  const [price, setPrice] = useState(0);
-  const [size, setSize] = useState('');
-  const [weight, setWeight] = useState(0);
-  const [handDelivery, setHandDelivery] = useState(0);
+  const [brand, setBrand] = useState<string | undefined>();
+  const [textile, setTextile] = useState<string | undefined>();
+  const [color1, setColor1] = useState<string | undefined>();
+  const [color2, setColor2] = useState<string | undefined>();
+  const [condition, setCondition] = useState<string | undefined>();
+  const [price, setPrice] = useState<string | undefined>();
+  const [size, setSize] = useState<string | undefined>();
+  const [weight, setWeight] = useState<string | undefined>();
+  const [handDelivery, setHandDelivery] = useState<number>();
   const [chosenDeliverers, setChosenDeliverers] = useState<Array<number>>([]);
   const [isDraft, setIsDraft] = useState(0);
   const [offer, setOffer] = useState<IOffer>();
@@ -65,7 +66,11 @@ const OfferForm = () => {
     axios.get(`${urlBack}/conditions`).then((res) => setConditionList(res.data));
     axios.get(`${urlBack}/sizes`).then((res) => setSizeList(res.data));
     axios.get(`${urlBack}/deliverers`).then((res) => setDelivererList(res.data));
-  }, []);
+
+    axios
+      .get(`${urlBack}/offers/${sessionStorage.getItem('idOfferSell')}`)
+      .then((res) => setOfferSell(res.data));
+  }, [idOfferSell]);
 
   useEffect(() => {
     category &&
@@ -89,23 +94,22 @@ const OfferForm = () => {
     setChosenDeliverers(deliverersArray);
     deliverersArray = [];
     const newOffer = {
-      id_user_seller: Number(idUser),
       title,
       picture1: pictures[0],
       description,
-      id_sport: parseInt(sport),
-      id_gender: gender,
+      id_sport: sport,
+      id_gender: Number(gender),
       is_child: genderIsChild ? 1 : 0,
-      id_category: parseInt(category),
-      id_item: parseInt(item),
-      id_brand: brand ? parseInt(brand) : null,
-      id_textile: textile ? parseInt(textile) : null,
-      id_size: size ? parseInt(size) : null,
-      id_color1: color1 ? parseInt(color1) : null,
-      id_color2: color2 ? parseInt(color2) : null,
-      id_condition: parseInt(condition),
-      price: Number(price),
-      weight: Number(weight),
+      id_category: category,
+      id_item: item,
+      id_brand: brand ? brand : null,
+      id_textile: textile ? textile : null,
+      id_size: size ? size : null,
+      id_color1: color1 ? color1 : null,
+      id_color2: color2 ? color2 : null,
+      id_condition: condition,
+      price: price,
+      weight: weight,
       hand_delivery: handDelivery,
       is_archived: 0,
       is_draft: isDraft,
@@ -129,7 +133,6 @@ const OfferForm = () => {
       picture19: pictures[18],
       picture20: pictures[19],
     } as unknown as IOffer;
-
     setOffer(newOffer);
   };
 
@@ -160,12 +163,12 @@ const OfferForm = () => {
   useEffect(() => {
     offer &&
       axios
-        .post<IOffer>(`${urlBack}/offers`, offer)
+        .put<IOffer>(`${urlBack}/offers/${idOfferSell}`, offer)
         .then((rep) => {
           const id_offer = rep.data.id_offer;
           chosenDeliverers.map((deliverer) => {
             const id_deliverer = deliverer;
-            axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
+            axios.put<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
               id_offer,
               id_deliverer,
             });
@@ -173,6 +176,7 @@ const OfferForm = () => {
         })
         .catch((err) => console.log({ ...err }));
   }, [offer]);
+  console.log(offerSell);
 
   return (
     <div className="offerForm">
@@ -423,7 +427,7 @@ const OfferForm = () => {
           </label>
           <input
             value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
+            onChange={(e) => setPrice(e.target.value)}
             className="offerForm__input"
             type="number"
             step={0.01}
@@ -439,7 +443,7 @@ const OfferForm = () => {
           </label>
           <input
             value={weight}
-            onChange={(e) => setWeight(Number(e.target.value))}
+            onChange={(e) => setWeight(e.target.value)}
             className="offerForm__input"
             type="number"
             step={1}
@@ -512,4 +516,4 @@ const OfferForm = () => {
   );
 };
 
-export default OfferForm;
+export default UpdateOffer;
