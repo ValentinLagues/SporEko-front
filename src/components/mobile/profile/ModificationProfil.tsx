@@ -20,6 +20,7 @@ import { HiEye } from 'react-icons/hi';
 import { ImCancelCircle, ImCheckmark } from 'react-icons/im';
 
 import CurrentUserContext from '../../../contexts/CurrentUser';
+import IUser from '../../../interfaces/IUser';
 import IUserLog from '../../../interfaces/IUser';
 import HeaderProfil from '../layout/HeaderProfil';
 
@@ -50,7 +51,8 @@ const ModificationProfil = () => {
   const [goodEntryPassword, setGoodEntryPassword] = useState<number>(0);
   const [messageError, setMessageError] = useState<string>('');
   const [message, setMessage] = useState<string>('');
-  console.log(firstname);
+  const [updateUser, setUpdateUser] = useState<IUser>();
+
   const urlBack = import.meta.env.VITE_URL_BACK;
   // UseEffect to admin right format of password .
   useEffect(() => {
@@ -83,6 +85,7 @@ const ModificationProfil = () => {
   }, [password, verifyPassword]);
 
   // Function axios to change picture of user
+
   const handleFileInput = (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
@@ -114,49 +117,55 @@ const ModificationProfil = () => {
       });
   };
 
-  // Axios call for update user informations
-  const updatedUser = (e: React.FormEvent<HTMLFormElement>) => {
+  const updatedUser = () => {
     if (password === verifyPassword) {
-      e.preventDefault;
-      axios
-        .put<IUserLog>(
-          `${urlBack}/users/${idUser}`,
-          {
-            lastname: lastname,
-            firstname: firstname,
-            address: address,
-            zipcode: zipcode,
-            city: city,
-            email: email,
-            password: password,
-            id_gender: id_gender,
-            id_country: id_country,
-            address_complement: address_complement,
-            id_athletic: id_athletic,
-            birthday: birthday,
-            phone: phone,
-            pseudo: pseudo,
-          },
-
-          {
-            withCredentials: true,
-          },
-        )
-        .then((res) => {
-          res;
-          setMessage('Vos données, on été mise à jour');
-        })
-        .catch((err) => {
-          if (err.response.data.message === 'Pseudo already exists') {
-            setMessageError("Ce pseudo n'est pas disponible!");
-          } else if (err.response.data.message === 'Email already exists') {
-            setMessageError('Cette adresse e-mail est déjà utilisée');
-          } else {
-            console.log({ ...err });
-          }
-        });
+      const newUpdateUser = {
+        lastname,
+        firstname,
+        address,
+        zipcode,
+        city,
+        email,
+        password,
+        id_gender,
+        id_country,
+        address_complement,
+        id_athletic,
+        birthday,
+        phone,
+        pseudo,
+      } as unknown as IUser;
+      setUpdateUser(newUpdateUser);
     }
   };
+  // Axios call for update user informations
+  useEffect(() => {
+    axios
+      .put<IUserLog>(
+        `${urlBack}/users/${idUser}`,
+        updateUser,
+
+        {
+          withCredentials: true,
+        },
+      )
+      .then((res) => {
+        res;
+        setMessageError('');
+        setMessage('Vos données, on été mise à jour');
+      })
+      .catch((err) => {
+        if (err.response.data.message === 'Pseudo already exists') {
+          setMessage('');
+          setMessageError("Ce pseudo n'est pas disponible!");
+        } else if (err.response.data.message === 'Email already exists') {
+          setMessage('');
+          setMessageError('Cette adresse e-mail est déjà utilisée');
+        } else {
+          console.log({ ...err });
+        }
+      });
+  }, [updateUser]);
 
   useEffect(() => {
     axios.get(`${urlBack}/genders`).then((res) => setGender(res.data));
@@ -167,7 +176,7 @@ const ModificationProfil = () => {
   return (
     <div className="modificationProfil">
       <HeaderProfil />
-      <form onSubmit={(e) => updatedUser(e)} className="modificationProfil__container">
+      <form onSubmit={() => updatedUser()} className="modificationProfil__container">
         {/*------------------------Input pseudo----------------------------- */}
         <div className="modificationProfil__container__content">
           <FiUserMinus className="modificationProfil__container__content__icons" />
@@ -183,7 +192,6 @@ const ModificationProfil = () => {
           <FiMeh className="modificationProfil__container__content__icons" />
           <input
             type="text"
-            defaultValue={firstname}
             placeholder={user.firstname ? user.firstname : 'Votre Prénom'}
             onChange={(e) => setFirstname(e.target.value)}
           />

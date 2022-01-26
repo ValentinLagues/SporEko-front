@@ -1,0 +1,95 @@
+.offers {
+  width: 100vw;
+  margin-bottom: 10vh;
+  flex-wrap: wrap;
+  & p {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  & h2 {
+    margin-bottom: 10px;
+    background-color: $colorLightGrey;
+    display: flex;
+    width: 100vw;
+    height: 5vh;
+    justify-content: center;
+    align-items: center;
+  }
+  &__offer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80vw;
+    margin: 0 10vw;
+    height: 10vh;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: $boxShadow;
+    margin-bottom: 50px;
+    & a {
+      display: flex;
+    }
+    & img {
+      height: 10vh;
+      overflow: hidden;
+      border-radius: 5px 0 0 5px;
+    }
+
+    &__detail {
+      display: flex;
+      width: 100vw;
+
+      & li {
+        width: 20vw;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+    }
+  }
+  &__isArchived {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80vw;
+    margin: 0 10vw;
+    height: 10vh;
+    align-items: center;
+    box-shadow: $boxShadow;
+    margin-bottom: 50px;
+    & .offerSell {
+      width: 80vw;
+      background-color: white;
+      border-radius: 5px 5px 0 0;
+      box-shadow: $boxShadow;
+      border: none;
+      justify-content: center;
+    }
+    & .offerSellModification {
+      width: 80vw;
+      background-color: white;
+      border-radius: 0 0 5px 5px;
+      box-shadow: $boxShadow;
+      border: none;
+      justify-content: center;
+    }
+    & a {
+      display: flex;
+    }
+    & img {
+      height: 10vh;
+      border-radius: 5px 0 0 0;
+      overflow: hidden;
+    }
+
+    &__detail {
+      display: flex;
+      width: 100vw;
+
+      & li {
+        width: 20vw;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+    }
+  }
+}
