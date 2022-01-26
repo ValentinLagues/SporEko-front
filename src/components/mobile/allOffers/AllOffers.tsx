@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { AiFillHeart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import OfferContext from '../../../contexts/Offer';
+
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import IFavorite from '../../../interfaces/IFavorites';
 import IOffer from '../../../interfaces/IOffer';
@@ -41,7 +41,7 @@ const AllOffers = () => {
   useEffect(() => {
     axios.get(`${urlBack}/offers`).then((res) => setAllOffers(res.data));
     idUser &&
-    isFavorite &&
+      isFavorite &&
       axios
         .get(`${urlBack}/users/${idUser}/favorites`)
         .then((res) => setUserFavorites(res.data))
