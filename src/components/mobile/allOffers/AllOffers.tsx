@@ -5,7 +5,7 @@ import { AiFillHeart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 import CurrentUserContext from '../../../contexts/CurrentUser';
-import IFavorite from '../../../interfaces/IFavorites';
+import IFavorite from '../../../interfaces/IFavorite';
 import IOffer from '../../../interfaces/IOffer';
 
 const AllOffers = () => {
