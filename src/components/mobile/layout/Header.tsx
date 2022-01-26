@@ -11,12 +11,12 @@ const Header = () => {
         <Link to="/">
           <img src={LogoRun} alt="Logo" className="header__container__logoRun" />
         </Link>
-        <div className="header__container__name">
-          <FiArrowLeft className="header__container__icon" />
-          <h3>Texte</h3>
-        </div>
+        {/* <div className="header__container__name"> */}
+        <FiArrowLeft className="header__container__icon" />
+        <h3>Texte</h3>
       </div>
     </div>
+    // </div>
   );
 };
 

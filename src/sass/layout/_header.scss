@@ -1,0 +1,26 @@
+.header {
+  position: fixed;
+  top: 0;
+  height: 8vh;
+  width: 100vw;
+  &__container {
+    background-color: $colorDarkGrey;
+    display: flex;
+    align-items: center;
+    &__logoRun {
+      width: 8vh;
+      height: 8vh;
+    }
+
+    & h3 {
+      color: $colorWhite;
+      text-align: center;
+      width: 50vw;
+    }
+    &__icon {
+      width: 6vw;
+      height: 6vh;
+      color: $colorWhite;
+    }
+  }
+}
