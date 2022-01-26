@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 
 import CurrentUserContext from '../../../contexts/CurrentUser';
-import IFavorite from '../../../interfaces/IFavorites';
+import IFavorite from '../../../interfaces/IFavorite';
 
 const Favorites = () => {
   const { idUser } = useContext(CurrentUserContext);

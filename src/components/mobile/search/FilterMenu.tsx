@@ -30,6 +30,7 @@ const FilterMenu = () => {
   const [genderIsChild, setGenderIsChild] = useState(false);
   const [category, setCategory] = useState('');
   const [item, setItem] = useState('');
+  const [itemInfos, setItemInfos] = useState<IItem>();
   const [categoryIsClothes, setCategoryIsClothes] = useState(false);
   const [condition, setCondition] = useState('');
   const [textile, setTextile] = useState('');
@@ -37,6 +38,7 @@ const FilterMenu = () => {
   const [color1, setColor1] = useState<number | null>(null);
   const [colorName, setColorName] = useState('');
   const [brand, setBrand] = useState('');
+  const [showSizes, setShowSizes] = useState(false);
   const [size, setSize] = useState('');
   const [price, setPrice] = useState<number | null>(null);
   const [orderBy, setOrderBy] = useState('');
@@ -51,6 +53,8 @@ const FilterMenu = () => {
     axios.get(`${urlBack}/sizes`).then((res) => setSizeList(res.data));
   }, []);
 
+  // if a category is chosen, itemList is 'filtered' by category
+  //else itemList contains all items
   useEffect(() => {
     category
       ? axios.get(`${urlBack}/categories/${category}/items`).then((res) => {
@@ -59,6 +63,7 @@ const FilterMenu = () => {
       : axios.get(`${urlBack}/items`).then((res) => setItemList(res.data));
   }, [category]);
 
+  //if category is clothes or shoes, or if item is a shoe or a clothes, sizeList is shown with appropriate sizes
   useEffect(() => {
     let filters = ``;
     let oneValue = false;
@@ -71,15 +76,33 @@ const FilterMenu = () => {
       filters += oneValue ? `&is_child=1` : `?is_child=1`;
       oneValue = true;
     }
-    if (!genderIsChild) {
-      filters += oneValue ? `&is_child=0` : `?is_child=0`;
-      oneValue = true;
-    }
-    item &&
-      axios.get(`${urlBack}/items/${item}/sizes${filters}`).then((res) => {
-        setSizeList(res.data);
-      });
+    item
+      ? axios.get(`${urlBack}/items/${item}/sizes${filters}`).then((res) => {
+          setSizeList(res.data);
+        })
+      : category
+      ? axios.get(`${urlBack}/categories/${category}/sizes${filters}`).then((res) => {
+          setSizeList(res.data);
+        })
+      : (setSizeList([]), setShowSizes(false));
   }, [item, gender, genderIsChild, category]);
+
+  const handleItemSelected = (id: string) => {
+    axios
+      .get(`${urlBack}/items/${id}`)
+      .then((item) => {
+        setItemInfos(item.data);
+        return item.data;
+      })
+      .then((item) =>
+        item.id_size_type === 1 ||
+        item.id_size_type === 2 ||
+        item.id_size_type === 3 ||
+        item.id_size_type === 6
+          ? setShowSizes(true)
+          : setShowSizes(false),
+      );
+  };
 
   const handleReset = () => {
     setSport('');
@@ -235,11 +258,14 @@ const FilterMenu = () => {
         <label htmlFor="categories">Catégorie</label>
         <select
           onChange={(e) => {
+            setItem('');
             setCategory(e.target.value);
-            e.target.value === '' ? setItem('') : '';
+            // e.target.value === '' ? setItem('') : '';
             e.target.value === '1'
-              ? setCategoryIsClothes(true)
+              ? (setCategoryIsClothes(true), setShowSizes(true))
               : setCategoryIsClothes(false);
+            e.target.value === '2' ? setShowSizes(true) : '';
+            e.target.value === '3' ? setShowSizes(false) : '';
           }}
           value={category}
           className=""
@@ -257,7 +283,16 @@ const FilterMenu = () => {
       <div className="filterMenu__item">
         <label htmlFor="items">Article</label>
         <select
-          onChange={(e) => setItem(e.target.value)}
+          onChange={(e) => {
+            handleItemSelected(e.target.value);
+            setItem(e.target.value);
+            itemInfos?.id_size_type === 1 ||
+            itemInfos?.id_size_type === 2 ||
+            itemInfos?.id_size_type === 3 ||
+            itemInfos?.id_size_type === 6
+              ? setShowSizes(true)
+              : setShowSizes(false);
+          }}
           value={item}
           className=""
           name="items"
@@ -353,7 +388,7 @@ const FilterMenu = () => {
             ))}
         </select>
       </div>
-      {item && (
+      {showSizes && (
         <div className="filterMenu__item">
           <label htmlFor="textile">Taille</label>
           <select
@@ -366,33 +401,17 @@ const FilterMenu = () => {
             {sizeList &&
               sizeList.map((size, index) => (
                 <option key={index} value={size.id_size}>
-                  {
-                    category === '2' && !genderIsChild
-                      ? `${size.size_eu}`
-                      : category === '2' && genderIsChild
-                      ? `${size.size_eu}/${size.size_foot}`
-                      : category === '1' && !genderIsChild
+                  {(category === '1' && genderIsChild) || itemInfos?.id_size_type === 6
+                    ? `${size.age_child}`
+                    : category === '1' ||
+                      itemInfos?.id_size_type === 2 ||
+                      itemInfos?.id_size_type === 3
+                    ? size.size_int !== null
                       ? `${size.size_int}/${size.size_eu}/${size.size_uk}`
-                      : category === '1' && genderIsChild
-                      ? `${size.age_child}/${size.height}`
-                      : ''
-
-                    // category === '2' && !genderIsChild
-                    //   ? `${size.size_eu}/${size.size_uk}/${size.size_us}`
-                    //   : category === '2' && genderIsChild
-                    //   ? `${size.size_eu}/${size.size_uk}/${size.size_us}/${size.size_foot}`
-                    //   : size.id_size_type === 2 && !genderIsChild
-                    //   ? `${size.size_int}/${size.size_eu}/${size.size_fr}/${size.size_uk}/${size.size_chest}`
-                    //   : size.id_size_type === 3 && !genderIsChild
-                    //   ? `${size.size_int}/${size.size_eu}/${size.size_fr}/${size.size_uk}/${size.size_pool}/${size.size_jeans}`
-                    //   : size.id_size_type === 4 && !genderIsChild
-                    //   ? `${size.size_int}/${size.hand_turn}/${size.size_glove}`
-                    //   : size.id_size_type === 5 && !genderIsChild
-                    //   ? `${size.size_int}/${size.height}/${size.crotch}/${size.size_bike_inches}/${size.size_bike}`
-                    //   : size.id_size_type === 5 && genderIsChild
-                    //   ? `${size.size_int}/${size.age_child}/${size.height}/${size.size_wheel}`
-                    //   : `${size.age_child}/${size.height}/`
-                  }
+                      : `${size.age_child}`
+                    : category === '2' || itemInfos?.id_size_type === 1
+                    ? `${size.size_eu}`
+                    : ''}
                 </option>
               ))}
           </select>
