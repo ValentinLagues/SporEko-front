@@ -18,10 +18,12 @@
             display: flex;
             flex-direction: column;
             text-align: center;
+            margin-left: .5em;
 
             &__mainPicture {
                 margin-top: 1rem;
                 margin-bottom: 1rem;
+                margin-left: -.5em;
                 
                         @media screen and (orientation:portrait) {
                             img {
@@ -62,6 +64,7 @@
             &__fav {
                 display: flex;
                 justify-content: flex-end;
+                margin-right: .8em;
             }
         }
 
