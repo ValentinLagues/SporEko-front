@@ -1,7 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { CgGenderFemale, CgGenderMale, CgGym } from 'react-icons/cg';
+import { FcSportsMode } from 'react-icons/fc';
+import { GiClothes, GiRunningShoe, GiTennisRacket } from 'react-icons/gi';
 
+import IItem from '../../../interfaces/IItem';
 import IOffer from '../../../interfaces/IOffer';
+import SearchBar from './SearchBar';
 
 interface Sport {
   id_sport: number;
@@ -16,27 +21,35 @@ interface Category {
 const urlBack = import.meta.env.VITE_URL_BACK;
 
 const Search = () => {
-  const [sportList, setSportList] = useState<Sport[]>([]);
-  const [categoryList, setCategoryList] = useState<Category[]>([]);
-  const [offerList, setOfferList] = useState<IOffer[]>([]);
+  const [sportsList, setSportsList] = useState<Sport[]>([]);
+  const [categoriesList, setCategoriesList] = useState<Category[]>([]);
+  const [itemsList, setItemsList] = useState<IItem[]>([]);
+  const [offersList, setOffersList] = useState<IOffer[]>([]);
 
-  const [sport, setSport] = useState('');
   const [gender, setGender] = useState<number | null>(null);
   const [genderAdult, setGenderAdult] = useState<number | null>(null);
   const [genderChild, setGenderChild] = useState<number | null>(null);
   const [genderIsChild, setGenderIsChild] = useState(false);
+  const [sport, setSport] = useState('');
   const [category, setCategory] = useState('');
-  const [categoryIsClothes, setCategoryIsClothes] = useState(false);
-  const [offer, setOffer] = useState('');
+  const [item, setItem] = useState('');
+  const [itemInfos, setItemInfos] = useState<IItem>();
 
   useEffect(() => {
-    axios.get(`${urlBack}/offers`).then((res) => setOfferList(res.data));
-    axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
-    axios.get(`${urlBack}/categories`).then((res) => setCategoryList(res.data));
+    axios.get(`${urlBack}/sports`).then((res) => setSportsList(res.data));
+    axios.get(`${urlBack}/categories`).then((res) => setCategoriesList(res.data));
+    axios.get(`${urlBack}/offers`).then((res) => setOffersList(res.data));
   }, []);
-  console.log(categoryIsClothes);
-  console.log(offerList);
-  console.log(offer);
+  console.log(offersList);
+  console.log(itemInfos);
+
+  useEffect(() => {
+    category
+      ? axios.get(`${urlBack}/categories/${category}/items`).then((res) => {
+          setItemsList(res.data);
+        })
+      : axios.get(`${urlBack}/items`).then((res) => setItemsList(res.data));
+  }, [category]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,26 +72,32 @@ const Search = () => {
       filters += oneValue ? `&id_category=${category}` : `?id_category=${category}`;
       oneValue = true;
     }
+    if (item) {
+      filters += oneValue ? `&id_item=${item}` : `?id_item=${item}`;
+      oneValue = true;
+    }
     axios.get(`${urlBack}/offers${filters}`).then((rep) => console.log(rep.data));
+  };
+  const handleItemSelected = (id: string) => {
+    axios.get(`${urlBack}/items/${id}`).then((item) => {
+      setItemInfos(item.data);
+      return item.data;
+    });
   };
 
   return (
     <div className="search">
-      <form className="search__bar">
-        <input
-          className="btn"
-          type="text"
-          placeholder="Entrez votre recherche"
-          value={offer}
-          onChange={(e) => setOffer(e.target.value)}
-        />
-      </form>
+      <SearchBar />
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="search__menu"
         id="filterMenuMobile">
-        <div className="search__menu__item">
-          <label htmlFor="sports">Quel sport recherchez-vous ?</label>
+        <div
+          // filtre sports
+          className="search__menu__item">
+          <label htmlFor="sports">
+            <FcSportsMode /> Quel sport recherchez-vous ? <FcSportsMode />
+          </label>
           <select
             onChange={(e) => setSport(e.target.value)}
             value={sport}
@@ -86,16 +105,20 @@ const Search = () => {
             name="sports"
             id="sports">
             <option value="">Tous</option>
-            {sportList &&
-              sportList.map((sport, index) => (
+            {sportsList &&
+              sportsList.map((sport, index) => (
                 <option key={index} value={sport.id_sport}>
                   {sport.name}
                 </option>
               ))}
           </select>
         </div>
-        <div className="search__menu__item">
-          <label htmlFor="genders">Genre</label>
+        <div
+          // filtre genre
+          className="search__menu__item">
+          <label htmlFor="genders">
+            <CgGenderMale /> Genre <CgGenderFemale />
+          </label>
           <select
             onChange={(e) => {
               setGenderAdult(Number(e.target.value));
@@ -113,7 +136,9 @@ const Search = () => {
           </select>
         </div>
         {genderIsChild && (
-          <div className="search__menu__item--right">
+          <div
+            // filtre genre enfants
+            className="search__menu__item--right">
             <select
               onChange={(e) => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
@@ -127,28 +152,63 @@ const Search = () => {
             </select>
           </div>
         )}
-        <div className="search__menu__item">
-          <label htmlFor="categories">Catégorie</label>
+        <div
+          // filtre categories
+          className="search__menu__item">
+          <label htmlFor="categories">
+            <GiClothes /> Catégorie <GiRunningShoe />
+          </label>
           <select
             onChange={(e) => {
               setCategory(e.target.value);
-              e.target.value === '1'
-                ? setCategoryIsClothes(true)
-                : setCategoryIsClothes(false);
             }}
             value={category}
             className=""
             name="categories"
             id="categories">
             <option value="">Toutes</option>
-            {categoryList &&
-              categoryList.map((category, index) => (
+            {categoriesList &&
+              categoriesList.map((category, index) => (
                 <option key={index} value={category.id_category}>
                   {category.name}
                 </option>
               ))}
           </select>
         </div>
+        <div
+          // filtre articles
+          className="search__menu__item">
+          <label htmlFor="items">
+            <CgGym /> Articles <GiTennisRacket />
+          </label>
+          <select
+            onChange={(e) => {
+              handleItemSelected(e.target.value);
+              setItem(e.target.value);
+            }}
+            value={item}
+            className=""
+            name="items"
+            id="items">
+            <option value="">Tous</option>
+            {itemsList &&
+              itemsList.map((item, index) => (
+                <option key={index} value={item.id_item}>
+                  {item.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        {/* <button
+          className=""
+          onClick={
+            search !== '' &&
+            offersList.filter((searchResults) =>
+              console.log(searchResults.title.includes({ search })),
+            )
+          }>
+          Recherche
+        </button> */}
       </form>
     </div>
   );

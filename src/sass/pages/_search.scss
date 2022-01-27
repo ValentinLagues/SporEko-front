@@ -3,12 +3,12 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 12vh 5vw 12vh;
+  margin: 15vh 5vw 12vh;
   width: 90vw;
   //   height: 95vh;
 
   &__bar {
-    margin-bottom: 5vh;
+    margin-bottom: 3vh;
     text-align: center;
 
     .btn {
@@ -18,13 +18,13 @@
   }
 
   &__menu {
-    margin: 2vh 0vw;
+    margin: 1vh 0vw;
 
     &__item {
       width: 70vw;
       display: flex;
       flex-direction: column;
-      margin: 3vh 0vw;
+      margin: 1vh 0vw;
       text-align: center;
 
       & label {

@@ -54,16 +54,14 @@ const ConfirmOrder = () => {
   }, []);
   console.log(confirmDelivererPrice);
   console.log(confirmDeliverer);
-  // let totalPrice = [];
-  // totalPrice = confirmDelivererPrice.map((deliverer_price: number) => (deliverer_price.price));
-  // const reducer = (previousValue: number, currentValue: number) =>
-  // previousValue + currentValue;
-  // totalPrice = totalPrice.reduce(reducer, 0);
+
   return (
     <div className="confirmOrder">
       <div className="confirmOrder__confirmOrderContainer">
         <div className="confirmOrder__confirmOrderContainer__box">
-          <p className="instructions">
+          <p
+            // encadré instructions
+            className="instructions">
             <BsBoxSeam /> Le mode de livraison disponible (Mondial Relay ou Colissimo) ou
             une remise en main propre
           </p>
@@ -75,7 +73,9 @@ const ConfirmOrder = () => {
             <img className="cards" src={cards} alt="cards" />
           </p>
         </div>
-        <div className="confirmOrder__confirmOrderContainer__box">
+        <div
+          // encadré recap commande
+          className="confirmOrder__confirmOrderContainer__box">
           <h3>COMMANDE</h3>
           {confirmOrder && confirmSize && confirmCondition && (
             <div>
@@ -88,7 +88,9 @@ const ConfirmOrder = () => {
             </div>
           )}
         </div>
-        <div className="confirmOrder__confirmOrderContainer__box">
+        <div
+          // encadré recap coordonnées
+          className="confirmOrder__confirmOrderContainer__box">
           <h3>VOS COORDONNEES</h3>
           {confirmAdress && (
             <div>
@@ -104,7 +106,9 @@ const ConfirmOrder = () => {
             </div>
           )}
         </div>
-        <div className="confirmOrder__confirmOrderContainer__box">
+        <div
+          // encadré selection mode de livraison (deliverers s'affiche si handDelivery est false)
+          className="confirmOrder__confirmOrderContainer__box">
           <h3>OPTIONS DE LIVRAISON</h3>
           <div className="delivererList">
             <span className="confirmOrder__confirmOrderContainer__span">
@@ -125,7 +129,9 @@ const ConfirmOrder = () => {
           {!handDelivery &&
             deliverersList.map((deliverer, index) => <p key={index}>{deliverer.name}</p>)}
         </div>
-        <div className="confirmOrder__confirmOrderContainer__box">
+        <div
+          // encadré résumé total prix (en cours)
+          className="confirmOrder__confirmOrderContainer__box">
           <h3>Résumé de la commande</h3>
           {confirmOrder && (
             <div>
