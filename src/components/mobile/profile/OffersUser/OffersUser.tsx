@@ -38,7 +38,8 @@ const OffersUser = () => {
                 }}
                 onKeyPress={() => {
                   sessionStorage.setItem('idOfferSell', `${offer.id_offer}`);
-                }}>
+                }}
+              >
                 <ul className="offers__offer__detail">
                   <Link className={offer.is_archived ? '' : 'offerSell'} to="/">
                     <li>
@@ -61,10 +62,12 @@ const OffersUser = () => {
                   }}
                   onKeyPress={() => {
                     sessionStorage.setItem('idOfferSell', `${offer.id_offer}`);
-                  }}>
+                  }}
+                >
                   <Link
                     to="/modifier-votre-annonce"
-                    className={offer.is_archived ? '' : 'offerSellModification'}>
+                    className={offer.is_archived ? '' : 'offerSellModification'}
+                  >
                     Modifier l&apos;annonce
                   </Link>
                 </div>
@@ -82,7 +85,8 @@ const OffersUser = () => {
             role="button"
             tabIndex={0}
             onClick={() => sessionStorage.setItem('idOfferBuy', `${offer.id_offer}`)}
-            onKeyPress={() => sessionStorage.setItem('idOfferBuy', `${offer.id_offer}`)}>
+            onKeyPress={() => sessionStorage.setItem('idOfferBuy', `${offer.id_offer}`)}
+          >
             <ul className="offers__offer__detail">
               <Link to="/mes_achats">
                 <li>

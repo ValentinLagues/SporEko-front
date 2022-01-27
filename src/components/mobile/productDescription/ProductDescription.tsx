@@ -45,19 +45,28 @@ const ProductDescription = () => {
   const [idSport, setIdSport] = useState<Sport>();
 
   useEffect(() => {
-    axios.get(`${urlBack}/offers/3`).then((res) => setOffer(res.data));
-    // console.log = ok
-    // axios.get(`${urlBack}/offers/1`).then((data) => console.log(data));
-    axios.get(`${urlBack}/brands/1`).then((res) => setBrand(res.data));
-    axios.get(`${urlBack}/colors/4`).then((res) => setColor(res.data));
-    axios.get(`${urlBack}/sports/${idSport}`).then((res) => setSport(res.data));
-    // axios.get(`${urlBack}/sizes/1`).then((res) => setSize(res.data));
-    axios.get(`${urlBack}/conditions/1`).then((res) => setCondition(res.data));
-    axios.get(`${urlBack}/deliverers/1`).then((res) => setDeliverer(res.data));
     axios
-      .get(`${urlBack}/users/1`, { withCredentials: true })
-      .then((res) => setUser(res.data));
-    axios.get(`${urlBack}/users/1/`);
+      .get(`${urlBack}/offers/6`)
+      .then((res) => res.data)
+      .then((data) => {
+        setOffer(data);
+        // console.log = ok
+        // axios.get(`${urlBack}/offers/1`).then((data) => console.log(data));
+        axios.get(`${urlBack}/brands/${data.id_brand}`).then((res) => setBrand(res.data));
+        axios.get(`${urlBack}/colors/${data.id_color}`).then((res) => setColor(res.data));
+        axios.get(`${urlBack}/sports/${data.id_sport}`).then((res) => setSport(res.data));
+        // axios.get(`${urlBack}/sizes/1`).then((res) => setSize(res.data));
+        axios
+          .get(`${urlBack}/conditions/${data.id_condition}`)
+          .then((res) => setCondition(res.data));
+        axios
+          .get(`${urlBack}/deliverers/${data.id_deliverer}`)
+          .then((res) => setDeliverer(res.data));
+        axios
+          .get(`${urlBack}/users/1`, { withCredentials: true })
+          .then((res) => setUser(res.data));
+        axios.get(`${urlBack}/users/1/`);
+      });
   }, []);
   // console.log(offer)
 
@@ -76,7 +85,7 @@ const ProductDescription = () => {
         {/* --------------------Container photo principale----------------- */}
         <img
           className="product-description__container-picture__big-picture"
-          src={offer && offer.picture5}
+          src={offer && offer.picture1}
           alt=""
         />
         <img
@@ -106,7 +115,72 @@ const ProductDescription = () => {
         />
         <img
           className="product-description__container-picture__all-picture"
-          src={offer && offer.picture1}
+          src={offer && offer.picture7}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture8}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture9}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture10}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture11}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture12}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture13}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture14}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture15}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture16}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture17}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture18}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture19}
+          alt=""
+        />
+        <img
+          className="product-description__container-picture__all-picture"
+          src={offer && offer.picture20}
           alt=""
         />
         <div className="product-description__container-picture__favorite"></div>
@@ -125,14 +199,12 @@ const ProductDescription = () => {
                     </div> */}
         </div>
         <div className="product-description__container-text__container2__brand">
-          <h2>{brand && brand.name}</h2>
+          <h2>{offer && offer.id_brand}</h2>
         </div>
         <div className="product-description__container-text__container3">
           <div className="product-description__container-text__container3__size">
             <h3>Taille</h3>
-            <p>
-              {offer && offer} {size && size.size_eu}
-            </p>
+            <p>{/* {offer && offer} {size && size.size_eu} */}</p>
           </div>
           <div className="product-description__container-text__container3__condition">
             <h3>Etat</h3>
@@ -143,7 +215,8 @@ const ProductDescription = () => {
             <p
               className="product-description__container-text__container3__color__pastille-color"
               {...(color && color.style)}
-              {...(color && color.style)}></p>
+              {...(color && color.style)}
+            ></p>
           </div>
           <div className="product-description__container-text__container3__sport-icon">
             <h3>Sport</h3>
