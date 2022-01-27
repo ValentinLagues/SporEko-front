@@ -36,6 +36,18 @@
   & #photo1 {
     visibility: hidden;
   }
+  & .photosContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    // margin: auto;
+  }
+
+  & .image {
+    width: 20vw;
+    height: auto;
+    margin: 3vw;
+  }
   &__input {
     width: 100%;
     margin-bottom: 30px;
@@ -133,6 +145,9 @@
       -ms-transform: translateX(24px);
       transform: translateX(24px);
     }
+  }
+  & #errorsDescription {
+    color: red;
   }
   &__submitContainer {
     display: flex;
