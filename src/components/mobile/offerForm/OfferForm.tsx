@@ -181,8 +181,7 @@ const OfferForm = () => {
         id="offerForm"
         onSubmit={(e: React.FormEvent) => handleSubmit(e)}
         className="offerForm__form"
-        action=""
-      >
+        action="">
         <div id="addPhotoContainer">
           <label id="labelPhoto1" htmlFor="photo1">
             <BsPlusLg /> AJOUTER PHOTOS
@@ -230,8 +229,7 @@ const OfferForm = () => {
             value={sport}
             className="offerForm__select"
             name="sports"
-            id="sports"
-          >
+            id="sports">
             <option value="" id="sport">
               Sport
             </option>
@@ -257,8 +255,7 @@ const OfferForm = () => {
             value={Number(genderAdult)}
             className="offerForm__select"
             name="genders"
-            id="genders"
-          >
+            id="genders">
             <option value="">Genre</option>
             <option value={1}>Femme</option>
             <option value={2}>Homme</option>
@@ -273,8 +270,7 @@ const OfferForm = () => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
               }}
               value={Number(genderChild)}
-              className="offerForm__select conditionnal"
-            >
+              className="offerForm__select conditionnal">
               <option value="">Tous</option>
               <option value={1}>Fille</option>
               <option value={2}>Garçon</option>
@@ -293,8 +289,7 @@ const OfferForm = () => {
                 : setCategoryIsClothes(false);
             }}
             value={category}
-            className="offerForm__select"
-          >
+            className="offerForm__select">
             <option value="">Catégorie</option>
             {categoryList &&
               categoryList.map((category, index) => (
@@ -311,8 +306,7 @@ const OfferForm = () => {
           <select
             onChange={(e) => setItem(e.target.value)}
             value={item}
-            className="offerForm__select"
-          >
+            className="offerForm__select">
             <option value="">Article</option>
             {itemList &&
               itemList.map((item, index) => (
@@ -329,8 +323,7 @@ const OfferForm = () => {
               value={textile}
               className="offerForm__select conditionnal"
               name="textile"
-              id="textile"
-            >
+              id="textile">
               <option value="">Toutes matières</option>
               {textileList &&
                 textileList.map((textile, index) => (
@@ -347,8 +340,7 @@ const OfferForm = () => {
             value={brand}
             className="offerForm__select"
             name="brands"
-            id="brands"
-          >
+            id="brands">
             <option value="">Marque</option>
             {brandList &&
               brandList.map((brand, index) => (
@@ -364,8 +356,7 @@ const OfferForm = () => {
             value={size}
             className="offerForm__select"
             name="sizes"
-            id="sizes"
-          >
+            id="sizes">
             <option value="">Taille</option>
             {sizeList &&
               sizeList.map((size, index) => (
@@ -381,8 +372,7 @@ const OfferForm = () => {
             value={color1}
             className="offerForm__select"
             name="color1"
-            id="color1"
-          >
+            id="color1">
             <option value="">Couleur 1</option>
             {colorList &&
               colorList.map((color, index) => (
@@ -398,8 +388,7 @@ const OfferForm = () => {
             value={color2}
             className="offerForm__select"
             name="color2"
-            id="color2"
-          >
+            id="color2">
             <option value="">Couleur 2</option>
             {colorList &&
               colorList.map((color, index) => (
@@ -418,8 +407,7 @@ const OfferForm = () => {
             value={condition}
             className="offerForm__select"
             name="conditions"
-            id="conditions"
-          >
+            id="conditions">
             <option value="">État du produit</option>
             {conditionList &&
               conditionList.map((condition, index) => (

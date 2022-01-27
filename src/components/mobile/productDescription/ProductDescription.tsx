@@ -2,11 +2,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 import IBrand from '../../../interfaces/IBrand';
+import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
-// import OfferContext from '../../../contexts/Offer';
 import Ioffer from '../../../interfaces/IOffer';
-// import IColor from '../../../interfaces/IColor';
 import ISize from '../../../interfaces/ISize';
 // import ISport from '../../../interfaces/ISport';
 import IUserLog from '../../../interfaces/IUser';
@@ -17,12 +16,12 @@ const urlBack = import.meta.env.VITE_URL_BACK;
 //   id_offer: number;
 // }
 
-interface Color {
-  id_color: number;
-  name: string;
-  color_code: string;
-  style: object;
-}
+// interface Color {
+//   id_color: number;
+//   name: string;
+//   color_code: string;
+//   style: object;
+// }
 interface Sport {
   id_sport: number;
   name: string;
@@ -32,17 +31,18 @@ interface Sport {
 const ProductDescription = () => {
   const [offer, setOffer] = useState<Ioffer>();
   const [brand, setBrand] = useState<IBrand>();
-  // const [size, setSize] = useState<ISize>();
+  const [size, setSize] = useState<ISize>();
   const [condition, setCondition] = useState<ICondition>();
   const [sport, setSport] = useState<Sport>();
   const [deliverer, setDeliverer] = useState<IDeliverer>();
-  const [color, setColor] = useState<Color>();
+  const [color, setColor] = useState<IColor>();
   // const [colorList, setColorList] = useState<Color[]>([]);
   const [user, setUser] = useState<IUserLog>();
 
   //   const [sellerAddress, setSellerAddress] = useState();
+  console.log(deliverer);
 
-  const [idSport, setIdSport] = useState<Sport>();
+  // const [idSport, setIdSport] = useState<Sport>();
 
   useEffect(() => {
     axios
@@ -55,7 +55,7 @@ const ProductDescription = () => {
         axios.get(`${urlBack}/brands/${data.id_brand}`).then((res) => setBrand(res.data));
         axios.get(`${urlBack}/colors/${data.id_color}`).then((res) => setColor(res.data));
         axios.get(`${urlBack}/sports/${data.id_sport}`).then((res) => setSport(res.data));
-        // axios.get(`${urlBack}/sizes/1`).then((res) => setSize(res.data));
+        axios.get(`${urlBack}/sizes/${data.id_size}`).then((res) => setSize(res.data));
         axios
           .get(`${urlBack}/conditions/${data.id_condition}`)
           .then((res) => setCondition(res.data));
@@ -63,21 +63,24 @@ const ProductDescription = () => {
           .get(`${urlBack}/deliverers/${data.id_deliverer}`)
           .then((res) => setDeliverer(res.data));
         axios
-          .get(`${urlBack}/users/1`, { withCredentials: true })
+          .get(`${urlBack}/users/${data.id_user_seller}`, { withCredentials: true })
           .then((res) => setUser(res.data));
-        axios.get(`${urlBack}/users/1/`);
+        // axios.get(`${urlBack}/users/1/`);
       });
   }, []);
   // console.log(offer)
 
-  useEffect(() => {
-    offer && offer;
-    axios.get(`${urlBack}/sports/${idSport}`).then((res) => setIdSport(res.data));
-  }, []);
-  console.log(idSport);
+  // useEffect(() => {
+  //   offer && offer;
+  //   axios.get(`${urlBack}/sports/${idSport}`).then((res) => setIdSport(res.data));
+  // }, []);
+  // console.log(idSport);
 
   // colorList &&
   //   colorList.map((color) => (color.style = { backgroundColor: color.color_code }));
+
+  // if (size) {
+  // }
 
   return (
     <div className="product-description">
@@ -199,12 +202,14 @@ const ProductDescription = () => {
                     </div> */}
         </div>
         <div className="product-description__container-text__container2__brand">
-          <h2>{offer && offer.id_brand}</h2>
+          <h2>{brand && brand.name}</h2>
         </div>
         <div className="product-description__container-text__container3">
           <div className="product-description__container-text__container3__size">
             <h3>Taille</h3>
-            <p>{/* {offer && offer} {size && size.size_eu} */}</p>
+            <p>
+              {size && size.id_size} {size && size.size_eu}
+            </p>
           </div>
           <div className="product-description__container-text__container3__condition">
             <h3>Etat</h3>
@@ -214,9 +219,8 @@ const ProductDescription = () => {
             <h3>Couleurs</h3>
             <p
               className="product-description__container-text__container3__color__pastille-color"
-              {...(color && color.style)}
-              {...(color && color.style)}
-            ></p>
+              {...(color && color.color_code)}
+              {...(color && color.style)}></p>
           </div>
           <div className="product-description__container-text__container3__sport-icon">
             <h3>Sport</h3>
@@ -247,7 +251,13 @@ const ProductDescription = () => {
               {offer && offer.hand_delivery}
             </p>
             <h4>Options d&apos;envoi</h4>
-            <button>{deliverer && deliverer.name}</button>
+            <button>
+              {/* {deliverer && deliverer.map(el, index)=> (
+              <option key={index} value={el.id_deliverer}>
+                {el.name}
+              </option> */}
+              {/* )} */}
+            </button>
             {/* <button>La poste {offer && offer.colissimo_delivery}</button> */}
             <p>{user && user.city}</p>
             <div className="product-description__container-text__container4__delivery__btn">

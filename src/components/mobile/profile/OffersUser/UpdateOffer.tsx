@@ -9,13 +9,13 @@ import ICategory from '../../../../interfaces/ICategory';
 import IColor from '../../../../interfaces/IColor';
 import ICondition from '../../../../interfaces/ICondition';
 import IDeliverer from '../../../../interfaces/IDeliverer';
+import IGender from '../../../../interfaces/IGender';
 import IItem from '../../../../interfaces/IItem';
 import IOffer from '../../../../interfaces/IOffer';
 import IOffer_Deliverer from '../../../../interfaces/IOffer_deliverer';
 import ISize from '../../../../interfaces/ISize';
 import ISport from '../../../../interfaces/ISport';
 import ITextile from '../../../../interfaces/ITextile';
-import IGender from '../../../../interfaces/IGender';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
@@ -205,8 +205,7 @@ const UpdateOffer = () => {
         id="offerForm"
         onSubmit={(e: React.FormEvent) => handleSubmit(e)}
         className="offerFormUpdate__form"
-        action=""
-      >
+        action="">
         {/* ---------------------------Input for updated pictures------------------------ */}
         <div id="addPhotoContainer">
           <label id="labelPhoto1" htmlFor="photo1">
@@ -263,8 +262,7 @@ const UpdateOffer = () => {
           <select
             value={sport}
             onChange={(e) => setSport(e.target.value)}
-            className="offerFormUpdate__select"
-          >
+            className="offerFormUpdate__select">
             {sportList.map((sport, index) => (
               <option key={index} value={sport.id_sport}>
                 {sport.name}
@@ -286,8 +284,7 @@ const UpdateOffer = () => {
             value={Number(genderAdult)}
             className="offerFormUpdate__select"
             name="genders"
-            id="genders"
-          >
+            id="genders">
             <option value="">Genre</option>
             {gendersList.map((gender, index) => (
               <option key={index} value={gender.id_gender}>
@@ -304,8 +301,7 @@ const UpdateOffer = () => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
               }}
               value={Number(genderChild)}
-              className="offerFormUpdate__select conditionnal"
-            >
+              className="offerFormUpdate__select conditionnal">
               {gendersList.map((child, index) => (
                 <option key={index} value={child.id_gender}>
                   {child.child_name}
@@ -325,8 +321,7 @@ const UpdateOffer = () => {
                 : setCategoryIsClothes(false);
             }}
             value={category}
-            className="offerFormUpdate__select"
-          >
+            className="offerFormUpdate__select">
             {categoryList.length &&
               categoryList.map((category, index) => (
                 <option key={index} value={category.id_category}>
@@ -341,8 +336,7 @@ const UpdateOffer = () => {
           <select
             value={item}
             onChange={(e) => setItem(e.target.value)}
-            className="offerFormUpdate__select"
-          >
+            className="offerFormUpdate__select">
             {itemList.length &&
               itemList.map((item, index) => (
                 <option key={index} value={item.id_item}>
@@ -360,8 +354,7 @@ const UpdateOffer = () => {
               value={textile}
               className="offerFormUpdate__select conditionnal"
               name="textile"
-              id="textile"
-            >
+              id="textile">
               {textileList &&
                 textileList.map((textile, index) => (
                   <option key={index} value={textile.id_textile}>
@@ -379,8 +372,7 @@ const UpdateOffer = () => {
             value={brand}
             className="offerFormUpdate__select"
             name="brands"
-            id="brands"
-          >
+            id="brands">
             <option value="">Marque</option>
             {brandList &&
               brandList.map((brand, index) => (
@@ -398,8 +390,7 @@ const UpdateOffer = () => {
             value={size}
             className="offerFormUpdate__select"
             name="sizes"
-            id="sizes"
-          >
+            id="sizes">
             <option value="">Taille</option>
             {sizeList &&
               sizeList.map((size, index) => (
@@ -417,8 +408,7 @@ const UpdateOffer = () => {
             value={color1}
             className="offerFormUpdate__select"
             name="color1"
-            id="color1"
-          >
+            id="color1">
             <option value="">Couleur 1</option>
             {colorList &&
               colorList.map((color, index) => (
@@ -436,8 +426,7 @@ const UpdateOffer = () => {
             value={color2}
             className="offerFormUpdate__select"
             name="color2"
-            id="color2"
-          >
+            id="color2">
             {colorList.length &&
               colorList.map((color, index) => (
                 <option key={index} value={color.id_color}>
@@ -454,8 +443,7 @@ const UpdateOffer = () => {
             value={condition}
             className="offerFormUpdate__select"
             name="conditions"
-            id="conditions"
-          >
+            id="conditions">
             <option value="">État du produit</option>
             {conditionList &&
               conditionList.map((condition, index) => (
