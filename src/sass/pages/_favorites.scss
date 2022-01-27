@@ -1,0 +1,20 @@
+.favorites {
+
+    &__title {
+        text-align: center;
+    }
+    
+    &__empty {
+        text-align: center;
+        margin-top: 15vh;
+
+        .btn {
+            background-color: #cff44d;
+            border-radius: 30px;
+            margin-top: 20vh;
+            padding: 2vh;
+            color: black;
+            border: none;
+        }
+    } 
+}
