@@ -6,14 +6,24 @@
   margin: 15vh 5vw 12vh;
   width: 90vw;
   //   height: 95vh;
+  
+  .invisible {
+    display: none;
+  }
 
   &__bar {
-    margin-bottom: 3vh;
     text-align: center;
 
     .btn {
+      position: relative;
       width: 80vw;
       text-align: center;
+    }
+
+    .filterIcon {
+      position: absolute;
+      right: 10vw;
+      margin-top: 1.5vh;
     }
   }
 

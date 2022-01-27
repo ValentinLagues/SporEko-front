@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { AiOutlineLock } from 'react-icons/ai';
 import { BsBoxSeam, BsShield } from 'react-icons/bs';
 
@@ -13,6 +13,8 @@ import IDeliverer_price from '../../../interfaces/IDeliverer_price';
 import IOffer from '../../../interfaces/IOffer';
 import ISize from '../../../interfaces/ISize';
 import IUserLog from '../../../interfaces/IUser';
+import CurrentOfferContext from '../../../contexts/Offer';
+
 
 interface IOffer_Deliverer {
   id_offer_deliverer: number;
@@ -23,7 +25,7 @@ interface IOffer_Deliverer {
 const urlBack = import.meta.env.VITE_URL_BACK;
 
 const ConfirmOrder = () => {
-  // const { id_offer } = useContext(OfferContext);
+  const { idOffer } = useContext(CurrentOfferContext);
   // const { id } = useContext(CurrentUserContext);
   const [confirmOrder, setConfirmOrder] = useState<IOffer>();
   const [confirmAdress, setConfirmAdress] = useState<IUserLog>();
@@ -35,8 +37,9 @@ const ConfirmOrder = () => {
 
   const [handDelivery, setHandDelivery] = useState(0);
 
+  console.log(idOffer);
   useEffect(() => {
-    axios.get(`${urlBack}/offers/1`).then((res) => {
+    axios.get(`${urlBack}/offers/${idOffer}`).then((res) => {
       setConfirmOrder(res.data);
       axios.get(`${urlBack}/sizes/1`).then((res) => setConfirmSize(res.data));
       axios.get(`${urlBack}/conditions/1`).then((res) => setConfirmCondition(res.data));

@@ -15,10 +15,12 @@ import OffersUser from './components/mobile/profile/OffersUser/OffersUser';
 import UpdateOffer from './components/mobile/profile/OffersUser/UpdateOffer';
 import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
+import ProductDescription from './components/mobile/productDescription/ProductDescription';
 import Shipement from './components/mobile/profile/Shipement';
 // import UpdateOffer from './components/mobile/profile/UpdateOffer';
-import FilterMenu from './components/mobile/search/FilterMenu';
 import CurrentUserContext from './contexts/CurrentUser';
+import Favorites from './components/mobile/favorites/Favorites';
+import ConfirmOrder from './components/mobile/confirmOrder/confirmOrder';
 
 function App() {
   const { idUser, accepted } = useContext(CurrentUserContext);
@@ -29,22 +31,23 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/favorites" element={<FilterMenu />} />
           <Route path="/annonces" element={<AllOffers />} />
-          <Route path="/search" element={<AllOffers />} />
-          <Route path="/connection" element={<Connection />} />
-          <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/connexion" element={<Connection />} />
+          <Route path="/creation-compte" element={<CreateAccount />} />
+          <Route path="/annonces/:id" element={<ProductDescription />} />
           <Route path={idUser || accepted ? '' : '*'} element={<Connection />} />
         </Routes>
         {(idUser || accepted) && (
           <Routes>
-            <Route path="/offerForm" element={<OfferForm />} />
+            <Route path="/creation-offre" element={<OfferForm />} />
             <Route path="/profil" element={<Profile />} />
             <Route path="/parametres" element={<Settings />} />
             <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
             <Route path="/mode-envoi" element={<Shipement />} />
             <Route path="/modifier-votre-annonce" element={<UpdateOffer />} />
             <Route path="/mes-ventes-et-achats" element={<OffersUser />} />
+            <Route path="/confirmer-achat" element={<ConfirmOrder />} />
+            <Route path="/favoris" element={<Favorites />} />
           </Routes>
         )}
 

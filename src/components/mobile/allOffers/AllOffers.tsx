@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import IFavorite from '../../../interfaces/IFavorite';
 import IOffer from '../../../interfaces/IOffer';
+import FilterMenu from '../search/FilterMenu';
 import Search from '../search/Search';
 
 const AllOffers = () => {
@@ -52,8 +53,8 @@ const AllOffers = () => {
   console.log(isFavorite);
 
   return (
-    <div className="offers">
-      <Search />
+    <div>
+      <Search setAllOffers={setAllOffers}/>
       <div className="allOffers">
         {allOffers.map((offer: IOffer, index: number) => {
           return (
@@ -61,7 +62,7 @@ const AllOffers = () => {
               <ul className="allOffers__offer__detail">
                 <li className="allOffers__offer__detail__mainPicture">
                   <Link
-                    to={`/offers/${offer.id_offer}`}
+                    to={`/annonces/${offer.id_offer}`}
                     className="allOffers__offer__detail__linkOfferDetails">
                     <img src={offer.picture1} alt={`profile`} />
                   </Link>

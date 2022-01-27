@@ -13,7 +13,7 @@ import ITextile from '../../../interfaces/ITextile';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
-const FilterMenu = () => {
+const FilterMenu = ({setAllOffers, setShowFilterMenu}) => {
   const [sportList, setSportList] = useState<ISport[]>([]);
   const [categoryList, setCategoryList] = useState<ICategory[]>([]);
   const [itemList, setItemList] = useState<IItem[]>([]);
@@ -190,7 +190,9 @@ const FilterMenu = () => {
       filters += oneValue ? `&sort=${sort}` : `?sort=${sort}`;
       oneValue = true;
     }
-    axios.get(`${urlBack}/offers${filters}`).then((rep) => console.log(rep.data));
+    axios.get(`${urlBack}/offers${filters}`).then((rep) => setAllOffers(rep.data));
+
+    setShowFilterMenu(false);
   };
 
   colorList &&

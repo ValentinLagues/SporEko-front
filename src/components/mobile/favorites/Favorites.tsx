@@ -42,6 +42,8 @@ const Favorites = () => {
 
   useEffect(() => {
     axios.get(`${urlBack}/offers/${idOfferFav}`).then((res) => setFavOffers(res.data));
+    //Pour chaque favori récupéré (res.data) je vais mapper et aller faire un axios avec l'id_offer
+    // je mets ça dans un tableau et je mets ce tableau dans un state
   }, []);
 
   useEffect(() => {
@@ -49,9 +51,6 @@ const Favorites = () => {
       axios
         .get(`${urlBack}/users/${idUser}/favorites`)
         .then((res) => setUserFavorites(res.data));
-
-    //Pour chaque favori récupéré (res.data) je vais mapper et aller faire un axios avec l'id_offer
-    // je mets ça dans un tableau et je mets ce tableau dans un state
   }, []);
 
   console.log(userFavorites);
