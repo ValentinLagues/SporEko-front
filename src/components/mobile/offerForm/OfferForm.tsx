@@ -41,19 +41,24 @@ const OfferForm = () => {
   const [genderIsChild, setGenderIsChild] = useState(false);
   const [category, setCategory] = useState('');
   const [item, setItem] = useState('');
+  const [itemInfos, setItemInfos] = useState<IItem>();
   const [categoryIsClothes, setCategoryIsClothes] = useState(false);
   const [brand, setBrand] = useState('');
   const [textile, setTextile] = useState('');
   const [color1, setColor1] = useState('');
   const [color2, setColor2] = useState('');
   const [condition, setCondition] = useState('');
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState<number | null>(null);
+  const [showSizes, setShowSizes] = useState(false);
   const [size, setSize] = useState('');
-  const [weight, setWeight] = useState(0);
+  const [weight, setWeight] = useState<number | null>(null);
+  const [weightRequired, setWeightRequired] = useState(false);
   const [handDelivery, setHandDelivery] = useState(0);
   const [chosenDeliverers, setChosenDeliverers] = useState<Array<number>>([]);
   const [isDraft, setIsDraft] = useState(0);
   const [offer, setOffer] = useState<IOffer>();
+  const [deliverersArray, setDeliverersArray] = useState<Array<number>>([]);
+  const [photoAdded, setPhotoAdded] = useState(false);
 
   useEffect(() => {
     axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
@@ -74,63 +79,125 @@ const OfferForm = () => {
       });
   }, [category]);
 
-  let deliverersArray: number[] = [];
+  useEffect(() => {
+    let filters = ``;
+    let oneValue = false;
+
+    if (gender) {
+      filters += `?id_gender=${gender}`;
+      oneValue = true;
+    }
+    if (genderIsChild) {
+      filters += oneValue ? `&is_child=1` : `?is_child=1`;
+      oneValue = true;
+    }
+    item
+      ? axios.get(`${urlBack}/items/${item}/sizes${filters}`).then((res) => {
+          setSizeList(res.data);
+        })
+      : category
+      ? axios.get(`${urlBack}/categories/${category}/sizes${filters}`).then((res) => {
+          setSizeList(res.data);
+        })
+      : (setSizeList([]), setShowSizes(false));
+  }, [item, gender, genderIsChild, category]);
+
+  const handleItemSelected = (id: string) => {
+    axios
+      .get(`${urlBack}/items/${id}`)
+      .then((item) => {
+        setItemInfos(item.data);
+        return item.data;
+      })
+      .then((item) =>
+        item.id_size_type === 1 ||
+        item.id_size_type === 2 ||
+        item.id_size_type === 3 ||
+        item.id_size_type === 6
+          ? setShowSizes(true)
+          : setShowSizes(false),
+      );
+  };
+
   const handleChosenDeliverers = (id: number) => {
     if (deliverersArray.includes(id)) {
-      deliverersArray.splice(deliverersArray.indexOf(id), 1);
+      setDeliverersArray(deliverersArray.filter((elem) => elem !== id));
     } else {
-      deliverersArray.push(id);
+      setDeliverersArray(deliverersArray.concat([id]));
     }
   };
 
+  useEffect(() => {
+    if (deliverersArray.length != 0) {
+      setWeightRequired(true);
+    } else {
+      setWeightRequired(false);
+    }
+  }, [deliverersArray]);
+
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    let errors = false;
+    const errorsDescription = document.getElementById('errorsDescription');
+    let errorsMessage = [];
 
-    setChosenDeliverers(deliverersArray);
-    deliverersArray = [];
-    const newOffer = {
-      id_user_seller: Number(idUser),
-      title,
-      picture1: pictures[0],
-      description,
-      id_sport: parseInt(sport),
-      id_gender: gender,
-      is_child: genderIsChild ? 1 : 0,
-      id_category: parseInt(category),
-      id_item: parseInt(item),
-      id_brand: brand ? parseInt(brand) : null,
-      id_textile: textile ? parseInt(textile) : null,
-      id_size: size ? parseInt(size) : null,
-      id_color1: color1 ? parseInt(color1) : null,
-      id_color2: color2 ? parseInt(color2) : null,
-      id_condition: parseInt(condition),
-      price: Number(price),
-      weight: Number(weight),
-      hand_delivery: handDelivery,
-      is_archived: 0,
-      is_draft: isDraft,
-      picture2: pictures[1],
-      picture3: pictures[2],
-      picture4: pictures[3],
-      picture5: pictures[4],
-      picture6: pictures[5],
-      picture7: pictures[6],
-      picture8: pictures[7],
-      picture9: pictures[8],
-      picture10: pictures[9],
-      picture11: pictures[10],
-      picture12: pictures[11],
-      picture13: pictures[12],
-      picture14: pictures[13],
-      picture15: pictures[14],
-      picture16: pictures[15],
-      picture17: pictures[16],
-      picture18: pictures[17],
-      picture19: pictures[18],
-      picture20: pictures[19],
-    } as unknown as IOffer;
+    if (!photoAdded) {
+      errorsMessage.push('veuillez ajouter au moins une photo');
+      errors = true;
+    }
 
-    setOffer(newOffer);
+    if (errors) {
+      e.preventDefault();
+      console.log(errorsMessage);
+      errorsMessage.map((message) => errorsDescription?.append(message));
+      errorsDescription?.setAttribute('display', 'bloc');
+    }
+    if (!errors) {
+      errorsDescription?.setAttribute('display', 'none');
+      setChosenDeliverers(deliverersArray);
+      setDeliverersArray([]);
+      const newOffer = {
+        id_user_seller: Number(idUser),
+        title,
+        picture1: pictures[0],
+        description,
+        id_sport: parseInt(sport),
+        id_gender: gender,
+        is_child: genderIsChild ? 1 : 0,
+        id_category: parseInt(category),
+        id_item: parseInt(item),
+        id_brand: brand ? parseInt(brand) : null,
+        id_textile: textile ? parseInt(textile) : null,
+        id_size: size ? parseInt(size) : null,
+        id_color1: color1 ? parseInt(color1) : null,
+        id_color2: color2 ? parseInt(color2) : null,
+        id_condition: parseInt(condition),
+        price: Number(Number(price).toFixed(2)),
+        weight: Number(Number(weight).toFixed(0)),
+        hand_delivery: handDelivery,
+        is_archived: 0,
+        is_draft: isDraft,
+        picture2: pictures[1],
+        picture3: pictures[2],
+        picture4: pictures[3],
+        picture5: pictures[4],
+        picture6: pictures[5],
+        picture7: pictures[6],
+        picture8: pictures[7],
+        picture9: pictures[8],
+        picture10: pictures[9],
+        picture11: pictures[10],
+        picture12: pictures[11],
+        picture13: pictures[12],
+        picture14: pictures[13],
+        picture15: pictures[14],
+        picture16: pictures[15],
+        picture17: pictures[16],
+        picture18: pictures[17],
+        picture19: pictures[18],
+        picture20: pictures[19],
+      } as unknown as IOffer;
+      setOffer(newOffer);
+    }
   };
 
   // Function axios to add pictures on offer.
@@ -153,9 +220,13 @@ const OfferForm = () => {
           },
         },
       )
-      .then((res) => setPictures(res.data))
+      .then((res) => (setPictures(res.data), setPhotoAdded(true)))
       .catch((err) => console.error({ ...err }));
   };
+
+  let images = Object.keys(pictures).map(function (key: any) {
+    return [Number(key), pictures[key]];
+  });
 
   useEffect(() => {
     offer &&
@@ -194,11 +265,23 @@ const OfferForm = () => {
             onChange={(e) => handleFileInput(e)}
           />
         </div>
+        <div className="photosContainer">
+          {pictures &&
+            images.map((image: Array<any>, index) => (
+              <img
+                className="image"
+                key={image[0]}
+                src={image[1]}
+                alt={`n°${index} de l'annonce`}
+              />
+            ))}
+        </div>
         <div>
           <label className="offerForm__label" htmlFor="title">
             <MdStarRate className="iconRequired" /> Titre
           </label>
           <input
+            required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="offerForm__input"
@@ -212,6 +295,7 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" /> Description
           </label>
           <textarea
+            required
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="offerForm__input"
@@ -225,6 +309,7 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" />
           </div>
           <select
+            required
             onChange={(e) => setSport(e.target.value)}
             value={sport}
             className="offerForm__select"
@@ -246,6 +331,7 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" />
           </div>
           <select
+            required
             onChange={(e) => {
               setGenderAdult(Number(e.target.value));
               e.target.value === '4'
@@ -282,14 +368,21 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" />
           </div>
           <select
+            required
             onChange={(e) => {
+              setItem('');
               setCategory(e.target.value);
+              // e.target.value === '' ? setItem('') : '';
               e.target.value === '1'
-                ? setCategoryIsClothes(true)
+                ? (setCategoryIsClothes(true), setShowSizes(true))
                 : setCategoryIsClothes(false);
+              e.target.value === '2' ? setShowSizes(true) : '';
+              e.target.value === '3' ? setShowSizes(false) : '';
             }}
             value={category}
-            className="offerForm__select">
+            className="offerForm__select"
+            name="categories"
+            id="categories">
             <option value="">Catégorie</option>
             {categoryList &&
               categoryList.map((category, index) => (
@@ -304,7 +397,17 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" />
           </div>
           <select
-            onChange={(e) => setItem(e.target.value)}
+            required
+            onChange={(e) => {
+              handleItemSelected(e.target.value);
+              setItem(e.target.value);
+              itemInfos?.id_size_type === 1 ||
+              itemInfos?.id_size_type === 2 ||
+              itemInfos?.id_size_type === 3 ||
+              itemInfos?.id_size_type === 6
+                ? setShowSizes(true)
+                : setShowSizes(false);
+            }}
             value={item}
             className="offerForm__select">
             <option value="">Article</option>
@@ -350,22 +453,37 @@ const OfferForm = () => {
               ))}
           </select>
         </div>
-        <div>
-          <select
-            onChange={(e) => setSize(e.target.value)}
-            value={size}
-            className="offerForm__select"
-            name="sizes"
-            id="sizes">
-            <option value="">Taille</option>
-            {sizeList &&
-              sizeList.map((size, index) => (
-                <option key={index} value={size.id_size}>
-                  {size.size_fr}
-                </option>
-              ))}
-          </select>
-        </div>
+        {showSizes && (
+          <div className="offerForm__items">
+            <div className="offerForm__items__asterisk">
+              <MdStarRate className="iconRequired" />
+            </div>
+            <select
+              onChange={(e) => setSize(e.target.value)}
+              value={size}
+              className="offerForm__select"
+              name="sizes"
+              id="sizes">
+              <option value="">Taille</option>
+              {sizeList &&
+                sizeList.map((size, index) => (
+                  <option key={index} value={size.id_size}>
+                    {(category === '1' && genderIsChild) || itemInfos?.id_size_type === 6
+                      ? `${size.age_child}`
+                      : category === '1' ||
+                        itemInfos?.id_size_type === 2 ||
+                        itemInfos?.id_size_type === 3
+                      ? size.size_int !== null
+                        ? `${size.size_int}/${size.size_eu}/${size.size_uk}`
+                        : `${size.age_child}`
+                      : category === '2' || itemInfos?.id_size_type === 1
+                      ? `${size.size_eu}`
+                      : ''}
+                  </option>
+                ))}
+            </select>
+          </div>
+        )}
         <div>
           <select
             onChange={(e) => setColor1(e.target.value)}
@@ -403,6 +521,7 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" />
           </div>
           <select
+            required
             onChange={(e) => setCondition(e.target.value)}
             value={condition}
             className="offerForm__select"
@@ -422,7 +541,8 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" /> Prix hors frais de port
           </label>
           <input
-            value={price}
+            required
+            value={price || ''}
             onChange={(e) => setPrice(Number(e.target.value))}
             className="offerForm__input"
             type="number"
@@ -434,11 +554,10 @@ const OfferForm = () => {
         </div>
         <div className="offerForm__weight">
           <label className="offerForm__label" htmlFor="weight">
-            {!handDelivery ? <MdStarRate className="iconRequired" /> : ''} Poids du
-            produit
+            {weightRequired && <MdStarRate className="iconRequired" />} Poids du produit
           </label>
           <input
-            value={weight}
+            value={weight || ''}
             onChange={(e) => setWeight(Number(e.target.value))}
             className="offerForm__input"
             type="number"
@@ -502,6 +621,7 @@ const OfferForm = () => {
             <span className="slider round"></span>
           </label>
         </div>
+        <div id="errorsDescription" className="offerForm__errorsDescription"></div>
         <div className="offerForm__submitContainer">
           <button className="btn" type="submit">
             Ajouter
