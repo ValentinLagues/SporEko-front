@@ -20,7 +20,7 @@ const Footer = () => {
           </Link>
         </li>
         <li>
-          <Link to="/search">
+          <Link to="/annonces">
             <BsSearch className="footer__footerContainer__footerIcons" />
             Rechercher
           </Link>

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
+import AllOffers from './components/mobile/allOffers/AllOffers';
 import Connection from './components/mobile/connection/Connection';
 import CreateAccount from './components/mobile/createAccount/CreateAccount';
 import Home from './components/mobile/Home/Home';
@@ -8,6 +9,8 @@ import Footer from './components/mobile/layout/Footer';
 import OfferForm from './components/mobile/offerForm/OfferForm';
 import ProductDescription from './components/mobile/productDescription/ProductDescription';
 import ModificationProfil from './components/mobile/profile/ModificationProfil';
+import OffersUser from './components/mobile/profile/OffersUser/OffersUser';
+import UpdateOffer from './components/mobile/profile/OffersUser/UpdateOffer';
 import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
 import Shipement from './components/mobile/profile/Shipement';
@@ -22,9 +25,11 @@ function App() {
       <HashRouter basename="/">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/annonces" element={<AllOffers />} />
           <Route path="/search" element={<FilterMenu />} />
           <Route path="/connection" element={<Connection />} />
           <Route path="/create-account" element={<CreateAccount />} />
+          <Route path={idUser || accepted ? '' : '*'} element={<Connection />} />
         </Routes>
         {(idUser || accepted) && (
           <Routes>
@@ -34,6 +39,8 @@ function App() {
             <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
             <Route path="/mode-envoi" element={<Shipement />} />
             <Route path="/product-description" element={<ProductDescription />} />
+            <Route path="/modifier-votre-annonce" element={<UpdateOffer />} />
+            <Route path="/mes-ventes-et-achats" element={<OffersUser />} />
           </Routes>
         )}
 

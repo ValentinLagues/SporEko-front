@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-import TestImage from '../../../../resources/testFicheProduit.jpg';
 import IBrand from '../../../interfaces/IBrand';
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
@@ -33,7 +32,7 @@ interface Sport {
 const ProductDescription = () => {
   const [offer, setOffer] = useState<Ioffer>();
   const [brand, setBrand] = useState<IBrand>();
-  const [size, setSize] = useState<ISize>();
+  // const [size, setSize] = useState<ISize>();
   const [condition, setCondition] = useState<ICondition>();
   const [sport, setSport] = useState<Sport>();
   const [deliverer, setDeliverer] = useState<IDeliverer>();
@@ -43,14 +42,16 @@ const ProductDescription = () => {
 
   //   const [sellerAddress, setSellerAddress] = useState();
 
+  const [idSport, setIdSport] = useState<Sport>();
+
   useEffect(() => {
-    axios.get(`${urlBack}/offers/1`).then((res) => setOffer(res.data));
+    axios.get(`${urlBack}/offers/3`).then((res) => setOffer(res.data));
     // console.log = ok
     // axios.get(`${urlBack}/offers/1`).then((data) => console.log(data));
     axios.get(`${urlBack}/brands/1`).then((res) => setBrand(res.data));
     axios.get(`${urlBack}/colors/4`).then((res) => setColor(res.data));
-    axios.get(`${urlBack}/sports/1`).then((res) => setSport(res.data));
-    axios.get(`${urlBack}/sizes/1`).then((res) => setSize(res.data));
+    axios.get(`${urlBack}/sports/${idSport}`).then((res) => setSport(res.data));
+    // axios.get(`${urlBack}/sizes/1`).then((res) => setSize(res.data));
     axios.get(`${urlBack}/conditions/1`).then((res) => setCondition(res.data));
     axios.get(`${urlBack}/deliverers/1`).then((res) => setDeliverer(res.data));
     axios
@@ -59,6 +60,12 @@ const ProductDescription = () => {
     axios.get(`${urlBack}/users/1/`);
   }, []);
   // console.log(offer)
+
+  useEffect(() => {
+    offer && offer;
+    axios.get(`${urlBack}/sports/${idSport}`).then((res) => setIdSport(res.data));
+  }, []);
+  console.log(idSport);
 
   // colorList &&
   //   colorList.map((color) => (color.style = { backgroundColor: color.color_code }));
@@ -69,37 +76,37 @@ const ProductDescription = () => {
         {/* --------------------Container photo principale----------------- */}
         <img
           className="product-description__container-picture__big-picture"
-          src={TestImage}
+          src={offer && offer.picture5}
           alt=""
         />
         <img
           className="product-description__container-picture__all-picture"
-          src={TestImage}
+          src={offer && offer.picture2}
           alt=""
         />
         <img
           className="product-description__container-picture__all-picture"
-          src={TestImage}
+          src={offer && offer.picture3}
           alt=""
         />
         <img
           className="product-description__container-picture__all-picture"
-          src={TestImage}
+          src={offer && offer.picture4}
           alt=""
         />
         <img
           className="product-description__container-picture__all-picture"
-          src={TestImage}
+          src={offer && offer.picture5}
           alt=""
         />
         <img
           className="product-description__container-picture__all-picture"
-          src={TestImage}
+          src={offer && offer.picture6}
           alt=""
         />
         <img
           className="product-description__container-picture__all-picture"
-          src={TestImage}
+          src={offer && offer.picture1}
           alt=""
         />
         <div className="product-description__container-picture__favorite"></div>
@@ -124,7 +131,7 @@ const ProductDescription = () => {
           <div className="product-description__container-text__container3__size">
             <h3>Taille</h3>
             <p>
-              {size && size.size_int} {size && size.size_eu}
+              {offer && offer} {size && size.size_eu}
             </p>
           </div>
           <div className="product-description__container-text__container3__condition">
