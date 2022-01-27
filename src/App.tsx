@@ -4,6 +4,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import AllOffers from './components/mobile/allOffers/AllOffers';
 import Connection from './components/mobile/connection/Connection';
 import CreateAccount from './components/mobile/createAccount/CreateAccount';
+import Favorites from './components/mobile/favorites/Favorites';
 import Home from './components/mobile/Home/Home';
 import Footer from './components/mobile/layout/Footer';
 import OfferForm from './components/mobile/offerForm/OfferForm';
@@ -15,7 +16,6 @@ import Settings from './components/mobile/profile/Settings';
 import Shipement from './components/mobile/profile/Shipement';
 import FilterMenu from './components/mobile/search/FilterMenu';
 import CurrentUserContext from './contexts/CurrentUser';
-import Favorites from './components/mobile/favorites/Favorites';
 
 function App() {
   const { idUser, accepted } = useContext(CurrentUserContext);

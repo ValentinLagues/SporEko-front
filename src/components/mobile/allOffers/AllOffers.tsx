@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { AiFillHeart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
+
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import IFavorite from '../../../interfaces/IFavorite';
 import IOffer from '../../../interfaces/IOffer';
@@ -21,7 +22,7 @@ const AllOffers = () => {
         id_user: Number(idUser),
         id_offer: idOffer,
       })
-      .then(() => setIsFavorite(true))
+      .then(() => setIsFavorite(true));
   };
 
   const deleteFavorite = (idOffer: number) => {
