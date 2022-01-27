@@ -1,31 +1,26 @@
 .header {
-  display: flex;
-  flex-direction: row;
-  background-color: rgb(180, 180, 180);
-
-  img {
-    width: 15%;
-  }
-
-  ul {
-    width: 80%;
+  position: fixed;
+  top: 0;
+  height: 8vh;
+  width: 100vw;
+  &__container {
+    background-color: $colorDarkGrey;
     display: flex;
     align-items: center;
-    justify-content: space-around;
-  }
+    &__logoRun {
+      width: 8vh;
+      height: 8vh;
+    }
 
-  a {
-    text-decoration: none;
-    color: black;
-
-    &:hover {
-      color: chartreuse;
+    & h3 {
+      color: $colorWhite;
+      text-align: center;
+      width: 50vw;
+    }
+    &__icon {
+      width: 6vw;
+      height: 6vh;
+      color: $colorWhite;
     }
   }
-}
-
-#searchHome {
-  width: 30rem;
-  padding: 0.8em;
-  border-radius: 10px;
 }

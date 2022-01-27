@@ -10,7 +10,7 @@ export default interface IUserLog {
   id_user: number;
   lastname: string;
   firstname: string;
-  adress: string;
+  address: string;
   zipcode: number;
   city: string;
   email: string;
@@ -21,7 +21,7 @@ export default interface IUserLog {
   isarchived: number;
   id_gender: number;
   id_country: number;
-  adress_complement: string;
+  address_complement: string;
   id_athletic: number;
   birthday: string;
   country: string;
@@ -29,4 +29,5 @@ export default interface IUserLog {
   creation_date: string;
   pseudo: string;
   authentified_by_facebook: number;
+  is_professional: number;
 }

@@ -1,8 +1,12 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 type OfferContent = {
-  id: number;
-  setId: React.Dispatch<React.SetStateAction<number>>;
+  idOffer: number;
+  setIdOffer: React.Dispatch<React.SetStateAction<number>>;
+  idOfferSell: string;
+  setIdOfferSell: React.Dispatch<React.SetStateAction<string>>;
+  idOfferBuy: string;
+  setIdOfferBuy: React.Dispatch<React.SetStateAction<string>>;
   creation_date: string;
   setCreation_date: React.Dispatch<React.SetStateAction<string>>;
   id_user_seller: number;
@@ -17,8 +21,8 @@ type OfferContent = {
   setId_sport: React.Dispatch<React.SetStateAction<number>>;
   id_gender: number;
   setId_gender: React.Dispatch<React.SetStateAction<number>>;
-  ischild: boolean;
-  setIschild: React.Dispatch<React.SetStateAction<boolean>>;
+  is_child: boolean;
+  setIs_child: React.Dispatch<React.SetStateAction<boolean>>;
   id_category: number;
   setId_category: React.Dispatch<React.SetStateAction<number>>;
   id_item: number;
@@ -37,22 +41,18 @@ type OfferContent = {
   setId_condition: React.Dispatch<React.SetStateAction<number>>;
   price: number;
   setPrice: React.Dispatch<React.SetStateAction<number>>;
-  id_weight: number;
-  setId_weight: React.Dispatch<React.SetStateAction<number>>;
+  weight: number;
+  setIdWeight: React.Dispatch<React.SetStateAction<number>>;
   id_user_buyer: number;
   setId_user_buyer: React.Dispatch<React.SetStateAction<number>>;
   purchase_date: string;
   setPurchase_date: React.Dispatch<React.SetStateAction<string>>;
   hand_delivery: boolean;
   setHand_delivery: React.Dispatch<React.SetStateAction<boolean>>;
-  colissimo_delivery: boolean;
-  setColissimo_delivery: React.Dispatch<React.SetStateAction<boolean>>;
-  mondial_relay_delivery: boolean;
-  setMondial_relay_delivery: React.Dispatch<React.SetStateAction<boolean>>;
-  isarchived: boolean;
-  setIsarchived: React.Dispatch<React.SetStateAction<boolean>>;
-  isdraft: boolean;
-  setIsdraft: React.Dispatch<React.SetStateAction<boolean>>;
+  is_archived: boolean;
+  setIs_archived: React.Dispatch<React.SetStateAction<boolean>>;
+  is_draft: boolean;
+  setIs_draft: React.Dispatch<React.SetStateAction<boolean>>;
   picture2: string;
   setPicture2: React.Dispatch<React.SetStateAction<string>>;
   picture3: string;
@@ -95,12 +95,16 @@ type OfferContent = {
 
 type Props = { children: Element };
 
-const OfferContext = createContext<OfferContent>({
-  id: 0,
-  setId: () => {},
+const CurrentOfferContext = createContext<OfferContent>({
+  idOffer: 0,
+  setIdOffer: () => {},
+  idOfferSell: '',
+  setIdOfferSell: () => {},
+  idOfferBuy: '',
+  setIdOfferBuy: () => {},
   creation_date: '',
   setCreation_date: () => {},
-  id_user_seller: 0,
+  id_user_seller: 1,
   setId_user_seller: () => {},
   picture1: '',
   setPicture1: () => {},
@@ -108,46 +112,42 @@ const OfferContext = createContext<OfferContent>({
   setTitle: () => {},
   description: '',
   setDescription: () => {},
-  id_sport: 0,
+  id_sport: 1,
   setId_sport: () => {},
-  id_gender: 0,
+  id_gender: 1,
   setId_gender: () => {},
-  ischild: false,
-  setIschild: () => {},
+  is_child: false,
+  setIs_child: () => {},
   id_category: 0,
   setId_category: () => {},
-  id_item: 0,
+  id_item: 1,
   setId_item: () => {},
-  id_brand: 0,
+  id_brand: 1,
   setId_brand: () => {},
-  id_textile: 0,
+  id_textile: 1,
   setId_textile: () => {},
-  id_size: 0,
+  id_size: 1,
   setId_size: () => {},
-  id_color1: 0,
+  id_color1: 1,
   setId_color1: () => {},
-  id_color2: 0,
+  id_color2: 1,
   setId_color2: () => {},
-  id_condition: 0,
+  id_condition: 1,
   setId_condition: () => {},
   price: 0.0,
   setPrice: () => {},
-  id_weight: 0,
-  setId_weight: () => {},
+  weight: 0,
+  setIdWeight: () => {},
   id_user_buyer: 0,
   setId_user_buyer: () => {},
   purchase_date: '',
   setPurchase_date: () => {},
   hand_delivery: false,
   setHand_delivery: () => {},
-  colissimo_delivery: false,
-  setColissimo_delivery: () => {},
-  mondial_relay_delivery: false,
-  setMondial_relay_delivery: () => {},
-  isarchived: false,
-  setIsarchived: () => {},
-  isdraft: false,
-  setIsdraft: () => {},
+  is_archived: false,
+  setIs_archived: () => {},
+  is_draft: false,
+  setIs_draft: () => {},
   picture2: '',
   setPicture2: () => {},
   picture3: '',
@@ -188,8 +188,15 @@ const OfferContext = createContext<OfferContent>({
   setPicture20: () => {},
 });
 
-export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
-  const [id, setId] = useState<number>(0);
+export const CurrentOfferContextProvider: React.FC<Props> = ({ children }) => {
+  const [idOffer, setIdOffer] = useState<number>(0);
+  const [idOfferSell, setIdOfferSell] = useState<string | any>('');
+  const [idOfferBuy, setIdOfferBuy] = useState<string | any>('');
+  useEffect(() => {
+    setIdOfferSell(sessionStorage.getItem('idOfferSell'));
+    setIdOfferBuy(sessionStorage.getItem('idOfferBuy'));
+  }, [idOfferSell]);
+
   const [creation_date, setCreation_date] = useState<string>('');
   const [id_user_seller, setId_user_seller] = useState<number>(0);
   const [picture1, setPicture1] = useState<string>('');
@@ -197,7 +204,7 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
   const [description, setDescription] = useState<string>('');
   const [id_sport, setId_sport] = useState<number>(0);
   const [id_gender, setId_gender] = useState<number>(0);
-  const [ischild, setIschild] = useState<boolean>(false);
+  const [is_child, setIs_child] = useState<boolean>(false);
   const [id_category, setId_category] = useState<number>(0);
   const [id_item, setId_item] = useState<number>(0);
   const [id_brand, setId_brand] = useState<number>(0);
@@ -207,14 +214,12 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
   const [id_color2, setId_color2] = useState<number>(0);
   const [id_condition, setId_condition] = useState<number>(0);
   const [price, setPrice] = useState<number>(0.0);
-  const [id_weight, setId_weight] = useState<number>(0);
+  const [weight, setIdWeight] = useState<number>(0);
   const [id_user_buyer, setId_user_buyer] = useState<number>(0);
   const [purchase_date, setPurchase_date] = useState<string>('');
   const [hand_delivery, setHand_delivery] = useState<boolean>(false);
-  const [colissimo_delivery, setColissimo_delivery] = useState<boolean>(false);
-  const [mondial_relay_delivery, setMondial_relay_delivery] = useState<boolean>(false);
-  const [isarchived, setIsarchived] = useState<boolean>(false);
-  const [isdraft, setIsdraft] = useState<boolean>(false);
+  const [is_archived, setIs_archived] = useState<boolean>(false);
+  const [is_draft, setIs_draft] = useState<boolean>(false);
   const [picture2, setPicture2] = useState<string>('');
   const [picture3, setPicture3] = useState<string>('');
   const [picture4, setPicture4] = useState<string>('');
@@ -236,10 +241,14 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
   const [picture20, setPicture20] = useState<string>('');
 
   return (
-    <OfferContext.Provider
+    <CurrentOfferContext.Provider
       value={{
-        id,
-        setId,
+        idOffer,
+        setIdOffer,
+        idOfferSell,
+        setIdOfferSell,
+        idOfferBuy,
+        setIdOfferBuy,
         creation_date,
         setCreation_date,
         id_user_seller,
@@ -254,8 +263,8 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
         setId_sport,
         id_gender,
         setId_gender,
-        ischild,
-        setIschild,
+        is_child,
+        setIs_child,
         id_category,
         setId_category,
         id_item,
@@ -274,22 +283,18 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
         setId_condition,
         price,
         setPrice,
-        id_weight,
-        setId_weight,
+        weight,
+        setIdWeight,
         id_user_buyer,
         setId_user_buyer,
         purchase_date,
         setPurchase_date,
         hand_delivery,
         setHand_delivery,
-        colissimo_delivery,
-        setColissimo_delivery,
-        mondial_relay_delivery,
-        setMondial_relay_delivery,
-        isarchived,
-        setIsarchived,
-        isdraft,
-        setIsdraft,
+        is_archived,
+        setIs_archived,
+        is_draft,
+        setIs_draft,
         picture2,
         setPicture2,
         picture3,
@@ -330,8 +335,8 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
         setPicture20,
       }}>
       {children}
-    </OfferContext.Provider>
+    </CurrentOfferContext.Provider>
   );
 };
 
-export default OfferContext;
+export default CurrentOfferContext;

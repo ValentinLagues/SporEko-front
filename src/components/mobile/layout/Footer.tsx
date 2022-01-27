@@ -1,42 +1,45 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { BsPlusLg } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
-import { FiMail } from 'react-icons/fi';
+import { FiHome } from 'react-icons/fi';
 import { FiHeart } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
+import CurrentUserContext from '../../../contexts/CurrentUser';
+
 const Footer = () => {
+  const { idUser } = useContext(CurrentUserContext);
   return (
     <div className="footer">
       <ul className="footer__footerContainer">
         <li>
-          <Link to="/favorites">
+          <Link to="/favoris">
             <FiHeart className="footer__footerContainer__footerIcons" />
             Favoris
           </Link>
         </li>
         <li>
-          <Link to="/search">
+          <Link to="/annonces">
             <BsSearch className="footer__footerContainer__footerIcons" />
             Rechercher
           </Link>
         </li>
         <li id="vendre">Vendre</li>
         <li>
-          <Link to="/messages">
-            <FiMail className="footer__footerContainer__footerIcons" />
-            Messages
+          <Link to="/">
+            <FiHome className="footer__footerContainer__footerIcons" />
+            Home
           </Link>
         </li>
         <li>
-          {sessionStorage.getItem('idBool') ? (
+          {idUser ? (
             <Link to="/profil">
               <CgProfile className="footer__footerContainer__footerIcons" />
               Profil
             </Link>
           ) : (
-            <Link to="/connection">
+            <Link to="/connexion">
               <CgProfile className="footer__footerContainer__footerIcons" />
               Compte
             </Link>
@@ -44,7 +47,7 @@ const Footer = () => {
         </li>
       </ul>
       <button type="button" className="footer__button">
-        <Link to="/offerForm">
+        <Link to="/creation-offre">
           <BsPlusLg className="btn" />
         </Link>
       </button>
