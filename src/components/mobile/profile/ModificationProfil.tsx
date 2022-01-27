@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { BiRun } from 'react-icons/Bi';
+import { BiRun } from 'react-icons/bi';
 import { BsGenderAmbiguous, BsGenderFemale, BsGenderMale } from 'react-icons/bs';
 import {
   FiCalendar,
@@ -140,31 +140,32 @@ const ModificationProfil = () => {
   };
   // Axios call for update user informations
   useEffect(() => {
-    axios
-      .put<IUserLog>(
-        `${urlBack}/users/${idUser}`,
-        updateUser,
+    updateUser &&
+      axios
+        .put<IUserLog>(
+          `${urlBack}/users/${idUser}`,
+          updateUser,
 
-        {
-          withCredentials: true,
-        },
-      )
-      .then((res) => {
-        res;
-        setMessageError('');
-        setMessage('Vos données, on été mise à jour');
-      })
-      .catch((err) => {
-        if (err.response.data.message === 'Pseudo already exists') {
-          setMessage('');
-          setMessageError("Ce pseudo n'est pas disponible!");
-        } else if (err.response.data.message === 'Email already exists') {
-          setMessage('');
-          setMessageError('Cette adresse e-mail est déjà utilisée');
-        } else {
-          console.log({ ...err });
-        }
-      });
+          {
+            withCredentials: true,
+          },
+        )
+        .then((res) => {
+          res;
+          setMessageError('');
+          setMessage('Vos données, on été mise à jour');
+        })
+        .catch((err) => {
+          if (err.response.data.message === 'Pseudo already exists') {
+            setMessage('');
+            setMessageError("Ce pseudo n'est pas disponible!");
+          } else if (err.response.data.message === 'Email already exists') {
+            setMessage('');
+            setMessageError('Cette adresse e-mail est déjà utilisée');
+          } else {
+            console.log({ ...err });
+          }
+        });
   }, [updateUser]);
 
   useEffect(() => {

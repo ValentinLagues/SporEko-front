@@ -333,7 +333,8 @@ export const CurrentOfferContextProvider: React.FC<Props> = ({ children }) => {
         setPicture19,
         picture20,
         setPicture20,
-      }}>
+      }}
+    >
       {children}
     </CurrentOfferContext.Provider>
   );
