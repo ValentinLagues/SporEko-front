@@ -1,0 +1,113 @@
+.confirmOrder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 5vw 11vh;
+  width: 90vw;
+  //   height: 95vh;
+
+  &__confirmOrderContainer {
+    text-align: center;
+
+    & img {
+      width: 70vw;
+    }
+
+    & h3 {
+      font-size: 2.5vh;
+      margin-bottom: 1.5vh;
+    }
+
+    & h4 {
+      font-size: 2vh;
+    }
+
+    & p {
+      padding: 1vw;
+      font-weight: bolder;
+      color: $colorBlack;
+    }
+
+    &__box {
+      border-style: solid;
+      border-radius: 20px;
+      border-width: 1px;
+      border-color: gray;
+      margin: 2vh 0vw;
+    }
+
+    & .delivererList {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 5px;
+      &__span {
+        max-width: 70%;
+      }
+      & .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 25px;
+        & input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+      }
+      & .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+        &:before {
+          position: absolute;
+          content: '';
+          height: 18px;
+          width: 18px;
+          left: 4px;
+          bottom: 4px;
+          background-color: white;
+          -webkit-transition: 0.4s;
+          transition: 0.4s;
+        }
+        &.round {
+          border-radius: 34px;
+          &:before {
+            border-radius: 50%;
+          }
+        }
+      }
+      & input:checked + .slider {
+        background-color: $colorSporEko;
+      }
+      & input:focus + .slider {
+        box-shadow: 0 0 1px $colorSporEko;
+      }
+      & input:checked + .slider:before {
+        -webkit-transform: translateX(24px);
+        -ms-transform: translateX(24px);
+        transform: translateX(24px);
+      }
+    }
+
+    .instructions {
+      color: gray;
+      padding: 3vw;
+      text-align: justify;
+      background-color: ghostwhite;
+      border-radius: 20px;
+    }
+
+    .cards {
+      width: 20vw;
+      height: 2vh;
+    }
+  }
+}

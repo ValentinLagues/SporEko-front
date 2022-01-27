@@ -41,7 +41,6 @@ const AllOffers = () => {
   useEffect(() => {
     axios.get(`${urlBack}/offers`).then((res) => setAllOffers(res.data));
     idUser &&
-      isFavorite &&
       axios
         .get(`${urlBack}/users/${idUser}/favorites`)
         .then((res) => setUserFavorites(res.data))
@@ -49,6 +48,7 @@ const AllOffers = () => {
   }, [isFavorite]);
 
   console.log(userFavorites);
+  console.log(isFavorite);
 
   return (
     <div className="allOffers">
@@ -59,7 +59,8 @@ const AllOffers = () => {
               <li className="allOffers__offer__detail__mainPicture">
                 <Link
                   to={`/offers/${offer.id_offer}`}
-                  className="allOffers__offer__detail__linkOfferDetails">
+                  className="allOffers__offer__detail__linkOfferDetails"
+                >
                   <img src={offer.picture1} alt={`profile`} />
                 </Link>
               </li>
@@ -68,7 +69,7 @@ const AllOffers = () => {
               </li>
               {idUser && (
                 <li className="allOffers__offer__detail__fav">
-                  {userFavorites.find((fav) => fav.id_offer == offer.id_offer) ? (
+                  {userFavorites.find((fav) => fav.id_offer === offer.id_offer) ? (
                     <AiFillHeart
                       className="inputIconFull"
                       onClick={() => deleteFavorite(Number(offer.id_offer))}
