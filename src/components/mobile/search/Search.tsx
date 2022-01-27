@@ -5,7 +5,7 @@ import { FcSportsMode } from 'react-icons/fc';
 import { GiClothes, GiRunningShoe, GiTennisRacket } from 'react-icons/gi';
 
 import IItem from '../../../interfaces/IItem';
-import IOffer from '../../../interfaces/IOffer';
+import FilterMenu from './FilterMenu';
 import SearchBar from './SearchBar';
 
 interface Sport {
@@ -20,11 +20,12 @@ interface Category {
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
-const Search = () => {
+type Props = { setAllOffers: () => {} };
+
+const Search: React.FC<Props> = ({ setAllOffers }) => {
   const [sportsList, setSportsList] = useState<Sport[]>([]);
   const [categoriesList, setCategoriesList] = useState<Category[]>([]);
   const [itemsList, setItemsList] = useState<IItem[]>([]);
-  const [offersList, setOffersList] = useState<IOffer[]>([]);
 
   const [gender, setGender] = useState<number | null>(null);
   const [genderAdult, setGenderAdult] = useState<number | null>(null);
@@ -34,14 +35,14 @@ const Search = () => {
   const [category, setCategory] = useState('');
   const [item, setItem] = useState('');
   const [itemInfos, setItemInfos] = useState<IItem>();
+  const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
+
+  console.log(itemInfos);
 
   useEffect(() => {
     axios.get(`${urlBack}/sports`).then((res) => setSportsList(res.data));
     axios.get(`${urlBack}/categories`).then((res) => setCategoriesList(res.data));
-    axios.get(`${urlBack}/offers`).then((res) => setOffersList(res.data));
   }, []);
-  console.log(offersList);
-  console.log(itemInfos);
 
   useEffect(() => {
     category
@@ -76,8 +77,12 @@ const Search = () => {
       filters += oneValue ? `&id_item=${item}` : `?id_item=${item}`;
       oneValue = true;
     }
-    axios.get(`${urlBack}/offers${filters}`).then((rep) => console.log(rep.data));
+    axios.get(`${urlBack}/offers${filters}`).then((rep) => setAllOffers(rep.data));
+
+    const search = document.getElementById('filterMenu');
+    search?.classList.add('invisible');
   };
+
   const handleItemSelected = (id: string) => {
     axios.get(`${urlBack}/items/${id}`).then((item) => {
       setItemInfos(item.data);
@@ -87,11 +92,11 @@ const Search = () => {
 
   return (
     <div className="search">
-      <SearchBar />
-      <form
-        onSubmit={(e) => handleSubmit(e)}
-        className="search__menu"
-        id="filterMenuMobile">
+      <SearchBar setShowFilterMenu={setShowFilterMenu} showFilterMenu={showFilterMenu} />
+      {showFilterMenu && (
+        <FilterMenu setAllOffers={setAllOffers} setShowFilterMenu={setShowFilterMenu} />
+      )}
+      <form onSubmit={(e) => handleSubmit(e)} className="search__menu" id="filterMenu">
         <div
           // filtre sports
           className="search__menu__item">
@@ -209,6 +214,9 @@ const Search = () => {
           }>
           Recherche
         </button> */}
+        <button type="button" className="btn" onClick={(e) => handleSubmit(e)}>
+          Rechercher
+        </button>
       </form>
     </div>
   );

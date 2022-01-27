@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import IFavorite from '../../../interfaces/IFavorite';
 import IOffer from '../../../interfaces/IOffer';
+import Search from '../search/Search';
 
 const AllOffers = () => {
   const [allOffers, setAllOffers] = useState<IOffer[]>([]);
@@ -14,7 +15,7 @@ const AllOffers = () => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const { idUser } = useContext(CurrentUserContext);
 
-  // add offer to favorites /
+  // Add offer to favorite /
 
   const addFavorite = (idOffer: number) => {
     axios
@@ -25,8 +26,8 @@ const AllOffers = () => {
       .then(() => setIsFavorite(true));
   };
 
+  // Delete a favorite by id//
   const deleteFavorite = (idOffer: number) => {
-    // je vais récupérer l'idFavorite correspondant au idOffer
     const idFavorite: number =
       userFavorites?.find((fav) => fav.id_offer === idOffer)?.id_favorite || 0;
     idUser &&
@@ -51,46 +52,48 @@ const AllOffers = () => {
   console.log(isFavorite);
 
   return (
-    <div className="allOffers">
-      {allOffers.map((offer: IOffer, index: number) => {
-        return (
-          <div className="allOffers__offer" key={index}>
-            <ul className="allOffers__offer__detail">
-              <li className="allOffers__offer__detail__mainPicture">
-                <Link
-                  to={`/offers/${offer.id_offer}`}
-                  className="allOffers__offer__detail__linkOfferDetails"
-                >
-                  <img src={offer.picture1} alt={`profile`} />
-                </Link>
-              </li>
-              <li className="allOffers__offer__detail__price">
-                <strong>{offer.price} €</strong>
-              </li>
-              {idUser && (
-                <li className="allOffers__offer__detail__fav">
-                  {userFavorites.find((fav) => fav.id_offer === offer.id_offer) ? (
-                    <AiFillHeart
-                      className="inputIconFull"
-                      onClick={() => deleteFavorite(Number(offer.id_offer))}
-                      size={30}
-                      color="red"
-                    />
-                  ) : (
-                    <AiOutlineHeart
-                      className="inputIconEmpty"
-                      onClick={() => addFavorite(Number(offer.id_offer))}
-                      size={30}
-                    />
-                  )}
+    <div>
+      <Search setAllOffers={setAllOffers} />
+      <div className="allOffers">
+        {allOffers.map((offer: IOffer, index: number) => {
+          return (
+            <div className="allOffers__offer" key={index}>
+              <ul className="allOffers__offer__detail">
+                <li className="allOffers__offer__detail__mainPicture">
+                  <Link
+                    to={`/annonces/${offer.id_offer}`}
+                    className="allOffers__offer__detail__linkOfferDetails">
+                    <img src={offer.picture1} alt={`profile`} />
+                  </Link>
                 </li>
-              )}
-              <li className="allOffers__offer__detail__brand">Nike{offer.id_brand}</li>
-              <li className="allOffers__offer__detail__size">M/S{offer.id_size}</li>
-            </ul>
-          </div>
-        );
-      })}
+                <li className="allOffers__offer__detail__price">
+                  <strong>{offer.price} €</strong>
+                </li>
+                {idUser && (
+                  <li className="allOffers__offer__detail__fav">
+                    {userFavorites.find((fav) => fav.id_offer === offer.id_offer) ? (
+                      <AiFillHeart
+                        className="inputIconFull"
+                        onClick={() => deleteFavorite(Number(offer.id_offer))}
+                        size={30}
+                        color="red"
+                      />
+                    ) : (
+                      <AiOutlineHeart
+                        className="inputIconEmpty"
+                        onClick={() => addFavorite(Number(offer.id_offer))}
+                        size={30}
+                      />
+                    )}
+                  </li>
+                )}
+                <li className="allOffers__offer__detail__brand">Nike{offer.id_brand}</li>
+                <li className="allOffers__offer__detail__size">M/S{offer.id_size}</li>
+              </ul>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

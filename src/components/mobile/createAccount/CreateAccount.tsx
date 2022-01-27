@@ -67,8 +67,7 @@ const CreateAccount = () => {
         id="create-account"
         onSubmit={(e: React.FormEvent) => handleSubmit(e)}
         className="create-account__form"
-        action=""
-      >
+        action="">
         <div className="create-account__form__inputsContainer">
           <div className="create-account__form__inputsContainer__input">
             <HiOutlineUserRemove className="inputIcon" />
@@ -156,8 +155,7 @@ const CreateAccount = () => {
               value={country}
               title="Ce champ est obligatoire"
               name="countries"
-              id="countries"
-            >
+              id="countries">
               <option value="">Pays*</option>
               {countriesList &&
                 countriesList.map((country, index) => (

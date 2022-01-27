@@ -1,6 +1,8 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
+import CurrentOfferContext from '../../../contexts/Offer';
 import IBrand from '../../../interfaces/IBrand';
 import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
@@ -44,9 +46,14 @@ const ProductDescription = () => {
 
   // const [idSport, setIdSport] = useState<Sport>();
 
+  const url = document.location.href;
+  const id = url.substring(url.lastIndexOf('/') + 1);
+  const { setIdOffer } = useContext(CurrentOfferContext);
+  setIdOffer(Number(id));
+
   useEffect(() => {
     axios
-      .get(`${urlBack}/offers/6`)
+      .get(`${urlBack}/offers/${id}`)
       .then((res) => res.data)
       .then((data) => {
         setOffer(data);
@@ -261,7 +268,7 @@ const ProductDescription = () => {
             {/* <button>La poste {offer && offer.colissimo_delivery}</button> */}
             <p>{user && user.city}</p>
             <div className="product-description__container-text__container4__delivery__btn">
-              <button>Acheter</button>
+              <Link to="/confirmer-achat">Acheter</Link>
               <button>Favoris</button>
             </div>
           </div>
