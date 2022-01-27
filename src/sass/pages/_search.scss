@@ -1,0 +1,36 @@
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 15vh 5vw 12vh;
+  width: 90vw;
+  //   height: 95vh;
+
+  &__bar {
+    margin-bottom: 3vh;
+    text-align: center;
+
+    .btn {
+      width: 80vw;
+      text-align: center;
+    }
+  }
+
+  &__menu {
+    margin: 1vh 0vw;
+
+    &__item {
+      width: 70vw;
+      display: flex;
+      flex-direction: column;
+      margin: 1vh 0vw;
+      text-align: center;
+
+      & label {
+        font-weight: bold;
+        padding-bottom: 1vh;
+      }
+    }
+  }
+}

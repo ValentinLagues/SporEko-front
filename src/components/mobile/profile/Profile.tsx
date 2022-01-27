@@ -27,7 +27,7 @@ const Profile = () => {
         </Link>
         <Link to="/parametres" className="profile__content__link">
           <FiSettings className="profile__content__icons" />
-          Paramètre
+          Paramètres
         </Link>
       </div>
       <div className="profile__content">

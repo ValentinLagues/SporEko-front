@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
-import { MdStarRate } from 'react-icons/md';
 
+// import { MdStarRate } from 'react-icons/md';
 import CurrentOfferContext from '../../../../contexts/Offer';
 import IBrand from '../../../../interfaces/IBrand';
 import ICategory from '../../../../interfaces/ICategory';
@@ -224,8 +224,8 @@ const UpdateOffer = () => {
               <img key={index} src={picture} alt="annonce" />
             ))}
           {offerSell.length &&
-            offerSell.map((picture: { picture: string | undefined }) => (
-              <img src={picture.picture} alt="annonce" />
+            offerSell.map((picture: { picture: string | undefined }, index: number) => (
+              <img key={index} src={picture.picture} alt="annonce" />
             ))}
         </div>
         {/* ---------------------------Input for title offer------------------------ */}
