@@ -14,7 +14,7 @@ const Footer = () => {
     <div className="footer">
       <ul className="footer__footerContainer">
         <li>
-          <Link to="/favorites">
+          <Link to="/product-description">
             <FiHeart className="footer__footerContainer__footerIcons" />
             Favoris
           </Link>

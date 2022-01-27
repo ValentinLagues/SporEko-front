@@ -15,6 +15,7 @@ import OffersUser from './components/mobile/profile/OffersUser/OffersUser';
 import UpdateOffer from './components/mobile/profile/OffersUser/UpdateOffer';
 import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
+import ProductDescription from './components/mobile/productDescription/ProductDescription';
 import Shipement from './components/mobile/profile/Shipement';
 // import UpdateOffer from './components/mobile/profile/UpdateOffer';
 import FilterMenu from './components/mobile/search/FilterMenu';
@@ -35,6 +36,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/connection" element={<Connection />} />
           <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/product-description" element={<ProductDescription />} />
           <Route path={idUser || accepted ? '' : '*'} element={<Connection />} />
         </Routes>
         {(idUser || accepted) && (
