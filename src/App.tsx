@@ -15,6 +15,7 @@ import Settings from './components/mobile/profile/Settings';
 import Shipement from './components/mobile/profile/Shipement';
 import FilterMenu from './components/mobile/search/FilterMenu';
 import CurrentUserContext from './contexts/CurrentUser';
+import Favorites from './components/mobile/favorites/Favorites';
 
 function App() {
   const { idUser, accepted } = useContext(CurrentUserContext);
@@ -39,6 +40,7 @@ function App() {
             <Route path="/mode-envoi" element={<Shipement />} />
             <Route path="/modifier-votre-annonce" element={<UpdateOffer />} />
             <Route path="/mes-ventes-et-achats" element={<OffersUser />} />
+            <Route path="/favorites" element={<Favorites />} />
           </Routes>
         )}
 

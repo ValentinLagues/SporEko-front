@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { AiFillHeart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import IFavorite from '../../../interfaces/IFavorite';
 import IOffer from '../../../interfaces/IOffer';
@@ -22,7 +21,7 @@ const AllOffers = () => {
         id_user: Number(idUser),
         id_offer: idOffer,
       })
-      .then(() => setIsFavorite(true));
+      .then(() => setIsFavorite(true))
   };
 
   const deleteFavorite = (idOffer: number) => {
@@ -41,7 +40,6 @@ const AllOffers = () => {
   useEffect(() => {
     axios.get(`${urlBack}/offers`).then((res) => setAllOffers(res.data));
     idUser &&
-      isFavorite &&
       axios
         .get(`${urlBack}/users/${idUser}/favorites`)
         .then((res) => setUserFavorites(res.data))
@@ -49,6 +47,7 @@ const AllOffers = () => {
   }, [isFavorite]);
 
   console.log(userFavorites);
+  console.log(isFavorite);
 
   return (
     <div className="allOffers">
@@ -68,7 +67,7 @@ const AllOffers = () => {
               </li>
               {idUser && (
                 <li className="allOffers__offer__detail__fav">
-                  {userFavorites.find((fav) => fav.id_offer == offer.id_offer) ? (
+                  {userFavorites.find((fav) => fav.id_offer === offer.id_offer) ? (
                     <AiFillHeart
                       className="inputIconFull"
                       onClick={() => deleteFavorite(Number(offer.id_offer))}
