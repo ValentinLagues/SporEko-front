@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import IFavorite from '../../../interfaces/IFavorite';
 import IOffer from '../../../interfaces/IOffer';
-import FilterMenu from '../search/FilterMenu';
 import Search from '../search/Search';
 
 const AllOffers = () => {
@@ -54,7 +53,7 @@ const AllOffers = () => {
 
   return (
     <div>
-      <Search setAllOffers={setAllOffers}/>
+      <Search setAllOffers={setAllOffers} />
       <div className="allOffers">
         {allOffers.map((offer: IOffer, index: number) => {
           return (

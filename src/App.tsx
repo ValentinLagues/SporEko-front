@@ -2,25 +2,25 @@ import React, { useContext } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import AllOffers from './components/mobile/allOffers/AllOffers';
+import ConfirmOrder from './components/mobile/confirmOrder/confirmOrder';
 // import ConfirmOrder from './components/mobile/confirmOrder/ConfirmOrder';
 import Connection from './components/mobile/connection/Connection';
 import CreateAccount from './components/mobile/createAccount/CreateAccount';
+import Favorites from './components/mobile/favorites/Favorites';
 import Home from './components/mobile/Home/Home';
 import Footer from './components/mobile/layout/Footer';
 import Header from './components/mobile/layout/Header';
 import OfferForm from './components/mobile/offerForm/OfferForm';
+import ProductDescription from './components/mobile/productDescription/ProductDescription';
 // import OfferDetails from './components/mobile/offerDetails/OfferDetails';
 import ModificationProfil from './components/mobile/profile/ModificationProfil';
 import OffersUser from './components/mobile/profile/OffersUser/OffersUser';
 import UpdateOffer from './components/mobile/profile/OffersUser/UpdateOffer';
 import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
-import ProductDescription from './components/mobile/productDescription/ProductDescription';
 import Shipement from './components/mobile/profile/Shipement';
 // import UpdateOffer from './components/mobile/profile/UpdateOffer';
 import CurrentUserContext from './contexts/CurrentUser';
-import Favorites from './components/mobile/favorites/Favorites';
-import ConfirmOrder from './components/mobile/confirmOrder/confirmOrder';
 
 function App() {
   const { idUser, accepted } = useContext(CurrentUserContext);

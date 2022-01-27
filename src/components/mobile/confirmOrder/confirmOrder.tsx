@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AiOutlineLock } from 'react-icons/ai';
 import { BsBoxSeam, BsShield } from 'react-icons/bs';
 
 import cards from '../../../../resources/cards.png';
+import CurrentOfferContext from '../../../contexts/Offer';
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
 import IDeliverer_price from '../../../interfaces/IDeliverer_price';
@@ -13,8 +14,6 @@ import IDeliverer_price from '../../../interfaces/IDeliverer_price';
 import IOffer from '../../../interfaces/IOffer';
 import ISize from '../../../interfaces/ISize';
 import IUserLog from '../../../interfaces/IUser';
-import CurrentOfferContext from '../../../contexts/Offer';
-
 
 interface IOffer_Deliverer {
   id_offer_deliverer: number;

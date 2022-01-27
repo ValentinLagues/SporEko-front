@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IoFilter } from 'react-icons/io5';
 
-const SearchBar = ({setShowFilterMenu, showFilterMenu}) => {
+const SearchBar = ({ setShowFilterMenu, showFilterMenu }) => {
   const [search, setSearch] = useState('');
 
   return (
@@ -14,7 +14,11 @@ const SearchBar = ({setShowFilterMenu, showFilterMenu}) => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <IoFilter className="filterIcon" onClick={() => setShowFilterMenu(!showFilterMenu)} size={30}/>
+        <IoFilter
+          className="filterIcon"
+          onClick={() => setShowFilterMenu(!showFilterMenu)}
+          size={30}
+        />
       </form>
     </div>
   );

@@ -5,10 +5,8 @@ import { FcSportsMode } from 'react-icons/fc';
 import { GiClothes, GiRunningShoe, GiTennisRacket } from 'react-icons/gi';
 
 import IItem from '../../../interfaces/IItem';
-import IOffer from '../../../interfaces/IOffer';
-import AllOffers from '../allOffers/AllOffers';
-import SearchBar from './SearchBar';
 import FilterMenu from './FilterMenu';
+import SearchBar from './SearchBar';
 
 interface Sport {
   id_sport: number;
@@ -22,9 +20,9 @@ interface Category {
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
-type Props = {setAllOffers : () => {}}
+type Props = { setAllOffers: () => {} };
 
-const Search : React.FC<Props> = ({setAllOffers}) => {
+const Search: React.FC<Props> = ({ setAllOffers }) => {
   const [sportsList, setSportsList] = useState<Sport[]>([]);
   const [categoriesList, setCategoriesList] = useState<Category[]>([]);
   const [itemsList, setItemsList] = useState<IItem[]>([]);
@@ -38,6 +36,8 @@ const Search : React.FC<Props> = ({setAllOffers}) => {
   const [item, setItem] = useState('');
   const [itemInfos, setItemInfos] = useState<IItem>();
   const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
+
+  console.log(itemInfos);
 
   useEffect(() => {
     axios.get(`${urlBack}/sports`).then((res) => setSportsList(res.data));
@@ -79,8 +79,8 @@ const Search : React.FC<Props> = ({setAllOffers}) => {
     }
     axios.get(`${urlBack}/offers${filters}`).then((rep) => setAllOffers(rep.data));
 
-    const search = document.getElementById('filterMenu')
-    search?.classList.add('invisible')
+    const search = document.getElementById('filterMenu');
+    search?.classList.add('invisible');
   };
 
   const handleItemSelected = (id: string) => {
@@ -91,15 +91,12 @@ const Search : React.FC<Props> = ({setAllOffers}) => {
   };
 
   return (
-    <div className="search" >
-      <SearchBar setShowFilterMenu={setShowFilterMenu} showFilterMenu={showFilterMenu}/>
-      { showFilterMenu &&
-      <FilterMenu setAllOffers={setAllOffers} setShowFilterMenu={setShowFilterMenu}/>
-      }
-      <form
-        onSubmit={(e) => handleSubmit(e)}
-        className="search__menu"
-        id="filterMenu">
+    <div className="search">
+      <SearchBar setShowFilterMenu={setShowFilterMenu} showFilterMenu={showFilterMenu} />
+      {showFilterMenu && (
+        <FilterMenu setAllOffers={setAllOffers} setShowFilterMenu={setShowFilterMenu} />
+      )}
+      <form onSubmit={(e) => handleSubmit(e)} className="search__menu" id="filterMenu">
         <div
           // filtre sports
           className="search__menu__item">
@@ -217,7 +214,9 @@ const Search : React.FC<Props> = ({setAllOffers}) => {
           }>
           Recherche
         </button> */}
-        <button type='button' className='btn' onClick={(e) => handleSubmit(e)}>Rechercher</button>
+        <button type="button" className="btn" onClick={(e) => handleSubmit(e)}>
+          Rechercher
+        </button>
       </form>
     </div>
   );

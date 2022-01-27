@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
+import CurrentOfferContext from '../../../contexts/Offer';
 import IBrand from '../../../interfaces/IBrand';
 import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
@@ -10,7 +11,6 @@ import Ioffer from '../../../interfaces/IOffer';
 import ISize from '../../../interfaces/ISize';
 // import ISport from '../../../interfaces/ISport';
 import IUserLog from '../../../interfaces/IUser';
-import CurrentOfferContext from '../../../contexts/Offer';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
@@ -46,9 +46,9 @@ const ProductDescription = () => {
 
   // const [idSport, setIdSport] = useState<Sport>();
 
-  const url = document.location.href
+  const url = document.location.href;
   const id = url.substring(url.lastIndexOf('/') + 1);
-  const {setIdOffer} = useContext(CurrentOfferContext);
+  const { setIdOffer } = useContext(CurrentOfferContext);
   setIdOffer(Number(id));
 
   useEffect(() => {
