@@ -32,7 +32,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/favorites" element={<FilterMenu />} />
           <Route path="/annonces" element={<AllOffers />} />
-          <Route path="/search" element={<Search />} />
+          <Route path="/search" element={<AllOffers />} />
           <Route path="/connection" element={<Connection />} />
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path={idUser || accepted ? '' : '*'} element={<Connection />} />

@@ -211,8 +211,7 @@ const FilterMenu = () => {
           value={sport}
           className=""
           name="sports"
-          id="sports"
-        >
+          id="sports">
           <option value="">Tous</option>
           {sportList &&
             sportList.map((sport, index) => (
@@ -233,8 +232,7 @@ const FilterMenu = () => {
           }}
           value={Number(genderAdult)}
           name=""
-          id=""
-        >
+          id="">
           <option value={''}>Tous</option>
           <option value={1}>Femme</option>
           <option value={2}>Homme</option>
@@ -249,8 +247,7 @@ const FilterMenu = () => {
             }}
             value={Number(genderChild)}
             name=""
-            id=""
-          >
+            id="">
             <option value="">Tous</option>
             <option value={1}>Fille</option>
             <option value={2}>Garçon</option>
@@ -273,8 +270,7 @@ const FilterMenu = () => {
           value={category}
           className=""
           name="categories"
-          id="categories"
-        >
+          id="categories">
           <option value="">Toutes</option>
           {categoryList &&
             categoryList.map((category, index) => (
@@ -300,8 +296,7 @@ const FilterMenu = () => {
           value={item}
           className=""
           name="items"
-          id="items"
-        >
+          id="items">
           <option value="">Tous</option>
           {itemList &&
             itemList.map((item, index) => (
@@ -319,8 +314,7 @@ const FilterMenu = () => {
             value={textile}
             className=""
             name="textile"
-            id="textile"
-          >
+            id="textile">
             <option value="">Toutes matières</option>
             {textileList &&
               textileList.map((textile, index) => (
@@ -338,8 +332,7 @@ const FilterMenu = () => {
           value={condition}
           className=""
           name="conditions"
-          id="conditions"
-        >
+          id="conditions">
           <option value="">Tous</option>
           {conditionList &&
             conditionList.map((condition, index) => (
@@ -355,8 +348,7 @@ const FilterMenu = () => {
         tabIndex={0}
         className="filterMenu__item"
         onClick={() => setColorListShow(!colorListShow)}
-        id="colors"
-      >
+        id="colors">
         <span>Couleur</span>
         <div className="iconChevronDownContainer">
           {color1 ? colorName : 'Toutes'}{' '}
@@ -371,8 +363,7 @@ const FilterMenu = () => {
                 tabIndex={0}
                 onClick={() => (setColor1(color.id_color), setColorName(color.name))}
                 key={index}
-                className="colorList__item"
-              >
+                className="colorList__item">
                 <div>{color.name}</div>
                 <div className="colorList__item__colorShip" style={color.style}></div>
               </div>
@@ -387,8 +378,7 @@ const FilterMenu = () => {
           value={brand}
           className=""
           name="brands"
-          id="brands"
-        >
+          id="brands">
           <option value="">Toutes</option>
           {brandList &&
             brandList.map((brand, index) => (
@@ -406,8 +396,7 @@ const FilterMenu = () => {
             value={size}
             className=""
             name="sizes"
-            id="sizes"
-          >
+            id="sizes">
             <option value="">Toutes</option>
             {sizeList &&
               sizeList.map((size, index) => (
@@ -455,8 +444,7 @@ const FilterMenu = () => {
           onChange={(e) => setOrderBy(e.target.value)}
           value={orderBy}
           name="orderBy"
-          id="orderBy"
-        >
+          id="orderBy">
           <option value="price ASC">prix croissant</option>
           <option value="price DESC">prix décroissant</option>
           <option value="">le plus récent</option>
