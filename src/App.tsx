@@ -30,9 +30,9 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/favorites" element={<Search />} />
+          <Route path="/favorites" element={<FilterMenu />} />
           <Route path="/annonces" element={<AllOffers />} />
-          <Route path="/search" element={<FilterMenu />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/connection" element={<Connection />} />
           <Route path="/create-account" element={<CreateAccount />} />
           <Route path={idUser || accepted ? '' : '*'} element={<Connection />} />
