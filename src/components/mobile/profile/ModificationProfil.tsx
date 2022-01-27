@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { BiRun } from 'react-icons/Bi';
+import { BiRun } from 'react-icons/bi';
 import { BsGenderAmbiguous, BsGenderFemale, BsGenderMale } from 'react-icons/bs';
 import {
   FiCalendar,

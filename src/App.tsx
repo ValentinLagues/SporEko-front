@@ -12,8 +12,8 @@ import ModificationProfil from './components/mobile/profile/ModificationProfil';
 import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
 import Shipement from './components/mobile/profile/Shipement';
-import FilterMenu from './components/mobile/search/FilterMenu';
 import UpdateOffer from './components/mobile/profile/UpdateOffer';
+import FilterMenu from './components/mobile/search/FilterMenu';
 import CurrentUserContext from './contexts/CurrentUser';
 
 function App() {
