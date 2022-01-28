@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
-import { MdStarRate } from 'react-icons/md';
 
 import CurrentOfferContext from '../../../../contexts/Offer';
 import IBrand from '../../../../interfaces/IBrand';
@@ -58,6 +57,10 @@ const UpdateOffer = () => {
   const [chosenDeliverers, setChosenDeliverers] = useState<Array<number>>([]);
   const [isDraft, setIsDraft] = useState(0);
   const [offer, setOffer] = useState<IOffer>();
+  let images = Object.keys(pictures).map(function (key) {
+    return [Number(key), pictures[key]];
+  });
+
   // axios call for display informations
   useEffect(() => {
     axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
@@ -178,6 +181,7 @@ const UpdateOffer = () => {
       .then((res) => setPictures(res.data))
       .catch((err) => console.error({ ...err }));
   };
+
   // Axios call to update offer
   useEffect(() => {
     offer &&
@@ -195,8 +199,6 @@ const UpdateOffer = () => {
         })
         .catch((err) => console.log({ ...err }));
   }, [offer]);
-
-  console.log(pictures.map((picture) => picture));
 
   return (
     <div className="offerFormUpdate">
@@ -218,14 +220,73 @@ const UpdateOffer = () => {
             name="imagesOffers"
             onChange={(e) => handleFileInput(e)}
           />
-          {pictures.length != 0 &&
-            Object.keys(pictures).map((picture, index) => (
-              <img key={index} src={picture} alt="annonce" />
-            ))}
-          {offerSell.length &&
-            offerSell.map((picture: { picture: string | undefined }) => (
-              <img src={picture.picture} alt="annonce" />
-            ))}
+          {pictures.length > 1 ? (
+            images.map((image) => <img className="image" key={image[0]} src={image[1]} />)
+          ) : (
+            <>
+              {offerSell.picture1 && (
+                <img className="image" src={offerSell.picture1} alt="annonce1" />
+              )}
+              {offerSell.picture2 && (
+                <img className="image" src={offerSell.picture2} alt="annonce2" />
+              )}
+              {offerSell.picture3 && (
+                <img className="image" src={offerSell.picture3} alt="annonce3" />
+              )}
+              {offerSell.picture4 && (
+                <img className="image" src={offerSell.picture4} alt="annonce4" />
+              )}
+              {offerSell.picture5 && (
+                <img className="image" src={offerSell.picture5} alt="annonce5" />
+              )}
+              {offerSell.picture6 && (
+                <img className="image" src={offerSell.picture6} alt="annonce6" />
+              )}
+              {offerSell.picture7 && (
+                <img className="image" src={offerSell.picture7} alt="annonce7" />
+              )}
+              {offerSell.picture8 && (
+                <img className="image" src={offerSell.picture8} alt="annonce8" />
+              )}
+              {offerSell.picture9 && (
+                <img className="image" src={offerSell.picture9} alt="annonce9" />
+              )}
+              {offerSell.picture10 && (
+                <img className="image" src={offerSell.picture10} alt="annonce10" />
+              )}
+              {offerSell.picture11 && (
+                <img className="image" src={offerSell.picture11} alt="annonce11" />
+              )}
+              {offerSell.picture12 && (
+                <img className="image" src={offerSell.picture12} alt="annonce12" />
+              )}
+              {offerSell.picture13 && (
+                <img className="image" src={offerSell.picture13} alt="annonce13" />
+              )}
+              {offerSell.picture14 && (
+                <img className="image" src={offerSell.picture14} alt="annonce14" />
+              )}
+              {offerSell.picture15 && (
+                <img className="image" src={offerSell.picture15} alt="annonce15" />
+              )}
+              {offerSell.picture16 && (
+                <img className="image" src={offerSell.picture16} alt="annonce16" />
+              )}
+              {offerSell.picture17 && (
+                <img className="image" src={offerSell.picture17} alt="annonce17" />
+              )}
+              {offerSell.picture18 && (
+                <img className="image" src={offerSell.picture18} alt="annonce18" />
+              )}
+              {offerSell.picture19 && (
+                <img className="image" src={offerSell.picture19} alt="annonce19" />
+              )}
+              {offerSell.picture20 && (
+                <img className="image" src={offerSell.picture20} alt="annonce20" />
+              )}
+            </>
+          )}
+          ;
         </div>
         {/* ---------------------------Input for title offer------------------------ */}
 
@@ -322,6 +383,7 @@ const UpdateOffer = () => {
             }}
             value={category}
             className="offerFormUpdate__select">
+            <option value="">Catégorie</option>
             {categoryList.length &&
               categoryList.map((category, index) => (
                 <option key={index} value={category.id_category}>
@@ -337,6 +399,7 @@ const UpdateOffer = () => {
             value={item}
             onChange={(e) => setItem(e.target.value)}
             className="offerFormUpdate__select">
+            <option value="">Article</option>
             {itemList.length &&
               itemList.map((item, index) => (
                 <option key={index} value={item.id_item}>
@@ -355,6 +418,7 @@ const UpdateOffer = () => {
               className="offerFormUpdate__select conditionnal"
               name="textile"
               id="textile">
+              <option value="">Textile</option>
               {textileList &&
                 textileList.map((textile, index) => (
                   <option key={index} value={textile.id_textile}>
@@ -427,6 +491,7 @@ const UpdateOffer = () => {
             className="offerFormUpdate__select"
             name="color2"
             id="color2">
+            <option value="">Couleur 2</option>
             {colorList.length &&
               colorList.map((color, index) => (
                 <option key={index} value={color.id_color}>
@@ -460,7 +525,6 @@ const UpdateOffer = () => {
             Prix hors frais de port
           </label>
           <input
-            value={price}
             placeholder={offerSell.price}
             onChange={(e) => setPrice(e.target.value)}
             className="offerFormUpdate__input"
@@ -478,7 +542,6 @@ const UpdateOffer = () => {
             Poids du produit
           </label>
           <input
-            value={weight}
             placeholder={offerSell.weight}
             onChange={(e) => setWeight(e.target.value)}
             className="offerFormUpdate__input"
