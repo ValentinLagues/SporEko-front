@@ -14,7 +14,7 @@ const Footer = () => {
     <div className="footer">
       <ul className="footer__footerContainer">
         <li>
-          <Link to="/favorites">
+          <Link to="/favoris">
             <FiHeart className="footer__footerContainer__footerIcons" />
             Favoris
           </Link>
@@ -39,7 +39,7 @@ const Footer = () => {
               Profil
             </Link>
           ) : (
-            <Link to="/connection">
+            <Link to="/connexion">
               <CgProfile className="footer__footerContainer__footerIcons" />
               Compte
             </Link>
@@ -47,7 +47,7 @@ const Footer = () => {
         </li>
       </ul>
       <button type="button" className="footer__button">
-        <Link to="/offerForm">
+        <Link to="/creation-offre">
           <BsPlusLg className="btn" />
         </Link>
       </button>
