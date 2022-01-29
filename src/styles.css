@@ -874,7 +874,6 @@ h4 {
 }
 
 .product-description__container-text {
-  background-color: pink;
   width: 100%;
   margin: 25px;
 }
@@ -887,7 +886,6 @@ h4 {
   -ms-flex-pack: justify;
   justify-content: space-between;
   margin-bottom: 15px;
-  background-color: greenyellow;
 }
 
 .product-description__container-text__container1__title {
@@ -900,11 +898,9 @@ h4 {
 
 .product-description__container-text__container2__brand {
   text-align: left;
-  background-color: burlywood;
 }
 
 .product-description__container-text__container3 {
-  background-color: coral;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -956,7 +952,6 @@ h4 {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background-color: #e90a30;
 }
 
 .product-description__container-text__container3__sport-icon__img {
