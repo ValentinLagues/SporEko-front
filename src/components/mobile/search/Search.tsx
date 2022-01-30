@@ -1,8 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { CgGenderFemale, CgGenderMale, CgGym } from 'react-icons/cg';
-import { FcSportsMode } from 'react-icons/fc';
-import { GiClothes, GiRunningShoe, GiTennisRacket } from 'react-icons/gi';
 
 import IItem from '../../../interfaces/IItem';
 import FilterMenu from './FilterMenu';

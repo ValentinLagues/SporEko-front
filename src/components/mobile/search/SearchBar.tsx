@@ -3,6 +3,7 @@ import { IoFilter } from 'react-icons/io5';
 
 const SearchBar = ({ setShowFilterMenu, showFilterMenu }) => {
   const [search, setSearch] = useState('');
+  console.log(search);
 
   return (
     <div>
