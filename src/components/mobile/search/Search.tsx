@@ -100,13 +100,11 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
         <div
           // filtre sports
           className="search__menu__item">
-          <label htmlFor="sports">
-            <FcSportsMode /> Quel sport recherchez-vous ? <FcSportsMode />
-          </label>
+          <label htmlFor="sports">Quel sport recherchez-vous ?</label>
           <select
             onChange={(e) => setSport(e.target.value)}
             value={sport}
-            className=""
+            className="search__menu__item__select"
             name="sports"
             id="sports">
             <option value="">Tous</option>
@@ -121,9 +119,7 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
         <div
           // filtre genre
           className="search__menu__item">
-          <label htmlFor="genders">
-            <CgGenderMale /> Genre <CgGenderFemale />
-          </label>
+          <label htmlFor="genders">Genre</label>
           <select
             onChange={(e) => {
               setGenderAdult(Number(e.target.value));
@@ -132,7 +128,7 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
                 : (setGenderIsChild(false), setGender(Number(e.target.value)));
             }}
             value={Number(genderAdult)}
-            name=""
+            className="search__menu__item__select"
             id="">
             <option value={''}>Tous</option>
             <option value={1}>Femme</option>
@@ -149,7 +145,7 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
               }}
               value={Number(genderChild)}
-              name=""
+              className="search__menu__item__select"
               id="">
               <option value="">Tous</option>
               <option value={1}>Fille</option>
@@ -160,15 +156,13 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
         <div
           // filtre categories
           className="search__menu__item">
-          <label htmlFor="categories">
-            <GiClothes /> Catégorie <GiRunningShoe />
-          </label>
+          <label htmlFor="categories">Catégories</label>
           <select
             onChange={(e) => {
               setCategory(e.target.value);
             }}
             value={category}
-            className=""
+            className="search__menu__item__select"
             name="categories"
             id="categories">
             <option value="">Toutes</option>
@@ -183,16 +177,14 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
         <div
           // filtre articles
           className="search__menu__item">
-          <label htmlFor="items">
-            <CgGym /> Articles <GiTennisRacket />
-          </label>
+          <label htmlFor="items">Articles</label>
           <select
             onChange={(e) => {
               handleItemSelected(e.target.value);
               setItem(e.target.value);
             }}
             value={item}
-            className=""
+            className="search__menu__item__select"
             name="items"
             id="items">
             <option value="">Tous</option>
@@ -204,16 +196,6 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
               ))}
           </select>
         </div>
-        {/* <button
-          className=""
-          onClick={
-            search !== '' &&
-            offersList.filter((searchResults) =>
-              console.log(searchResults.title.includes({ search })),
-            )
-          }>
-          Recherche
-        </button> */}
         <button type="button" className="btn" onClick={(e) => handleSubmit(e)}>
           Rechercher
         </button>
