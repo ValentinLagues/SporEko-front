@@ -15,6 +15,8 @@ const AllOffers = () => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const { idUser } = useContext(CurrentUserContext);
 
+  console.log(allOffers);
+
   // Add offer to favorite /
 
   const addFavorite = (idOffer: number) => {

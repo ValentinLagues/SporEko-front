@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
+// import { AiFillHeart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 import CurrentOfferContext from '../../../contexts/Offer';
@@ -268,8 +269,15 @@ const ProductDescription = () => {
             {/* <button>La poste {offer && offer.colissimo_delivery}</button> */}
             <p>{user && user.city}</p>
             <div className="product-description__container-text__container4__delivery__btn">
-              <Link to="/confirmer-achat">Acheter</Link>
-              <button>Favoris</button>
+              <Link className="btn" type="submit" to="/confirmer-achat">
+                Acheter
+              </Link>
+              {/* <AiFillHeart
+                className="inputIconFull"
+                // onClick={() => deleteFavorite(Number(offer.id_offer))}
+                size={30}
+                color="red"
+              /> */}
             </div>
           </div>
         </div>

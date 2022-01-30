@@ -5,6 +5,7 @@ import { FcSportsMode } from 'react-icons/fc';
 import { GiClothes, GiRunningShoe, GiTennisRacket } from 'react-icons/gi';
 
 import IItem from '../../../interfaces/IItem';
+import AllOffers from '../allOffers/AllOffers';
 import FilterMenu from './FilterMenu';
 import SearchBar from './SearchBar';
 
@@ -82,7 +83,6 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
     const search = document.getElementById('filterMenu');
     search?.classList.add('invisible');
   };
-
   const handleItemSelected = (id: string) => {
     axios.get(`${urlBack}/items/${id}`).then((item) => {
       setItemInfos(item.data);
