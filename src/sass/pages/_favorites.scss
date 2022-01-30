@@ -1,20 +1,78 @@
 .favorites {
+  margin-top: 10vh;
+  margin-bottom: 10vh;
 
-    &__title {
-        text-align: center;
-    }
-    
-    &__empty {
-        text-align: center;
-        margin-top: 15vh;
+  &__title {
+    text-align: center;
+  }
 
-        .btn {
-            background-color: #cff44d;
-            border-radius: 30px;
-            margin-top: 20vh;
-            padding: 2vh;
-            color: black;
-            border: none;
+  &__offers {
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    margin: 2rem;
+    margin-bottom: 0.5em;
+    border-radius: 15px;
+    box-shadow: $boxShadow;
+
+    &__detail {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      margin-left: 0.5em;
+      width: 90%;
+
+      &__mainPicture {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        margin-left: -0.5em;
+
+        img {
+          object-fit: contain;
+          width: 60vw;
+          height: 20vh;
         }
-    } 
+      }
+
+      &__price {
+        display: flex;
+        justify-content: flex-start;
+        margin-left: 4vw;
+      }
+
+      &__brand {
+        display: flex;
+        justify-content: flex-start;
+        width: 50%;
+        margin-left: 4vw;
+      }
+
+      &__size {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 0.5rem;
+        margin-left: 4vw;
+      }
+
+      &__fav {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 0.8em;
+      }
+    }
+  }
+
+  &__empty {
+    text-align: center;
+    margin-top: 15vh;
+
+    .btn {
+      background-color: #cff44d;
+      border-radius: 30px;
+      margin-top: 20vh;
+      padding: 2vh;
+      color: black;
+      border: none;
+    }
+  }
 }
