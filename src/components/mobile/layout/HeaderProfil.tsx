@@ -24,9 +24,9 @@ const HeaderProfil = () => {
   return (
     <div className="headerProfil">
       <div className="headerProfil__intro">
-        <Link to="/">
+        {/* <Link to="/">
           <img src={LogoRun} alt="Logo" className="headerProfil__intro__logoRun" />
-        </Link>
+        </Link> */}
         <div className="headerProfil__intro__photo">
           <img
             src={user.picture}

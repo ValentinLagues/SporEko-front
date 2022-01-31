@@ -138,6 +138,7 @@ const ModificationProfil = () => {
       setUpdateUser(newUpdateUser);
     }
   };
+  console.log(updateUser);
   // Axios call for update user informations
   useEffect(() => {
     updateUser &&
