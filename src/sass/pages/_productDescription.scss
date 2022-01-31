@@ -23,7 +23,7 @@
                 width: 80%;
             }
 
-        &__container-picture__all-picture {
+        &__container-picture__all-picture{
             width: 30vw;
         }   
         
@@ -32,23 +32,37 @@
         width: 100%;
         // max-width: 500px;
         // min-width: 290px;
-        margin: 25px;
+        margin: 15px;
     }  
     
         &__container-text__container1 {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;  
+            margin-bottom: 1.5rem; 
+            position: relative;
             // background-color: greenyellow;
         }
-
-        &__container-text__container1__title {
-            font-size: 2rem;
+        &__container-text__container1__title{
+            margin: auto;
+        }
+        &__container-text__container1__title h2 {
+            font-size: 5vw;
+            text-align: start;
+            margin-left: 1rem;         
         }  
 
             &__container-text__container1__price {
-                background-color: aquamarine;
-            }  
+                // background-color: aquamarine;
+                margin: auto; 
+                width: 18%;   
+                text-align: end;
+            }
+
+        .style-hr {
+            border-left: 4px solid rgb(207, 244, 77);
+            height: 5vh;
+            position: absolute;
+        }    
             
             
 
@@ -61,16 +75,17 @@
             // background-color: coral;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;  
-            margin-top: 15px;
+            margin-bottom: 2rem;  
+            margin-top: 2rem;
         }
 
         &__container-text__container4 {
             flex-direction: column;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;  
-            margin-top: 15px;
+            margin-left: 1rem;
+            margin-right: 1rem;
+            margin-bottom: 2rem;
         }
 
         &__container-text__container4 {
@@ -102,9 +117,16 @@
         height: 2rem;
         width: 2rem;
 } 
-
+&__container-text__container4__delivery {
+      border-style: solid;
+      border-radius: 20px;
+      border-width: 1px;
+      border-color: gray;
+      padding: 2vh 0vw;
+}
 &__container-text__container4__delivery__btn {
-    padding: 2rem;
+    padding-top: 4rem;
+    padding-bottom: 3rem;
 }
 &__container-text__container4__delivery__btn .btn  {
     padding-left: 6vh;

@@ -55,7 +55,7 @@ const AllOffers = () => {
 
   return (
     <div>
-      <Search setAllOffers={setAllOffers} />
+      <Search setAllOffers={() => setAllOffers} />
       <div className="allOffers">
         {allOffers.map((offer: IOffer, index: number) => {
           return (

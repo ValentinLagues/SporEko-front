@@ -212,6 +212,7 @@ const ProductDescription = () => {
       <div className="product-description__container-text">
         <div className="product-description__container-text__container1">
           <div className="product-description__container-text__container1__title">
+            <hr className="style-hr"></hr>
             <h2>{offer && offer.title}</h2>
           </div>
 
@@ -262,8 +263,8 @@ const ProductDescription = () => {
           <div className="product-description__container-text__container4__delivery">
             <h3>Livraison</h3>
             <p>{handDeliverer && handDeliverer}</p>
-            <p>Secteur: {user && user.city}</p>
-            <h4>Options d&apos;envoi</h4>
+            <p>Localisation du produit: {user && user.city}</p>
+            <h4>Options d&apos;envois disponibles</h4>
             {offerDeliverer &&
               deliverer &&
               deliverer
@@ -271,17 +272,11 @@ const ProductDescription = () => {
                   offerDeliverer.includes(Number(allDeliverer.id_deliverer)),
                 )
                 .map((delive, index) => <p key={index}>{delive.name}</p>)}
-            <div className="product-description__container-text__container4__delivery__btn">
-              <Link className="btn" type="submit" to="/confirmer-achat">
-                Acheter
-              </Link>
-              {/* <AiFillHeart
-                className="inputIconFull"
-                // onClick={() => deleteFavorite(Number(offer.id_offer))}
-                size={30}
-                color="red"
-              /> */}
-            </div>
+          </div>
+          <div className="product-description__container-text__container4__delivery__btn">
+            <Link className="btn" type="submit" to="/confirmer-achat">
+              Acheter
+            </Link>
           </div>
         </div>
       </div>

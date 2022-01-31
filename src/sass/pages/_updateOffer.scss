@@ -9,6 +9,9 @@
   & #addPhotoContainer {
     text-align: center;
     margin: 30px auto;
+    & .image {
+      width: 15vw;
+    }
   }
   & #labelPhoto1 {
     margin: auto;
