@@ -25,25 +25,18 @@ const Favorites = () => {
   };
 
   useEffect(() => {
-    // je recupère les favoris de mon utilisateur
     idUser &&
       axios.get<IFavorite[]>(`${urlBack}/users/${idUser}/favorites`).then((res) => {
         setUserFavorites(res.data);
-        // Pour chaque favori, je recupère l'id de l'offre
+
         const allOffers: IOffer[] = [];
         res.data.map((fav) =>
-          axios
-            // Je récupère les offres par ID
-            .get(`${urlBack}/offers/${fav.id_offer}`)
-            .then((res) => {
-              // Je push dans ce tableau toutes les offres qui correspondent
-              // à l'id que je récupère dans mes favoris
-              allOffers.push(res.data);
-              //Une fois mes offres récupérés, je les stock dans un state
-              //et je map mes offres
-              setFavOffers(allOffers.map<IOffer>((offer) => offer));
-              setIsFavorite(false);
-            }),
+          axios.get(`${urlBack}/offers/${fav.id_offer}`).then((res) => {
+            allOffers.push(res.data);
+
+            setFavOffers(allOffers.map<IOffer>((offer) => offer));
+            setIsFavorite(false);
+          }),
         );
       });
   }, [isFavorite]);

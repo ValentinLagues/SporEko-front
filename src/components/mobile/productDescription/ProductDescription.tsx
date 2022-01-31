@@ -37,7 +37,6 @@ const ProductDescription = () => {
   const [user, setUser] = useState<IUserLog>();
 
   //   const [sellerAddress, setSellerAddress] = useState();
-  // console.log(deliverer);
 
   // const [idSport, setIdSport] = useState<Sport>();
 
@@ -49,7 +48,6 @@ const ProductDescription = () => {
       .then((res) => res.data)
       .then((data) => {
         setOffer(data);
-        // console.log = ok
         // axios.get(`${urlBack}/offers/1`).then((data) => console.log(data));
         axios.get(`${urlBack}/brands/${data.id_brand}`).then((res) => setBrand(res.data));
         axios.get(`${urlBack}/colors/${data.id_color}`).then((res) => setColor(res.data));

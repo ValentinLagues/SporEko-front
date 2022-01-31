@@ -36,7 +36,6 @@ const AllOffers = () => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [searchByTitle, setSearchByTitle] = useState<string>('');
   const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
-  console.log(searchByTitle);
 
   const [sport, setSport] = useState<string>('');
   const [gender, setGender] = useState<number | null>(null);

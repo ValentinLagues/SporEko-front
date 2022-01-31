@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const Header = () => {
   const navigate = useNavigate();
   const url = document.location.href;
-  console.log(url);
+
   return (
     <div className="header">
       <div className="header__container">
