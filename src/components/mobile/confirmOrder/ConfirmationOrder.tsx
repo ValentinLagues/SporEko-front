@@ -2,65 +2,63 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { AiOutlineLock } from 'react-icons/ai';
 import { BsBoxSeam, BsShield } from 'react-icons/bs';
+import { useParams } from 'react-router';
 
 import cards from '../../../../resources/cards.png';
-import CurrentOfferContext from '../../../contexts/Offer';
+import CurrentUserContext from '../../../contexts/CurrentUser';
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
 import IDeliverer_price from '../../../interfaces/IDeliverer_price';
-// import IDeliverer_price from '../../../interfaces/IDeliverer_price';
-// import CurrentUserContext from '../../../contexts/CurrentUser';
-// import OfferContext from '../../../contexts/Offer';
 import IOffer from '../../../interfaces/IOffer';
+import IOffer_deliverer from '../../../interfaces/IOffer_deliverer';
 import ISize from '../../../interfaces/ISize';
 import IUserLog from '../../../interfaces/IUser';
 
-interface IOffer_Deliverer {
-  id_offer_deliverer: number;
-  id_offer: number;
-  id_deliverer: number;
-}
-
 const urlBack = import.meta.env.VITE_URL_BACK;
 
-const ConfirmOrder = () => {
-  const { idOffer } = useContext(CurrentOfferContext);
-  // const { id } = useContext(CurrentUserContext);
-  const [confirmOrder, setConfirmOrder] = useState<IOffer>();
-  const [confirmAdress, setConfirmAdress] = useState<IUserLog>();
-  const [confirmDeliverer, setConfirmDeliverer] = useState<IOffer_Deliverer>();
-  const [confirmDelivererPrice, setConfirmDelivererPrice] = useState<IDeliverer_price>();
-  const [confirmCondition, setConfirmCondition] = useState<ICondition>();
+const ConfirmationOrder = () => {
+  const { idoffer } = useParams();
+  const { idUser } = useContext(CurrentUserContext);
+  const [confirmedOrder, setConfirmedOrder] = useState<IOffer>();
+  const [confirmedAdress, setConfirmedAdress] = useState<IUserLog>();
+  const [confirmedDeliverer, setConfirmedDeliverer] = useState<IOffer_deliverer>();
+  const [confirmedDelivererPrice, setConfirmedDelivererPrice] =
+    useState<IDeliverer_price>();
+  const [confirmedCondition, setConfirmedCondition] = useState<ICondition>();
   const [deliverersList, setDeliverersList] = useState<IDeliverer[]>([]);
-  const [confirmSize, setConfirmSize] = useState<ISize>();
+  const [confirmedSize, setConfirmedSize] = useState<ISize>();
 
   const [handDelivery, setHandDelivery] = useState(0);
 
-  console.log(idOffer);
+  console.log(confirmedCondition);
   useEffect(() => {
-    axios.get(`${urlBack}/offers/${idOffer}`).then((res) => {
-      setConfirmOrder(res.data);
-      axios.get(`${urlBack}/sizes/1`).then((res) => setConfirmSize(res.data));
-      axios.get(`${urlBack}/conditions/1`).then((res) => setConfirmCondition(res.data));
+    axios.get(`${urlBack}/offers/${idoffer}`).then((res) => {
+      setConfirmedOrder(res.data);
+      axios
+        .get(`${urlBack}/sizes/${res.data.id_size}`)
+        .then((res) => setConfirmedSize(res.data));
+      axios
+        .get(`${urlBack}/conditions/${res.data.id_condition}`)
+        .then((res) => setConfirmedCondition(res.data));
     });
     axios
-      .get(`${urlBack}/users/1`, { withCredentials: true })
-      .then((res) => setConfirmAdress(res.data));
+      .get(`${urlBack}/users/${idUser}`, { withCredentials: true })
+      .then((res) => setConfirmedAdress(res.data));
     axios.get(`${urlBack}/offer_deliverers`).then((res) => {
-      setConfirmDeliverer(res.data);
+      setConfirmedDeliverer(res.data);
       axios.get(`${urlBack}/deliverers`).then((res) => setDeliverersList(res.data));
     });
     axios
       .get(`${urlBack}/deliverer_price`)
-      .then((res) => setConfirmDelivererPrice(res.data));
+      .then((res) => setConfirmedDelivererPrice(res.data));
   }, []);
-  console.log(confirmDelivererPrice);
-  console.log(confirmDeliverer);
+  console.log(confirmedDelivererPrice);
+  console.log(confirmedDeliverer);
 
   return (
-    <div className="confirmOrder">
-      <div className="confirmOrder__confirmOrderContainer">
-        <div className="confirmOrder__confirmOrderContainer__box">
+    <div className="confirmedOrder">
+      <div className="confirmedOrder__confirmedOrderContainer">
+        <div className="confirmedOrder__confirmedOrderContainer__box">
           <p
             // encadré instructions
             className="instructions">
@@ -77,43 +75,44 @@ const ConfirmOrder = () => {
         </div>
         <div
           // encadré recap commande
-          className="confirmOrder__confirmOrderContainer__box">
+          className="confirmedOrder__confirmedOrderContainer__box">
           <h3>COMMANDE</h3>
-          {confirmOrder && confirmSize && confirmCondition && (
+          {confirmedOrder && (
             <div>
-              <img src={confirmOrder.picture1} alt="picture1" />
-              <h4>{confirmOrder.title}</h4>
+              <img src={confirmedOrder.picture1} alt="picture1" />
+              <h4>{confirmedOrder.title}</h4>
               <p>
-                {confirmSize.size_fr} {confirmCondition.name}
+                {confirmedSize && confirmedSize.size_fr}{' '}
+                {confirmedCondition && confirmedCondition.name}
               </p>
-              <h3>{confirmOrder.price} €</h3>
+              <h3>{confirmedOrder.price} €</h3>
             </div>
           )}
         </div>
         <div
           // encadré recap coordonnées
-          className="confirmOrder__confirmOrderContainer__box">
+          className="confirmedOrder__confirmedOrderContainer__box">
           <h3>VOS COORDONNEES</h3>
-          {confirmAdress && (
+          {confirmedAdress && (
             <div>
               <h4>
-                {confirmAdress.firstname} {confirmAdress.lastname}
+                {confirmedAdress.firstname} {confirmedAdress.lastname}
               </h4>
-              <p>{confirmAdress.address}</p>
-              <p>{confirmAdress.address_complement}</p>
+              <p>{confirmedAdress.address}</p>
+              <p>{confirmedAdress.address_complement}</p>
               <p>
-                {confirmAdress.zipcode} {confirmAdress.city}
+                {confirmedAdress.zipcode} {confirmedAdress.city}
               </p>
-              <p>{confirmAdress.country}</p>
+              <p>{confirmedAdress.country}</p>
             </div>
           )}
         </div>
         <div
           // encadré selection mode de livraison (deliverers s'affiche si handDelivery est false)
-          className="confirmOrder__confirmOrderContainer__box">
+          className="confirmedOrder__confirmedOrderContainer__box">
           <h3>OPTIONS DE LIVRAISON</h3>
           <div className="delivererList">
-            <span className="confirmOrder__confirmOrderContainer__span">
+            <span className="confirmedOrder__confirmedOrderContainer__span">
               Remise en main propre
             </span>
             <label className="switch">
@@ -133,15 +132,15 @@ const ConfirmOrder = () => {
         </div>
         <div
           // encadré résumé total prix (en cours)
-          className="confirmOrder__confirmOrderContainer__box">
+          className="confirmedOrder__confirmedOrderContainer__box">
           <h3>Résumé de la commande</h3>
-          {confirmOrder && (
+          {confirmedOrder && (
             <div>
-              <img src={confirmOrder.picture1} alt="picturetotal" />
-              <p>Montant : {confirmOrder.price} €</p>
+              <img src={confirmedOrder.picture1} alt="picturetotal" />
+              <p>Montant : {confirmedOrder.price} €</p>
               <p>Frais de port : </p>
               <p>Frais de protection acheteurs : </p>
-              <p>TOTAL : {confirmOrder.price} + 1 €</p>
+              <p>TOTAL : {confirmedOrder.price} + 1 €</p>
             </div>
           )}
           <button>Payer</button>
@@ -151,4 +150,4 @@ const ConfirmOrder = () => {
   );
 };
 
-export default ConfirmOrder;
+export default ConfirmationOrder;

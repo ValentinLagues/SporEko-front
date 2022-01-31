@@ -8,12 +8,8 @@ import { MdOutlineEmail } from 'react-icons/md';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 
+import ICountry from '../../../interfaces/ICountry';
 import IUserLog from '../../../interfaces/IUser';
-
-interface Country {
-  id_country: number;
-  name: string;
-}
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
@@ -29,7 +25,7 @@ const CreateAccount = () => {
   const [country, setCountry] = useState('');
   const [profil, setProfil] = useState<Number>(0);
   const [gender, setGender] = useState<Number>();
-  const [countriesList, setCountriesList] = useState<Country[]>([]);
+  const [countriesList, setCountriesList] = useState<ICountry[]>([]);
   const [user, setUser] = useState<IUserLog>();
 
   useEffect(() => {

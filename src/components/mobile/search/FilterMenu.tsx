@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { HiChevronDown } from 'react-icons/hi';
 
 import IBrand from '../../../interfaces/IBrand';
@@ -11,192 +10,107 @@ import ISize from '../../../interfaces/ISize';
 import ISport from '../../../interfaces/ISport';
 import ITextile from '../../../interfaces/ITextile';
 
-const urlBack = import.meta.env.VITE_URL_BACK;
+interface Props {
+  itemInfos: IItem | undefined;
+  categoryIsClothes: boolean;
+  setCategoryIsClothes: React.Dispatch<React.SetStateAction<boolean>>;
+  price: number | null;
+  setPrice: React.Dispatch<React.SetStateAction<number | null>>;
+  size: string;
+  setSize: React.Dispatch<React.SetStateAction<string>>;
+  showSizes: boolean;
+  setShowSizes: React.Dispatch<React.SetStateAction<boolean>>;
+  brand: string;
+  setBrand: React.Dispatch<React.SetStateAction<string>>;
+  condition: string;
+  setCondition: React.Dispatch<React.SetStateAction<string>>;
+  textile: string;
+  setTextile: React.Dispatch<React.SetStateAction<string>>;
+  color1: number | null;
+  setColor1: React.Dispatch<React.SetStateAction<number | null>>;
+  colorName: string;
+  setColorName: React.Dispatch<React.SetStateAction<string>>;
+  orderBy: string;
+  setOrderBy: React.Dispatch<React.SetStateAction<string>>;
+  colorsList: Array<IColor>;
+  showColorsList: boolean;
+  setShowColorsList: React.Dispatch<React.SetStateAction<boolean>>;
+  conditionsList: Array<ICondition>;
+  brandsList: Array<IBrand>;
+  sizesList: Array<ISize>;
+  textilesList: Array<ITextile>;
+  item: string;
+  setItem: React.Dispatch<React.SetStateAction<string>>;
+  category: string;
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
+  sport: string;
+  setSport: React.Dispatch<React.SetStateAction<string>>;
+  genderIsChild: boolean;
+  setGenderIsChild: React.Dispatch<React.SetStateAction<boolean>>;
+  genderAdult: number | null;
+  setGenderAdult: React.Dispatch<React.SetStateAction<number | null>>;
+  genderChild: number | null;
+  setGenderChild: React.Dispatch<React.SetStateAction<number | null>>;
+  setGender: React.Dispatch<React.SetStateAction<number | null>>;
+  categoriesList: Array<ICategory>;
+  itemsList: Array<IItem>;
+  sportsList: Array<ISport>;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleItemSelected: (item: string) => void;
+  handleReset: () => void;
+}
 
-const FilterMenu = ({ setAllOffers, setShowFilterMenu }) => {
-  const [sportList, setSportList] = useState<ISport[]>([]);
-  const [categoryList, setCategoryList] = useState<ICategory[]>([]);
-  const [itemList, setItemList] = useState<IItem[]>([]);
-  const [conditionList, setConditionList] = useState<ICondition[]>([]);
-  const [textileList, setTextileList] = useState<ITextile[]>([]);
-  const [colorList, setColorList] = useState<IColor[]>([]);
-  const [brandList, setBrandList] = useState<IBrand[]>([]);
-  const [sizeList, setSizeList] = useState<ISize[]>([]);
-
-  const [sport, setSport] = useState('');
-  const [gender, setGender] = useState<number | null>(null);
-  const [genderAdult, setGenderAdult] = useState<number | null>(null);
-  const [genderChild, setGenderChild] = useState<number | null>(null);
-  const [genderIsChild, setGenderIsChild] = useState(false);
-  const [category, setCategory] = useState('');
-  const [item, setItem] = useState('');
-  const [itemInfos, setItemInfos] = useState<IItem>();
-  const [categoryIsClothes, setCategoryIsClothes] = useState(false);
-  const [condition, setCondition] = useState('');
-  const [textile, setTextile] = useState('');
-  const [colorListShow, setColorListShow] = useState(false);
-  const [color1, setColor1] = useState<number | null>(null);
-  const [colorName, setColorName] = useState('');
-  const [brand, setBrand] = useState('');
-  const [showSizes, setShowSizes] = useState(false);
-  const [size, setSize] = useState('');
-  const [price, setPrice] = useState<number | null>(null);
-  const [orderBy, setOrderBy] = useState('');
-
-  useEffect(() => {
-    axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
-    axios.get(`${urlBack}/categories`).then((res) => setCategoryList(res.data));
-    axios.get(`${urlBack}/conditions`).then((res) => setConditionList(res.data));
-    axios.get(`${urlBack}/textiles`).then((res) => setTextileList(res.data));
-    axios.get(`${urlBack}/colors`).then((res) => setColorList(res.data));
-    axios.get(`${urlBack}/brands`).then((res) => setBrandList(res.data));
-    axios.get(`${urlBack}/sizes`).then((res) => setSizeList(res.data));
-  }, []);
-
-  // if a category is chosen, itemList is 'filtered' by category
-  //else itemList contains all items
-  useEffect(() => {
-    category
-      ? axios.get(`${urlBack}/categories/${category}/items`).then((res) => {
-          setItemList(res.data);
-        })
-      : axios.get(`${urlBack}/items`).then((res) => setItemList(res.data));
-  }, [category]);
-
-  //if category is clothes or shoes, or if item is a shoe or a clothes, sizeList is shown with appropriate sizes
-  useEffect(() => {
-    let filters = ``;
-    let oneValue = false;
-
-    if (gender) {
-      filters += `?id_gender=${gender}`;
-      oneValue = true;
-    }
-    if (genderIsChild) {
-      filters += oneValue ? `&is_child=1` : `?is_child=1`;
-      oneValue = true;
-    }
-    item
-      ? axios.get(`${urlBack}/items/${item}/sizes${filters}`).then((res) => {
-          setSizeList(res.data);
-        })
-      : category
-      ? axios.get(`${urlBack}/categories/${category}/sizes${filters}`).then((res) => {
-          setSizeList(res.data);
-        })
-      : (setSizeList([]), setShowSizes(false));
-  }, [item, gender, genderIsChild, category]);
-
-  const handleItemSelected = (id: string) => {
-    axios
-      .get(`${urlBack}/items/${id}`)
-      .then((item) => {
-        setItemInfos(item.data);
-        return item.data;
-      })
-      .then((item) =>
-        item.id_size_type === 1 ||
-        item.id_size_type === 2 ||
-        item.id_size_type === 3 ||
-        item.id_size_type === 6
-          ? setShowSizes(true)
-          : setShowSizes(false),
-      );
-  };
-
-  const handleReset = () => {
-    setSport('');
-    setGender(null);
-    setGenderAdult(null);
-    setGenderChild(null);
-    setGenderIsChild(false);
-    setCategory('');
-    setItem('');
-    setCategoryIsClothes(false);
-    setCondition('');
-    setTextile('');
-    setColorListShow(false);
-    setColor1(null);
-    setColorName('');
-    setBrand('');
-    setSize('');
-    setPrice(null);
-    setOrderBy('');
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    let filters = ``;
-    let oneValue = false;
-
-    if (sport) {
-      filters += `?id_sport=${sport}`;
-      oneValue = true;
-    }
-    if (gender) {
-      filters += oneValue ? `&id_gender=${gender}` : `?id_gender=${gender}`;
-      oneValue = true;
-    }
-    if (genderIsChild) {
-      filters += oneValue ? `&ischild=${1}` : `?ischild=${1}`;
-      oneValue = true;
-    }
-    if (category) {
-      filters += oneValue ? `&id_category=${category}` : `?id_category=${category}`;
-      oneValue = true;
-    }
-    if (item) {
-      filters += oneValue ? `&id_item=${item}` : `?id_item=${item}`;
-      oneValue = true;
-    }
-    if (condition) {
-      filters += oneValue ? `&id_condition=${condition}` : `?id_condition=${condition}`;
-      oneValue = true;
-    }
-    if (textile) {
-      filters += oneValue ? `&id_textile=${textile}` : `?id_textile=${textile}`;
-      oneValue = true;
-    }
-    if (color1) {
-      filters += oneValue ? `&id_color1=${color1}` : `?id_color1=${color1}`;
-      oneValue = true;
-    }
-    if (brand) {
-      filters += oneValue ? `&id_brand=${brand}` : `?id_brand=${brand}`;
-      oneValue = true;
-    }
-    if (size) {
-      filters += oneValue ? `&id_size=${size}` : `?id_size=${size}`;
-      oneValue = true;
-    }
-    if (price) {
-      if (price === 100) {
-        filters += oneValue ? `&minPrice=${price}` : `?minPrice=${price}`;
-        oneValue = true;
-      } else if (price > 50) {
-        filters += oneValue
-          ? `&minPrice=50&maxPrice=${price}`
-          : `?&minPrice=50&maxPrice=${price}`;
-        oneValue = true;
-      } else {
-        filters += oneValue
-          ? `&minPrice=0&maxPrice=${price}`
-          : `?&minPrice=0&maxPrice=${price}`;
-        oneValue = true;
-      }
-    }
-    if (orderBy) {
-      const sort = orderBy;
-      filters += oneValue ? `&sort=${sort}` : `?sort=${sort}`;
-      oneValue = true;
-    }
-    axios.get(`${urlBack}/offers${filters}`).then((rep) => setAllOffers(rep.data));
-
-    setShowFilterMenu(false);
-  };
-
-  colorList &&
-    colorList.map((color) => (color.style = { backgroundColor: color.color_code }));
+const FilterMenu: React.FC<Props> = ({
+  item,
+  setItem,
+  itemInfos,
+  category,
+  setCategory,
+  categoryIsClothes,
+  setCategoryIsClothes,
+  sport,
+  setSport,
+  price,
+  setPrice,
+  size,
+  setSize,
+  showSizes,
+  setShowSizes,
+  brand,
+  setBrand,
+  condition,
+  setCondition,
+  textile,
+  setTextile,
+  color1,
+  setColor1,
+  colorName,
+  setColorName,
+  orderBy,
+  setOrderBy,
+  genderIsChild,
+  setGenderIsChild,
+  genderAdult,
+  setGenderAdult,
+  genderChild,
+  setGenderChild,
+  setGender,
+  categoriesList,
+  colorsList,
+  showColorsList,
+  setShowColorsList,
+  conditionsList,
+  brandsList,
+  sizesList,
+  textilesList,
+  itemsList,
+  sportsList,
+  handleReset,
+  handleSubmit,
+  handleItemSelected,
+}) => {
+  colorsList &&
+    colorsList.map((color) => (color.style = { backgroundColor: color.color_code }));
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="filterMenu" id="filterMenuMobile">
@@ -215,8 +129,8 @@ const FilterMenu = ({ setAllOffers, setShowFilterMenu }) => {
           name="sports"
           id="sports">
           <option value="">Tous</option>
-          {sportList &&
-            sportList.map((sport, index) => (
+          {sportsList &&
+            sportsList.map((sport, index) => (
               <option key={index} value={sport.id_sport}>
                 {sport.name}
               </option>
@@ -274,8 +188,8 @@ const FilterMenu = ({ setAllOffers, setShowFilterMenu }) => {
           name="categories"
           id="categories">
           <option value="">Toutes</option>
-          {categoryList &&
-            categoryList.map((category, index) => (
+          {categoriesList &&
+            categoriesList.map((category, index) => (
               <option key={index} value={category.id_category}>
                 {category.name}
               </option>
@@ -300,8 +214,8 @@ const FilterMenu = ({ setAllOffers, setShowFilterMenu }) => {
           name="items"
           id="items">
           <option value="">Tous</option>
-          {itemList &&
-            itemList.map((item, index) => (
+          {itemsList &&
+            itemsList.map((item, index) => (
               <option key={index} value={item.id_item}>
                 {item.name}
               </option>
@@ -318,8 +232,8 @@ const FilterMenu = ({ setAllOffers, setShowFilterMenu }) => {
             name="textile"
             id="textile">
             <option value="">Toutes matières</option>
-            {textileList &&
-              textileList.map((textile, index) => (
+            {textilesList &&
+              textilesList.map((textile, index) => (
                 <option key={index} value={textile.id_textile}>
                   {textile.name}
                 </option>
@@ -336,8 +250,8 @@ const FilterMenu = ({ setAllOffers, setShowFilterMenu }) => {
           name="conditions"
           id="conditions">
           <option value="">Tous</option>
-          {conditionList &&
-            conditionList.map((condition, index) => (
+          {conditionsList &&
+            conditionsList.map((condition, index) => (
               <option key={index} value={condition.id_condition}>
                 {condition.name}
               </option>
@@ -345,20 +259,20 @@ const FilterMenu = ({ setAllOffers, setShowFilterMenu }) => {
         </select>
       </div>
       <div
-        onKeyPress={() => setColorListShow(!colorListShow)}
+        onKeyPress={() => setShowColorsList(!showColorsList)}
         role="button"
         tabIndex={0}
         className="filterMenu__item"
-        onClick={() => setColorListShow(!colorListShow)}
+        onClick={() => setShowColorsList(!showColorsList)}
         id="colors">
         <span>Couleur</span>
         <div className="iconChevronDownContainer">
           {color1 ? colorName : 'Toutes'}{' '}
           <HiChevronDown className="iconChevronDownContainer__icon" />
         </div>
-        {colorListShow && (
+        {showColorsList && (
           <div className="colorList">
-            {colorList.map((color, index) => (
+            {colorsList.map((color, index) => (
               <div
                 onKeyPress={() => (setColor1(color.id_color), setColorName(color.name))}
                 role="button"
@@ -382,8 +296,8 @@ const FilterMenu = ({ setAllOffers, setShowFilterMenu }) => {
           name="brands"
           id="brands">
           <option value="">Toutes</option>
-          {brandList &&
-            brandList.map((brand, index) => (
+          {brandsList &&
+            brandsList.map((brand, index) => (
               <option key={index} value={brand.id_brand}>
                 {brand.name}
               </option>
@@ -400,8 +314,8 @@ const FilterMenu = ({ setAllOffers, setShowFilterMenu }) => {
             name="sizes"
             id="sizes">
             <option value="">Toutes</option>
-            {sizeList &&
-              sizeList.map((size, index) => (
+            {sizesList &&
+              sizesList.map((size, index) => (
                 <option key={index} value={size.id_size}>
                   {(category === '1' && genderIsChild) || itemInfos?.id_size_type === 6
                     ? `${size.age_child}`

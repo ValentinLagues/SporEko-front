@@ -18,7 +18,7 @@ const Connection = () => {
 
   const navigate: NavigateFunction = useNavigate();
   function redirectHome() {
-    navigate('/');
+    navigate('/accueil');
   }
 
   const urlBack = import.meta.env.VITE_URL_BACK;

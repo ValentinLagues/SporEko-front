@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IoFilter } from 'react-icons/io5';
 
-const SearchBar = ({ setShowFilterMenu, showFilterMenu }) => {
-  const [search, setSearch] = useState('');
+interface Props {
+  showFilterMenu: boolean;
+  setShowFilterMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+}
 
+const SearchBar: React.FC<Props> = ({ setShowFilterMenu, showFilterMenu, setSearch }) => {
   return (
     <div>
       <form className="search__bar">
@@ -11,8 +15,10 @@ const SearchBar = ({ setShowFilterMenu, showFilterMenu }) => {
           className="btn"
           type="text"
           placeholder="Entrez votre recherche"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            console.log(e.target.value);
+            setSearch(e.target.value);
+          }}
         />
         <IoFilter
           className="filterIcon"

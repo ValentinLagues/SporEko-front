@@ -1,112 +1,61 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { CgGenderFemale, CgGenderMale, CgGym } from 'react-icons/cg';
-import { FcSportsMode } from 'react-icons/fc';
-import { GiClothes, GiRunningShoe, GiTennisRacket } from 'react-icons/gi';
+import React from 'react';
 
+import ICategory from '../../../interfaces/ICategory';
 import IItem from '../../../interfaces/IItem';
-import FilterMenu from './FilterMenu';
-import SearchBar from './SearchBar';
+import ISport from '../../../interfaces/ISport';
 
-interface Sport {
-  id_sport: number;
-  name: string;
+interface Props {
+  item: string;
+  setItem: React.Dispatch<React.SetStateAction<string>>;
+  category: string;
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
+  sport: string;
+  setSport: React.Dispatch<React.SetStateAction<string>>;
+  genderIsChild: boolean;
+  setGenderIsChild: React.Dispatch<React.SetStateAction<boolean>>;
+  genderAdult: number | null;
+  setGenderAdult: React.Dispatch<React.SetStateAction<number | null>>;
+  genderChild: number | null;
+  setGenderChild: React.Dispatch<React.SetStateAction<number | null>>;
+  setGender: React.Dispatch<React.SetStateAction<number | null>>;
+  categoriesList: Array<ICategory>;
+  itemsList: Array<IItem>;
+  sportsList: Array<ISport>;
+  handleSubmit: () => void;
+  handleItemSelected: (item: string) => void;
 }
 
-interface Category {
-  id_category: number;
-  name: string;
-}
-
-const urlBack = import.meta.env.VITE_URL_BACK;
-
-type Props = { setAllOffers: () => {} };
-
-const Search: React.FC<Props> = ({ setAllOffers }) => {
-  const [sportsList, setSportsList] = useState<Sport[]>([]);
-  const [categoriesList, setCategoriesList] = useState<Category[]>([]);
-  const [itemsList, setItemsList] = useState<IItem[]>([]);
-
-  const [gender, setGender] = useState<number | null>(null);
-  const [genderAdult, setGenderAdult] = useState<number | null>(null);
-  const [genderChild, setGenderChild] = useState<number | null>(null);
-  const [genderIsChild, setGenderIsChild] = useState(false);
-  const [sport, setSport] = useState('');
-  const [category, setCategory] = useState('');
-  const [item, setItem] = useState('');
-  const [itemInfos, setItemInfos] = useState<IItem>();
-  const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
-
-  console.log(itemInfos);
-
-  useEffect(() => {
-    axios.get(`${urlBack}/sports`).then((res) => setSportsList(res.data));
-    axios.get(`${urlBack}/categories`).then((res) => setCategoriesList(res.data));
-  }, []);
-
-  useEffect(() => {
-    category
-      ? axios.get(`${urlBack}/categories/${category}/items`).then((res) => {
-          setItemsList(res.data);
-        })
-      : axios.get(`${urlBack}/items`).then((res) => setItemsList(res.data));
-  }, [category]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    let filters = ``;
-    let oneValue = false;
-
-    if (sport) {
-      filters += `?id_sport=${sport}`;
-      oneValue = true;
-    }
-    if (gender) {
-      filters += oneValue ? `&id_gender=${gender}` : `?id_gender=${gender}`;
-      oneValue = true;
-    }
-    if (genderIsChild) {
-      filters += oneValue ? `&ischild=${1}` : `?ischild=${1}`;
-      oneValue = true;
-    }
-    if (category) {
-      filters += oneValue ? `&id_category=${category}` : `?id_category=${category}`;
-      oneValue = true;
-    }
-    if (item) {
-      filters += oneValue ? `&id_item=${item}` : `?id_item=${item}`;
-      oneValue = true;
-    }
-    axios.get(`${urlBack}/offers${filters}`).then((rep) => setAllOffers(rep.data));
-
-    const search = document.getElementById('filterMenu');
-    search?.classList.add('invisible');
-  };
-
-  const handleItemSelected = (id: string) => {
-    axios.get(`${urlBack}/items/${id}`).then((item) => {
-      setItemInfos(item.data);
-      return item.data;
-    });
-  };
-
+const Search: React.FC<Props> = ({
+  item,
+  setItem,
+  category,
+  setCategory,
+  sport,
+  setSport,
+  genderIsChild,
+  setGenderIsChild,
+  genderAdult,
+  setGenderAdult,
+  genderChild,
+  setGenderChild,
+  setGender,
+  categoriesList,
+  itemsList,
+  sportsList,
+  handleSubmit,
+  handleItemSelected,
+}) => {
   return (
     <div className="search">
-      <SearchBar setShowFilterMenu={setShowFilterMenu} showFilterMenu={showFilterMenu} />
-      {showFilterMenu && (
-        <FilterMenu setAllOffers={setAllOffers} setShowFilterMenu={setShowFilterMenu} />
-      )}
-      <form onSubmit={(e) => handleSubmit(e)} className="search__menu" id="filterMenu">
+      <form onSubmit={() => handleSubmit()} className="search__menu" id="filterMenu">
         <div
           // filtre sports
           className="search__menu__item">
-          <label htmlFor="sports">
-            <FcSportsMode /> Quel sport recherchez-vous ? <FcSportsMode />
-          </label>
+          <label htmlFor="sports">Quel sport recherchez-vous ?</label>
           <select
             onChange={(e) => setSport(e.target.value)}
             value={sport}
-            className=""
+            className="search__menu__item__select"
             name="sports"
             id="sports">
             <option value="">Tous</option>
@@ -121,9 +70,7 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
         <div
           // filtre genre
           className="search__menu__item">
-          <label htmlFor="genders">
-            <CgGenderMale /> Genre <CgGenderFemale />
-          </label>
+          <label htmlFor="genders">Genre</label>
           <select
             onChange={(e) => {
               setGenderAdult(Number(e.target.value));
@@ -132,7 +79,7 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
                 : (setGenderIsChild(false), setGender(Number(e.target.value)));
             }}
             value={Number(genderAdult)}
-            name=""
+            className="search__menu__item__select"
             id="">
             <option value={''}>Tous</option>
             <option value={1}>Femme</option>
@@ -149,7 +96,7 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
               }}
               value={Number(genderChild)}
-              name=""
+              className="search__menu__item__select"
               id="">
               <option value="">Tous</option>
               <option value={1}>Fille</option>
@@ -160,15 +107,13 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
         <div
           // filtre categories
           className="search__menu__item">
-          <label htmlFor="categories">
-            <GiClothes /> Catégorie <GiRunningShoe />
-          </label>
+          <label htmlFor="categories">Catégories</label>
           <select
             onChange={(e) => {
               setCategory(e.target.value);
             }}
             value={category}
-            className=""
+            className="search__menu__item__select"
             name="categories"
             id="categories">
             <option value="">Toutes</option>
@@ -183,16 +128,14 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
         <div
           // filtre articles
           className="search__menu__item">
-          <label htmlFor="items">
-            <CgGym /> Articles <GiTennisRacket />
-          </label>
+          <label htmlFor="items">Articles</label>
           <select
             onChange={(e) => {
               handleItemSelected(e.target.value);
               setItem(e.target.value);
             }}
             value={item}
-            className=""
+            className="search__menu__item__select"
             name="items"
             id="items">
             <option value="">Tous</option>
@@ -204,17 +147,7 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
               ))}
           </select>
         </div>
-        {/* <button
-          className=""
-          onClick={
-            search !== '' &&
-            offersList.filter((searchResults) =>
-              console.log(searchResults.title.includes({ search })),
-            )
-          }>
-          Recherche
-        </button> */}
-        <button type="button" className="btn" onClick={(e) => handleSubmit(e)}>
+        <button type="button" className="btn" onClick={() => handleSubmit()}>
           Rechercher
         </button>
       </form>
