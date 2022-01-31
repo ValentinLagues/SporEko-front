@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 import { IoFilter } from 'react-icons/io5';
+import CurrentOfferContext from '../../../contexts/Offer';
+
+const urlBack = import.meta.env.VITE_URL_BACK;
 
 const SearchBar = ({ setShowFilterMenu, showFilterMenu }) => {
+  const { title } = useContext(CurrentOfferContext);
   const [search, setSearch] = useState('');
   console.log(search);
+
+  useEffect(() => {
+    axios.get(`${urlBack}/offers/${title}`).then((res) => setSearch(res.data));
+  }, []);
 
   return (
     <div>

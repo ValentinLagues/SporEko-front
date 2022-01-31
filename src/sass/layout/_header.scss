@@ -8,9 +8,11 @@
     background-color: $colorDarkGrey;
     display: flex;
     align-items: center;
-    &__logoRun {
-      width: 8vh;
-      height: 8vh;
+
+    &__logo {
+      width: 30vw;
+      height: 7vh;
+      padding: 0 20vw;
     }
 
     & h3 {
@@ -19,8 +21,9 @@
       width: 50vw;
     }
     &__icon {
-      width: 6vw;
-      height: 6vh;
+      padding-left: 7vw;
+      width: 8vw;
+      height: 8vh;
       color: $colorWhite;
     }
   }

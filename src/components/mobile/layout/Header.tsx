@@ -1,21 +1,19 @@
 import React from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import LogoRun from '../../../../resources/LogoRun.png';
+import logo from '../../../../resources/Logo_transparent.png';
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <div className="header">
       <div className="header__container">
-        <Link to="/">
-          <img src={LogoRun} alt="Logo" className="header__container__logoRun" />
-        </Link>
-        <FiArrowLeft className="header__container__icon" />
-        <h3>Texte</h3>
+        <FiArrowLeft onClick={() => navigate(-1)} className="header__container__icon" />
+        <img src={logo} alt="LogoSporeko" className="header__container__logo" />
       </div>
     </div>
-    // </div>
   );
 };
 
