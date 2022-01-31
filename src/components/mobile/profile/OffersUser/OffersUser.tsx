@@ -36,7 +36,9 @@ const OffersUser = () => {
                     sessionStorage.setItem('idOfferSell', `${offer.id_offer}`);
                   }}>
                   <ul className="offers__offer__detail">
-                    <Link className={offer.is_archived ? '' : 'offerSell'} to="/">
+                    <Link
+                      className={offer.is_archived ? '' : 'offerSell'}
+                      to={`/annonces/${offer.id_offer}`}>
                       <li>
                         <img src={offer.picture1} alt={`annonce ${offer.id_offer}`} />
                       </li>
@@ -59,7 +61,7 @@ const OffersUser = () => {
                       sessionStorage.setItem('idOfferSell', `${offer.id_offer}`);
                     }}>
                     <Link
-                      to="/modifier-votre-annonce"
+                      to={`/modifier-votre-annonce/${offer.id_offer}`}
                       className={offer.is_archived ? '' : 'offerSellModification'}>
                       Modifier l&apos;annonce
                     </Link>
@@ -84,7 +86,7 @@ const OffersUser = () => {
                 sessionStorage.setItem('idOfferBuy', `${offer.id_offer}`)
               }>
               <ul className="offers__offer__detail">
-                <Link to="/mes_achats">
+                <Link to={`/annonces/${offer.id_offer}`}>
                   <li>
                     <img src={offer.picture1} alt={` annonce ${offer.id_offer}`} />
                   </li>

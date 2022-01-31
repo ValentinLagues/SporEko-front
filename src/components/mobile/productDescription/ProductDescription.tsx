@@ -42,7 +42,7 @@ const ProductDescription = () => {
   const [user, setUser] = useState<IUserLog>();
 
   //   const [sellerAddress, setSellerAddress] = useState();
-  console.log(deliverer);
+  // console.log(deliverer);
 
   // const [idSport, setIdSport] = useState<Sport>();
 

@@ -25,6 +25,7 @@ import IUserLog from '../../../interfaces/IUser';
 import HeaderProfil from '../layout/HeaderProfil';
 
 const ModificationProfil = () => {
+  // User context
   const { user, idUser } = useContext(CurrentUserContext);
 
   const [gender, setGender] = useState<Array<any>>([]);
@@ -53,6 +54,9 @@ const ModificationProfil = () => {
   const [message, setMessage] = useState<string>('');
   const [updateUser, setUpdateUser] = useState<IUser>();
 
+  // Format to birthday date
+  const date = new Date(user.birthday).toLocaleDateString();
+  // Url to axios call
   const urlBack = import.meta.env.VITE_URL_BACK;
   // UseEffect to admin right format of password .
   useEffect(() => {
@@ -138,7 +142,7 @@ const ModificationProfil = () => {
       setUpdateUser(newUpdateUser);
     }
   };
-  console.log(updateUser);
+
   // Axios call for update user informations
   useEffect(() => {
     updateUser &&
@@ -168,7 +172,7 @@ const ModificationProfil = () => {
           }
         });
   }, [updateUser]);
-
+  // Axios call to display select
   useEffect(() => {
     axios.get(`${urlBack}/genders`).then((res) => setGender(res.data));
     axios.get(`${urlBack}/athletics`).then((res) => setAthletic(res.data));
@@ -181,9 +185,10 @@ const ModificationProfil = () => {
       <form onSubmit={() => updatedUser()} className="modificationProfil__container">
         {/*------------------------Input pseudo----------------------------- */}
         <div className="modificationProfil__container__content">
+          <label htmlFor="pseudo">Pseudo :</label>
           <FiUserMinus className="modificationProfil__container__content__icons" />
           <input
-            type="text"
+            id="pseudo"
             placeholder={user.pseudo ? user.pseudo : 'Votre pseudo'}
             onChange={(e) => setPseudo(e.target.value)}
           />
@@ -191,7 +196,8 @@ const ModificationProfil = () => {
         </div>
         {/*------------------------Input Firstname----------------------------- */}
         <div className="modificationProfil__container__content">
-          <FiMeh className="modificationProfil__container__content__icons" />
+          <label htmlFor="prenom">Prénom :</label>
+          <FiMeh className="modificationProfil__container__content__icons" id="prenom" />
           <input
             type="text"
             placeholder={user.firstname ? user.firstname : 'Votre Prénom'}
@@ -201,26 +207,31 @@ const ModificationProfil = () => {
         </div>
         {/*------------------------Input Lastname----------------------------- */}
         <div className="modificationProfil__container__content">
+          <label htmlFor="nom">Nom :</label>
           <FiMeh className="modificationProfil__container__content__icons" />
           <input
             type="text"
+            id="nom"
             placeholder={user.lastname ? user.lastname : 'Votre nom'}
             onChange={(e) => setLastName(e.target.value)}
           />
           <hr />
         </div>
-        {/*------------------------Input adress----------------------------- */}
+        {/*------------------------Input address----------------------------- */}
         <div className="modificationProfil__container__content">
+          <label htmlFor="adresse">Adresse :</label>
           <FiHome className="modificationProfil__container__content__icons" />
           <input
+            id="adresse"
             type="text"
             placeholder={user.address ? user.address : 'Votre adresse'}
             onChange={(e) => setAddress(e.target.value)}
           />
           <hr />
         </div>
-        {/*------------------------Input adresse complement----------------------------- */}
+        {/*------------------------Input address complement----------------------------- */}
         <div className="modificationProfil__container__content">
+          <label htmlFor="address-complement">Complément d&apos;adresse :</label>
           <div className="modificationProfil__container__content__icons">
             <FiHome />
             <FiPlus />
@@ -228,28 +239,31 @@ const ModificationProfil = () => {
 
           <input
             type="text"
-            placeholder={
-              user.address_complement ? user.address_complement : "Complément d'adresse"
-            }
+            id="address-complement"
+            placeholder={user.address_complement}
             onChange={(e) => setAddress_complement(e.target.value)}
           />
           <hr />
         </div>
         {/*------------------------Input City----------------------------- */}
         <div className="modificationProfil__container__content">
+          <label htmlFor="ville">Ville :</label>
           <FiMapPin className="modificationProfil__container__content__icons" />
           <input
             type="text"
-            placeholder={user.city ? user.city : 'Ville'}
+            id="ville"
+            placeholder={user.city}
             onChange={(e) => setCity(e.target.value)}
           />
           <hr />
         </div>
         {/*------------------------Input Zip code----------------------------- */}
         <div className="modificationProfil__container__content">
+          <label htmlFor="zip-code">Code postal :</label>
           <FiMapPin className="modificationProfil__container__content__icons" />
           <input
             type="number"
+            id="zip-code"
             min="0"
             max="99999"
             placeholder={user.zipcode ? user.zipcode : 'Code postal'}
@@ -259,8 +273,9 @@ const ModificationProfil = () => {
         </div>
         {/*------------------------Select Country----------------------------- */}
         <div className="modificationProfil__container__content">
+          <label htmlFor="pays">Pays :</label>
           <FiMap className="modificationProfil__container__content__icons" />
-          <select onChange={(e) => setId_country(e.target.value)}>
+          <select onChange={(e) => setId_country(e.target.value)} id="pays">
             {country
               .filter((el) => el.id_country == user.id_country)
               .map((el, index) => (
@@ -269,7 +284,7 @@ const ModificationProfil = () => {
                 </option>
               ))}
             {country.map((el, index) => (
-              <option key={index} value={el.id_country}>
+              <option key={index} defaultValue={el.id_country}>
                 {el.name}
               </option>
             ))}
@@ -278,9 +293,11 @@ const ModificationProfil = () => {
         </div>
         {/*------------------------Input email----------------------------- */}
         <div className="modificationProfil__container__content">
+          <label htmlFor="email">Email :</label>
           <FiMail className="modificationProfil__container__content__icons" />
           <input
             type="email"
+            id="email"
             placeholder={user.email ? user.email : 'Entrez votre email'}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -298,9 +315,11 @@ const ModificationProfil = () => {
               style={{ right: '16vw', position: 'absolute', color: 'red' }}
             />
           )}
+          <label htmlFor="password">Mot de passe :</label>
           <FiLock className="modificationProfil__container__content__icons" />
           <input
             placeholder="Modifier votre mot de passe"
+            id="password"
             type={`${hiEye ? 'password' : 'text'}`}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
               setPassword(e.currentTarget.value)
@@ -321,6 +340,7 @@ const ModificationProfil = () => {
               style={{ right: '16vw', position: 'absolute', color: 'red' }}
             />
           )}
+          <label htmlFor="password">Confirmation mot de passe :</label>
           <FiKey className="modificationProfil__container__content__icons" />
           <input
             placeholder="Confirmer votre mot de passe"
@@ -334,9 +354,12 @@ const ModificationProfil = () => {
         </div>
         {/*------------------------Input Phone----------------------------- */}
         <div className="modificationProfil__container__content">
+          <label htmlFor="phone">Téléphone : Ex -&gt; 01-02-03-04-05 </label>
           <FiPhone className="modificationProfil__container__content__icons" />
           <input
             type="tel"
+            id="phone"
+            pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
             placeholder={user.phone ? user.phone : 'Entrer votre téléphone'}
             onChange={(e) => setPhone(e.target.value)}
           />
@@ -344,9 +367,10 @@ const ModificationProfil = () => {
         </div>
         {/*------------------------Input birthday date----------------------------- */}
         <div className="modificationProfil__container__content">
+          <label htmlFor="birthday">Date de naissance : {date}</label>
           <FiCalendar className="modificationProfil__container__content__icons" />
           <input
-            placeholder={user.birthday}
+            id="birthday"
             type="date"
             onChange={(e) => setBirthday(e.target.value)}
           />
@@ -354,6 +378,7 @@ const ModificationProfil = () => {
         </div>
         {/*------------------------Select athletic style----------------------------- */}
         <div className="modificationProfil__container__content">
+          <label htmlFor="birthday">Quel genre de sportifs êtes-vous ?</label>
           <BiRun className="modificationProfil__container__content__icons" />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <select onChange={(e) => setId_athletic(e.target.value)}>
@@ -372,13 +397,14 @@ const ModificationProfil = () => {
           </select>
           <hr />
         </div>
+        {/*------------------------Select gender----------------------------- */}
         <div className="modificationProfil__container__content">
+          <label htmlFor="gender">Genre :</label>
           <div className="modificationProfil__container__content__icons">
             <BsGenderFemale />
             <BsGenderMale />
             <BsGenderAmbiguous />
           </div>
-          {/*------------------------Select gender----------------------------- */}
           <select onChange={(e) => setId_gender(e.currentTarget.value)}>
             {gender
               .filter((el) => el.id_gender == user.id_gender)
@@ -397,7 +423,7 @@ const ModificationProfil = () => {
         </div>
         {/*------------------------Input add or change imageUser----------------------------- */}
         <div className="modificationProfil__container__content">
-          <label htmlFor="imageUser">Modifier votre photo</label>
+          <label htmlFor="imageUser">Modifier votre photo de profil :</label>
           <FiFile className="modificationProfil__container__content__icons" />
           <input
             id="imageUser"

@@ -44,7 +44,7 @@ function App() {
             <Route path="/parametres" element={<Settings />} />
             <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
             <Route path="/mode-envoi" element={<Shipement />} />
-            <Route path="/modifier-votre-annonce" element={<UpdateOffer />} />
+            <Route path="/modifier-votre-annonce/:id" element={<UpdateOffer />} />
             <Route path="/mes-ventes-et-achats" element={<OffersUser />} />
             <Route path="/confirmer-achat" element={<ConfirmOrder />} />
             <Route path="/favoris" element={<Favorites />} />
