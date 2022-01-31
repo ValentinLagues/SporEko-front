@@ -147,6 +147,7 @@ h4 {
 
 .header {
   position: fixed;
+  z-index: 1;
   top: 0;
   height: 8vh;
   width: 100vw;
@@ -557,6 +558,7 @@ h4 {
 }
 
 .offerForm {
+  margin-top: 10vh;
   color: gray;
   margin-top: 10vh;
   margin-bottom: 10vh;
@@ -1151,10 +1153,12 @@ h4 {
 }
 
 .headerProfil__intro {
+  margin-top: 4.5vh;
   margin-bottom: 8vh;
   background-color: darkgrey;
   width: 100vw;
   height: 20vh;
+  padding: 0 4vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2039,6 +2043,10 @@ h4 {
 .offerFormUpdate #addPhotoContainer {
   text-align: center;
   margin: 30px auto;
+}
+
+.offerFormUpdate #addPhotoContainer .image {
+  width: 15vw;
 }
 
 .offerFormUpdate #labelPhoto1 {

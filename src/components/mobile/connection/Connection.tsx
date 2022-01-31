@@ -95,7 +95,7 @@ const Connection = () => {
       <div className="connectionPage__span">
         <span className="connectionPage__span--bold">Devenir un SporEko ? </span>
         <span>
-          <Link to="/create-account" className="connectionPage__span--red">
+          <Link to="/creation-compte" className="connectionPage__span--red">
             Créer un compte
           </Link>
         </span>

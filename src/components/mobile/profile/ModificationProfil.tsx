@@ -93,7 +93,7 @@ const ModificationProfil = () => {
     formData.append('imageUser', file);
     axios
       .put<IUserLog>(
-        `${urlBack}/users/image/${idUser}`,
+        `${urlBack}/users/${idUser}/image`,
         formData,
 
         {
@@ -138,6 +138,7 @@ const ModificationProfil = () => {
       setUpdateUser(newUpdateUser);
     }
   };
+  console.log(updateUser);
   // Axios call for update user informations
   useEffect(() => {
     updateUser &&
