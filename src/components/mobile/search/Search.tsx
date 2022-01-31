@@ -48,9 +48,7 @@ const Search: React.FC<Props> = ({
   return (
     <div className="search">
       <form onSubmit={() => handleSubmit()} className="search__menu" id="filterMenu">
-        <div
-          // filtre sports
-          className="search__menu__item">
+        <div className="search__menu__item">
           <label htmlFor="sports">Quel sport recherchez-vous ?</label>
           <select
             onChange={(e) => setSport(e.target.value)}
@@ -67,9 +65,7 @@ const Search: React.FC<Props> = ({
               ))}
           </select>
         </div>
-        <div
-          // filtre genre
-          className="search__menu__item">
+        <div className="search__menu__item">
           <label htmlFor="genders">Genre</label>
           <select
             onChange={(e) => {
@@ -88,9 +84,7 @@ const Search: React.FC<Props> = ({
           </select>
         </div>
         {genderIsChild && (
-          <div
-            // filtre genre enfants
-            className="search__menu__item--right">
+          <div className="search__menu__item--right">
             <select
               onChange={(e) => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
@@ -104,9 +98,7 @@ const Search: React.FC<Props> = ({
             </select>
           </div>
         )}
-        <div
-          // filtre categories
-          className="search__menu__item">
+        <div className="search__menu__item">
           <label htmlFor="categories">Catégories</label>
           <select
             onChange={(e) => {
@@ -125,9 +117,7 @@ const Search: React.FC<Props> = ({
               ))}
           </select>
         </div>
-        <div
-          // filtre articles
-          className="search__menu__item">
+        <div className="search__menu__item">
           <label htmlFor="items">Articles</label>
           <select
             onChange={(e) => {

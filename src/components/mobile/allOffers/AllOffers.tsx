@@ -4,21 +4,20 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { AiFillHeart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-import Search from '../search/Search';
-import SearchBar from '../search/SearchBar';
-import FilterMenu from '../search/FilterMenu';
-
 import CurrentUserContext from '../../../contexts/CurrentUser';
-import IFavorite from '../../../interfaces/IFavorite';
-import IOffer from '../../../interfaces/IOffer';
 import IBrand from '../../../interfaces/IBrand';
 import ICategory from '../../../interfaces/ICategory';
 import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
+import IFavorite from '../../../interfaces/IFavorite';
 import IItem from '../../../interfaces/IItem';
+import IOffer from '../../../interfaces/IOffer';
 import ISize from '../../../interfaces/ISize';
 import ISport from '../../../interfaces/ISport';
 import ITextile from '../../../interfaces/ITextile';
+import FilterMenu from '../search/FilterMenu';
+import Search from '../search/Search';
+import SearchBar from '../search/SearchBar';
 
 const AllOffers = () => {
   const { idUser } = useContext(CurrentUserContext);
@@ -37,7 +36,6 @@ const AllOffers = () => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [searchByTitle, setSearchByTitle] = useState<string>('');
   const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
-  console.log(searchByTitle);
 
   const [sport, setSport] = useState<string>('');
   const [gender, setGender] = useState<number | null>(null);
