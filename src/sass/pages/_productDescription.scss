@@ -83,24 +83,19 @@
         }
 
        
-// &__container-text__container3__color__pastille-color {
-//               position: absolute;
-//               top: 5vh;
-//               right: 0;
-//               width: 100%;
-//               display: flex;
-//               flex-direction: column;
-//               align-items: center;
-//             //   background-color: rgb(233, 10, 48);
-            
-//         }
+&__container-text__container3__color__pastille-color {
+              
+              display: flex;
+              flex-direction: row;
+        }
 
 .colorPastille {
-    margin: 5px 10px 5px 20px;
+    margin: 5px 5px 5px 5px;
     width: 5vw;
     height: 5vw;
     border-radius: 50%;
     border: 1px solid black;
+    display: flex;
   }
 
 &__container-text__container3__sport-icon__img {
