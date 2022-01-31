@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import AllOffers from './components/mobile/allOffers/AllOffers';
-import ConfirmOrder from './components/mobile/confirmOrder/confirmOrder';
-// import ConfirmOrder from './components/mobile/confirmOrder/ConfirmOrder';
+import ConfirmationOrder from './components/mobile/confirmOrder/ConfirmationOrder';
 import Connection from './components/mobile/connection/Connection';
 import CreateAccount from './components/mobile/createAccount/CreateAccount';
 import Favorites from './components/mobile/favorites/Favorites';
@@ -30,7 +29,7 @@ function App() {
       <HashRouter basename="/">
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/accueil" element={<Home />} />
           <Route path="/annonces" element={<AllOffers />} />
           <Route path="/connexion" element={<Connection />} />
           <Route path="/creation-compte" element={<CreateAccount />} />
@@ -46,11 +45,10 @@ function App() {
             <Route path="/mode-envoi" element={<Shipment />} />
             <Route path="/modifier-votre-annonce" element={<UpdateOffer />} />
             <Route path="/mes-ventes-et-achats" element={<OffersUser />} />
-            <Route path="/confirmer-achat" element={<ConfirmOrder />} />
+            <Route path="/confirmer-achat/:idoffer" element={<ConfirmationOrder />} />
             <Route path="/favoris" element={<Favorites />} />
           </Routes>
         )}
-
         <Footer />
       </HashRouter>
     </div>

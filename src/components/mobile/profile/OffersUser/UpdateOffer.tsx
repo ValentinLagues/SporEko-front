@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 
-import CurrentOfferContext from '../../../../contexts/Offer';
+import CurrentOfferContext from '../../../../contexts/BleuOffer';
 import IBrand from '../../../../interfaces/IBrand';
 import ICategory from '../../../../interfaces/ICategory';
 import IColor from '../../../../interfaces/IColor';
