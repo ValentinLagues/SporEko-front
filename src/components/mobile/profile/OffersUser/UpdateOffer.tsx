@@ -2,19 +2,19 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
 
-import CurrentOfferContext from '../../../../contexts/Offer';
+import CurrentOfferContext from '../../../../contexts/BleuOffer';
 import IBrand from '../../../../interfaces/IBrand';
 import ICategory from '../../../../interfaces/ICategory';
 import IColor from '../../../../interfaces/IColor';
 import ICondition from '../../../../interfaces/ICondition';
 import IDeliverer from '../../../../interfaces/IDeliverer';
+import IGender from '../../../../interfaces/IGender';
 import IItem from '../../../../interfaces/IItem';
 import IOffer from '../../../../interfaces/IOffer';
 import IOffer_Deliverer from '../../../../interfaces/IOffer_deliverer';
 import ISize from '../../../../interfaces/ISize';
 import ISport from '../../../../interfaces/ISport';
 import ITextile from '../../../../interfaces/ITextile';
-import IGender from '../../../../interfaces/IGender';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
