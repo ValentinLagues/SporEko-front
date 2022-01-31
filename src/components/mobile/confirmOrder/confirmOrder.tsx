@@ -7,19 +7,13 @@ import cards from '../../../../resources/cards.png';
 import CurrentOfferContext from '../../../contexts/Offer';
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
+import IOffer_deliverer from '../../../interfaces/IOffer_deliverer';
 import IDeliverer_price from '../../../interfaces/IDeliverer_price';
-// import IDeliverer_price from '../../../interfaces/IDeliverer_price';
-// import CurrentUserContext from '../../../contexts/CurrentUser';
-// import OfferContext from '../../../contexts/Offer';
 import IOffer from '../../../interfaces/IOffer';
 import ISize from '../../../interfaces/ISize';
 import IUserLog from '../../../interfaces/IUser';
-
-interface IOffer_Deliverer {
-  id_offer_deliverer: number;
-  id_offer: number;
-  id_deliverer: number;
-}
+// import CurrentUserContext from '../../../contexts/CurrentUser';
+// import OfferContext from '../../../contexts/Offer';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
 
@@ -28,7 +22,7 @@ const ConfirmOrder = () => {
   // const { id } = useContext(CurrentUserContext);
   const [confirmOrder, setConfirmOrder] = useState<IOffer>();
   const [confirmAdress, setConfirmAdress] = useState<IUserLog>();
-  const [confirmDeliverer, setConfirmDeliverer] = useState<IOffer_Deliverer>();
+  const [confirmDeliverer, setConfirmDeliverer] = useState<IOffer_deliverer>();
   const [confirmDelivererPrice, setConfirmDelivererPrice] = useState<IDeliverer_price>();
   const [confirmCondition, setConfirmCondition] = useState<ICondition>();
   const [deliverersList, setDeliverersList] = useState<IDeliverer[]>([]);

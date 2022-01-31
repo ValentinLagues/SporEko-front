@@ -4,15 +4,15 @@
   top: 0;
   height: 8vh;
   width: 100vw;
+  background-color: $colorDarkGrey;
   &__container {
-    background-color: $colorDarkGrey;
     display: flex;
     align-items: center;
 
     &__logo {
-      width: 30vw;
+      width: 40vw;
       height: 7vh;
-      padding: 0 20vw;
+      padding: 0 15vw;
     }
 
     & h3 {

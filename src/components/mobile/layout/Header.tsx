@@ -1,9 +1,8 @@
 import React from 'react';
 import { FiArrowLeft } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-import logo from '../../../../resources/Logo_transparent.png';
+import logo from '../../../../resources/Logo_white.png';
 
 const Header = () => {
   const navigate = useNavigate();

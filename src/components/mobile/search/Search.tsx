@@ -1,27 +1,24 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
+import IOffer from '../../../interfaces/IOffer';
+import ICategory from '../../../interfaces/ICategory';
+import ISport from '../../../interfaces/ISport';
 import IItem from '../../../interfaces/IItem';
 import FilterMenu from './FilterMenu';
 import SearchBar from './SearchBar';
 
-interface Sport {
-  id_sport: number;
-  name: string;
-}
-
-interface Category {
-  id_category: number;
-  name: string;
-}
-
 const urlBack = import.meta.env.VITE_URL_BACK;
 
-type Props = { setAllOffers: () => {} };
+interface Props {
+  showFilterMenu: boolean;
+  setShowFilterMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  setAllOffers: React.Dispatch<React.SetStateAction<IOffer[]>>;
+}
 
-const Search: React.FC<Props> = ({ setAllOffers }) => {
-  const [sportsList, setSportsList] = useState<Sport[]>([]);
-  const [categoriesList, setCategoriesList] = useState<Category[]>([]);
+const Search: React.FC<Props> = ({ setAllOffers, showFilterMenu, setShowFilterMenu }) => {
+  const [sportsList, setSportsList] = useState<ISport[]>([]);
+  const [categoriesList, setCategoriesList] = useState<ICategory[]>([]);
   const [itemsList, setItemsList] = useState<IItem[]>([]);
 
   const [gender, setGender] = useState<number | null>(null);
@@ -32,7 +29,6 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
   const [category, setCategory] = useState('');
   const [item, setItem] = useState('');
   const [itemInfos, setItemInfos] = useState<IItem>();
-  const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
 
   console.log(itemInfos);
 
@@ -89,7 +85,7 @@ const Search: React.FC<Props> = ({ setAllOffers }) => {
 
   return (
     <div className="search">
-      <SearchBar setShowFilterMenu={setShowFilterMenu} showFilterMenu={showFilterMenu} />
+      <SearchBar />
       {showFilterMenu && (
         <FilterMenu setAllOffers={setAllOffers} setShowFilterMenu={setShowFilterMenu} />
       )}

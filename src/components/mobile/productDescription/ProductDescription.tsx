@@ -9,7 +9,7 @@ import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
 import Ioffer from '../../../interfaces/IOffer';
 import ISize from '../../../interfaces/ISize';
-// import ISport from '../../../interfaces/ISport';
+import ISport from '../../../interfaces/ISport';
 import IUserLog from '../../../interfaces/IUser';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
@@ -24,18 +24,13 @@ const urlBack = import.meta.env.VITE_URL_BACK;
 //   color_code: string;
 //   style: object;
 // }
-interface Sport {
-  id_sport: number;
-  name: string;
-  icon: string;
-}
 
 const ProductDescription = () => {
   const [offer, setOffer] = useState<Ioffer>();
   const [brand, setBrand] = useState<IBrand>();
   const [size, setSize] = useState<ISize>();
   const [condition, setCondition] = useState<ICondition>();
-  const [sport, setSport] = useState<Sport>();
+  const [sport, setSport] = useState<ISport>();
   const [deliverer, setDeliverer] = useState<IDeliverer>();
   const [color, setColor] = useState<IColor>();
   // const [colorList, setColorList] = useState<Color[]>([]);

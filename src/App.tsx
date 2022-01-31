@@ -18,7 +18,7 @@ import OffersUser from './components/mobile/profile/OffersUser/OffersUser';
 import UpdateOffer from './components/mobile/profile/OffersUser/UpdateOffer';
 import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
-import Shipement from './components/mobile/profile/Shipement';
+import Shipment from './components/mobile/profile/Shipment';
 // import UpdateOffer from './components/mobile/profile/UpdateOffer';
 import CurrentUserContext from './contexts/CurrentUser';
 
@@ -43,7 +43,7 @@ function App() {
             <Route path="/profil" element={<Profile />} />
             <Route path="/parametres" element={<Settings />} />
             <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
-            <Route path="/mode-envoi" element={<Shipement />} />
+            <Route path="/mode-envoi" element={<Shipment />} />
             <Route path="/modifier-votre-annonce" element={<UpdateOffer />} />
             <Route path="/mes-ventes-et-achats" element={<OffersUser />} />
             <Route path="/confirmer-achat" element={<ConfirmOrder />} />

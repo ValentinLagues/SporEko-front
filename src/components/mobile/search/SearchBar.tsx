@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { IoFilter } from 'react-icons/io5';
-import CurrentOfferContext from '../../../contexts/Offer';
 
-const urlBack = import.meta.env.VITE_URL_BACK;
+interface Props {
+  showFilterMenu: boolean;
+  search: string;
+  setShowFilterMenu: React.Dispatch<React.SetStateAction<boolean>>;
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+}
 
-const SearchBar = ({ setShowFilterMenu, showFilterMenu }) => {
-  const { title } = useContext(CurrentOfferContext);
-  const [search, setSearch] = useState('');
-  console.log(search);
-
-  useEffect(() => {
-    axios.get(`${urlBack}/offers/${title}`).then((res) => setSearch(res.data));
-  }, []);
-
+const SearchBar: React.FC<Props> = ({
+  setShowFilterMenu,
+  showFilterMenu,
+  search,
+  setSearch,
+}) => {
   return (
     <div>
       <form className="search__bar">

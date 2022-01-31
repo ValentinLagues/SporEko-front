@@ -4,17 +4,23 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { AiFillHeart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
+import CurrentOfferContext from '../../../contexts/Offer';
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import IFavorite from '../../../interfaces/IFavorite';
 import IOffer from '../../../interfaces/IOffer';
 import Search from '../search/Search';
+import SearchBar from '../search/SearchBar';
 
 const AllOffers = () => {
   const [allOffers, setAllOffers] = useState<IOffer[]>([]);
   const [userFavorites, setUserFavorites] = useState<IFavorite[]>([]);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [search, setSearch] = useState('');
+  const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
   const { idUser } = useContext(CurrentUserContext);
 
+  const { title } = useContext(CurrentOfferContext);
+  console.log(search);
   // Add offer to favorite /
 
   const addFavorite = (idOffer: number) => {
@@ -48,12 +54,26 @@ const AllOffers = () => {
         .then(() => setIsFavorite(false));
   }, [isFavorite]);
 
+  useEffect(() => {
+    axios.get(`${urlBack}/offers?${title}`).then((res) => setAllOffers(res.data));
+  }, [search]);
+
   console.log(userFavorites);
   console.log(isFavorite);
 
   return (
     <div>
-      <Search setAllOffers={() => setAllOffers} />
+      <SearchBar
+        showFilterMenu={showFilterMenu}
+        setShowFilterMenu={() => setShowFilterMenu}
+        search={search}
+        setSearch={() => setSearch}
+      />
+      <Search
+        setAllOffers={() => setAllOffers}
+        showFilterMenu={showFilterMenu}
+        setShowFilterMenu={() => setShowFilterMenu}
+      />
       <div className="allOffers">
         {allOffers.map((offer: IOffer, index: number) => {
           return (
