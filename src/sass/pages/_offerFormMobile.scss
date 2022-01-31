@@ -1,17 +1,27 @@
 .offerForm {
+  margin-top: 10vh;
   color: gray;
+  margin-top: 10vh;
   margin-bottom: 10vh;
   position: relative;
+  & .bold {
+    font-weight: bold;
+  }
   &__form {
     padding: 20px;
   }
   &__items {
     position: relative;
+    margin-top: 20px;
 
     &__asterisk {
       position: absolute;
       left: 6px;
       top: 20%;
+    }
+    &.conditionnal {
+      width: 80%;
+      margin-left: 20%;
     }
   }
   & .iconRequired {
@@ -20,7 +30,7 @@
   }
   & #addPhotoContainer {
     text-align: center;
-    margin: 30px auto;
+    margin: 15px auto;
   }
   & #labelPhoto1 {
     margin: auto;
@@ -42,7 +52,14 @@
     overflow: hidden;
     // margin: auto;
   }
-
+  & .photoTips,
+  & .descriptionTips {
+    margin-top: -2vh;
+    text-align: end;
+  }
+  & .invisible {
+    display: none;
+  }
   & .image {
     width: 20vw;
     height: auto;
@@ -59,11 +76,8 @@
     border: none;
     box-shadow: 2px 2px 10px lightgray;
     padding: 8px 8px 8px 16px;
+    margin-top: 5px;
     width: 100%;
-    &.conditionnal {
-      width: 80%;
-      margin-left: 20%;
-    }
   }
   &__price,
   &__weight {
@@ -71,13 +85,36 @@
     align-items: center;
     margin: 10px auto;
     & label {
-      padding-left: 12px;
-      min-width: 70%;
+      min-width: 74%;
     }
     & input {
       max-width: 22%;
       margin-bottom: 0;
     }
+    & .questionIcon {
+      font-size: larger;
+      margin-bottom: -0.5vh;
+    }
+    &__table {
+      margin: 10px auto;
+      text-align: left;
+      border-collapse: collapse;
+      & tr {
+        border-bottom: 1px solid lightgray;
+        background-color: rgba(211, 211, 211, 0.342);
+      }
+      & th,
+      td {
+        padding: 10px 5px;
+      }
+    }
+  }
+  & #weightTipsContent {
+    // position: absolute;
+    // top: 3vh;
+    background-color: white;
+    padding: 1vh 0.5vw 2vh 2vw;
+    z-index: 2;
   }
   &__deliveries {
     box-shadow: 2px 2px 10px lightgray;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import HeaderProfil from '../layout/HeaderProfil';
 
-const Shipement = () => {
+const Shipment = () => {
   return (
     <div className="envoi">
       <HeaderProfil />
@@ -10,4 +10,4 @@ const Shipement = () => {
   );
 };
 
-export default Shipement;
+export default Shipment;

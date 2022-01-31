@@ -28,7 +28,7 @@
         }   
         
     &__container-text {
-        background-color: pink;
+        // background-color: pink;
         width: 100%;
         // max-width: 500px;
         // min-width: 290px;
@@ -39,7 +39,7 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 15px;  
-            background-color: greenyellow;
+            // background-color: greenyellow;
         }
 
         &__container-text__container1__title {
@@ -54,11 +54,11 @@
 
         &__container-text__container2__brand{
             text-align: left;
-            background-color: burlywood;
+            // background-color: burlywood;
         }
 
         &__container-text__container3 {
-            background-color: coral;
+            // background-color: coral;
             display: flex;
             justify-content: space-between;
             margin-bottom: 15px;  
@@ -91,7 +91,7 @@
               display: flex;
               flex-direction: column;
               align-items: center;
-              background-color: rgb(233, 10, 48);
+            //   background-color: rgb(233, 10, 48);
             
         }
 

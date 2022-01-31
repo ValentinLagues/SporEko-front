@@ -1,15 +1,15 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import CurrentOfferContext from '../../../contexts/Offer';
 import IBrand from '../../../interfaces/IBrand';
 import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
 import Ioffer from '../../../interfaces/IOffer';
 import ISize from '../../../interfaces/ISize';
-// import ISport from '../../../interfaces/ISport';
+import ISport from '../../../interfaces/ISport';
 import IUserLog from '../../../interfaces/IUser';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
@@ -24,32 +24,23 @@ const urlBack = import.meta.env.VITE_URL_BACK;
 //   color_code: string;
 //   style: object;
 // }
-interface Sport {
-  id_sport: number;
-  name: string;
-  icon: string;
-}
 
 const ProductDescription = () => {
   const [offer, setOffer] = useState<Ioffer>();
   const [brand, setBrand] = useState<IBrand>();
   const [size, setSize] = useState<ISize>();
   const [condition, setCondition] = useState<ICondition>();
-  const [sport, setSport] = useState<Sport>();
+  const [sport, setSport] = useState<ISport>();
   const [deliverer, setDeliverer] = useState<IDeliverer>();
   const [color, setColor] = useState<IColor>();
   // const [colorList, setColorList] = useState<Color[]>([]);
   const [user, setUser] = useState<IUserLog>();
 
   //   const [sellerAddress, setSellerAddress] = useState();
-  console.log(deliverer);
 
   // const [idSport, setIdSport] = useState<Sport>();
 
-  const url = document.location.href;
-  const id = url.substring(url.lastIndexOf('/') + 1);
-  const { setIdOffer } = useContext(CurrentOfferContext);
-  setIdOffer(Number(id));
+  const { id } = useParams();
 
   useEffect(() => {
     axios
@@ -57,7 +48,6 @@ const ProductDescription = () => {
       .then((res) => res.data)
       .then((data) => {
         setOffer(data);
-        // console.log = ok
         // axios.get(`${urlBack}/offers/1`).then((data) => console.log(data));
         axios.get(`${urlBack}/brands/${data.id_brand}`).then((res) => setBrand(res.data));
         axios.get(`${urlBack}/colors/${data.id_color}`).then((res) => setColor(res.data));
@@ -268,7 +258,7 @@ const ProductDescription = () => {
             {/* <button>La poste {offer && offer.colissimo_delivery}</button> */}
             <p>{user && user.city}</p>
             <div className="product-description__container-text__container4__delivery__btn">
-              <Link to="/confirmer-achat">Acheter</Link>
+              <Link to={`/confirmer-achat/${id}`}>Acheter</Link>
               <button>Favoris</button>
             </div>
           </div>

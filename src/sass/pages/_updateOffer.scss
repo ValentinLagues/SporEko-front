@@ -1,14 +1,22 @@
 .offerFormUpdate {
   color: gray;
+  height: 200vh;
   margin-bottom: 10vh;
+  margin-top: 10vh;
   position: relative;
   &__form {
     padding: 20px;
+  }
+  & label{
+    padding: 10vh 0;
   }
 
   & #addPhotoContainer {
     text-align: center;
     margin: 30px auto;
+    & .image {
+      width: 15vw;
+    }
   }
   & #labelPhoto1 {
     margin: auto;
