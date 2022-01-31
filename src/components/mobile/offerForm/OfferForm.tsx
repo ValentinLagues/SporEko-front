@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { BsPlusLg } from 'react-icons/bs';
+import { FaQuestionCircle } from 'react-icons/fa';
 import { MdStarRate } from 'react-icons/md';
 
 import CurrentUserContext from '../../../contexts/CurrentUser';
@@ -102,6 +103,27 @@ const OfferForm = () => {
       : (setSizeList([]), setShowSizes(false));
   }, [item, gender, genderIsChild, category]);
 
+  const togglePhotoTipsContent = () => {
+    const photoTipsContent = document.getElementById('photoTipsContent');
+    photoTipsContent?.classList.contains('invisible')
+      ? photoTipsContent.classList.remove('invisible')
+      : photoTipsContent?.classList.add('invisible');
+  };
+
+  const toggleDescriptionTipsContent = () => {
+    const descriptionTipsContent = document.getElementById('descriptionTipsContent');
+    descriptionTipsContent?.classList.contains('invisible')
+      ? descriptionTipsContent.classList.remove('invisible')
+      : descriptionTipsContent?.classList.add('invisible');
+  };
+
+  const toggleWeightTipsContent = () => {
+    const weightTipsContent = document.getElementById('weightTipsContent');
+    weightTipsContent?.classList.contains('invisible')
+      ? weightTipsContent.classList.remove('invisible')
+      : weightTipsContent?.classList.add('invisible');
+  };
+
   const handleItemSelected = (id: string) => {
     axios
       .get(`${urlBack}/items/${id}`)
@@ -137,18 +159,68 @@ const OfferForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     let errors = false;
-    const errorsDescription = document.getElementById('errorsDescription');
+    let errorsDescription: HTMLElement | null =
+      document.getElementById('errorsDescription');
+    errorsDescription && (errorsDescription.innerHTML = '');
     let errorsMessage = [];
 
     if (!photoAdded) {
-      errorsMessage.push('veuillez ajouter au moins une photo');
+      errorsMessage.push('Veuillez ajouter au moins une photo');
+      errors = true;
+    }
+    if (title === '') {
+      errorsMessage.push('Veuillez ajouter un titre');
+      errors = true;
+    }
+    if (description === '') {
+      errorsMessage.push('Veuillez ajouter une description');
+      errors = true;
+    }
+    if (sport === '') {
+      errorsMessage.push('Veuillez préciser un sport');
+      errors = true;
+    }
+    if (gender === null) {
+      errorsMessage.push('Veuillez préciser un genre');
+      errors = true;
+    }
+    if (category === '') {
+      errorsMessage.push('Veuillez préciser une catégorie');
+      errors = true;
+    }
+    if (item === '') {
+      errorsMessage.push('Veuillez selectionner un article');
+      errors = true;
+    }
+    if (showSizes && size === '') {
+      errorsMessage.push('Veuillez renseigner une taille');
+      errors = true;
+    }
+    if (condition === '') {
+      errorsMessage.push("Veuillez préciser l'état de l'article");
+      errors = true;
+    }
+    if (price === null) {
+      errorsMessage.push("Veuillez renseigner le prix de l'article");
+      errors = true;
+    }
+    if (deliverersArray.length === 0 && !handDelivery) {
+      errorsMessage.push('Veuillez sélectionner au moins un mode de livraison');
+      errors = true;
+    }
+    if (deliverersArray.length != 0 && weight === null) {
+      errorsMessage.push("Veuillez renseigner le poids de l'article");
       errors = true;
     }
 
     if (errors) {
       e.preventDefault();
       console.log(errorsMessage);
-      errorsMessage.map((message) => errorsDescription?.append(message));
+      errorsMessage.map((message) => {
+        const p = document.createElement('p');
+        p.append(message);
+        errorsDescription?.append(p);
+      });
       errorsDescription?.setAttribute('display', 'bloc');
     }
     if (!errors) {
@@ -253,6 +325,7 @@ const OfferForm = () => {
         onSubmit={(e: React.FormEvent) => handleSubmit(e)}
         className="offerForm__form"
         action="">
+        <div>Ajoute jusqu&apos;à 20 photos</div>
         <div id="addPhotoContainer">
           <label id="labelPhoto1" htmlFor="photo1">
             <BsPlusLg /> AJOUTER PHOTOS
@@ -264,7 +337,21 @@ const OfferForm = () => {
             name="imagesOffers"
             onChange={(e) => handleFileInput(e)}
           />
+          <div
+            tabIndex={0}
+            role="button"
+            onKeyPress={() => togglePhotoTipsContent()}
+            onClick={() => togglePhotoTipsContent()}
+            className="photoTips">
+            Nos astuces photos
+          </div>
+          <div id="photoTipsContent" className="invisible">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda vero
+            ratione cum voluptatibus, omnis sit magnam possimus eligendi blanditiis, ab
+            quas facilis quod neque porro totam dolorum provident repellendus cupiditate.
+          </div>
         </div>
+
         <div className="photosContainer">
           {pictures &&
             images.map((image: Array<any>, index) => (
@@ -281,7 +368,7 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" /> Titre
           </label>
           <input
-            required
+            // required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="offerForm__input"
@@ -295,7 +382,7 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" /> Description
           </label>
           <textarea
-            required
+            // required
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="offerForm__input"
@@ -303,21 +390,35 @@ const OfferForm = () => {
             id="description"
             name="description"
           />
+          <div
+            tabIndex={0}
+            role="button"
+            onKeyPress={() => toggleDescriptionTipsContent()}
+            onClick={() => toggleDescriptionTipsContent()}
+            className="descriptionTips">
+            Conseils pour bien décrire votre article
+          </div>
+          <div id="descriptionTipsContent" className="invisible">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda vero
+            ratione cum voluptatibus, omnis sit magnam possimus eligendi blanditiis, ab
+            quas facilis quod neque porro totam dolorum provident repellendus cupiditate.
+          </div>
         </div>
         <div className="offerForm__items">
-          <div className="offerForm__items__asterisk">
+          <label className="offerForm__label" htmlFor="sports">
+            <MdStarRate className="iconRequired" /> Sport
+          </label>
+          {/* <div className="offerForm__items__asterisk">
             <MdStarRate className="iconRequired" />
-          </div>
+          </div> */}
           <select
-            required
+            // required
             onChange={(e) => setSport(e.target.value)}
             value={sport}
             className="offerForm__select"
             name="sports"
             id="sports">
-            <option value="" id="sport">
-              Sport
-            </option>
+            <option value="" id="sport"></option>
             {sportList &&
               sportList.map((sport, index) => (
                 <option key={index} value={sport.id_sport}>
@@ -327,11 +428,14 @@ const OfferForm = () => {
           </select>
         </div>
         <div className="offerForm__items">
-          <div className="offerForm__items__asterisk">
+          <label className="offerForm__label" htmlFor="genders">
+            <MdStarRate className="iconRequired" /> Genre
+          </label>
+          {/* <div className="offerForm__items__asterisk">
             <MdStarRate className="iconRequired" />
-          </div>
+          </div> */}
           <select
-            required
+            // required
             onChange={(e) => {
               setGenderAdult(Number(e.target.value));
               e.target.value === '4'
@@ -342,7 +446,7 @@ const OfferForm = () => {
             className="offerForm__select"
             name="genders"
             id="genders">
-            <option value="">Genre</option>
+            <option value=""></option>
             <option value={1}>Femme</option>
             <option value={2}>Homme</option>
             <option value={4}>Enfant</option>
@@ -350,13 +454,13 @@ const OfferForm = () => {
           </select>
         </div>
         {genderIsChild && (
-          <div>
+          <div className="offerForm__items conditionnal">
             <select
               onChange={(e) => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
               }}
               value={Number(genderChild)}
-              className="offerForm__select conditionnal">
+              className="offerForm__select">
               <option value="">Tous</option>
               <option value={1}>Fille</option>
               <option value={2}>Garçon</option>
@@ -364,11 +468,14 @@ const OfferForm = () => {
           </div>
         )}
         <div className="offerForm__items">
-          <div className="offerForm__items__asterisk">
+          <label className="offerForm__label" htmlFor="categories">
+            <MdStarRate className="iconRequired" /> Catégorie
+          </label>
+          {/* <div className="offerForm__items__asterisk">
             <MdStarRate className="iconRequired" />
-          </div>
+          </div> */}
           <select
-            required
+            // required
             onChange={(e) => {
               setItem('');
               setCategory(e.target.value);
@@ -383,7 +490,7 @@ const OfferForm = () => {
             className="offerForm__select"
             name="categories"
             id="categories">
-            <option value="">Catégorie</option>
+            <option value=""></option>
             {categoryList &&
               categoryList.map((category, index) => (
                 <option key={index} value={category.id_category}>
@@ -392,12 +499,36 @@ const OfferForm = () => {
               ))}
           </select>
         </div>
-        <div className="offerForm__items">
-          <div className="offerForm__items__asterisk">
-            <MdStarRate className="iconRequired" />
+        {categoryIsClothes && (
+          <div className="offerForm__items conditionnal">
+            <label className="offerForm__label" htmlFor="textile">
+              Matière
+            </label>
+            <select
+              onChange={(e) => setTextile(e.target.value)}
+              value={textile}
+              className="offerForm__select"
+              name="textile"
+              id="textile">
+              <option value=""></option>
+              {textileList &&
+                textileList.map((textile, index) => (
+                  <option key={index} value={textile.id_textile}>
+                    {textile.name}
+                  </option>
+                ))}
+            </select>
           </div>
+        )}
+        <div className="offerForm__items">
+          <label className="offerForm__label" htmlFor="items">
+            <MdStarRate className="iconRequired" /> Article
+          </label>
+          {/* <div className="offerForm__items__asterisk">
+            <MdStarRate className="iconRequired" />
+          </div> */}
           <select
-            required
+            // required
             onChange={(e) => {
               handleItemSelected(e.target.value);
               setItem(e.target.value);
@@ -409,8 +540,9 @@ const OfferForm = () => {
                 : setShowSizes(false);
             }}
             value={item}
-            className="offerForm__select">
-            <option value="">Article</option>
+            className="offerForm__select"
+            id="items">
+            <option value=""></option>
             {itemList &&
               itemList.map((item, index) => (
                 <option key={index} value={item.id_item}>
@@ -419,32 +551,17 @@ const OfferForm = () => {
               ))}
           </select>
         </div>
-        {categoryIsClothes && (
-          <div>
-            <select
-              onChange={(e) => setTextile(e.target.value)}
-              value={textile}
-              className="offerForm__select conditionnal"
-              name="textile"
-              id="textile">
-              <option value="">Toutes matières</option>
-              {textileList &&
-                textileList.map((textile, index) => (
-                  <option key={index} value={textile.id_textile}>
-                    {textile.name}
-                  </option>
-                ))}
-            </select>
-          </div>
-        )}
-        <div>
+        <div className="offerForm__items">
+          <label className="offerForm__label" htmlFor="brands">
+            Marque
+          </label>
           <select
             onChange={(e) => setBrand(e.target.value)}
             value={brand}
             className="offerForm__select"
             name="brands"
             id="brands">
-            <option value="">Marque</option>
+            <option value=""></option>
             {brandList &&
               brandList.map((brand, index) => (
                 <option key={index} value={brand.id_brand}>
@@ -455,16 +572,19 @@ const OfferForm = () => {
         </div>
         {showSizes && (
           <div className="offerForm__items">
-            <div className="offerForm__items__asterisk">
+            <label className="offerForm__label" htmlFor="sizes">
+              <MdStarRate className="iconRequired" /> Taille
+            </label>
+            {/* <div className="offerForm__items__asterisk">
               <MdStarRate className="iconRequired" />
-            </div>
+            </div> */}
             <select
               onChange={(e) => setSize(e.target.value)}
               value={size}
               className="offerForm__select"
               name="sizes"
               id="sizes">
-              <option value="">Taille</option>
+              <option value=""></option>
               {sizeList &&
                 sizeList.map((size, index) => (
                   <option key={index} value={size.id_size}>
@@ -484,30 +604,17 @@ const OfferForm = () => {
             </select>
           </div>
         )}
-        <div>
+        <div className="offerForm__items">
+          <label className="offerForm__label" htmlFor="color1">
+            Couleur 1
+          </label>
           <select
             onChange={(e) => setColor1(e.target.value)}
             value={color1}
             className="offerForm__select"
             name="color1"
             id="color1">
-            <option value="">Couleur 1</option>
-            {colorList &&
-              colorList.map((color, index) => (
-                <option key={index} value={color.id_color}>
-                  {color.name}
-                </option>
-              ))}
-          </select>
-        </div>
-        <div>
-          <select
-            onChange={(e) => setColor2(e.target.value)}
-            value={color2}
-            className="offerForm__select"
-            name="color2"
-            id="color2">
-            <option value="">Couleur 2</option>
+            <option value=""></option>
             {colorList &&
               colorList.map((color, index) => (
                 <option key={index} value={color.id_color}>
@@ -517,17 +624,39 @@ const OfferForm = () => {
           </select>
         </div>
         <div className="offerForm__items">
-          <div className="offerForm__items__asterisk">
-            <MdStarRate className="iconRequired" />
-          </div>
+          <label className="offerForm__label" htmlFor="color2">
+            Couleur 2
+          </label>
           <select
-            required
+            onChange={(e) => setColor2(e.target.value)}
+            value={color2}
+            className="offerForm__select"
+            name="color2"
+            id="color2">
+            <option value=""></option>
+            {colorList &&
+              colorList.map((color, index) => (
+                <option key={index} value={color.id_color}>
+                  {color.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        <div className="offerForm__items">
+          <label className="offerForm__label" htmlFor="conditions">
+            <MdStarRate className="iconRequired" /> État du produit
+          </label>
+          {/* <div className="offerForm__items__asterisk">
+            <MdStarRate className="iconRequired" />
+          </div> */}
+          <select
+            // required
             onChange={(e) => setCondition(e.target.value)}
             value={condition}
             className="offerForm__select"
             name="conditions"
             id="conditions">
-            <option value="">État du produit</option>
+            <option value=""></option>
             {conditionList &&
               conditionList.map((condition, index) => (
                 <option key={index} value={condition.id_condition}>
@@ -541,7 +670,7 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" /> Prix hors frais de port
           </label>
           <input
-            required
+            // required
             value={price || ''}
             onChange={(e) => setPrice(Number(e.target.value))}
             className="offerForm__input"
@@ -554,7 +683,11 @@ const OfferForm = () => {
         </div>
         <div className="offerForm__weight">
           <label className="offerForm__label" htmlFor="weight">
-            {weightRequired && <MdStarRate className="iconRequired" />} Poids du produit
+            {weightRequired && <MdStarRate className="iconRequired" />} Format du colis{' '}
+            <FaQuestionCircle
+              className="questionIcon"
+              onClick={() => toggleWeightTipsContent()}
+            />
           </label>
           <input
             value={weight || ''}
@@ -565,6 +698,53 @@ const OfferForm = () => {
             id="weight"
             name="weight"
           />
+          g
+        </div>
+        <div id="weightTipsContent" className="invisible">
+          <p>
+            Estimez au mieux le poids de votre colis. Si votre colis a été sous-évalué, il
+            pourrait se retrouver bloqué et engendrer un coût supplémentaire
+            <br />
+            <span className="bold">Besoin d&apos;aide ?</span>
+            <br />
+            Pas de pèse personne ou balance de cuisine chez vous? Pas de panique ! Voici
+            quelques exemples de poids moyens
+          </p>
+          <div>
+            <table className="offerForm__weight__table">
+              <thead>
+                <tr>
+                  <th>Exemple de produit</th>
+                  <th>Poids</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    Vêtement léger (Tee shirt, Maillot, Short, Chaussette, Legging,
+                    Casquette)
+                  </td>
+                  <td>500g</td>
+                </tr>
+                <tr>
+                  <td>Ballon de foot</td>
+                  <td>500g</td>
+                </tr>
+                <tr>
+                  <td>Ballon de basket</td>
+                  <td>1000g</td>
+                </tr>
+                <tr>
+                  <td>Survêtement, pull, vêtement de montagne (1 pièce)</td>
+                  <td>1000g</td>
+                </tr>
+                <tr>
+                  <td>Basket de running dans une boîte</td>
+                  <td>1500g</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div className="offerForm__deliveries">
           <span className="offerForm__switchContainer__span">
