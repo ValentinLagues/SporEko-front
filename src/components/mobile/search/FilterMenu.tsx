@@ -56,7 +56,7 @@ interface Props {
   itemsList: Array<IItem>;
   sportsList: Array<ISport>;
   handleSubmit: () => void;
-  handleItemSelected: (item: string) => void;
+  handleItemSelected: (_e: string) => void;
   handleReset: () => void;
 }
 

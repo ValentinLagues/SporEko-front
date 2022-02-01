@@ -1916,12 +1916,8 @@ h4 {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  margin: 15vh 5vw 12vh 0;
-  width: 90vw;
-}
-
-.search .invisible {
-  display: none;
+  margin: 3vh 0 5vh;
+  width: 100vw;
 }
 
 .search__bar {
@@ -1953,16 +1949,12 @@ h4 {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  margin: 1vh 0vw;
+  margin: 1vh 0;
   text-align: left;
 }
 
 .search__menu__item label {
   font-weight: bold;
-}
-
-.search__menu button {
-  margin: 2vh 20vw;
 }
 
 .offers {
