@@ -46,7 +46,6 @@ const CreateAccount = () => {
     } as IUserLog;
     setUser(newUser);
   };
-  console.log(profil);
 
   useEffect(() => {
     user &&
@@ -55,7 +54,7 @@ const CreateAccount = () => {
         .then((req) => console.log(req))
         .catch((err) => console.log(err));
   }, [user]);
-  // console.log(country)
+
   return (
     <div className="create-account">
       <h2>Créez votre compte</h2>
@@ -233,7 +232,7 @@ const CreateAccount = () => {
           S&rsquo;inscrire
         </button>
         <div className="containerSignin">
-          Vous avez déjà un compte? <Link to="/connection">Connectez-vous</Link>
+          Vous avez déjà un compte ? <Link to="/connection">Connectez-vous</Link>
         </div>
       </form>
     </div>

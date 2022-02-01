@@ -27,8 +27,6 @@ const ConfirmationOrder = () => {
   const [confirmedCondition, setConfirmedCondition] = useState<ICondition>();
   const [deliverersList, setDeliverersList] = useState<IDeliverer[]>([]);
   const [confirmedSize, setConfirmedSize] = useState<ISize>();
-  console.log(confirmedDeliverer);
-  console.log(confirmedDelivererPrice);
 
   const [handDelivery, setHandDelivery] = useState(0);
 

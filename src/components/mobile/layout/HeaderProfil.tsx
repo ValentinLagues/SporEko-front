@@ -7,7 +7,7 @@ import CurrentUserContext from '../../../contexts/CurrentUser';
 import IUserLog from '../../../interfaces/IUser';
 
 const HeaderProfil = () => {
-  const urlBack = 'http://localhost:8000/';
+  const urlBack = import.meta.env.VITE_URL_BACK;
 
   const { idUser, setUser, user } = useContext(CurrentUserContext);
 
@@ -23,9 +23,6 @@ const HeaderProfil = () => {
   return (
     <div className="headerProfil">
       <div className="headerProfil__intro">
-        {/* <Link to="/">
-          <img src={LogoRun} alt="Logo" className="headerProfil__intro__logoRun" />
-        </Link> */}
         <div className="headerProfil__intro__photo">
           <img
             src={user.picture}

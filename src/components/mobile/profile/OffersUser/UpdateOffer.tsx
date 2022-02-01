@@ -223,10 +223,7 @@ const UpdateOffer = () => {
       errorsMessage.push('Veuillez préciser un sport');
       errors = true;
     }
-    if (gender === null) {
-      errorsMessage.push('Veuillez préciser un genre');
-      errors = true;
-    }
+
     if (category === '') {
       errorsMessage.push('Veuillez préciser une catégorie');
       errors = true;
@@ -320,7 +317,7 @@ const UpdateOffer = () => {
     const formData = new FormData();
     const arrayFiles = Array.from(file);
     arrayFiles.map((el) => formData.append('imagesOffers', el));
-    // formData.append('imagesOffers', file);
+
     axios
       .post(
         `${urlBack}/offers/images`,
@@ -356,7 +353,7 @@ const UpdateOffer = () => {
         })
         .catch((err) => console.log({ ...err }));
   }, [offer]);
-  console.log(chosenDeliverers);
+
   return (
     <div className="offerForm">
       <form
@@ -400,7 +397,7 @@ const UpdateOffer = () => {
         {/* ---------------------------Input for title offer------------------------ */}
         <div>
           <label className="offerForm__label" htmlFor="title">
-            <MdStarRate className="iconRequired" /> Titre
+            Titre
           </label>
           <input
             value={title}
@@ -413,7 +410,7 @@ const UpdateOffer = () => {
         {/* ---------------------------Input for description offer------------------------ */}
         <div>
           <label className="offerForm__label" htmlFor="description">
-            <MdStarRate className="iconRequired" /> Description
+            Description
           </label>
           <textarea
             value={description}
@@ -439,7 +436,7 @@ const UpdateOffer = () => {
         {/* ---------------------------Select for sports------------------------ */}
         <div className="offerForm__items">
           <label className="offerForm__label" htmlFor="sports">
-            <MdStarRate className="iconRequired" /> Sport
+            Sport
           </label>
           <select
             onChange={(e) => setSport(e.target.value)}
@@ -458,7 +455,7 @@ const UpdateOffer = () => {
         {/* ---------------------------Select for genders------------------------ */}
         <div className="offerForm__items">
           <label className="offerForm__label" htmlFor="genders">
-            <MdStarRate className="iconRequired" /> Genre
+            Genre
           </label>
           <select
             onChange={(e) => {
@@ -499,7 +496,7 @@ const UpdateOffer = () => {
         {/* ---------------------------Select for categories------------------------ */}
         <div className="offerForm__items">
           <label className="offerForm__label" htmlFor="categories">
-            <MdStarRate className="iconRequired" /> Catégorie
+            Catégorie
           </label>
 
           <select
@@ -548,7 +545,7 @@ const UpdateOffer = () => {
         {/* ---------------------------Select for items------------------------ */}
         <div className="offerForm__items">
           <label className="offerForm__label" htmlFor="items">
-            <MdStarRate className="iconRequired" /> Article
+            Article
           </label>
           <select
             onChange={(e) => {
@@ -596,7 +593,7 @@ const UpdateOffer = () => {
         {showSizes && (
           <div className="offerForm__items">
             <label className="offerForm__label" htmlFor="sizes">
-              <MdStarRate className="iconRequired" /> Taille
+              Taille
             </label>
             <select
               onChange={(e) => setSize(e.target.value)}
@@ -664,7 +661,7 @@ const UpdateOffer = () => {
         {/* ---------------------------Select for conditions------------------------ */}
         <div className="offerForm__items">
           <label className="offerForm__label" htmlFor="conditions">
-            <MdStarRate className="iconRequired" /> État du produit
+            État du produit
           </label>
           <select
             onChange={(e) => setCondition(e.target.value)}
@@ -683,7 +680,7 @@ const UpdateOffer = () => {
         {/* ---------------------------Select for price------------------------ */}
         <div className="offerForm__price">
           <label className="offerForm__label" htmlFor="price">
-            <MdStarRate className="iconRequired" /> Prix hors frais de port
+            Prix hors frais de port
           </label>
           <input
             value={price || ''}
@@ -762,9 +759,7 @@ const UpdateOffer = () => {
         </div>
         {/* ---------------------------Input for Deliveries------------------------ */}
         <div className="offerForm__deliveries">
-          <span className="offerForm__switchContainer__span">
-            <MdStarRate className="iconRequired" /> Modes de livraison :
-          </span>
+          <span className="offerForm__switchContainer__span">Modes de livraison :</span>
           <div className="delivererList">
             <div className="offerForm__switchContainer">
               <span className="offerForm__switchContainer__span">
