@@ -53,7 +53,7 @@ const Favorites = () => {
                   <ul className="favorites__offers__detail">
                     <li className="favorites__offers__detail__mainPicture">
                       <Link
-                        to={`/annonces/${offer.id_offer}`}
+                        to={`/offers/${offer.id_offer}`}
                         className="favorites__offers__detail__linkOfferDetails">
                         <img src={offer.picture1} alt={`profile`} />
                       </Link>
@@ -87,7 +87,7 @@ const Favorites = () => {
       ) : (
         <div className="favorites__empty">
           <h2>Vous n avez aucun favori</h2>
-          <Link to="/annonces">
+          <Link to="/offers">
             <button type="button" className="btn">
               Consultez les offres et trouvez votre bonheur !
             </button>
