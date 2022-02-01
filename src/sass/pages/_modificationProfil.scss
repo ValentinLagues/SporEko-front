@@ -1,6 +1,6 @@
 .modificationProfil {
   text-align: center;
-  height: 180vh;
+  height: 230vh;
   &__container {
     width: 90vw;
     margin-bottom: 20vh;
@@ -20,20 +20,21 @@
     &__content {
       position: relative;
       width: 100vw;
+    
       flex-wrap: wrap;
       color: $colorText;
       display: flex;
       align-items: center;
       padding: 1vh 5vw;
       text-align: left;
-      height: 5vh;
+      
       &__icons {
         margin-left: 5vw;
       }
       & label {
-        width: 80vw;
-        height: 5vh;
-        text-align: center;
+        flex: inline-block;
+        width: 70vw;
+        padding: 1vh 5vw;
       }
       & input {
         width: 60vw;
@@ -46,7 +47,7 @@
       }
 
       & select {
-        align-content: flex-end;
+     
         width: 55vw;
         margin-left: 2vw;
         height: 4vh;

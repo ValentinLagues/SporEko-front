@@ -1,9 +1,8 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
-// import { AiFillHeart } from 'react-icons/ai';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import CurrentOfferContext from '../../../contexts/Offer';
 import IBrand from '../../../interfaces/IBrand';
 import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
@@ -45,10 +44,7 @@ const ProductDescription = () => {
   // const [itemInfos, setItemInfos] = useState<IItem>();
   // const [categoryIsClothes, setCategoryIsClothes] = useState(false);
 
-  const url = document.location.href;
-  const id = url.substring(url.lastIndexOf('/') + 1);
-  const { setIdOffer } = useContext(CurrentOfferContext);
-  setIdOffer(Number(id));
+  const { id } = useParams();
 
   useEffect(() => {
     axios
@@ -63,7 +59,6 @@ const ProductDescription = () => {
       .then((res) => res.data)
       .then((data) => {
         setOffer(data);
-        // console.log = ok
         // axios.get(`${urlBack}/offers/1`).then((data) => console.log(data));
 
         data.id_brand &&

@@ -935,8 +935,12 @@ h4 {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+<<<<<<< HEAD
   margin-bottom: 1.5rem;
   position: relative;
+=======
+  margin-bottom: 15px;
+>>>>>>> fdc6275314d55528e7dfd5cad49c17d958899532
 }
 
 .product-description__container-text__container1__title {
@@ -972,8 +976,13 @@ h4 {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+<<<<<<< HEAD
   margin-bottom: 2rem;
   margin-top: 2rem;
+=======
+  margin-bottom: 15px;
+  margin-top: 15px;
+>>>>>>> fdc6275314d55528e7dfd5cad49c17d958899532
 }
 
 .product-description__container-text__container4 {
@@ -987,9 +996,14 @@ h4 {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+<<<<<<< HEAD
   margin-left: 1rem;
   margin-right: 1rem;
   margin-bottom: 2rem;
+=======
+  margin-bottom: 15px;
+  margin-top: 15px;
+>>>>>>> fdc6275314d55528e7dfd5cad49c17d958899532
 }
 
 .product-description__container-text__container4 {
@@ -1009,6 +1023,7 @@ h4 {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
+<<<<<<< HEAD
   -ms-flex-direction: row;
   flex-direction: row;
 }
@@ -1022,6 +1037,13 @@ h4 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+=======
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+>>>>>>> fdc6275314d55528e7dfd5cad49c17d958899532
 }
 
 .product-description__container-text__container3__sport-icon__img {

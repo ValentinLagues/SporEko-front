@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import LogoRun from '../../../../resources/LogoRun.png';
 import PhotoDefault from '../../../../resources/photoDefault.png';
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import IUserLog from '../../../interfaces/IUser';
