@@ -10,28 +10,22 @@ import IDeliverer from '../../../interfaces/IDeliverer';
 import Ioffer from '../../../interfaces/IOffer';
 import IOffer_deliverer from '../../../interfaces/IOffer_deliverer';
 import ISize from '../../../interfaces/ISize';
+import ISport from '../../../interfaces/ISport';
 import IUserLog from '../../../interfaces/IUser';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
-
-interface Sport {
-  id_sport: number;
-  name: string;
-  icon: string;
-}
 
 const ProductDescription = () => {
   const [offer, setOffer] = useState<Ioffer>();
   const [brand, setBrand] = useState<IBrand>();
   const [size, setSize] = useState<ISize>();
   const [condition, setCondition] = useState<ICondition>();
-  const [sport, setSport] = useState<Sport>();
+  const [sport, setSport] = useState<ISport>();
   const [deliverer, setDeliverer] = useState<IDeliverer[]>([]);
   const [offerDeliverer, setOfferDeliverer] = useState<IOffer_deliverer[]>([]);
   const [handDeliverer, setHandDeliverer] = useState('');
   const [color1, setColor1] = useState<IColor>();
   const [color2, setColor2] = useState<IColor>();
-  // const [colorList, setColorList] = useState<IColor[]>([]);
   const [user, setUser] = useState<IUserLog>();
 
   const { id } = useParams();
@@ -40,16 +34,14 @@ const ProductDescription = () => {
     axios
       .get(`${urlBack}/offers/${id}/offer_deliverers`)
       .then((res) =>
-        setOfferDeliverer(res.data.map((deliverer: any) => deliverer.id_deliverer)),
+        setOfferDeliverer(res.data.map((deliverer) => deliverer.id_deliverer)),
       );
-    // axios.get(`${urlBack}/colors`).then((res) => setColorList(res.data));
 
     axios
       .get(`${urlBack}/offers/${id}`)
       .then((res) => res.data)
       .then((data) => {
         setOffer(data);
-        // axios.get(`${urlBack}/offers/1`).then((data) => console.log(data));
 
         data.id_brand &&
           axios
@@ -250,8 +242,8 @@ const ProductDescription = () => {
             {offerDeliverer &&
               deliverer &&
               deliverer
-                .filter((allDeliverer) =>
-                  offerDeliverer.includes(Number(allDeliverer.id_deliverer)),
+                .filter((allDeliverer: any) =>
+                  offerDeliverer.includes(allDeliverer.id_deliverer),
                 )
                 .map((delive, index) => <p key={index}>{delive.name}</p>)}
           </div>
