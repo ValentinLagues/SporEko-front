@@ -102,8 +102,6 @@ const AllOffers = () => {
       : (setSizesList([]), setShowSizes(false));
   }, [item, gender, genderIsChild, category]);
 
-  console.log(sizesList);
-
   const handleItemSelected = (id: string) => {
     axios
       .get(`${urlBack}/items/${id}`)

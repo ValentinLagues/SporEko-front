@@ -7,7 +7,6 @@ import IBrand from '../../../interfaces/IBrand';
 import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
-// import IItem from '../../../interfaces/IItem';
 import Ioffer from '../../../interfaces/IOffer';
 import IOffer_deliverer from '../../../interfaces/IOffer_deliverer';
 import ISize from '../../../interfaces/ISize';
@@ -85,9 +84,6 @@ const ProductDescription = () => {
   }, []);
   color1 && (color1.style = { backgroundColor: color1?.color_code });
   color2 && (color2.style = { backgroundColor: color2?.color_code });
-
-  // console.log(color1);
-  // console.log(color2);
 
   return (
     <div className="product-description">
