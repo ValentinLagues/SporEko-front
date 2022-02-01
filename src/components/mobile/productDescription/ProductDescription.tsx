@@ -35,15 +35,6 @@ const ProductDescription = () => {
   // const [colorList, setColorList] = useState<IColor[]>([]);
   const [user, setUser] = useState<IUserLog>();
 
-  // const [gender, setGender] = useState<number | null>(null);
-  // const [genderAdult, setGenderAdult] = useState<number | null>(null);
-  // const [genderChild, setGenderChild] = useState<number | null>(null);
-  // const [genderIsChild, setGenderIsChild] = useState(false);
-  // const [category, setCategory] = useState('');
-  // const [item, setItem] = useState('');
-  // const [itemInfos, setItemInfos] = useState<IItem>();
-  // const [categoryIsClothes, setCategoryIsClothes] = useState(false);
-
   const { id } = useParams();
 
   useEffect(() => {

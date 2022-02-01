@@ -332,7 +332,7 @@ const AllOffers = () => {
               <ul className="allOffers__container__offer__detail">
                 <li className="allOffers__container__offer__detail__mainPicture">
                   <Link
-                    to={`/annonces/${offer.id_offer}`}
+                    to={`/offers/${offer.id_offer}`}
                     className="allOffers__container__offer__detail__linkOfferDetails">
                     <img src={offer.picture1} alt={`profile`} />
                   </Link>
