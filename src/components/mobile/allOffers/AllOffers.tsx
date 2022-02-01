@@ -334,7 +334,7 @@ const AllOffers = () => {
             <div className="allOffers__container__offer" key={index}>
               <div className="allOffers__container__offer__mainPicture">
                 <Link
-                  to={`/offers/${offer.id_offer}`}
+                  to={`/offer/${offer.id_offer}`}
                   className="allOffers__container__offer__linkOfferDetails">
                   <img src={offer.picture1} alt={`profile`} />
                 </Link>

@@ -248,7 +248,7 @@ const ProductDescription = () => {
                 .map((delive, index) => <p key={index}>{delive.name}</p>)}
           </div>
           <div className="product-description__container-text__container4__delivery__btn">
-            <Link className="btn" type="submit" to="/confirmer-achat">
+            <Link className="btn" type="submit" to={`/confirmation-order/${id}`}>
               Acheter
             </Link>
           </div>
