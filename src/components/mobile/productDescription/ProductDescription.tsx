@@ -258,7 +258,7 @@ const ProductDescription = () => {
             {/* <button>La poste {offer && offer.colissimo_delivery}</button> */}
             <p>{user && user.city}</p>
             <div className="product-description__container-text__container4__delivery__btn">
-              <Link to={`/confirmer-achat/${id}`}>Acheter</Link>
+              <Link to={`/confirmation-order/${id}`}>Acheter</Link>
               <button>Favoris</button>
             </div>
           </div>

@@ -15,28 +15,28 @@ const Profile = () => {
     <div className="profile">
       <HeaderProfil />
       <div className="profile__content">
-        <Link to="/mes-ventes-et-achats" className="profile__content__link">
+        <Link to="/my-dashboard" className="profile__content__link">
           <FiList className="profile__content__icons" />
           Mes ventes et achats
           <hr />
         </Link>
-        <Link to="/favoris" className="profile__content__link">
+        <Link to="/favorites" className="profile__content__link">
           <FiHeart className="profile__content__icons" />
           Mes favoris
           <hr />
         </Link>
-        <Link to="/parametres" className="profile__content__link">
+        <Link to="/settings" className="profile__content__link">
           <FiSettings className="profile__content__icons" />
           Paramètres
         </Link>
       </div>
       <div className="profile__content">
-        <Link to="/mode-envoi" className="profile__content__link">
+        <Link to="/shipment" className="profile__content__link">
           <FiShield className="profile__content__icons" />
           Politique de confidentialité
           <hr />
         </Link>
-        <Link to="/mode-envoi" className="profile__content__link">
+        <Link to="/shipment" className="profile__content__link">
           <FiEdit className="profile__content__icons" />
           Faites nous vos suggestions
           <hr />

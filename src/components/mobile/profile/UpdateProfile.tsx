@@ -24,7 +24,7 @@ import IUser from '../../../interfaces/IUser';
 import IUserLog from '../../../interfaces/IUser';
 import HeaderProfil from '../layout/HeaderProfil';
 
-const ModificationProfil = () => {
+const UpdateProfile = () => {
   // User context
   const { user, idUser } = useContext(CurrentUserContext);
 
@@ -180,13 +180,13 @@ const ModificationProfil = () => {
   }, []);
 
   return (
-    <div className="modificationProfil">
+    <div className="updateProfile">
       <HeaderProfil />
-      <form onSubmit={() => updatedUser()} className="modificationProfil__container">
+      <form onSubmit={() => updatedUser()} className="updateProfile__container">
         {/*------------------------Input pseudo----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="pseudo">Pseudo :</label>
-          <FiUserMinus className="modificationProfil__container__content__icons" />
+          <FiUserMinus className="updateProfile__container__content__icons" />
           <input
             id="pseudo"
             placeholder={user.pseudo ? user.pseudo : 'Votre pseudo'}
@@ -195,9 +195,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Input Firstname----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="prenom">Prénom :</label>
-          <FiMeh className="modificationProfil__container__content__icons" id="prenom" />
+          <FiMeh className="updateProfile__container__content__icons" id="prenom" />
           <input
             type="text"
             placeholder={user.firstname ? user.firstname : 'Votre Prénom'}
@@ -206,9 +206,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Input Lastname----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="nom">Nom :</label>
-          <FiMeh className="modificationProfil__container__content__icons" />
+          <FiMeh className="updateProfile__container__content__icons" />
           <input
             type="text"
             id="nom"
@@ -218,9 +218,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Input address----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="adresse">Adresse :</label>
-          <FiHome className="modificationProfil__container__content__icons" />
+          <FiHome className="updateProfile__container__content__icons" />
           <input
             id="adresse"
             type="text"
@@ -230,9 +230,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Input address complement----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="address-complement">Complément d&apos;adresse :</label>
-          <div className="modificationProfil__container__content__icons">
+          <div className="updateProfile__container__content__icons">
             <FiHome />
             <FiPlus />
           </div>
@@ -246,9 +246,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Input City----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="ville">Ville :</label>
-          <FiMapPin className="modificationProfil__container__content__icons" />
+          <FiMapPin className="updateProfile__container__content__icons" />
           <input
             type="text"
             id="ville"
@@ -258,9 +258,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Input Zip code----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="zip-code">Code postal :</label>
-          <FiMapPin className="modificationProfil__container__content__icons" />
+          <FiMapPin className="updateProfile__container__content__icons" />
           <input
             type="number"
             id="zip-code"
@@ -272,9 +272,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Select Country----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="pays">Pays :</label>
-          <FiMap className="modificationProfil__container__content__icons" />
+          <FiMap className="updateProfile__container__content__icons" />
           <select onChange={(e) => setId_country(e.target.value)} id="pays">
             {country
               .filter((el) => el.id_country == user.id_country)
@@ -292,9 +292,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Input email----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="email">Email :</label>
-          <FiMail className="modificationProfil__container__content__icons" />
+          <FiMail className="updateProfile__container__content__icons" />
           <input
             type="email"
             id="email"
@@ -304,7 +304,7 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Input password----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           {goodEntryPassword === 1 && (
             <ImCheckmark
               style={{ right: '16vw', position: 'absolute', color: 'green' }}
@@ -316,7 +316,7 @@ const ModificationProfil = () => {
             />
           )}
           <label htmlFor="password">Mot de passe :</label>
-          <FiLock className="modificationProfil__container__content__icons" />
+          <FiLock className="updateProfile__container__content__icons" />
           <input
             placeholder="Modifier votre mot de passe"
             id="password"
@@ -329,7 +329,7 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Input password verification----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           {goodEntryVerifyPassword === 1 && (
             <ImCheckmark
               style={{ right: '16vw', position: 'absolute', color: 'green' }}
@@ -341,7 +341,7 @@ const ModificationProfil = () => {
             />
           )}
           <label htmlFor="password">Confirmation mot de passe :</label>
-          <FiKey className="modificationProfil__container__content__icons" />
+          <FiKey className="updateProfile__container__content__icons" />
           <input
             placeholder="Confirmer votre mot de passe"
             type={`${hiEye2 ? 'password' : 'text'}`}
@@ -353,9 +353,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Input Phone----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="phone">Téléphone : Ex -&gt; 01-02-03-04-05 </label>
-          <FiPhone className="modificationProfil__container__content__icons" />
+          <FiPhone className="updateProfile__container__content__icons" />
           <input
             type="tel"
             id="phone"
@@ -366,9 +366,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Input birthday date----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="birthday">Date de naissance : {date}</label>
-          <FiCalendar className="modificationProfil__container__content__icons" />
+          <FiCalendar className="updateProfile__container__content__icons" />
           <input
             id="birthday"
             type="date"
@@ -377,9 +377,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Select athletic style----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="birthday">Quel genre de sportifs êtes-vous ?</label>
-          <BiRun className="modificationProfil__container__content__icons" />
+          <BiRun className="updateProfile__container__content__icons" />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <select onChange={(e) => setId_athletic(e.target.value)}>
             {athletic
@@ -398,9 +398,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Select gender----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="gender">Genre :</label>
-          <div className="modificationProfil__container__content__icons">
+          <div className="updateProfile__container__content__icons">
             <BsGenderFemale />
             <BsGenderMale />
             <BsGenderAmbiguous />
@@ -422,9 +422,9 @@ const ModificationProfil = () => {
           <hr />
         </div>
         {/*------------------------Input add or change imageUser----------------------------- */}
-        <div className="modificationProfil__container__content">
+        <div className="updateProfile__container__content">
           <label htmlFor="imageUser">Modifier votre photo de profil :</label>
-          <FiFile className="modificationProfil__container__content__icons" />
+          <FiFile className="updateProfile__container__content__icons" />
           <input
             id="imageUser"
             type="file"
@@ -441,4 +441,4 @@ const ModificationProfil = () => {
   );
 };
 
-export default ModificationProfil;
+export default UpdateProfile;

@@ -40,7 +40,7 @@ const HeaderProfil = () => {
           <h3>
             {user.firstname} {user.lastname}
           </h3>
-          <Link to="/profil" className="headerProfil__intro__name__link">
+          <Link to="/profile" className="headerProfil__intro__name__link">
             Voir mon profil
           </Link>
         </div>
