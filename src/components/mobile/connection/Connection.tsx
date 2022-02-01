@@ -18,7 +18,7 @@ const Connection = () => {
 
   const navigate: NavigateFunction = useNavigate();
   function redirectHome() {
-    navigate('/accueil');
+    navigate('/home');
   }
 
   const urlBack = import.meta.env.VITE_URL_BACK;
@@ -95,7 +95,7 @@ const Connection = () => {
       <div className="connectionPage__span">
         <span className="connectionPage__span--bold">Devenir un SporEko ? </span>
         <span>
-          <Link to="/creation-compte" className="connectionPage__span--red">
+          <Link to="/create-account" className="connectionPage__span--red">
             Créer un compte
           </Link>
         </span>

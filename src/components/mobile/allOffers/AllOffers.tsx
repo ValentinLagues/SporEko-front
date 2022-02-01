@@ -101,8 +101,6 @@ const AllOffers = () => {
       : (setSizesList([]), setShowSizes(false));
   }, [item, gender, genderIsChild, category]);
 
-  console.log(sizesList);
-
   const handleItemSelected = (id: string) => {
     axios
       .get(`${urlBack}/items/${id}`)
@@ -139,6 +137,8 @@ const AllOffers = () => {
     setPrice(null);
     setOrderBy('');
   };
+
+  console.log(allOffers);
 
   // Add offer to favorite /
 
