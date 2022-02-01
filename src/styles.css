@@ -925,7 +925,7 @@ h4 {
 
 .product-description__container-text {
   width: 100%;
-  margin: 25px;
+  margin: 15px;
 }
 
 .product-description__container-text__container1 {
@@ -935,15 +935,34 @@ h4 {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+<<<<<<< HEAD
+  margin-bottom: 1.5rem;
+  position: relative;
+=======
   margin-bottom: 15px;
+>>>>>>> fdc6275314d55528e7dfd5cad49c17d958899532
 }
 
 .product-description__container-text__container1__title {
-  font-size: 2rem;
+  margin: auto;
+}
+
+.product-description__container-text__container1__title h2 {
+  font-size: 5vw;
+  text-align: start;
+  margin-left: 1rem;
 }
 
 .product-description__container-text__container1__price {
-  background-color: aquamarine;
+  margin: auto;
+  width: 18%;
+  text-align: end;
+}
+
+.product-description .style-hr {
+  border-left: 4px solid #cff44d;
+  height: 5vh;
+  position: absolute;
 }
 
 .product-description__container-text__container2__brand {
@@ -957,8 +976,13 @@ h4 {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+<<<<<<< HEAD
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+=======
   margin-bottom: 15px;
   margin-top: 15px;
+>>>>>>> fdc6275314d55528e7dfd5cad49c17d958899532
 }
 
 .product-description__container-text__container4 {
@@ -972,8 +996,14 @@ h4 {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
+<<<<<<< HEAD
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 2rem;
+=======
   margin-bottom: 15px;
   margin-top: 15px;
+>>>>>>> fdc6275314d55528e7dfd5cad49c17d958899532
 }
 
 .product-description__container-text__container4 {
@@ -988,25 +1018,55 @@ h4 {
 }
 
 .product-description__container-text__container3__color__pastille-color {
-  position: absolute;
-  top: 5vh;
-  right: 0;
-  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
+<<<<<<< HEAD
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.product-description .colorPastille {
+  margin: 5px 5px 5px 5px;
+  width: 5vw;
+  height: 5vw;
+  border-radius: 50%;
+  border: 1px solid black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+=======
   -ms-flex-direction: column;
   flex-direction: column;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+>>>>>>> fdc6275314d55528e7dfd5cad49c17d958899532
 }
 
 .product-description__container-text__container3__sport-icon__img {
   height: 2rem;
   width: 2rem;
+}
+
+.product-description__container-text__container4__delivery {
+  border-style: solid;
+  border-radius: 20px;
+  border-width: 1px;
+  border-color: gray;
+  padding: 2vh 0vw;
+}
+
+.product-description__container-text__container4__delivery__btn {
+  padding-top: 4rem;
+  padding-bottom: 3rem;
+}
+
+.product-description__container-text__container4__delivery__btn .btn {
+  padding-left: 6vh;
+  padding-right: 6vh;
 }
 
 .filterMenu {
