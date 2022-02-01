@@ -14,32 +14,32 @@ const Footer = () => {
     <div className="footer">
       <ul className="footer__footerContainer">
         <li>
-          <Link to="/favoris">
+          <Link to="/favorites">
             <FiHeart className="footer__footerContainer__footerIcons" />
             Favoris
           </Link>
         </li>
         <li>
-          <Link to="/annonces">
+          <Link to="/offers">
             <BsSearch className="footer__footerContainer__footerIcons" />
             Rechercher
           </Link>
         </li>
         <li id="vendre">Vendre</li>
         <li>
-          <Link to="/accueil">
+          <Link to="/home">
             <FiHome className="footer__footerContainer__footerIcons" />
             Home
           </Link>
         </li>
         <li>
           {idUser ? (
-            <Link to="/profil">
+            <Link to="/profile">
               <CgProfile className="footer__footerContainer__footerIcons" />
               Profil
             </Link>
           ) : (
-            <Link to="/connexion">
+            <Link to="/login">
               <CgProfile className="footer__footerContainer__footerIcons" />
               Compte
             </Link>
@@ -47,7 +47,7 @@ const Footer = () => {
         </li>
       </ul>
       <button type="button" className="footer__button">
-        <Link to="/creation-offre">
+        <Link to="/create-offer">
           <BsPlusLg className="btn" />
         </Link>
       </button>
