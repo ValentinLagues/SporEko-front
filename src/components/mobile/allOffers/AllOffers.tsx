@@ -101,6 +101,8 @@ const AllOffers = () => {
       : (setSizesList([]), setShowSizes(false));
   }, [item, gender, genderIsChild, category]);
 
+  console.log(sizesList);
+
   const handleItemSelected = (id: string) => {
     axios
       .get(`${urlBack}/items/${id}`)
@@ -161,7 +163,7 @@ const AllOffers = () => {
         .then(() => setIsFavorite(true));
   };
 
-  // useEffect offers, users //
+  // useEffect offers, favorites by ID //
   const urlBack = import.meta.env.VITE_URL_BACK;
 
   useEffect(() => {
@@ -329,14 +331,14 @@ const AllOffers = () => {
         {allOffers.map((offer, index: number) => {
           return (
             <div className="allOffers__container__offer" key={index}>
+              <div className="allOffers__container__offer__mainPicture">
+                <Link
+                  to={`/annonces/${offer.id_offer}`}
+                  className="allOffers__container__offer__linkOfferDetails">
+                  <img src={offer.picture1} alt={`profile`} />
+                </Link>
+              </div>
               <ul className="allOffers__container__offer__detail">
-                <li className="allOffers__container__offer__detail__mainPicture">
-                  <Link
-                    to={`/offers/${offer.id_offer}`}
-                    className="allOffers__container__offer__detail__linkOfferDetails">
-                    <img src={offer.picture1} alt={`profile`} />
-                  </Link>
-                </li>
                 <li className="allOffers__container__offer__detail__price">
                   <strong>{offer.price} €</strong>
                 </li>
@@ -359,7 +361,7 @@ const AllOffers = () => {
                   </li>
                 )}
                 <li className="allOffers__container__offer__detail__brand">
-                  Nike{offer.id_brand}
+                  {brandsList.find((brand) => brand.id_brand === offer.id_brand)?.name}
                 </li>
                 <li className="allOffers__container__offer__detail__size">
                   M/S{offer.id_size}
