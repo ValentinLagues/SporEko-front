@@ -36,6 +36,7 @@ const AllOffers = () => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [searchByTitle, setSearchByTitle] = useState<string>('');
   const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
+  const [hideFilters, setHideFilters] = useState<boolean>(false);
 
   const [sport, setSport] = useState<string>('');
   const [gender, setGender] = useState<number | null>(null);
@@ -307,33 +308,37 @@ const AllOffers = () => {
           handleItemSelected={handleItemSelected}
         />
       )}
-      <Search
-        item={item}
-        setItem={setItem}
-        category={category}
-        setCategory={setCategory}
-        sport={sport}
-        setSport={setSport}
-        genderIsChild={genderIsChild}
-        setGenderIsChild={setGenderIsChild}
-        genderAdult={genderAdult}
-        setGenderAdult={setGenderAdult}
-        genderChild={genderChild}
-        setGenderChild={setGenderChild}
-        setGender={setGender}
-        categoriesList={categoriesList}
-        itemsList={itemsList}
-        sportsList={sportsList}
-        handleSubmit={handleSubmit}
-        handleItemSelected={handleItemSelected}
-      />
+      {!hideFilters && (
+        <Search
+          hideFilters={hideFilters}
+          setHideFilters={setHideFilters}
+          item={item}
+          setItem={setItem}
+          category={category}
+          setCategory={setCategory}
+          sport={sport}
+          setSport={setSport}
+          genderIsChild={genderIsChild}
+          setGenderIsChild={setGenderIsChild}
+          genderAdult={genderAdult}
+          setGenderAdult={setGenderAdult}
+          genderChild={genderChild}
+          setGenderChild={setGenderChild}
+          setGender={setGender}
+          categoriesList={categoriesList}
+          itemsList={itemsList}
+          sportsList={sportsList}
+          handleSubmit={handleSubmit}
+          handleItemSelected={handleItemSelected}
+        />
+      )}
       <div className="allOffers__container">
         {allOffers.map((offer, index: number) => {
           return (
             <div className="allOffers__container__offer" key={index}>
               <div className="allOffers__container__offer__mainPicture">
                 <Link
-                  to={`/annonces/${offer.id_offer}`}
+                  to={`/offers/${offer.id_offer}`}
                   className="allOffers__container__offer__linkOfferDetails">
                   <img src={offer.picture1} alt={`profile`} />
                 </Link>
