@@ -43,7 +43,7 @@ function App() {
             <Route path="/shipment" element={<Shipment />} />
             <Route path="/update-offer/:id" element={<UpdateOffer />} />
             <Route path="/my-dashboard" element={<OffersUser />} />
-            <Route path="/confirmation-order/:idoffer" element={<ConfirmationOrder />} />
+            <Route path="/confirmation-order/:idOffer" element={<ConfirmationOrder />} />
             <Route path="/favorites" element={<Favorites />} />
           </Routes>
         )}
