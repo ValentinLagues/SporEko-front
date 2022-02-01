@@ -11,14 +11,12 @@ import Footer from './components/mobile/layout/Footer';
 import Header from './components/mobile/layout/Header';
 import OfferForm from './components/mobile/offerForm/OfferForm';
 import ProductDescription from './components/mobile/productDescription/ProductDescription';
-// import OfferDetails from './components/mobile/offerDetails/OfferDetails';
 import ModificationProfil from './components/mobile/profile/ModificationProfil';
 import OffersUser from './components/mobile/profile/OffersUser/OffersUser';
 import UpdateOffer from './components/mobile/profile/OffersUser/UpdateOffer';
 import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
 import Shipment from './components/mobile/profile/Shipment';
-// import UpdateOffer from './components/mobile/profile/UpdateOffer';
 import CurrentUserContext from './contexts/CurrentUser';
 
 function App() {
@@ -43,7 +41,7 @@ function App() {
             <Route path="/parametres" element={<Settings />} />
             <Route path="/modifier-mon-profil" element={<ModificationProfil />} />
             <Route path="/mode-envoi" element={<Shipment />} />
-            <Route path="/modifier-votre-annonce" element={<UpdateOffer />} />
+            <Route path="/modifier-votre-annonce/:id" element={<UpdateOffer />} />
             <Route path="/mes-ventes-et-achats" element={<OffersUser />} />
             <Route path="/confirmer-achat/:idoffer" element={<ConfirmationOrder />} />
             <Route path="/favoris" element={<Favorites />} />
