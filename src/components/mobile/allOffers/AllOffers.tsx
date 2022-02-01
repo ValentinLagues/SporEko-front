@@ -140,6 +140,8 @@ const AllOffers = () => {
     setOrderBy('');
   };
 
+  console.log(allOffers);
+
   // Add offer to favorite /
 
   const addFavorite = (idOffer: number) => {

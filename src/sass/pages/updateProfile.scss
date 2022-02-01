@@ -1,4 +1,4 @@
-.modificationProfil {
+.updateProfile {
   text-align: center;
   height: 230vh;
   &__container {
@@ -20,14 +20,14 @@
     &__content {
       position: relative;
       width: 100vw;
-    
+
       flex-wrap: wrap;
       color: $colorText;
       display: flex;
       align-items: center;
       padding: 1vh 5vw;
       text-align: left;
-      
+
       &__icons {
         margin-left: 5vw;
       }
@@ -47,7 +47,6 @@
       }
 
       & select {
-     
         width: 55vw;
         margin-left: 2vw;
         height: 4vh;

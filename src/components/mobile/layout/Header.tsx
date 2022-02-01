@@ -10,7 +10,7 @@ const Header = () => {
     <div className="header">
       <div className="header__container">
         <FiArrowLeft onClick={() => navigate(-1)} className="header__container__icon" />
-        <p>{url.slice(24)}</p>
+        <p className="header__container__name">{url.slice(24)}</p>
       </div>
     </div>
   );

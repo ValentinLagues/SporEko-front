@@ -9,16 +9,11 @@
     display: flex;
     align-items: center;
 
-    &__logo {
-      width: 40vw;
-      height: 7vh;
-      padding: 0 15vw;
-    }
-
-    & h3 {
+    & p {
       color: $colorWhite;
-      text-align: center;
-      width: 50vw;
+      padding: 0 30vw;
+      font-size: 2vh;
+      font-weight: bold;
     }
     &__icon {
       padding-left: 7vw;
