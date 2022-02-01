@@ -5,6 +5,8 @@ import IItem from '../../../interfaces/IItem';
 import ISport from '../../../interfaces/ISport';
 
 interface Props {
+  hideFilters: boolean;
+  setHideFilters: React.Dispatch<React.SetStateAction<boolean>>;
   item: string;
   setItem: React.Dispatch<React.SetStateAction<string>>;
   category: string;
@@ -22,10 +24,12 @@ interface Props {
   itemsList: Array<IItem>;
   sportsList: Array<ISport>;
   handleSubmit: () => void;
-  handleItemSelected: (item: string) => void;
+  handleItemSelected: (_e: string) => void;
 }
 
 const Search: React.FC<Props> = ({
+  hideFilters,
+  setHideFilters,
   item,
   setItem,
   category,
@@ -47,15 +51,14 @@ const Search: React.FC<Props> = ({
 }) => {
   return (
     <div className="search">
-      <form onSubmit={() => handleSubmit()} className="search__menu" id="filterMenu">
+      <form onSubmit={() => handleSubmit()} className="search__menu">
         <div className="search__menu__item">
           <label htmlFor="sports">Quel sport recherchez-vous ?</label>
           <select
             onChange={(e) => setSport(e.target.value)}
             value={sport}
             className="search__menu__item__select"
-            name="sports"
-            id="sports">
+            name="sports">
             <option value="">Tous</option>
             {sportsList &&
               sportsList.map((sport, index) => (
@@ -84,7 +87,7 @@ const Search: React.FC<Props> = ({
           </select>
         </div>
         {genderIsChild && (
-          <div className="search__menu__item--right">
+          <div className="search__menu__item">
             <select
               onChange={(e) => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
@@ -137,10 +140,16 @@ const Search: React.FC<Props> = ({
               ))}
           </select>
         </div>
-        <button type="button" className="btn" onClick={() => handleSubmit()}>
-          Rechercher
-        </button>
       </form>
+      <button
+        type="button"
+        className="btn"
+        onClick={() => {
+          setHideFilters(!hideFilters);
+          handleSubmit();
+        }}>
+        Rechercher
+      </button>
     </div>
   );
 };

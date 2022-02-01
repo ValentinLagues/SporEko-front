@@ -17,7 +17,7 @@ import IUserLog from '../../../interfaces/IUser';
 const urlBack = import.meta.env.VITE_URL_BACK;
 
 const ConfirmationOrder = () => {
-  const { idoffer } = useParams();
+  const { idOffer } = useParams();
   const { idUser } = useContext(CurrentUserContext);
   const [confirmedOrder, setConfirmedOrder] = useState<IOffer>();
   const [confirmedAdress, setConfirmedAdress] = useState<IUserLog>();
@@ -33,7 +33,7 @@ const ConfirmationOrder = () => {
   const [handDelivery, setHandDelivery] = useState(0);
 
   useEffect(() => {
-    axios.get(`${urlBack}/offers/${idoffer}`).then((res) => {
+    axios.get(`${urlBack}/offers/${idOffer}`).then((res) => {
       setConfirmedOrder(res.data);
       axios
         .get(`${urlBack}/sizes/${res.data.id_size}`)
