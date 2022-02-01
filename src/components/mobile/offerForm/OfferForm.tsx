@@ -180,10 +180,10 @@ const OfferForm = () => {
       errorsMessage.push('Veuillez préciser un sport');
       errors = true;
     }
-    if (gender === null) {
-      errorsMessage.push('Veuillez préciser un genre');
-      errors = true;
-    }
+    // if (gender === null) {
+    //   errorsMessage.push('Veuillez préciser un genre');
+    //   errors = true;
+    // }
     if (category === '') {
       errorsMessage.push('Veuillez préciser une catégorie');
       errors = true;
