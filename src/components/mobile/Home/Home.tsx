@@ -8,7 +8,7 @@ const Home = () => {
       <div className="home__Container">
         <img src={Logo} alt="Sporeko" />
 
-        <p>Dépensez moins, pour vous dépenser plus!</p>
+        <p>Dépensez moins, pour vous dépenser plus !</p>
         <form>
           <input className="btn" type="text" placeholder="Recherchez sur SPOREKO" />
         </form>

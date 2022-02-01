@@ -180,10 +180,6 @@ const OfferForm = () => {
       errorsMessage.push('Veuillez préciser un sport');
       errors = true;
     }
-    if (gender === null) {
-      errorsMessage.push('Veuillez préciser un genre');
-      errors = true;
-    }
     if (category === '') {
       errorsMessage.push('Veuillez préciser une catégorie');
       errors = true;
@@ -279,7 +275,6 @@ const OfferForm = () => {
     const formData = new FormData();
     const arrayFiles = Array.from(file);
     arrayFiles.map((el) => formData.append('imagesOffers', el));
-    // formData.append('imagesOffers', file);
 
     axios
       .post(
@@ -368,7 +363,6 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" /> Titre
           </label>
           <input
-            // required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="offerForm__input"
@@ -382,7 +376,6 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" /> Description
           </label>
           <textarea
-            // required
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="offerForm__input"
@@ -408,11 +401,8 @@ const OfferForm = () => {
           <label className="offerForm__label" htmlFor="sports">
             <MdStarRate className="iconRequired" /> Sport
           </label>
-          {/* <div className="offerForm__items__asterisk">
-            <MdStarRate className="iconRequired" />
-          </div> */}
+
           <select
-            // required
             onChange={(e) => setSport(e.target.value)}
             value={sport}
             className="offerForm__select"
@@ -429,13 +419,10 @@ const OfferForm = () => {
         </div>
         <div className="offerForm__items">
           <label className="offerForm__label" htmlFor="genders">
-            <MdStarRate className="iconRequired" /> Genre
+            Genre
           </label>
-          {/* <div className="offerForm__items__asterisk">
-            <MdStarRate className="iconRequired" />
-          </div> */}
+
           <select
-            // required
             onChange={(e) => {
               setGenderAdult(Number(e.target.value));
               e.target.value === '4'
@@ -471,15 +458,11 @@ const OfferForm = () => {
           <label className="offerForm__label" htmlFor="categories">
             <MdStarRate className="iconRequired" /> Catégorie
           </label>
-          {/* <div className="offerForm__items__asterisk">
-            <MdStarRate className="iconRequired" />
-          </div> */}
+
           <select
-            // required
             onChange={(e) => {
               setItem('');
               setCategory(e.target.value);
-              // e.target.value === '' ? setItem('') : '';
               e.target.value === '1'
                 ? (setCategoryIsClothes(true), setShowSizes(true))
                 : setCategoryIsClothes(false);
@@ -524,11 +507,8 @@ const OfferForm = () => {
           <label className="offerForm__label" htmlFor="items">
             <MdStarRate className="iconRequired" /> Article
           </label>
-          {/* <div className="offerForm__items__asterisk">
-            <MdStarRate className="iconRequired" />
-          </div> */}
+
           <select
-            // required
             onChange={(e) => {
               handleItemSelected(e.target.value);
               setItem(e.target.value);
@@ -575,9 +555,7 @@ const OfferForm = () => {
             <label className="offerForm__label" htmlFor="sizes">
               <MdStarRate className="iconRequired" /> Taille
             </label>
-            {/* <div className="offerForm__items__asterisk">
-              <MdStarRate className="iconRequired" />
-            </div> */}
+
             <select
               onChange={(e) => setSize(e.target.value)}
               value={size}
@@ -646,11 +624,8 @@ const OfferForm = () => {
           <label className="offerForm__label" htmlFor="conditions">
             <MdStarRate className="iconRequired" /> État du produit
           </label>
-          {/* <div className="offerForm__items__asterisk">
-            <MdStarRate className="iconRequired" />
-          </div> */}
+
           <select
-            // required
             onChange={(e) => setCondition(e.target.value)}
             value={condition}
             className="offerForm__select"
@@ -670,7 +645,6 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" /> Prix hors frais de port
           </label>
           <input
-            // required
             value={price || ''}
             onChange={(e) => setPrice(Number(e.target.value))}
             className="offerForm__input"
@@ -707,7 +681,7 @@ const OfferForm = () => {
             <br />
             <span className="bold">Besoin d&apos;aide ?</span>
             <br />
-            Pas de pèse personne ou balance de cuisine chez vous? Pas de panique ! Voici
+            Pas de pèse personne ou balance de cuisine chez vous ? Pas de panique ! Voici
             quelques exemples de poids moyens
           </p>
           <div>
@@ -753,7 +727,7 @@ const OfferForm = () => {
           <div className="delivererList">
             <div className="offerForm__switchContainer">
               <span className="offerForm__switchContainer__span">
-                Remise en main propre:
+                Remise en main propre :
               </span>
               <label className="switch">
                 <input
