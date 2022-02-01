@@ -55,7 +55,7 @@ interface Props {
   categoriesList: Array<ICategory>;
   itemsList: Array<IItem>;
   sportsList: Array<ISport>;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleSubmit: () => void;
   handleItemSelected: (item: string) => void;
   handleReset: () => void;
 }
@@ -113,7 +113,7 @@ const FilterMenu: React.FC<Props> = ({
     colorsList.map((color) => (color.style = { backgroundColor: color.color_code }));
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className="filterMenu" id="filterMenuMobile">
+    <form onSubmit={() => handleSubmit()} className="filterMenu" id="filterMenuMobile">
       <div className="filterMenu__item">
         <h2>FILTRES</h2>
         <button onClick={() => handleReset()} id="resetBtn" type="reset">

@@ -11,12 +11,12 @@ import Footer from './components/mobile/layout/Footer';
 import Header from './components/mobile/layout/Header';
 import OfferForm from './components/mobile/offerForm/OfferForm';
 import ProductDescription from './components/mobile/productDescription/ProductDescription';
-import UpdateProfile from './components/mobile/profile/UpdateProfile';
 import OffersUser from './components/mobile/profile/OffersUser/OffersUser';
 import UpdateOffer from './components/mobile/profile/OffersUser/UpdateOffer';
 import Profile from './components/mobile/profile/Profile';
 import Settings from './components/mobile/profile/Settings';
 import Shipment from './components/mobile/profile/Shipment';
+import UpdateProfile from './components/mobile/profile/UpdateProfile';
 import CurrentUserContext from './contexts/CurrentUser';
 
 function App() {

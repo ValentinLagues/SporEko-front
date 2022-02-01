@@ -35,7 +35,7 @@ const ProductDescription = () => {
   const [color, setColor] = useState<IColor>();
   // const [colorList, setColorList] = useState<Color[]>([]);
   const [user, setUser] = useState<IUserLog>();
-
+  console.log(deliverer);
   //   const [sellerAddress, setSellerAddress] = useState();
 
   // const [idSport, setIdSport] = useState<Sport>();

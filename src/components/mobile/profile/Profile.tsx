@@ -31,17 +31,17 @@ const Profile = () => {
         </Link>
       </div>
       <div className="profile__content">
-        <Link to="/shipment" className="profile__content__link">
+        <Link to="/private-policy" className="profile__content__link">
           <FiShield className="profile__content__icons" />
           Politique de confidentialité
           <hr />
         </Link>
-        <Link to="/shipment" className="profile__content__link">
+        <Link to="/suggestions" className="profile__content__link">
           <FiEdit className="profile__content__icons" />
           Faites nous vos suggestions
           <hr />
         </Link>
-        <Link to="/" className="profile__content__link">
+        <Link to="/help" className="profile__content__link">
           <FiHelpCircle className="profile__content__icons" />
           Aide
         </Link>
