@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
 import PhotoDefault from '../../../../resources/photoDefault.png';
 import CurrentUserContext from '../../../contexts/CurrentUser';
@@ -13,7 +12,7 @@ const HeaderProfil = () => {
 
   useEffect(() => {
     axios
-      .get<IUserLog>(`${urlBack}users/${idUser}`, { withCredentials: true })
+      .get<IUserLog>(`${urlBack}/users/${idUser}`, { withCredentials: true })
       .then((res) => {
         setUser(res.data);
       })
@@ -37,9 +36,6 @@ const HeaderProfil = () => {
           <h3>
             {user.firstname} {user.lastname}
           </h3>
-          <Link to="/profile" className="headerProfil__intro__name__link">
-            Voir mon profil
-          </Link>
         </div>
       </div>
     </div>
