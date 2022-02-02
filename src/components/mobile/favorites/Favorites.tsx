@@ -43,7 +43,6 @@ const Favorites = () => {
 
   return (
     <div className="favorites">
-      <h1 className="favorites__title">Mes Favoris</h1>
       {userFavorites.length > 0 ? (
         favOffers.map((offer: IOffer, index: number) => {
           return (
@@ -53,7 +52,7 @@ const Favorites = () => {
                   <ul className="favorites__offers__detail">
                     <li className="favorites__offers__detail__mainPicture">
                       <Link
-                        to={`/offers/${offer.id_offer}`}
+                        to={`/offer/${offer.id_offer}`}
                         className="favorites__offers__detail__linkOfferDetails">
                         <img src={offer.picture1} alt={`profile`} />
                       </Link>

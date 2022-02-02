@@ -29,7 +29,7 @@ const Footer = () => {
         <li>
           <Link to="/home">
             <FiHome className="footer__footerContainer__footerIcons" />
-            Home
+            Accueil
           </Link>
         </li>
         <li>

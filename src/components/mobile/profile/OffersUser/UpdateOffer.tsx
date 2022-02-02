@@ -60,10 +60,12 @@ const UpdateOffer = () => {
   const [weight, setWeight] = useState<number | null>(null);
   const [weightRequired, setWeightRequired] = useState(false);
   const [handDelivery, setHandDelivery] = useState(0);
-  const [chosenDeliverers, setChosenDeliverers] = useState<Array<number>>([]);
+  const [_chosenDeliverers, _setChosenDeliverers] = useState<Array<number>>([]);
   const [isDraft, setIsDraft] = useState(0);
   const [offer, setOffer] = useState<IOffer>();
   const [deliverersArray, setDeliverersArray] = useState<Array<number>>([]);
+  const [deliverersArrayInitial, setDeliverersArrayInitial] = useState<Array<number>>([]);
+
   // Axios call to display select
   useEffect(() => {
     axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
@@ -76,7 +78,10 @@ const UpdateOffer = () => {
     axios.get(`${urlBack}/sizes`).then((res) => setSizeList(res.data));
     axios.get(`${urlBack}/deliverers`).then((res) => setDelivererList(res.data));
     axios.get(`${urlBack}/genders`).then((res) => setGendersList(res.data));
-
+    axios.get(`${urlBack}/offers/${id}/offer_deliv`).then((res) => {
+      setDeliverersArray(res.data.map((deliverer: IDeliverer) => deliverer.id_deliverer));
+      setDeliverersArrayInitial(res.data);
+    });
     axios.get(`${urlBack}/offers/${id}`).then((res) => {
       setTitle(res.data.title);
       setDescription(res.data.description);
@@ -119,7 +124,7 @@ const UpdateOffer = () => {
       });
     });
   }, [id]);
-
+  console.log(deliverersArrayInitial);
   useEffect(() => {
     category &&
       axios.get(`${urlBack}/categories/${category}/items`).then((res) => {
@@ -205,6 +210,8 @@ const UpdateOffer = () => {
   }, [deliverersArray]);
 
   const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('pppppppppprrrrrrrrrreeeeeeeevvvvvvvvveeeeeeeeent');
     let errors = false;
     let errorsDescription: HTMLElement | null =
       document.getElementById('errorsDescription');
@@ -247,7 +254,7 @@ const UpdateOffer = () => {
       errorsMessage.push('Veuillez sélectionner au moins un mode de livraison');
       errors = true;
     }
-    if (deliverersArray.length != 0 && weight === null) {
+    if (deliverersArray.length !== 0 && weight === null) {
       errorsMessage.push("Veuillez renseigner le poids de l'article");
       errors = true;
     }
@@ -264,8 +271,8 @@ const UpdateOffer = () => {
     }
     if (!errors) {
       errorsDescription?.setAttribute('display', 'none');
-      setChosenDeliverers(deliverersArray);
-      setDeliverersArray([]);
+      // setChosenDeliverers(deliverersArray);
+      // setDeliverersArray([]);
       const newOffer = {
         title,
         picture1: pictures[0],
@@ -340,19 +347,33 @@ const UpdateOffer = () => {
     offer &&
       axios
         .put<IOffer>(`${urlBack}/offers/${id}`, offer)
-        .then((rep) => {
-          const id_offer = rep.data.id_offer;
-          chosenDeliverers.map((deliverer) => {
+        .then((res) => {
+          res;
+        })
+        .catch((err) => console.log(err));
+
+    {
+      deliverersArrayInitial[0] === undefined
+        ? deliverersArray.map((deliverer) => {
             const id_deliverer = deliverer;
+            const id_offer = id;
             axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
               id_offer,
               id_deliverer,
             });
-          });
-        })
-        .catch((err) => console.log({ ...err }));
+          })
+        : deliverersArrayInitial[0] !== undefined &&
+          axios.delete(`${urlBack}/offers/${id}/offer_deliverers`);
+      deliverersArray.map((deliverer) => {
+        const id_deliverer = deliverer;
+        axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
+          id,
+          id_deliverer,
+        });
+      });
+    }
   }, [offer]);
-
+  console.log(deliverersArrayInitial.id_deliverer);
   return (
     <div className="offerForm">
       <form
@@ -480,7 +501,7 @@ const UpdateOffer = () => {
               onChange={(e) => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
               }}
-              value={Number(genderChild)}
+              value={Number(genderChild) || ''}
               className="offerForm__select">
               {gendersList
                 .filter((children) => children.child_name)
@@ -528,7 +549,7 @@ const UpdateOffer = () => {
             </label>
             <select
               onChange={(e) => setTextile(e.target.value)}
-              value={textile}
+              value={textile || ''}
               className="offerForm__select"
               id="textile">
               <option value=""></option>
@@ -576,7 +597,7 @@ const UpdateOffer = () => {
           </label>
           <select
             onChange={(e) => setBrand(e.target.value)}
-            value={brand}
+            value={brand || ''}
             className="offerForm__select"
             id="brands">
             <option value=""></option>
@@ -596,7 +617,7 @@ const UpdateOffer = () => {
             </label>
             <select
               onChange={(e) => setSize(e.target.value)}
-              value={size}
+              value={size || ''}
               className="offerForm__select"
               id="sizes">
               <option value=""></option>
@@ -626,7 +647,7 @@ const UpdateOffer = () => {
           </label>
           <select
             onChange={(e) => setColor1(e.target.value)}
-            value={color1}
+            value={color1 || ''}
             className="offerForm__select"
             id="color1">
             <option value=""></option>
@@ -645,7 +666,7 @@ const UpdateOffer = () => {
           </label>
           <select
             onChange={(e) => setColor2(e.target.value)}
-            value={color2}
+            value={color2 || ''}
             className="offerForm__select"
             id="color2">
             <option value=""></option>
@@ -776,6 +797,7 @@ const UpdateOffer = () => {
               </label>
             </div>
             {delivererList &&
+              deliverersArray &&
               delivererList.map((deliverer) => (
                 <div key={deliverer.id_deliverer} className="offerForm__switchContainer">
                   <span className="offerForm__switchContainer__span">
@@ -783,6 +805,7 @@ const UpdateOffer = () => {
                   </span>
                   <label className="switch">
                     <input
+                      checked={deliverersArray.includes(deliverer.id_deliverer)}
                       onChange={() => handleChosenDeliverers(deliverer.id_deliverer)}
                       id={deliverer.name}
                       type="checkbox"

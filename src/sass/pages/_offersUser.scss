@@ -1,6 +1,6 @@
 .offers {
   width: 100vw;
-  margin-bottom: 10vh;
+  margin: 12vh 0;
   flex-wrap: wrap;
   & p {
     text-align: center;
@@ -8,7 +8,6 @@
   }
   & h2 {
     margin-bottom: 10px;
-    background-color: $colorLightGrey;
     display: flex;
     width: 100vw;
     height: 5vh;
@@ -29,7 +28,7 @@
       display: flex;
     }
     & img {
-      height: 10vh;
+      height: 8vh;
       overflow: hidden;
       border-radius: 5px 0 0 5px;
     }
@@ -65,10 +64,12 @@
     }
     & .offerSellModification {
       width: 80vw;
-      background-color: white;
+      height: 3vh;
+      background-color:$colorSporEko;
       border-radius: 0 0 5px 5px;
       box-shadow: $boxShadow;
-      border: none;
+      border-top: 1px black solid;
+      align-items: center;
       justify-content: center;
     }
     & a {
