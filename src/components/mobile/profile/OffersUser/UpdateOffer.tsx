@@ -60,7 +60,6 @@ const UpdateOffer = () => {
   const [weight, setWeight] = useState<number | null>(null);
   const [weightRequired, setWeightRequired] = useState(false);
   const [handDelivery, setHandDelivery] = useState(0);
-  const [_chosenDeliverers, _setChosenDeliverers] = useState<Array<number>>([]);
   const [isDraft, setIsDraft] = useState(0);
   const [offer, setOffer] = useState<IOffer>();
   const [deliverersArray, setDeliverersArray] = useState<Array<number>>([]);
@@ -124,7 +123,7 @@ const UpdateOffer = () => {
       });
     });
   }, [id]);
-  console.log(deliverersArrayInitial);
+
   useEffect(() => {
     category &&
       axios.get(`${urlBack}/categories/${category}/items`).then((res) => {
@@ -210,8 +209,6 @@ const UpdateOffer = () => {
   }, [deliverersArray]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('pppppppppprrrrrrrrrreeeeeeeevvvvvvvvveeeeeeeeent');
     let errors = false;
     let errorsDescription: HTMLElement | null =
       document.getElementById('errorsDescription');
@@ -271,8 +268,7 @@ const UpdateOffer = () => {
     }
     if (!errors) {
       errorsDescription?.setAttribute('display', 'none');
-      // setChosenDeliverers(deliverersArray);
-      // setDeliverersArray([]);
+
       const newOffer = {
         title,
         picture1: pictures[0],
@@ -351,7 +347,6 @@ const UpdateOffer = () => {
           res;
         })
         .catch((err) => console.log(err));
-
     {
       deliverersArrayInitial[0] === undefined
         ? deliverersArray.map((deliverer) => {
@@ -362,18 +357,34 @@ const UpdateOffer = () => {
               id_deliverer,
             });
           })
-        : deliverersArrayInitial[0] !== undefined &&
-          axios.delete(`${urlBack}/offers/${id}/offer_deliverers`);
-      deliverersArray.map((deliverer) => {
-        const id_deliverer = deliverer;
-        axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
-          id,
-          id_deliverer,
-        });
-      });
+        : axios
+            .delete(`${urlBack}/offers/${id}/offer_deliverers`)
+            .then((res) => {
+              console.log(deliverersArray);
+              res &&
+                deliverersArray.map((deliverer) => {
+                  const id_deliverer = deliverer;
+                  const id_offer = id;
+                  axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
+                    id_offer,
+                    id_deliverer,
+                  });
+                });
+            })
+            .catch((err) => {
+              err &&
+                deliverersArray.map((deliverer) => {
+                  const id_deliverer = deliverer;
+                  const id_offer = id;
+                  axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
+                    id_offer,
+                    id_deliverer,
+                  });
+                });
+            });
     }
   }, [offer]);
-  console.log(deliverersArrayInitial.id_deliverer);
+
   return (
     <div className="offerForm">
       <form
