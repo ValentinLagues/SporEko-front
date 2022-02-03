@@ -223,14 +223,10 @@ const UpdateOffer = () => {
       errorsMessage.push('Veuillez préciser un sport');
       errors = true;
     }
-<<<<<<< HEAD
-
-=======
     // if (gender === null) {
     //   errorsMessage.push('Veuillez préciser un genre');
     //   errors = true;
     // }
->>>>>>> 5cd09f53cb2bb2996f230fabbbb3dd114c76456a
     if (category === '') {
       errorsMessage.push('Veuillez préciser une catégorie');
       errors = true;
