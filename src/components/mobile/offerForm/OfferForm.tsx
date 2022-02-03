@@ -158,6 +158,8 @@ const OfferForm = () => {
   }, [deliverersArray]);
 
   const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('enlever le prevent');
     let errors = false;
     let errorsDescription: HTMLElement | null =
       document.getElementById('errorsDescription');
@@ -299,8 +301,8 @@ const OfferForm = () => {
     offer &&
       axios
         .post<IOffer>(`${urlBack}/offers`, offer)
-        .then((rep) => {
-          const id_offer = rep.data.id_offer;
+        .then((res) => {
+          const id_offer = res.data.id_offer;
           chosenDeliverers.map((deliverer) => {
             const id_deliverer = deliverer;
             axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {

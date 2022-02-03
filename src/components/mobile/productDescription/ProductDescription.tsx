@@ -27,7 +27,6 @@ const ProductDescription = () => {
   const [color1, setColor1] = useState<IColor>();
   const [color2, setColor2] = useState<IColor>();
   const [user, setUser] = useState<IUserLog>();
-
   const { id } = useParams();
 
   useEffect(() => {
@@ -55,7 +54,10 @@ const ProductDescription = () => {
           axios
             .get(`${urlBack}/colors/${data.id_color2}`)
             .then((res) => setColor2(res.data));
-        axios.get(`${urlBack}/sports/${data.id_sport}`).then((res) => setSport(res.data));
+        data.id_sport &&
+          axios.get(`${urlBack}/sports/${data.id_sport}`).then((res) => {
+            setSport(res.data);
+          });
         data.id_size &&
           axios.get(`${urlBack}/sizes/${data.id_size}`).then((res) => setSize(res.data));
         axios
@@ -210,10 +212,10 @@ const ProductDescription = () => {
           </div>
           <div className="product-description__container-text__container3__color">
             <h3>Couleurs</h3>
-            <p className="product-description__container-text__container3__color__pastille-color">
+            <div className="product-description__container-text__container3__color__pastille-color">
               {color1 && <div className="colorPastille" style={color1.style}></div>}
               {color2 && <div className="colorPastille" style={color2.style}></div>}
-            </p>
+            </div>
           </div>
           <div className="product-description__container-text__container3__sport-icon">
             <h3>Sport</h3>
@@ -248,7 +250,7 @@ const ProductDescription = () => {
                 .map((delive, index) => <p key={index}>{delive.name}</p>)}
           </div>
           <div className="product-description__container-text__container4__delivery__btn">
-            <Link className="btn" type="submit" to="/confirmer-achat">
+            <Link className="btn" type="submit" to={`/confirmation-order/${id}`}>
               Acheter
             </Link>
           </div>
