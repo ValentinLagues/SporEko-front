@@ -8,7 +8,7 @@ const LogOut = () => {
   const { logout } = useContext(CurrentUserContext);
   const navigate: NavigateFunction = useNavigate();
   function redirectHome() {
-    navigate('/home');
+    navigate('/');
   }
   return (
     <div className="logOut">

@@ -3,12 +3,10 @@
   text-align: center;
   height: 90vh;
 
-  & h1 {
-    color: black;
-    font-family: 'Outfit', sans-serif;
-    margin: 5vh;
-    font-weight: bold;
-    font-size: 10vw;
+  & img {
+    width:60vw;
+    margin: 2vh;
+  
   }
 
   & h2 {
@@ -80,7 +78,7 @@
     }
   }
   &__span {
-    margin-top: 15vh;
+    margin-top: 5vh;
     &--bold {
       font-weight: bold;
     }

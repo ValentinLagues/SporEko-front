@@ -38,7 +38,7 @@ const OffersUser = () => {
                   <ul className="offers__offer__detail">
                     <Link
                       className={offer.is_archived ? '' : 'offerSell'}
-                      to={`/offers/${offer.id_offer}`}>
+                      to={`/offer/${offer.id_offer}`}>
                       <li>
                         <img src={offer.picture1} alt={`annonce ${offer.id_offer}`} />
                       </li>
