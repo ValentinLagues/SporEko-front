@@ -16,7 +16,6 @@ const SearchBar: React.FC<Props> = ({ setShowFilterMenu, showFilterMenu, setSear
           type="text"
           placeholder="Entrez votre recherche"
           onChange={(e) => {
-            console.log(e.target.value);
             setSearch(e.target.value);
           }}
         />

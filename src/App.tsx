@@ -1,54 +1,33 @@
 import React, { useContext } from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import AllOffers from './components/mobile/allOffers/AllOffers';
-import ConfirmationOrder from './components/mobile/confirmOrder/ConfirmationOrder';
+import authMenu from './auth';
 import Connection from './components/mobile/connection/Connection';
-import CreateAccount from './components/mobile/createAccount/CreateAccount';
-import Favorites from './components/mobile/favorites/Favorites';
-import Home from './components/mobile/Home/Home';
 import Footer from './components/mobile/layout/Footer';
 import Header from './components/mobile/layout/Header';
-import OfferForm from './components/mobile/offerForm/OfferForm';
-import ProductDescription from './components/mobile/productDescription/ProductDescription';
-import OffersUser from './components/mobile/profile/OffersUser/OffersUser';
-import UpdateOffer from './components/mobile/profile/OffersUser/UpdateOffer';
-import Profile from './components/mobile/profile/Profile';
-import Settings from './components/mobile/profile/Settings';
-import Shipment from './components/mobile/profile/Shipment';
-import UpdateProfile from './components/mobile/profile/UpdateProfile';
 import CurrentUserContext from './contexts/CurrentUser';
+import menuList from './menu';
 
 function App() {
   const { idUser, accepted } = useContext(CurrentUserContext);
-
   return (
     <div className="App">
-      <HashRouter basename="/">
+      <BrowserRouter basename="/">
         <Header />
         <Routes>
-          <Route path="/home" element={<Home />} />
-          <Route path="/offers" element={<AllOffers />} />
-          <Route path="/login" element={<Connection />} />
-          <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/offers/:id" element={<ProductDescription />} />
+          {menuList.map(({ path, Component }, index) => (
+            <Route path={path} key={index} element={<Component />} />
+          ))}
           <Route path={idUser || accepted ? '' : '*'} element={<Connection />} />
         </Routes>
-        {(idUser || accepted) && (
-          <Routes>
-            <Route path="/create-offer" element={<OfferForm />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/update-profile" element={<UpdateProfile />} />
-            <Route path="/shipment" element={<Shipment />} />
-            <Route path="/update-offer/:id" element={<UpdateOffer />} />
-            <Route path="/my-dashboard" element={<OffersUser />} />
-            <Route path="/confirmation-order/:idoffer" element={<ConfirmationOrder />} />
-            <Route path="/favorites" element={<Favorites />} />
-          </Routes>
-        )}
+        <Routes>
+          {(idUser || accepted) &&
+            authMenu.map(({ path, Component }, index) => (
+              <Route path={path} key={index} element={<Component />} />
+            ))}
+        </Routes>
         <Footer />
-      </HashRouter>
+      </BrowserRouter>
     </div>
   );
 }

@@ -36,6 +36,7 @@ const AllOffers = () => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [searchByTitle, setSearchByTitle] = useState<string>('');
   const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
+  const [hideFilters, setHideFilters] = useState<boolean>(false);
 
   const [sport, setSport] = useState<string>('');
   const [gender, setGender] = useState<number | null>(null);
@@ -138,8 +139,6 @@ const AllOffers = () => {
     setOrderBy('');
   };
 
-  console.log(allOffers);
-
   // Add offer to favorite /
 
   const addFavorite = (idOffer: number) => {
@@ -161,7 +160,7 @@ const AllOffers = () => {
         .then(() => setIsFavorite(true));
   };
 
-  // useEffect offers, users //
+  // useEffect offers, favorites by ID //
   const urlBack = import.meta.env.VITE_URL_BACK;
 
   useEffect(() => {
@@ -305,38 +304,42 @@ const AllOffers = () => {
           handleItemSelected={handleItemSelected}
         />
       )}
-      <Search
-        item={item}
-        setItem={setItem}
-        category={category}
-        setCategory={setCategory}
-        sport={sport}
-        setSport={setSport}
-        genderIsChild={genderIsChild}
-        setGenderIsChild={setGenderIsChild}
-        genderAdult={genderAdult}
-        setGenderAdult={setGenderAdult}
-        genderChild={genderChild}
-        setGenderChild={setGenderChild}
-        setGender={setGender}
-        categoriesList={categoriesList}
-        itemsList={itemsList}
-        sportsList={sportsList}
-        handleSubmit={handleSubmit}
-        handleItemSelected={handleItemSelected}
-      />
+      {!hideFilters && (
+        <Search
+          hideFilters={hideFilters}
+          setHideFilters={setHideFilters}
+          item={item}
+          setItem={setItem}
+          category={category}
+          setCategory={setCategory}
+          sport={sport}
+          setSport={setSport}
+          genderIsChild={genderIsChild}
+          setGenderIsChild={setGenderIsChild}
+          genderAdult={genderAdult}
+          setGenderAdult={setGenderAdult}
+          genderChild={genderChild}
+          setGenderChild={setGenderChild}
+          setGender={setGender}
+          categoriesList={categoriesList}
+          itemsList={itemsList}
+          sportsList={sportsList}
+          handleSubmit={handleSubmit}
+          handleItemSelected={handleItemSelected}
+        />
+      )}
       <div className="allOffers__container">
         {allOffers.map((offer, index: number) => {
           return (
             <div className="allOffers__container__offer" key={index}>
+              <div className="allOffers__container__offer__mainPicture">
+                <Link
+                  to={`/offer/${offer.id_offer}`}
+                  className="allOffers__container__offer__linkOfferDetails">
+                  <img src={offer.picture1} alt={`profile`} />
+                </Link>
+              </div>
               <ul className="allOffers__container__offer__detail">
-                <li className="allOffers__container__offer__detail__mainPicture">
-                  <Link
-                    to={`/offers/${offer.id_offer}`}
-                    className="allOffers__container__offer__detail__linkOfferDetails">
-                    <img src={offer.picture1} alt={`profile`} />
-                  </Link>
-                </li>
                 <li className="allOffers__container__offer__detail__price">
                   <strong>{offer.price} €</strong>
                 </li>
@@ -359,7 +362,7 @@ const AllOffers = () => {
                   </li>
                 )}
                 <li className="allOffers__container__offer__detail__brand">
-                  Nike{offer.id_brand}
+                  {brandsList.find((brand) => brand.id_brand === offer.id_brand)?.name}
                 </li>
                 <li className="allOffers__container__offer__detail__size">
                   M/S{offer.id_size}

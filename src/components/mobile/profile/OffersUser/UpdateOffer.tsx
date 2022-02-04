@@ -60,10 +60,11 @@ const UpdateOffer = () => {
   const [weight, setWeight] = useState<number | null>(null);
   const [weightRequired, setWeightRequired] = useState(false);
   const [handDelivery, setHandDelivery] = useState(0);
-  const [chosenDeliverers, setChosenDeliverers] = useState<Array<number>>([]);
   const [isDraft, setIsDraft] = useState(0);
   const [offer, setOffer] = useState<IOffer>();
   const [deliverersArray, setDeliverersArray] = useState<Array<number>>([]);
+  const [deliverersArrayInitial, setDeliverersArrayInitial] = useState<Array<number>>([]);
+
   // Axios call to display select
   useEffect(() => {
     axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
@@ -76,7 +77,10 @@ const UpdateOffer = () => {
     axios.get(`${urlBack}/sizes`).then((res) => setSizeList(res.data));
     axios.get(`${urlBack}/deliverers`).then((res) => setDelivererList(res.data));
     axios.get(`${urlBack}/genders`).then((res) => setGendersList(res.data));
-
+    axios.get(`${urlBack}/offers/${id}/offer_deliv`).then((res) => {
+      setDeliverersArray(res.data.map((deliverer: IDeliverer) => deliverer.id_deliverer));
+      setDeliverersArrayInitial(res.data);
+    });
     axios.get(`${urlBack}/offers/${id}`).then((res) => {
       setTitle(res.data.title);
       setDescription(res.data.description);
@@ -223,10 +227,6 @@ const UpdateOffer = () => {
       errorsMessage.push('Veuillez préciser un sport');
       errors = true;
     }
-    if (gender === null) {
-      errorsMessage.push('Veuillez préciser un genre');
-      errors = true;
-    }
     if (category === '') {
       errorsMessage.push('Veuillez préciser une catégorie');
       errors = true;
@@ -251,7 +251,7 @@ const UpdateOffer = () => {
       errorsMessage.push('Veuillez sélectionner au moins un mode de livraison');
       errors = true;
     }
-    if (deliverersArray.length != 0 && weight === null) {
+    if (deliverersArray.length !== 0 && weight === null) {
       errorsMessage.push("Veuillez renseigner le poids de l'article");
       errors = true;
     }
@@ -268,8 +268,7 @@ const UpdateOffer = () => {
     }
     if (!errors) {
       errorsDescription?.setAttribute('display', 'none');
-      setChosenDeliverers(deliverersArray);
-      setDeliverersArray([]);
+
       const newOffer = {
         title,
         picture1: pictures[0],
@@ -319,11 +318,14 @@ const UpdateOffer = () => {
     const file = target.files as FileList;
     const formData = new FormData();
     const arrayFiles = Array.from(file);
-    arrayFiles.map((el) => formData.append('imagesOffers', el));
-    // formData.append('imagesOffers', file);
+    arrayFiles.map((el, index) =>
+      formData.append('imagesOffers', el, `photo${index}${id}`),
+    );
+
     axios
       .post(
         `${urlBack}/offers/images`,
+
         formData,
 
         {
@@ -344,26 +346,55 @@ const UpdateOffer = () => {
     offer &&
       axios
         .put<IOffer>(`${urlBack}/offers/${id}`, offer)
-        .then((rep) => {
-          const id_offer = rep.data.id_offer;
-          chosenDeliverers.map((deliverer) => {
+        .then((res) => {
+          res;
+        })
+        .catch((err) => console.log(err));
+    {
+      deliverersArrayInitial[0] === undefined
+        ? deliverersArray.map((deliverer) => {
             const id_deliverer = deliverer;
+            const id_offer = id;
             axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
               id_offer,
               id_deliverer,
             });
-          });
-        })
-        .catch((err) => console.log({ ...err }));
+          })
+        : axios
+            .delete(`${urlBack}/offers/${id}/offer_deliverers`)
+            .then((res) => {
+              console.log(deliverersArray);
+              res &&
+                deliverersArray.map((deliverer) => {
+                  const id_deliverer = deliverer;
+                  const id_offer = id;
+                  axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
+                    id_offer,
+                    id_deliverer,
+                  });
+                });
+            })
+            .catch((err) => {
+              err &&
+                deliverersArray.map((deliverer) => {
+                  const id_deliverer = deliverer;
+                  const id_offer = id;
+                  axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
+                    id_offer,
+                    id_deliverer,
+                  });
+                });
+            });
+    }
   }, [offer]);
-  console.log(chosenDeliverers);
+
   return (
-    <div className="offerForm">
+    <div className="updateOfferForm">
       <form
         encType="multipart/form-data"
-        id="offerForm"
+        id="updateOfferForm"
         onSubmit={(e: React.FormEvent) => handleSubmit(e)}
-        className="offerForm__form"
+        className="updateOfferForm__form"
         action="">
         {/* ---------------------------Input for updated pictures------------------------ */}
         <div>Ajoute jusqu&apos;à 20 photos</div>
@@ -399,26 +430,26 @@ const UpdateOffer = () => {
         </div>
         {/* ---------------------------Input for title offer------------------------ */}
         <div>
-          <label className="offerForm__label" htmlFor="title">
-            <MdStarRate className="iconRequired" /> Titre
+          <label className="updateOfferForm__label" htmlFor="title">
+            Titre
           </label>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="offerForm__input"
+            className="updateOfferForm__input"
             type="text"
             id="title"
           />
         </div>
         {/* ---------------------------Input for description offer------------------------ */}
         <div>
-          <label className="offerForm__label" htmlFor="description">
-            <MdStarRate className="iconRequired" /> Description
+          <label className="updateOfferForm__label" htmlFor="description">
+            Description
           </label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="offerForm__input"
+            className="updateOfferForm__input"
             rows={5}
             id="description"
           />
@@ -437,14 +468,14 @@ const UpdateOffer = () => {
           </div>
         </div>
         {/* ---------------------------Select for sports------------------------ */}
-        <div className="offerForm__items">
-          <label className="offerForm__label" htmlFor="sports">
-            <MdStarRate className="iconRequired" /> Sport
+        <div className="updateOfferForm__items">
+          <label className="updateOfferForm__label" htmlFor="sports">
+            Sport
           </label>
           <select
             onChange={(e) => setSport(e.target.value)}
             value={sport}
-            className="offerForm__select"
+            className="updateOfferForm__select"
             id="sports">
             <option value="" id="sport"></option>
             {sportList &&
@@ -456,9 +487,9 @@ const UpdateOffer = () => {
           </select>
         </div>
         {/* ---------------------------Select for genders------------------------ */}
-        <div className="offerForm__items">
-          <label className="offerForm__label" htmlFor="genders">
-            <MdStarRate className="iconRequired" /> Genre
+        <div className="updateOfferForm__items">
+          <label className="updateOfferForm__label" htmlFor="genders">
+            Genre
           </label>
           <select
             onChange={(e) => {
@@ -468,7 +499,7 @@ const UpdateOffer = () => {
                 : (setGenderIsChild(0), setGender(Number(e.target.value)));
             }}
             value={Number(genderAdult)}
-            className="offerForm__select"
+            className="updateOfferForm__select"
             id="genders">
             {gendersList.map((gender, index) => (
               <option key={index} value={gender.id_gender}>
@@ -479,13 +510,13 @@ const UpdateOffer = () => {
           </select>
         </div>
         {genderIsChild === 1 && (
-          <div className="offerForm__items conditionnal">
+          <div className="updateOfferForm__items conditionnal">
             <select
               onChange={(e) => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
               }}
-              value={Number(genderChild)}
-              className="offerForm__select">
+              value={Number(genderChild) || ''}
+              className="updateOfferForm__select">
               {gendersList
                 .filter((children) => children.child_name)
                 .map((gender, index) => (
@@ -497,9 +528,9 @@ const UpdateOffer = () => {
           </div>
         )}
         {/* ---------------------------Select for categories------------------------ */}
-        <div className="offerForm__items">
-          <label className="offerForm__label" htmlFor="categories">
-            <MdStarRate className="iconRequired" /> Catégorie
+        <div className="updateOfferForm__items">
+          <label className="updateOfferForm__label" htmlFor="categories">
+            Catégorie
           </label>
 
           <select
@@ -513,7 +544,7 @@ const UpdateOffer = () => {
               e.target.value === '3' && setShowSizes(false);
             }}
             value={category}
-            className="offerForm__select"
+            className="updateOfferForm__select"
             id="categories">
             <option value=""></option>
             {categoryList &&
@@ -526,14 +557,14 @@ const UpdateOffer = () => {
         </div>
         {/* ---------------------------Select for category is clothes------------------------ */}
         {categoryIsClothes && (
-          <div className="offerForm__items conditionnal">
-            <label className="offerForm__label" htmlFor="textile">
+          <div className="updateOfferForm__items conditionnal">
+            <label className="updateOfferForm__label" htmlFor="textile">
               Matière
             </label>
             <select
               onChange={(e) => setTextile(e.target.value)}
-              value={textile}
-              className="offerForm__select"
+              value={textile || ''}
+              className="updateOfferForm__select"
               id="textile">
               <option value=""></option>
               {textileList &&
@@ -546,9 +577,9 @@ const UpdateOffer = () => {
           </div>
         )}
         {/* ---------------------------Select for items------------------------ */}
-        <div className="offerForm__items">
-          <label className="offerForm__label" htmlFor="items">
-            <MdStarRate className="iconRequired" /> Article
+        <div className="updateOfferForm__items">
+          <label className="updateOfferForm__label" htmlFor="items">
+            Article
           </label>
           <select
             onChange={(e) => {
@@ -562,7 +593,7 @@ const UpdateOffer = () => {
                 : setShowSizes(false);
             }}
             value={item}
-            className="offerForm__select"
+            className="updateOfferForm__select"
             id="items">
             <option value=""></option>
             {itemList &&
@@ -574,14 +605,14 @@ const UpdateOffer = () => {
           </select>
         </div>
         {/* ---------------------------Select for brands------------------------ */}
-        <div className="offerForm__items">
-          <label className="offerForm__label" htmlFor="brands">
+        <div className="updateOfferForm__items">
+          <label className="updateOfferForm__label" htmlFor="brands">
             Marque
           </label>
           <select
             onChange={(e) => setBrand(e.target.value)}
-            value={brand}
-            className="offerForm__select"
+            value={brand || ''}
+            className="updateOfferForm__select"
             id="brands">
             <option value=""></option>
             {brandList &&
@@ -594,14 +625,14 @@ const UpdateOffer = () => {
         </div>
         {/* ---------------------------Select for sizes------------------------ */}
         {showSizes && (
-          <div className="offerForm__items">
-            <label className="offerForm__label" htmlFor="sizes">
-              <MdStarRate className="iconRequired" /> Taille
+          <div className="updateOfferForm__items">
+            <label className="updateOfferForm__label" htmlFor="sizes">
+              Taille
             </label>
             <select
               onChange={(e) => setSize(e.target.value)}
-              value={size}
-              className="offerForm__select"
+              value={size || ''}
+              className="updateOfferForm__select"
               id="sizes">
               <option value=""></option>
               {sizeList &&
@@ -624,14 +655,14 @@ const UpdateOffer = () => {
           </div>
         )}
         {/* ---------------------------Select for color1------------------------ */}
-        <div className="offerForm__items">
-          <label className="offerForm__label" htmlFor="color1">
+        <div className="updateOfferForm__items">
+          <label className="updateOfferForm__label" htmlFor="color1">
             Couleur 1
           </label>
           <select
             onChange={(e) => setColor1(e.target.value)}
-            value={color1}
-            className="offerForm__select"
+            value={color1 || ''}
+            className="updateOfferForm__select"
             id="color1">
             <option value=""></option>
             {colorList &&
@@ -643,14 +674,14 @@ const UpdateOffer = () => {
           </select>
         </div>
         {/* ---------------------------Select for color2------------------------ */}
-        <div className="offerForm__items">
-          <label className="offerForm__label" htmlFor="color2">
+        <div className="updateOfferForm__items">
+          <label className="updateOfferForm__label" htmlFor="color2">
             Couleur 2
           </label>
           <select
             onChange={(e) => setColor2(e.target.value)}
-            value={color2}
-            className="offerForm__select"
+            value={color2 || ''}
+            className="updateOfferForm__select"
             id="color2">
             <option value=""></option>
             {colorList &&
@@ -662,14 +693,14 @@ const UpdateOffer = () => {
           </select>
         </div>
         {/* ---------------------------Select for conditions------------------------ */}
-        <div className="offerForm__items">
-          <label className="offerForm__label" htmlFor="conditions">
-            <MdStarRate className="iconRequired" /> État du produit
+        <div className="updateOfferForm__items">
+          <label className="updateOfferForm__label" htmlFor="conditions">
+            État du produit
           </label>
           <select
             onChange={(e) => setCondition(e.target.value)}
             value={condition}
-            className="offerForm__select"
+            className="updateOfferForm__select"
             id="conditions">
             <option value=""></option>
             {conditionList &&
@@ -681,14 +712,14 @@ const UpdateOffer = () => {
           </select>
         </div>
         {/* ---------------------------Select for price------------------------ */}
-        <div className="offerForm__price">
-          <label className="offerForm__label" htmlFor="price">
-            <MdStarRate className="iconRequired" /> Prix hors frais de port
+        <div className="updateOfferForm__price">
+          <label className="updateOfferForm__label" htmlFor="price">
+            Prix hors frais de port
           </label>
           <input
             value={price || ''}
             onChange={(e) => setPrice(Number(e.target.value))}
-            className="offerForm__input"
+            className="updateOfferForm__input"
             type="number"
             step={0.01}
             id="price"
@@ -696,8 +727,8 @@ const UpdateOffer = () => {
           €
         </div>
         {/* ---------------------------Input for weight------------------------ */}
-        <div className="offerForm__weight">
-          <label className="offerForm__label" htmlFor="weight">
+        <div className="updateOfferForm__weight">
+          <label className="updateOfferForm__label" htmlFor="weight">
             {weightRequired && <MdStarRate className="iconRequired" />} Format du colis{' '}
             <FaQuestionCircle
               className="questionIcon"
@@ -707,7 +738,7 @@ const UpdateOffer = () => {
           <input
             value={weight || ''}
             onChange={(e) => setWeight(Number(e.target.value))}
-            className="offerForm__input"
+            className="updateOfferForm__input"
             type="number"
             step={1}
             id="weight"
@@ -725,7 +756,7 @@ const UpdateOffer = () => {
             quelques exemples de poids moyens
           </p>
           <div>
-            <table className="offerForm__weight__table">
+            <table className="updateOfferForm__weight__table">
               <thead>
                 <tr>
                   <th>Exemple de produit</th>
@@ -761,13 +792,13 @@ const UpdateOffer = () => {
           </div>
         </div>
         {/* ---------------------------Input for Deliveries------------------------ */}
-        <div className="offerForm__deliveries">
-          <span className="offerForm__switchContainer__span">
-            <MdStarRate className="iconRequired" /> Modes de livraison :
+        <div className="updateOfferForm__deliveries">
+          <span className="updateOfferForm__switchContainer__span">
+            Modes de livraison :
           </span>
           <div className="delivererList">
-            <div className="offerForm__switchContainer">
-              <span className="offerForm__switchContainer__span">
+            <div className="updateOfferForm__switchContainer">
+              <span className="updateOfferForm__switchContainer__span">
                 Remise en main propre:
               </span>
               <label className="switch">
@@ -782,13 +813,17 @@ const UpdateOffer = () => {
               </label>
             </div>
             {delivererList &&
+              deliverersArray &&
               delivererList.map((deliverer) => (
-                <div key={deliverer.id_deliverer} className="offerForm__switchContainer">
-                  <span className="offerForm__switchContainer__span">
+                <div
+                  key={deliverer.id_deliverer}
+                  className="updateOfferForm__switchContainer">
+                  <span className="updateOfferForm__switchContainer__span">
                     {deliverer.name}
                   </span>
                   <label className="switch">
                     <input
+                      checked={deliverersArray.includes(deliverer.id_deliverer)}
                       onChange={() => handleChosenDeliverers(deliverer.id_deliverer)}
                       id={deliverer.name}
                       type="checkbox"
@@ -799,8 +834,8 @@ const UpdateOffer = () => {
               ))}
           </div>
         </div>
-        <div className="offerForm__switchContainer">
-          <span className="offerForm__switchContainer__span">
+        <div className="updateOfferForm__switchContainer">
+          <span className="updateOfferForm__switchContainer__span">
             Enregistrer comme brouillon et mettre en vente plus tard
           </span>
           <label className="switch">
@@ -814,8 +849,8 @@ const UpdateOffer = () => {
             <span className="slider round"></span>
           </label>
         </div>
-        <div id="errorsDescription" className="offerForm__errorsDescription"></div>
-        <div className="offerForm__submitContainer">
+        <div id="errorsDescription" className="updateOfferForm__errorsDescription"></div>
+        <div className="updateOfferForm__submitContainer">
           <button className="btn" type="submit">
             Ajouter
           </button>

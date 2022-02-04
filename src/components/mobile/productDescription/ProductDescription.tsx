@@ -10,22 +10,17 @@ import IDeliverer from '../../../interfaces/IDeliverer';
 import Ioffer from '../../../interfaces/IOffer';
 import IOffer_deliverer from '../../../interfaces/IOffer_deliverer';
 import ISize from '../../../interfaces/ISize';
+import ISport from '../../../interfaces/ISport';
 import IUserLog from '../../../interfaces/IUser';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
-
-interface Sport {
-  id_sport: number;
-  name: string;
-  icon: string;
-}
 
 const ProductDescription = () => {
   const [offer, setOffer] = useState<Ioffer>([]);
   const [brand, setBrand] = useState<IBrand>();
   const [size, setSize] = useState<ISize>();
   const [condition, setCondition] = useState<ICondition>();
-  const [sport, setSport] = useState<Sport>();
+  const [sport, setSport] = useState<ISport>();
   const [deliverer, setDeliverer] = useState<IDeliverer[]>([]);
   const [offerDeliverer, setOfferDeliverer] = useState<IOffer_deliverer[]>([]);
   const [handDeliverer, setHandDeliverer] = useState('');
@@ -40,7 +35,7 @@ const ProductDescription = () => {
     axios
       .get(`${urlBack}/offers/${id}/offer_deliverers`)
       .then((res) =>
-        setOfferDeliverer(res.data.map((deliverer: any) => deliverer.id_deliverer)),
+        setOfferDeliverer(res.data.map((deliverer) => deliverer.id_deliverer)),
       );
 
     axios
@@ -82,7 +77,10 @@ const ProductDescription = () => {
           axios
             .get(`${urlBack}/colors/${data.id_color2}`)
             .then((res) => setColor2(res.data));
-        axios.get(`${urlBack}/sports/${data.id_sport}`).then((res) => setSport(res.data));
+        data.id_sport &&
+          axios.get(`${urlBack}/sports/${data.id_sport}`).then((res) => {
+            setSport(res.data);
+          });
         data.id_size &&
           axios.get(`${urlBack}/sizes/${data.id_size}`).then((res) => setSize(res.data));
         axios
@@ -161,10 +159,10 @@ const ProductDescription = () => {
           </div>
           <div className="product-description__container-text__container3__color">
             <h3>Couleurs</h3>
-            <p className="product-description__container-text__container3__color__pastille-color">
+            <div className="product-description__container-text__container3__color__pastille-color">
               {color1 && <div className="colorPastille" style={color1.style}></div>}
               {color2 && <div className="colorPastille" style={color2.style}></div>}
-            </p>
+            </div>
           </div>
           <div className="product-description__container-text__container3__sport-icon">
             <h3>Sport</h3>
@@ -193,13 +191,13 @@ const ProductDescription = () => {
             {offerDeliverer &&
               deliverer &&
               deliverer
-                .filter((allDeliverer) =>
-                  offerDeliverer.includes(Number(allDeliverer.id_deliverer)),
+                .filter((allDeliverer: any) =>
+                  offerDeliverer.includes(allDeliverer.id_deliverer),
                 )
                 .map((delive, index) => <p key={index}>{delive.name}</p>)}
           </div>
           <div className="product-description__container-text__container4__delivery__btn">
-            <Link className="btn" type="submit" to="/confirmer-achat">
+            <Link className="btn" type="submit" to={`/confirmation-order/${id}`}>
               Acheter
             </Link>
           </div>

@@ -27,9 +27,9 @@ const Footer = () => {
         </li>
         <li id="vendre">Vendre</li>
         <li>
-          <Link to="/home">
+          <Link to="/">
             <FiHome className="footer__footerContainer__footerIcons" />
-            Home
+            Accueil
           </Link>
         </li>
         <li>
