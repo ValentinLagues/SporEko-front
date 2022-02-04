@@ -1,20 +1,13 @@
 import React from 'react';
-import { HashRouter, Route, Routes } from 'react-router-dom';
 
-import Connection from './components/connection/Connection';
-import Home from './components/home/Home';
-import Footer from './components/layout/Footer';
+import CreateAccount from './components/CreateAccount';
+import Home from './components/Home';
 
 function App() {
   return (
     <div className="App">
-      <HashRouter basename="/">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/connection" element={<Connection />} />
-        </Routes>
-        <Footer />
-      </HashRouter>
+      <Home />
+      <CreateAccount />
     </div>
   );
 }
