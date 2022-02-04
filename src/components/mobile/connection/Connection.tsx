@@ -6,6 +6,7 @@ import { HiEye } from 'react-icons/hi';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 
+import Logo from '../../../../resources/logo_dark.png';
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import IUser from '../../../interfaces/IUser';
 
@@ -18,7 +19,7 @@ const Connection = () => {
 
   const navigate: NavigateFunction = useNavigate();
   function redirectHome() {
-    navigate('/home');
+    navigate('/');
   }
 
   const urlBack = import.meta.env.VITE_URL_BACK;
@@ -55,7 +56,7 @@ const Connection = () => {
 
   return (
     <main className="connectionPage">
-      <h1>SporEko</h1>
+      <img src={Logo} alt="Sporeko logo" />
       <h2>Bienvenue !</h2>
       <p>Connectez-vous pour découvrir toutes nos fonctionnalités</p>
       <form

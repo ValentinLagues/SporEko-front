@@ -8,34 +8,40 @@ import ProductDescription from './components/mobile/productDescription/ProductDe
 
 type Menu = {
   path: string;
-  title: string;
+  titleFr: string;
+  titleEn: string;
   Component: React.ComponentType;
 };
 
 const menuList: Menu[] = [
   {
-    path: '/home',
-    title: 'Accueil',
+    path: '/',
+    titleFr: 'Accueil',
+    titleEn: 'Home',
     Component: Home,
   },
   {
     path: '/offers',
-    title: 'Annonces',
+    titleFr: 'Annonces',
+    titleEn: 'Offers',
     Component: AllOffers,
   },
   {
     path: '/login',
-    title: 'Connexion',
+    titleFr: 'Connexion',
+    titleEn: 'Login',
     Component: Connection,
   },
   {
     path: '/create-account',
-    title: 'Créer votre compte',
+    titleFr: 'Créer votre compte',
+    titleEn: 'Create your account',
     Component: CreateAccount,
   },
   {
     path: '/offer/:id',
-    title: 'Annonce',
+    titleFr: 'Annonce',
+    titleEn: 'Offer',
     Component: ProductDescription,
   },
 ];
