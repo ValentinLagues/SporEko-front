@@ -158,8 +158,6 @@ const OfferForm = () => {
   }, [deliverersArray]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('enlever le prevent');
     let errors = false;
     let errorsDescription: HTMLElement | null =
       document.getElementById('errorsDescription');
