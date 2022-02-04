@@ -12,7 +12,7 @@ function App() {
   const { idUser, accepted } = useContext(CurrentUserContext);
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <Header />
         <Routes>
           {menuList.map(({ path, Component }, index) => (

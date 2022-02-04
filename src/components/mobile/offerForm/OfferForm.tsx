@@ -158,8 +158,6 @@ const OfferForm = () => {
   }, [deliverersArray]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('enlever le prevent');
     let errors = false;
     let errorsDescription: HTMLElement | null =
       document.getElementById('errorsDescription');
@@ -277,7 +275,6 @@ const OfferForm = () => {
     const formData = new FormData();
     const arrayFiles = Array.from(file);
     arrayFiles.map((el) => formData.append('imagesOffers', el));
-
     axios
       .post(
         `${urlBack}/offers/images`,

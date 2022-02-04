@@ -2,6 +2,7 @@ import React from 'react';
 
 import ConfirmationOrder from './components/mobile/confirmOrder/ConfirmationOrder';
 import Favorites from './components/mobile/favorites/Favorites';
+import UnderConstruction from './components/mobile/layout/UnderConstruction';
 import OfferForm from './components/mobile/offerForm/OfferForm';
 import OffersUser from './components/mobile/profile/OffersUser/OffersUser';
 import UpdateOffer from './components/mobile/profile/OffersUser/UpdateOffer';
@@ -12,55 +13,71 @@ import UpdateProfile from './components/mobile/profile/UpdateProfile';
 
 type Menu = {
   path: string;
-  title: string;
+  titleFr: string;
+  titleEn: string;
   Component: React.ComponentType;
 };
 
 const authMenu: Menu[] = [
   {
     path: '/create-offer',
-    title: 'Créer une annonce',
+    titleFr: 'Créer une annonce',
+    titleEn: 'Create an offer',
     Component: OfferForm,
   },
   {
     path: '/profile',
-    title: 'Profil',
+    titleFr: 'Profil',
+    titleEn: 'Profile',
     Component: Profile,
   },
   {
     path: '/settings',
-    title: 'Paramétres',
+    titleFr: 'Paramétres',
+    titleEn: 'Settings',
     Component: Settings,
   },
   {
     path: '/update-profile',
-    title: 'Modifier votre profil',
+    titleFr: 'Modifier votre profil',
+    titleEn: 'Edit your profile',
     Component: UpdateProfile,
   },
   {
     path: '/shipment',
-    title: 'Livraison',
+    titleFr: 'Livraison',
+    titleEn: 'Shipment',
     Component: Shipment,
   },
   {
     path: '/update-offer/:id',
-    title: 'Modifier votre annonce',
+    titleFr: 'Modifier votre annonce',
+    titleEn: 'Update your offer',
     Component: UpdateOffer,
   },
   {
     path: '/my-dashboard',
-    title: 'Mes ventes et achats',
+    titleFr: 'Mes ventes et achats',
+    titleEn: 'My sales and purchases',
     Component: OffersUser,
   },
   {
     path: '/confirmation-order/:id',
-    title: 'Confirmation de commande',
+    titleFr: 'Confirmation de commande',
+    titleEn: 'Order confirmation',
     Component: ConfirmationOrder,
   },
   {
     path: '/favorites',
-    title: 'Mes favoris',
+    titleFr: 'Mes favoris',
+    titleEn: 'My favorites',
     Component: Favorites,
+  },
+  {
+    path: '/under-construction',
+    titleFr: 'Prochainement',
+    titleEn: 'Under construction',
+    Component: UnderConstruction,
   },
 ];
 export default authMenu;
