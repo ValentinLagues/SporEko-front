@@ -54,7 +54,10 @@ const CreateAccount = () => {
         .then((req) => console.log(req))
         .catch((err) => console.log(err));
   }, [user]);
+<<<<<<< HEAD
+=======
 
+>>>>>>> 10bbc56439399cdbf8e25ded77ee22b49b0bf9da
   return (
     <div className="create-account">
       <h2>Créez votre compte</h2>
