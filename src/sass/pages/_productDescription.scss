@@ -1,20 +1,13 @@
 .product-description {
     margin-top: 10vh;
     text-align: center;
-    // height: 150vh;
     margin-bottom: 10vh;
-    // ligne indispensable pour scroller mon annonce 
-        display: flex;
-        justify-content: space-around;
-        flex-wrap: wrap;
-        margin-bottom: 10vh;
-        // padding: 30px 0;
-        // background-color: yellow;
-      
-
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 10vh;
 
     &__container-picture {
-        // background-color: blue; 
         max-width: 600px;
     }
 
@@ -25,7 +18,16 @@
 
         &__container-picture__all-picture{
             width: 30vw;
+            flex-wrap: nowrap;
+            display: flex;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+
         }   
+
+        &__container-picture__all-picture__invisible{
+            display: none;
+        }
         
     &__container-text {
         // background-color: pink;
