@@ -50,7 +50,6 @@
     display: flex;
     flex-wrap: nowrap;
     overflow: hidden;
-    // margin: auto;
   }
   & .photoTips,
   & .descriptionTips {
@@ -110,8 +109,6 @@
     }
   }
   & #weightTipsContent {
-    // position: absolute;
-    // top: 3vh;
     background-color: white;
     padding: 1vh 0.5vw 2vh 2vw;
     z-index: 2;
