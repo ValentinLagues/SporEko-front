@@ -32,8 +32,7 @@ const CreateAccount = () => {
     axios.get(`${urlBack}/countries`).then((res) => setCountriesList(res.data));
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const newUser = {
       pseudo,
       lastname,
@@ -51,7 +50,7 @@ const CreateAccount = () => {
     user &&
       axios
         .post<IUserLog>(`${urlBack}/users`, user)
-        .then((req) => console.log(req))
+        .then((res) => res)
         .catch((err) => console.log(err));
   }, [user]);
 

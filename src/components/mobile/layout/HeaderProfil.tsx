@@ -24,7 +24,7 @@ const HeaderProfil = () => {
       <div className="headerProfil__intro">
         <div className="headerProfil__intro__photo">
           <img
-            src={user.picture}
+            src={user.picture ? user.picture : PhotoDefault}
             onError={(e) => {
               e.currentTarget.onerror = null;
               e.currentTarget.src = PhotoDefault;

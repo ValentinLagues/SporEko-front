@@ -33,7 +33,9 @@ const ProductDescription = () => {
     axios
       .get(`${urlBack}/offers/${id}/offer_deliverers`)
       .then((res) =>
-        setOfferDeliverer(res.data.map((deliverer) => deliverer.id_deliverer)),
+        setOfferDeliverer(
+          res.data.map((deliverer: { id_deliverer: number }) => deliverer.id_deliverer),
+        ),
       );
 
     axios
