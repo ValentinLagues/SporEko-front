@@ -277,7 +277,6 @@ const OfferForm = () => {
     const formData = new FormData();
     const arrayFiles = Array.from(file);
     arrayFiles.map((el) => formData.append('imagesOffers', el));
-
     axios
       .post(
         `${urlBack}/offers/images`,

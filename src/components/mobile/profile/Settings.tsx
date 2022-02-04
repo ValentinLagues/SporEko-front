@@ -16,7 +16,7 @@ const Settings = () => {
           Modifer mon profil
           <hr />
         </Link>
-        <Link to="/shipment" className="settings__content__link">
+        <Link to="/under-construction" className="settings__content__link">
           <FiTruck className="settings__content__icons" />
           Mode d&apos;envoi
         </Link>

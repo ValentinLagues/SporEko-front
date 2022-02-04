@@ -17,7 +17,7 @@ const Header = () => {
           (path, index) =>
             path.path === url.pathname && (
               <div key={index} className="header__container__name">
-                <p>{path.title}</p>
+                <p>{path.titleFr}</p>
               </div>
             ),
         )}
@@ -25,7 +25,7 @@ const Header = () => {
           (path, index) =>
             path.path === url.pathname && (
               <div key={index} className="header__container__name">
-                <p>{path.title}</p>
+                <p>{path.titleFr}</p>
               </div>
             ),
         )}
