@@ -1,12 +1,4 @@
 export default interface IUser {
-  id: number;
-  userImage: string;
-  token: string;
-  pseudo: string;
-  admin: number;
-  userIn: boolean;
-}
-export default interface IUserLog {
   id_user: number;
   lastname: string;
   firstname: string;

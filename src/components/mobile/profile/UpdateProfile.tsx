@@ -20,32 +20,36 @@ import { HiEye } from 'react-icons/hi';
 import { ImCancelCircle, ImCheckmark } from 'react-icons/im';
 
 import CurrentUserContext from '../../../contexts/CurrentUser';
+import IAthletic from '../../../interfaces/IAthletic';
+import ICountry from '../../../interfaces/ICountry';
+import IGender from '../../../interfaces/IGender';
 import IUser from '../../../interfaces/IUser';
 import IUserLog from '../../../interfaces/IUser';
 import HeaderProfil from '../layout/HeaderProfil';
 
 const UpdateProfile = () => {
   // User context
-  const { user, idUser } = useContext(CurrentUserContext);
+  const { idUser } = useContext(CurrentUserContext);
 
   const [gender, setGender] = useState<Array<any>>([]);
+  const [user, setUser] = useState<IUser>([]);
   const [athletic, setAthletic] = useState<Array<any>>([]);
   const [country, setCountry] = useState<Array<any>>([]);
-  const [pseudo, setPseudo] = useState<string | undefined>(user.pseudo);
-  const [lastname, setLastName] = useState<string | undefined>(user.lastname);
-  const [firstname, setFirstname] = useState<string | undefined>();
-  const [address, setAddress] = useState<string | undefined>();
+  const [pseudo, setPseudo] = useState<string>(user.pseudo);
+  const [lastname, setLastName] = useState<string>(user.lastname);
+  const [firstname, setFirstname] = useState<string>();
+  const [address, setAddress] = useState<string>();
   const [address_complement, setAddress_complement] = useState<string>();
-  const [zipcode, setZipcode] = useState<number | undefined>();
-  const [city, setCity] = useState<string | undefined>();
-  const [id_country, setId_country] = useState<string | undefined>();
-  const [phone, setPhone] = useState<string | undefined>();
-  const [email, setEmail] = useState<string | undefined>();
-  const [birthday, setBirthday] = useState<string | undefined>();
-  const [id_gender, setId_gender] = useState<string | undefined>();
-  const [id_athletic, setId_athletic] = useState<string | undefined>();
-  const [password, setPassword] = useState<string | undefined>();
-  const [verifyPassword, setVerifyPassword] = useState<string | undefined>();
+  const [zipcode, setZipcode] = useState<number>();
+  const [city, setCity] = useState<string>();
+  const [id_country, setId_country] = useState<string>();
+  const [phone, setPhone] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [birthday, setBirthday] = useState<string>();
+  const [id_gender, setId_gender] = useState<string>();
+  const [id_athletic, setId_athletic] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [confirmPassword, setConfirmPassword] = useState<string>();
   const [hiEye, setHiEye] = useState<boolean>(true);
   const [hiEye2, setHiEye2] = useState<boolean>(true);
   const [goodEntryVerifyPassword, setGoodEntryVerifyPassword] = useState<number>(0);
@@ -68,25 +72,27 @@ const UpdateProfile = () => {
       setGoodEntryPassword(0);
     }
   }, [password]);
-
+  useEffect(() => {
+    axios.get<IUser>(`${urlBack}/users/${idUser}`).then((res) => setUser(res.data));
+  }, [idUser]);
   // UseEffect for verify the concordance of password
   useEffect(() => {
     if (
-      password === verifyPassword &&
-      verifyPassword?.length != undefined &&
-      verifyPassword.length > 0
+      password === confirmPassword &&
+      confirmPassword?.length != undefined &&
+      confirmPassword.length > 0
     ) {
       setGoodEntryVerifyPassword(1);
     } else if (
-      verifyPassword?.length != undefined &&
-      password != verifyPassword &&
-      verifyPassword.length > 0
+      confirmPassword?.length != undefined &&
+      password != confirmPassword &&
+      confirmPassword.length > 0
     ) {
       setGoodEntryVerifyPassword(2);
     } else {
       setGoodEntryVerifyPassword(0);
     }
-  }, [password, verifyPassword]);
+  }, [password, confirmPassword]);
 
   // Function axios to change picture of user
 
@@ -113,7 +119,7 @@ const UpdateProfile = () => {
         setMessageError('');
       })
       .catch((err) => {
-        console.error(err);
+        err;
         setMessage('');
         setMessageError(
           "Le fichier est trop volumineux ou n'est pas au bon format (jpeg/jpg/png)",
@@ -122,7 +128,7 @@ const UpdateProfile = () => {
   };
 
   const updatedUser = () => {
-    if (password === verifyPassword) {
+    if (password === confirmPassword) {
       const newUpdateUser = {
         lastname,
         firstname,
@@ -147,7 +153,7 @@ const UpdateProfile = () => {
   useEffect(() => {
     updateUser &&
       axios
-        .put<IUserLog>(
+        .put<IUser>(
           `${urlBack}/users/${idUser}`,
           updateUser,
 
@@ -174,9 +180,9 @@ const UpdateProfile = () => {
   }, [updateUser]);
   // Axios call to display select
   useEffect(() => {
-    axios.get(`${urlBack}/genders`).then((res) => setGender(res.data));
-    axios.get(`${urlBack}/athletics`).then((res) => setAthletic(res.data));
-    axios.get(`${urlBack}/countries`).then((res) => setCountry(res.data));
+    axios.get<IGender[]>(`${urlBack}/genders`).then((res) => setGender(res.data));
+    axios.get<IAthletic[]>(`${urlBack}/athletics`).then((res) => setAthletic(res.data));
+    axios.get<ICountry[]>(`${urlBack}/countries`).then((res) => setCountry(res.data));
   }, []);
 
   return (
@@ -266,7 +272,7 @@ const UpdateProfile = () => {
             id="zip-code"
             min="0"
             max="99999"
-            placeholder={user.zipcode ? user.zipcode : 'Code postal'}
+            placeholder={user.zipcode ? `${user.zipcode}` : 'Code postal'}
             onChange={(e) => setZipcode(e.target.valueAsNumber)}
           />
           <hr />
@@ -307,12 +313,22 @@ const UpdateProfile = () => {
         <div className="updateProfile__container__content">
           {goodEntryPassword === 1 && (
             <ImCheckmark
-              style={{ right: '16vw', position: 'absolute', color: 'green' }}
+              style={{
+                right: '16vw',
+                bottom: '2.2vh',
+                position: 'absolute',
+                color: 'green',
+              }}
             />
           )}
           {goodEntryPassword === 2 && (
             <ImCancelCircle
-              style={{ right: '16vw', position: 'absolute', color: 'red' }}
+              style={{
+                right: '16vw',
+                bottom: '2.2vh',
+                position: 'absolute',
+                color: 'red',
+              }}
             />
           )}
           <label htmlFor="password">Mot de passe :</label>
@@ -332,12 +348,22 @@ const UpdateProfile = () => {
         <div className="updateProfile__container__content">
           {goodEntryVerifyPassword === 1 && (
             <ImCheckmark
-              style={{ right: '16vw', position: 'absolute', color: 'green' }}
+              style={{
+                right: '16vw',
+                bottom: '2.2vh',
+                position: 'absolute',
+                color: 'green',
+              }}
             />
           )}
           {goodEntryVerifyPassword === 2 && (
             <ImCancelCircle
-              style={{ right: '16vw', position: 'absolute', color: 'red' }}
+              style={{
+                right: '16vw',
+                bottom: '2.2vh',
+                position: 'absolute',
+                color: 'red',
+              }}
             />
           )}
           <label htmlFor="password">Confirmation mot de passe :</label>
@@ -346,7 +372,7 @@ const UpdateProfile = () => {
             placeholder="Confirmer votre mot de passe"
             type={`${hiEye2 ? 'password' : 'text'}`}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setVerifyPassword(e.currentTarget.value)
+              setConfirmPassword(e.currentTarget.value)
             }
           />
           <HiEye className="inputIcon right" onClick={() => setHiEye2(!hiEye2)} />

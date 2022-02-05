@@ -13,7 +13,9 @@ const OffersUser = () => {
   const urlBack = import.meta.env.VITE_URL_BACK;
 
   useEffect(() => {
-    axios.get(`${urlBack}/users/${idUser}/offers`).then((res) => setAllOffers(res.data));
+    axios
+      .get<IOffer[]>(`${urlBack}/users/${idUser}/offers`)
+      .then((res) => setAllOffers(res.data));
   }, []);
 
   return (
