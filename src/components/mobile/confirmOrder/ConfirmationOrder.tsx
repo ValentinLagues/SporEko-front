@@ -21,14 +21,16 @@ const ConfirmationOrder = () => {
   const { idUser } = useContext(CurrentUserContext);
   const [confirmedOrder, setConfirmedOrder] = useState<IOffer>();
   const [confirmedAdress, setConfirmedAdress] = useState<IUserLog>();
-  const [_confirmedDeliverer, setConfirmedDeliverer] = useState<IOffer_deliverer>();
-  const [_confirmedDelivererPrice, setConfirmedDelivererPrice] =
+  const [confirmedDeliverer, setConfirmedDeliverer] = useState<IOffer_deliverer>();
+  const [confirmedDelivererPrice, setConfirmedDelivererPrice] =
     useState<IDeliverer_price>();
   const [confirmedCondition, setConfirmedCondition] = useState<ICondition>();
   const [deliverersList, setDeliverersList] = useState<IDeliverer[]>([]);
   const [confirmedSize, setConfirmedSize] = useState<ISize>();
 
   const [handDelivery, setHandDelivery] = useState(0);
+  const [colissimoDelivery, setColissimoDelivery] = useState(0);
+  const [mondialRelayDelivery, setMondialRelayDelivery] = useState(0);
 
   useEffect(() => {
     axios.get(`${urlBack}/offers/${id}`).then((res) => {
@@ -51,6 +53,16 @@ const ConfirmationOrder = () => {
       .get(`${urlBack}/deliverer_price`)
       .then((res) => setConfirmedDelivererPrice(res.data));
   }, []);
+
+  useEffect(() => {
+    axios
+      .get(
+        `${urlBack}/deliverer_prices?idDeliverer=${confirmedDelivererPrice?.id_deliverer}&weight=${confirmedOrder?.weight}`,
+      )
+      .then((res) => {
+        setConfirmedDelivererPrice(res.data);
+      });
+  }, [confirmedDeliverer]);
 
   return (
     <div className="confirmedOrder">
@@ -115,6 +127,36 @@ const ConfirmationOrder = () => {
               />
               <span className="slider round"> </span>
             </label>
+            <span className="confirmedOrder__confirmedOrderContainer__span">
+              Colissimo
+            </span>
+            <label className="switch">
+              <input
+                checked={colissimoDelivery ? true : false}
+                onChange={() => {
+                  colissimoDelivery ? setColissimoDelivery(0) : setColissimoDelivery(1);
+                }}
+                type="checkbox"
+                name="colissimoDelivery"
+              />
+              <span className="slider round"> </span>
+            </label>
+            <span className="confirmedOrder__confirmedOrderContainer__span">
+              Mondial Relay
+            </span>
+            <label className="switch">
+              <input
+                checked={mondialRelayDelivery ? true : false}
+                onChange={() => {
+                  mondialRelayDelivery
+                    ? setMondialRelayDelivery(0)
+                    : setMondialRelayDelivery(1);
+                }}
+                type="checkbox"
+                name="mondialRelayDelivery"
+              />
+              <span className="slider round"> </span>
+            </label>
           </div>
           {!handDelivery &&
             deliverersList.map((deliverer, index) => <p key={index}>{deliverer.name}</p>)}
@@ -126,7 +168,7 @@ const ConfirmationOrder = () => {
               <img src={confirmedOrder.picture1} alt="picturetotal" />
               <p>Montant : {confirmedOrder.price} €</p>
               <p>Frais de port : </p>
-              <p>Frais de protection acheteurs : </p>
+              <p>Frais de protection acheteurs : 1 €</p>
               <p>TOTAL : {confirmedOrder.price} + 1 €</p>
             </div>
           )}
