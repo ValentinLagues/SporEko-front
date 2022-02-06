@@ -31,23 +31,25 @@ const UpdateProfile = () => {
   // User context
   const { idUser } = useContext(CurrentUserContext);
 
-  const [gender, setGender] = useState<Array<any>>([]);
+  const [gender, setGender] = useState<IGender[]>([]);
   const [user, setUser] = useState<IUser>([]);
   const [athletic, setAthletic] = useState<Array<any>>([]);
   const [country, setCountry] = useState<Array<any>>([]);
   const [pseudo, setPseudo] = useState<string>(user.pseudo);
-  const [lastname, setLastName] = useState<string>(user.lastname);
-  const [firstname, setFirstname] = useState<string>();
-  const [address, setAddress] = useState<string>();
-  const [address_complement, setAddress_complement] = useState<string>();
-  const [zipcode, setZipcode] = useState<number>();
-  const [city, setCity] = useState<string>();
-  const [id_country, setId_country] = useState<string>();
-  const [phone, setPhone] = useState<string>();
-  const [email, setEmail] = useState<string>();
-  const [birthday, setBirthday] = useState<string>();
-  const [id_gender, setId_gender] = useState<string>();
-  const [id_athletic, setId_athletic] = useState<string>();
+  const [lastname, setLastname] = useState<string>(user.lastname);
+  const [firstname, setFirstname] = useState<string>(user.firstname);
+  const [address, setAddress] = useState<string>(user.address);
+  const [address_complement, setAddress_complement] = useState<string>(
+    user.address_complement,
+  );
+  const [zipcode, setZipcode] = useState<number>(user.zipcode);
+  const [city, setCity] = useState<string>(user.city);
+  const [id_country, setId_country] = useState<number>(user.id_country);
+  const [phone, setPhone] = useState<string>(user.phone);
+  const [email, setEmail] = useState<string>(user.email);
+  const [birthday, setBirthday] = useState<string>(user.birthday);
+  const [id_gender, setId_gender] = useState<number>(user.id_gender);
+  const [id_athletic, setId_athletic] = useState<number>(user.id_athletic);
   const [password, setPassword] = useState<string>();
   const [confirmPassword, setConfirmPassword] = useState<string>();
   const [hiEye, setHiEye] = useState<boolean>(true);
@@ -74,7 +76,7 @@ const UpdateProfile = () => {
   }, [password]);
   useEffect(() => {
     axios.get<IUser>(`${urlBack}/users/${idUser}`).then((res) => setUser(res.data));
-  }, [idUser]);
+  }, []);
   // UseEffect for verify the concordance of password
   useEffect(() => {
     if (
@@ -144,7 +146,7 @@ const UpdateProfile = () => {
         birthday,
         phone,
         pseudo,
-      } as unknown as IUser;
+      } as IUser;
       setUpdateUser(newUpdateUser);
     }
   };
@@ -219,7 +221,7 @@ const UpdateProfile = () => {
             type="text"
             id="nom"
             placeholder={user.lastname ? user.lastname : 'Votre nom'}
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={(e) => setLastname(e.target.value)}
           />
           <hr />
         </div>
@@ -273,7 +275,7 @@ const UpdateProfile = () => {
             min="0"
             max="99999"
             placeholder={user.zipcode ? `${user.zipcode}` : 'Code postal'}
-            onChange={(e) => setZipcode(e.target.valueAsNumber)}
+            onChange={(e) => setZipcode(Number(e.target.valueAsNumber))}
           />
           <hr />
         </div>
@@ -281,7 +283,7 @@ const UpdateProfile = () => {
         <div className="updateProfile__container__content">
           <label htmlFor="pays">Pays :</label>
           <FiMap className="updateProfile__container__content__icons" />
-          <select onChange={(e) => setId_country(e.target.value)} id="pays">
+          <select onChange={(e) => setId_country(Number(e.target.value))} id="pays">
             {country
               .filter((el) => el.id_country == user.id_country)
               .map((el, index) => (
@@ -290,7 +292,7 @@ const UpdateProfile = () => {
                 </option>
               ))}
             {country.map((el, index) => (
-              <option key={index} defaultValue={el.id_country}>
+              <option key={index} value={el.id_country}>
                 {el.name}
               </option>
             ))}
@@ -407,7 +409,7 @@ const UpdateProfile = () => {
           <label htmlFor="birthday">Quel genre de sportifs êtes-vous ?</label>
           <BiRun className="updateProfile__container__content__icons" />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <select onChange={(e) => setId_athletic(e.target.value)}>
+          <select onChange={(e) => setId_athletic(Number(e.target.value))}>
             {athletic
               .filter((el) => el.id_athletic == user.id_athletic)
               .map((el, index) => (
@@ -416,7 +418,7 @@ const UpdateProfile = () => {
                 </option>
               ))}
             {athletic.map((el, index) => (
-              <option key={index} value={el.id_athletic}>
+              <option key={index} value={Number(el.id_athletic)}>
                 {el.name}
               </option>
             ))}
@@ -431,7 +433,7 @@ const UpdateProfile = () => {
             <BsGenderMale />
             <BsGenderAmbiguous />
           </div>
-          <select onChange={(e) => setId_gender(e.currentTarget.value)}>
+          <select onChange={(e) => setId_gender(Number(e.currentTarget.value))}>
             {gender
               .filter((el) => el.id_gender == user.id_gender)
               .map((el, index) => (

@@ -12,6 +12,8 @@ import IUser from '../../../interfaces/IUser';
 import IUserLog from '../../../interfaces/IUserLog';
 
 const Connection = () => {
+  const { setIdUser } = useContext(CurrentUserContext);
+
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -33,33 +35,36 @@ const Connection = () => {
     } as IUser;
     setLogin(userLog);
   };
+
   useEffect(() => {
-    axios
-      .post<IUserLog>(`${urlBack}/login`, login, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        setErrorMessage('');
-        sessionStorage.setItem('pseudo', data.pseudo);
-        sessionStorage.setItem('id', `${data.id}`);
-        sessionStorage.setItem('firstname', `${data.firstname}`);
-        sessionStorage.setItem('lastname', `${data.lastname}`);
-        sessionStorage.setItem('picture', `${data.picture}`);
-        setAccepted(true);
-        redirectHome();
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
-          setErrorMessage('Email ou mot de passe incorrect');
-        } else {
-          setErrorMessage(err);
-        }
-      });
+    login &&
+      axios
+        .post<IUserLog>(`${urlBack}/login`, login, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        })
+        .then((response) => response.data)
+        .then((data) => {
+          setErrorMessage('');
+          setIdUser(data.id);
+          sessionStorage.setItem('pseudo', data.pseudo);
+          sessionStorage.setItem('id', `${data.id}`);
+          sessionStorage.setItem('firstname', `${data.firstname}`);
+          sessionStorage.setItem('lastname', `${data.lastname}`);
+          sessionStorage.setItem('picture', `${data.picture}`);
+          setAccepted(true);
+          redirectHome();
+        })
+        .catch((err) => {
+          if (err.response.status === 401) {
+            setErrorMessage('Email ou mot de passe incorrect');
+          } else {
+            setErrorMessage(err);
+          }
+        });
   }, [login]);
 
   return (

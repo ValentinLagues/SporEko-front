@@ -41,17 +41,21 @@ const CurrentUserContext = createContext<UserContent>({
 
 export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
   const [accepted, setAccepted] = useState<boolean>(false);
-  const [pseudo, setPseudo] = useState<string>(sessionStorage.getItem('pseudo') || '');
-  const [idUser, setIdUser] = useState<number>(Number(sessionStorage.getItem('id')) || 0);
+  const [pseudo, setPseudo] = useState<string>(
+    sessionStorage.getItem('pseudo') as string,
+  );
+  const [idUser, setIdUser] = useState<number>(Number(sessionStorage.getItem('id')));
   const [firstname, setFirstname] = useState<string>(
-    sessionStorage.getItem('firstname') || '',
+    sessionStorage.getItem('firstname') as string,
   );
   const [lastname, setLastname] = useState<string>(
-    sessionStorage.getItem('lastname') || '',
+    sessionStorage.getItem('lastname') as string,
   );
-  const [picture, setPicture] = useState<string>(sessionStorage.getItem('picture') || '');
+  const [picture, setPicture] = useState<string>(
+    sessionStorage.getItem('picture') as string,
+  );
   const [admin, setAdmin] = useState<number>(
-    Number(sessionStorage.getItem('admin')) || 0,
+    Number(sessionStorage.getItem('admin')) as number,
   );
   const deleteCookie = useCookies(['user_token'])[2];
 

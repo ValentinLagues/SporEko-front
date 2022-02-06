@@ -1,17 +1,26 @@
-import React, { useContext } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 import PhotoDefault from '../../../../resources/photoDefault.png';
-import CurrentUserContext from '../../../contexts/CurrentUser';
+import IUser from '../../../interfaces/IUser';
 
 const HeaderProfil = () => {
-  const { picture, lastname, firstname } = useContext(CurrentUserContext);
+  const [user, setUser] = useState<IUser>([]);
+  // Url back
+  const urlBack = import.meta.env.VITE_URL_BACK;
+  // Axios call for user infos
+  useEffect(() => {
+    axios
+      .get(`${urlBack}/users/${sessionStorage.getItem('id')}`)
+      .then((res) => setUser(res.data));
+  }, []);
 
   return (
     <div className="headerProfil">
       <div className="headerProfil__intro">
         <div className="headerProfil__intro__photo">
           <img
-            src={picture ? picture : PhotoDefault}
+            src={user.picture ? user.picture : PhotoDefault}
             onError={(e) => {
               e.currentTarget.onerror = null;
               e.currentTarget.src = PhotoDefault;
@@ -21,7 +30,7 @@ const HeaderProfil = () => {
         </div>
         <div className="headerProfil__intro__name">
           <h3>
-            {firstname} {lastname}
+            {user.firstname} {user.lastname}
           </h3>
         </div>
       </div>
