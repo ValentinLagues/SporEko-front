@@ -21,12 +21,14 @@ const ConfirmationOrder = () => {
   const { idUser } = useContext(CurrentUserContext);
   const [confirmedOrder, setConfirmedOrder] = useState<IOffer>();
   const [confirmedAdress, setConfirmedAdress] = useState<IUserLog>();
-  const [confirmedDeliverer, setConfirmedDeliverer] = useState<IOffer_deliverer>();
+  const [_confirmedDeliverer, setConfirmedDeliverer] = useState<IOffer_deliverer>();
   const [confirmedDelivererPrice, setConfirmedDelivererPrice] =
     useState<IDeliverer_price>();
   const [confirmedCondition, setConfirmedCondition] = useState<ICondition>();
   const [deliverersList, setDeliverersList] = useState<IDeliverer[]>([]);
   const [confirmedSize, setConfirmedSize] = useState<ISize>();
+
+  // const [totalOrder, setTotalOrder] = useState([]);
 
   const [handDelivery, setHandDelivery] = useState(0);
   const [colissimoDelivery, setColissimoDelivery] = useState(0);
@@ -62,7 +64,7 @@ const ConfirmationOrder = () => {
       .then((res) => {
         setConfirmedDelivererPrice(res.data);
       });
-  }, [confirmedDeliverer]);
+  }, [confirmedDelivererPrice]);
 
   return (
     <div className="confirmedOrder">
@@ -166,10 +168,16 @@ const ConfirmationOrder = () => {
           {confirmedOrder && (
             <div>
               <img src={confirmedOrder.picture1} alt="picturetotal" />
-              <p>Montant : {confirmedOrder.price} €</p>
-              <p>Frais de port : </p>
-              <p>Frais de protection acheteurs : 1 €</p>
-              <p>TOTAL : {confirmedOrder.price} + 1 €</p>
+              <p className="confirmedOrder__confirmedOrderContainer__box__orderDetails">
+                Montant : {confirmedOrder.price} €
+              </p>
+              <p className="confirmedOrder__confirmedOrderContainer__box__orderDetails">
+                Frais de port : {confirmedDelivererPrice?.price}
+              </p>
+              <p className="confirmedOrder__confirmedOrderContainer__box__orderDetails">
+                Frais de protection acheteurs : 1 €
+              </p>
+              {/* <p className="confirmedOrder__confirmedOrderContainer__box__orderDetails">TOTAL : {totalOrder.reduce() €</p> */}
             </div>
           )}
         </div>
