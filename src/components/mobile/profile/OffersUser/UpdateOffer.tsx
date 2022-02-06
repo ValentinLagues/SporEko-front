@@ -423,7 +423,7 @@ const UpdateOffer = () => {
         <div className="photosContainer">
           {pictures.map((image, index) => (
             <img
-              className={image != 'null' ? 'image' : 'invisible'}
+              className={image !== null ? 'image' : 'invisible'}
               key={index}
               src={image}
               alt={`n°${index} de l'annonce`}
