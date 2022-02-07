@@ -6,7 +6,6 @@ import { useParams } from 'react-router';
 
 import cards from '../../../../resources/cards.png';
 import CurrentUserContext from '../../../contexts/CurrentUser';
-
 // import des interfaces
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
