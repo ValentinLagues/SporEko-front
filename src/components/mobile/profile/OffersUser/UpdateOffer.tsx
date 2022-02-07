@@ -13,7 +13,7 @@ import IDeliverer from '../../../../interfaces/IDeliverer';
 import IGender from '../../../../interfaces/IGender';
 import IItem from '../../../../interfaces/IItem';
 import IOffer from '../../../../interfaces/IOffer';
-import IOffer_Deliverer from '../../../../interfaces/IOffer_deliverer';
+import IOfferDeliverer from '../../../../interfaces/IOfferDeliverer';
 import ISize from '../../../../interfaces/ISize';
 import ISport from '../../../../interfaces/ISport';
 import ITextile from '../../../../interfaces/ITextile';
@@ -25,63 +25,71 @@ const UpdateOffer = () => {
   const { id } = useParams();
 
   // UseState for dispaly informations
-  const [sportList, setSportList] = useState<ISport[]>([]);
-  const [categoryList, setCategoryList] = useState<ICategory[]>([]);
-  const [itemList, setItemList] = useState<IItem[]>([]);
-  const [brandList, setBrandList] = useState<IBrand[]>([]);
-  const [textileList, setTextileList] = useState<ITextile[]>([]);
-  const [colorList, setColorList] = useState<IColor[]>([]);
-  const [conditionList, setConditionList] = useState<ICondition[]>([]);
-  const [sizeList, setSizeList] = useState<ISize[]>([]);
-  const [delivererList, setDelivererList] = useState<IDeliverer[]>([]);
-  const [gendersList, setGendersList] = useState<IGender[]>([]);
+  const [sports, setSports] = useState<ISport[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [items, setItems] = useState<IItem[]>([]);
+  const [brands, setBrands] = useState<IBrand[]>([]);
+  const [textiles, setTextiles] = useState<ITextile[]>([]);
+  const [colors, setColors] = useState<IColor[]>([]);
+  const [conditions, setConditions] = useState<ICondition[]>([]);
+  const [sizes, setSizes] = useState<ISize[]>([]);
+  const [deliverers, setDeliverers] = useState<IDeliverer[]>([]);
+  const [genders, setGenders] = useState<IGender[]>([]);
 
   // useState for update offer
   const [pictures, setPictures] = useState<Array<string>>([]);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [sport, setSport] = useState('');
-  const [gender, setGender] = useState<number | null>(null);
-  const [genderAdult, setGenderAdult] = useState<number | null>(null);
-  const [genderChild, setGenderChild] = useState<number | null>(null);
-  const [genderIsChild, setGenderIsChild] = useState(0);
-  const [category, setCategory] = useState('');
-  const [item, setItem] = useState('');
+  const [title, setTitle] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [sport, setSport] = useState<number>(0);
+  const [gender, setGender] = useState<number>(0);
+  const [genderAdult, setGenderAdult] = useState<number>(0);
+  const [genderChild, setGenderChild] = useState<number>(0);
+  const [genderIsChild, setGenderIsChild] = useState<number>(0);
+  const [category, setCategory] = useState<number>(0);
+  const [item, setItem] = useState<number>(0);
   const [itemInfos, setItemInfos] = useState<IItem>();
-  const [categoryIsClothes, setCategoryIsClothes] = useState(false);
-  const [brand, setBrand] = useState('');
-  const [textile, setTextile] = useState('');
-  const [color1, setColor1] = useState('');
-  const [color2, setColor2] = useState('');
-  const [condition, setCondition] = useState('');
-  const [price, setPrice] = useState<number | null>(null);
-  const [showSizes, setShowSizes] = useState(false);
-  const [size, setSize] = useState('');
-  const [weight, setWeight] = useState<number | null>(null);
-  const [weightRequired, setWeightRequired] = useState(false);
-  const [handDelivery, setHandDelivery] = useState(0);
-  const [isDraft, setIsDraft] = useState(0);
+  const [categoryIsClothes, setCategoryIsClothes] = useState<boolean>(false);
+  const [brand, setBrand] = useState<number>(0);
+  const [textile, setTextile] = useState<string>('');
+  const [color1, setColor1] = useState<number>(0);
+  const [color2, setColor2] = useState<number>(0);
+  const [condition, setCondition] = useState<number>(0);
+  const [price, setPrice] = useState<number>(0);
+  const [showSizes, setShowSizes] = useState<boolean>(false);
+  const [size, setSize] = useState<number>(0);
+  const [weight, setWeight] = useState<number>(0);
+  const [weightRequired, setWeightRequired] = useState<boolean>(false);
+  const [handDelivery, setHandDelivery] = useState<number>(0);
+  const [isDraft, setIsDraft] = useState<number>(0);
   const [offer, setOffer] = useState<IOffer>();
   const [deliverersArray, setDeliverersArray] = useState<Array<number>>([]);
-  const [deliverersArrayInitial, setDeliverersArrayInitial] = useState<Array<number>>([]);
+  const [deliverersArrayInitial, setDeliverersArrayInitial] = useState<IOfferDeliverer[]>(
+    [],
+  );
 
   // Axios call to display select
   useEffect(() => {
-    axios.get(`${urlBack}/sports`).then((res) => setSportList(res.data));
-    axios.get(`${urlBack}/categories`).then((res) => setCategoryList(res.data));
-    axios.get(`${urlBack}/items`).then((res) => setItemList(res.data));
-    axios.get(`${urlBack}/brands`).then((res) => setBrandList(res.data));
-    axios.get(`${urlBack}/textiles`).then((res) => setTextileList(res.data));
-    axios.get(`${urlBack}/colors`).then((res) => setColorList(res.data));
-    axios.get(`${urlBack}/conditions`).then((res) => setConditionList(res.data));
-    axios.get(`${urlBack}/sizes`).then((res) => setSizeList(res.data));
-    axios.get(`${urlBack}/deliverers`).then((res) => setDelivererList(res.data));
-    axios.get(`${urlBack}/genders`).then((res) => setGendersList(res.data));
-    axios.get(`${urlBack}/offers/${id}/offer_deliv`).then((res) => {
-      setDeliverersArray(res.data.map((deliverer: IDeliverer) => deliverer.id_deliverer));
+    axios.get<ISport[]>(`${urlBack}/sports`).then((res) => setSports(res.data));
+    axios
+      .get<ICategory[]>(`${urlBack}/categories`)
+      .then((res) => setCategories(res.data));
+    axios.get<IItem[]>(`${urlBack}/items`).then((res) => setItems(res.data));
+    axios.get<IBrand[]>(`${urlBack}/brands`).then((res) => setBrands(res.data));
+    axios.get<ITextile[]>(`${urlBack}/textiles`).then((res) => setTextiles(res.data));
+    axios.get<IColor[]>(`${urlBack}/colors`).then((res) => setColors(res.data));
+    axios
+      .get<ICondition[]>(`${urlBack}/conditions`)
+      .then((res) => setConditions(res.data));
+    axios.get<ISize[]>(`${urlBack}/sizes`).then((res) => setSizes(res.data));
+    axios
+      .get<IDeliverer[]>(`${urlBack}/deliverers`)
+      .then((res) => setDeliverers(res.data));
+    axios.get<IGender[]>(`${urlBack}/genders`).then((res) => setGenders(res.data));
+    axios.get<IOfferDeliverer[]>(`${urlBack}/offers/${id}/offer_deliv`).then((res) => {
+      setDeliverersArray(res.data.map((deliverer) => deliverer.id_deliverer));
       setDeliverersArrayInitial(res.data);
     });
-    axios.get(`${urlBack}/offers/${id}`).then((res) => {
+    axios.get<IOffer>(`${urlBack}/offers/${id}`).then((res) => {
       setTitle(res.data.title);
       setDescription(res.data.description);
       setSport(res.data.id_sport);
@@ -99,35 +107,35 @@ const UpdateOffer = () => {
       setWeight(res.data.weight);
       setHandDelivery(res.data.hand_delivery);
       setIsDraft(res.data.is_draft);
-      setPictures({
-        picture1: res.data.picture1,
-        picture2: res.data.picture2,
-        picture3: res.data.picture3,
-        picture4: res.data.picture4,
-        picture5: res.data.picture5,
-        picture6: res.data.picture6,
-        picture7: res.data.picture7,
-        picture8: res.data.picture8,
-        picture9: res.data.picture9,
-        picture10: res.data.picture10,
-        picture11: res.data.picture11,
-        picture12: res.data.picture12,
-        picture13: res.data.picture13,
-        picture14: res.data.picture14,
-        picture15: res.data.picture15,
-        picture16: res.data.picture16,
-        picture17: res.data.picture17,
-        picture18: res.data.picture18,
-        picture19: res.data.picture19,
-        picture20: res.data.picture20,
-      });
+      setPictures([
+        res.data.picture1,
+        res.data.picture2,
+        res.data.picture3,
+        res.data.picture4,
+        res.data.picture5,
+        res.data.picture6,
+        res.data.picture7,
+        res.data.picture8,
+        res.data.picture9,
+        res.data.picture10,
+        res.data.picture11,
+        res.data.picture12,
+        res.data.picture13,
+        res.data.picture14,
+        res.data.picture15,
+        res.data.picture16,
+        res.data.picture17,
+        res.data.picture18,
+        res.data.picture19,
+        res.data.picture20,
+      ]);
     });
   }, [id]);
 
   useEffect(() => {
     category &&
-      axios.get(`${urlBack}/categories/${category}/items`).then((res) => {
-        setItemList(res.data);
+      axios.get<IItem[]>(`${urlBack}/categories/${category}/items`).then((res) => {
+        setItems(res.data);
       });
   }, [category]);
 
@@ -144,14 +152,16 @@ const UpdateOffer = () => {
       oneValue = true;
     }
     item
-      ? axios.get(`${urlBack}/items/${item}/sizes${filters}`).then((res) => {
-          setSizeList(res.data);
+      ? axios.get<ISize[]>(`${urlBack}/items/${item}/sizes${filters}`).then((res) => {
+          setSizes(res.data);
         })
       : category
-      ? axios.get(`${urlBack}/categories/${category}/sizes${filters}`).then((res) => {
-          setSizeList(res.data);
-        })
-      : (setSizeList([]), setShowSizes(false));
+      ? axios
+          .get<ISize[]>(`${urlBack}/categories/${category}/sizes${filters}`)
+          .then((res) => {
+            setSizes(res.data);
+          })
+      : (setSizes([]), setShowSizes(false));
   }, [item, gender, genderIsChild, category]);
 
   const togglePhotoTipsContent = () => {
@@ -177,7 +187,7 @@ const UpdateOffer = () => {
 
   const handleItemSelected = (id: string) => {
     axios
-      .get(`${urlBack}/items/${id}`)
+      .get<IItem>(`${urlBack}/items/${id}`)
       .then((item) => {
         setItemInfos(item.data);
         return item.data;
@@ -223,23 +233,23 @@ const UpdateOffer = () => {
       errorsMessage.push('Veuillez ajouter une description');
       errors = true;
     }
-    if (sport === '') {
+    if (sport === 0) {
       errorsMessage.push('Veuillez préciser un sport');
       errors = true;
     }
-    if (category === '') {
+    if (category === 0) {
       errorsMessage.push('Veuillez préciser une catégorie');
       errors = true;
     }
-    if (item === '') {
+    if (item === 0) {
       errorsMessage.push('Veuillez selectionner un article');
       errors = true;
     }
-    if (showSizes && size === '') {
+    if (showSizes && size === 0) {
       errorsMessage.push('Veuillez renseigner une taille');
       errors = true;
     }
-    if (condition === '') {
+    if (condition === 0) {
       errorsMessage.push("Veuillez préciser l'état de l'article");
       errors = true;
     }
@@ -258,7 +268,6 @@ const UpdateOffer = () => {
 
     if (errors) {
       e.preventDefault();
-      console.log(errorsMessage);
       errorsMessage.map((message) => {
         const p = document.createElement('p');
         p.append(message);
@@ -278,36 +287,36 @@ const UpdateOffer = () => {
         is_child: genderIsChild,
         id_category: category,
         id_item: item,
-        id_brand: brand ? brand : null,
-        id_textile: textile ? textile : null,
-        id_size: size ? size : null,
-        id_color1: color1 ? color1 : null,
-        id_color2: color2 ? color2 : null,
+        id_brand: brand ? brand : 0,
+        id_textile: textile ? textile : 0,
+        id_size: size ? size : 0,
+        id_color1: color1 ? color1 : 0,
+        id_color2: color2 ? color2 : 0,
         id_condition: condition,
         price: Number(Number(price).toFixed(2)),
         weight: Number(Number(weight).toFixed(0)),
         hand_delivery: handDelivery,
         is_archived: 0,
         is_draft: isDraft,
-        picture2: pictures[1],
-        picture3: pictures[2],
-        picture4: pictures[3],
-        picture5: pictures[4],
-        picture6: pictures[5],
-        picture7: pictures[6],
-        picture8: pictures[7],
-        picture9: pictures[8],
-        picture10: pictures[9],
-        picture11: pictures[10],
-        picture12: pictures[11],
-        picture13: pictures[12],
-        picture14: pictures[13],
-        picture15: pictures[14],
-        picture16: pictures[15],
-        picture17: pictures[16],
-        picture18: pictures[17],
-        picture19: pictures[18],
-        picture20: pictures[19],
+        picture2: pictures[1] ? pictures[1] : 'null',
+        picture3: pictures[2] ? pictures[2] : 'null',
+        picture4: pictures[3] ? pictures[3] : 'null',
+        picture5: pictures[4] ? pictures[4] : 'null',
+        picture6: pictures[5] ? pictures[5] : 'null',
+        picture7: pictures[6] ? pictures[6] : 'null',
+        picture8: pictures[7] ? pictures[7] : 'null',
+        picture9: pictures[8] ? pictures[8] : 'null',
+        picture10: pictures[9] ? pictures[9] : 'null',
+        picture11: pictures[10] ? pictures[10] : 'null',
+        picture12: pictures[11] ? pictures[11] : 'null',
+        picture13: pictures[12] ? pictures[12] : 'null',
+        picture14: pictures[13] ? pictures[13] : 'null',
+        picture15: pictures[14] ? pictures[14] : 'null',
+        picture16: pictures[15] ? pictures[15] : 'null',
+        picture17: pictures[16] ? pictures[16] : 'null',
+        picture18: pictures[17] ? pictures[17] : 'null',
+        picture19: pictures[18] ? pictures[18] : 'null',
+        picture20: pictures[19] ? pictures[19] : 'null',
       } as unknown as IOffer;
       setOffer(newOffer);
     }
@@ -318,9 +327,7 @@ const UpdateOffer = () => {
     const file = target.files as FileList;
     const formData = new FormData();
     const arrayFiles = Array.from(file);
-    arrayFiles.map((el, index) =>
-      formData.append('imagesOffers', el, `photo${index}${id}`),
-    );
+    arrayFiles.map((el) => formData.append('imagesOffers', el));
 
     axios
       .post(
@@ -338,10 +345,6 @@ const UpdateOffer = () => {
       .catch((err) => console.error({ ...err }));
   };
 
-  let images = Object.keys(pictures).map(function (key: any) {
-    return [Number(key), pictures[key]];
-  });
-
   useEffect(() => {
     offer &&
       axios
@@ -349,26 +352,25 @@ const UpdateOffer = () => {
         .then((res) => {
           res;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log({ ...err }));
     {
       deliverersArrayInitial[0] === undefined
         ? deliverersArray.map((deliverer) => {
             const id_deliverer = deliverer;
             const id_offer = id;
-            axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
+            axios.post<IOfferDeliverer>(`${urlBack}/offer_deliverers`, {
               id_offer,
               id_deliverer,
             });
           })
         : axios
-            .delete(`${urlBack}/offers/${id}/offer_deliverers`)
+            .delete<IOfferDeliverer[]>(`${urlBack}/offers/${id}/offer_deliverers`)
             .then((res) => {
-              console.log(deliverersArray);
               res &&
                 deliverersArray.map((deliverer) => {
                   const id_deliverer = deliverer;
                   const id_offer = id;
-                  axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
+                  axios.post<IOfferDeliverer>(`${urlBack}/offer_deliverers`, {
                     id_offer,
                     id_deliverer,
                   });
@@ -379,7 +381,7 @@ const UpdateOffer = () => {
                 deliverersArray.map((deliverer) => {
                   const id_deliverer = deliverer;
                   const id_offer = id;
-                  axios.post<IOffer_Deliverer>(`${urlBack}/offer_deliverers`, {
+                  axios.post<IOfferDeliverer>(`${urlBack}/offer_deliverers`, {
                     id_offer,
                     id_deliverer,
                   });
@@ -395,7 +397,8 @@ const UpdateOffer = () => {
         id="updateOfferForm"
         onSubmit={(e: React.FormEvent) => handleSubmit(e)}
         className="updateOfferForm__form"
-        action="">
+        action=""
+      >
         {/* ---------------------------Input for updated pictures------------------------ */}
         <div>Ajoute jusqu&apos;à 20 photos</div>
         <div id="addPhotoContainer">
@@ -408,7 +411,8 @@ const UpdateOffer = () => {
             role="button"
             onKeyPress={() => togglePhotoTipsContent()}
             onClick={() => togglePhotoTipsContent()}
-            className="photoTips">
+            className="photoTips"
+          >
             Nos astuces photos
           </div>
           <div id="photoTipsContent" className="invisible">
@@ -419,11 +423,11 @@ const UpdateOffer = () => {
         </div>
 
         <div className="photosContainer">
-          {images.map((image: Array<any>, index) => (
+          {pictures.map((image, index) => (
             <img
-              className={image[1] !== null ? 'image' : 'invisible'}
+              className={image !== null ? 'image' : 'invisible'}
               key={index}
-              src={image[1]}
+              src={image}
               alt={`n°${index} de l'annonce`}
             />
           ))}
@@ -458,7 +462,8 @@ const UpdateOffer = () => {
             role="button"
             onKeyPress={() => toggleDescriptionTipsContent()}
             onClick={() => toggleDescriptionTipsContent()}
-            className="descriptionTips">
+            className="descriptionTips"
+          >
             Conseils pour bien décrire votre article
           </div>
           <div id="descriptionTipsContent" className="invisible">
@@ -473,13 +478,14 @@ const UpdateOffer = () => {
             Sport
           </label>
           <select
-            onChange={(e) => setSport(e.target.value)}
+            onChange={(e) => setSport(Number(e.target.value))}
             value={sport}
             className="updateOfferForm__select"
-            id="sports">
+            id="sports"
+          >
             <option value="" id="sport"></option>
-            {sportList &&
-              sportList.map((sport, index) => (
+            {sports &&
+              sports.map((sport, index) => (
                 <option key={index} value={sport.id_sport}>
                   {sport.name}
                 </option>
@@ -495,13 +501,14 @@ const UpdateOffer = () => {
             onChange={(e) => {
               setGenderAdult(Number(e.target.value));
               e.target.value === '4'
-                ? (setGenderIsChild(1), setGender(null))
+                ? (setGenderIsChild(1), setGender(0))
                 : (setGenderIsChild(0), setGender(Number(e.target.value)));
             }}
             value={Number(genderAdult)}
             className="updateOfferForm__select"
-            id="genders">
-            {gendersList.map((gender, index) => (
+            id="genders"
+          >
+            {genders.map((gender, index) => (
               <option key={index} value={gender.id_gender}>
                 {gender.adult_name}
               </option>
@@ -516,8 +523,9 @@ const UpdateOffer = () => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
               }}
               value={Number(genderChild) || ''}
-              className="updateOfferForm__select">
-              {gendersList
+              className="updateOfferForm__select"
+            >
+              {genders
                 .filter((children) => children.child_name)
                 .map((gender, index) => (
                   <option key={index} value={gender.id_gender}>
@@ -535,8 +543,8 @@ const UpdateOffer = () => {
 
           <select
             onChange={(e) => {
-              setItem('');
-              setCategory(e.target.value);
+              setItem(0);
+              setCategory(Number(e.target.value));
               e.target.value === '1'
                 ? (setCategoryIsClothes(true), setShowSizes(true))
                 : setCategoryIsClothes(false);
@@ -545,10 +553,11 @@ const UpdateOffer = () => {
             }}
             value={category}
             className="updateOfferForm__select"
-            id="categories">
+            id="categories"
+          >
             <option value=""></option>
-            {categoryList &&
-              categoryList.map((category, index) => (
+            {categories &&
+              categories.map((category, index) => (
                 <option key={index} value={category.id_category}>
                   {category.name}
                 </option>
@@ -565,10 +574,11 @@ const UpdateOffer = () => {
               onChange={(e) => setTextile(e.target.value)}
               value={textile || ''}
               className="updateOfferForm__select"
-              id="textile">
+              id="textile"
+            >
               <option value=""></option>
-              {textileList &&
-                textileList.map((textile, index) => (
+              {textiles &&
+                textiles.map((textile, index) => (
                   <option key={index} value={textile.id_textile}>
                     {textile.name}
                   </option>
@@ -584,7 +594,7 @@ const UpdateOffer = () => {
           <select
             onChange={(e) => {
               handleItemSelected(e.target.value);
-              setItem(e.target.value);
+              setItem(Number(e.target.value));
               itemInfos?.id_size_type === 1 ||
               itemInfos?.id_size_type === 2 ||
               itemInfos?.id_size_type === 3 ||
@@ -594,10 +604,11 @@ const UpdateOffer = () => {
             }}
             value={item}
             className="updateOfferForm__select"
-            id="items">
+            id="items"
+          >
             <option value=""></option>
-            {itemList &&
-              itemList.map((item, index) => (
+            {items &&
+              items.map((item, index) => (
                 <option key={index} value={item.id_item}>
                   {item.name}
                 </option>
@@ -610,13 +621,14 @@ const UpdateOffer = () => {
             Marque
           </label>
           <select
-            onChange={(e) => setBrand(e.target.value)}
+            onChange={(e) => setBrand(Number(e.target.value))}
             value={brand || ''}
             className="updateOfferForm__select"
-            id="brands">
+            id="brands"
+          >
             <option value=""></option>
-            {brandList &&
-              brandList.map((brand, index) => (
+            {brands &&
+              brands.map((brand, index) => (
                 <option key={index} value={brand.id_brand}>
                   {brand.name}
                 </option>
@@ -630,25 +642,26 @@ const UpdateOffer = () => {
               Taille
             </label>
             <select
-              onChange={(e) => setSize(e.target.value)}
+              onChange={(e) => setSize(Number(e.target.value))}
               value={size || ''}
               className="updateOfferForm__select"
-              id="sizes">
+              id="sizes"
+            >
               <option value=""></option>
-              {sizeList &&
-                sizeList.map((size, index) => (
+              {sizes &&
+                sizes.map((size, index) => (
                   <option key={index} value={size.id_size}>
-                    {(category === '1' && genderIsChild) || itemInfos?.id_size_type === 6
+                    {(category === 1 && genderIsChild) || itemInfos?.id_size_type === 6
                       ? `${size.age_child}`
-                      : category === '1' ||
+                      : category === 1 ||
                         itemInfos?.id_size_type === 2 ||
                         itemInfos?.id_size_type === 3
                       ? size.size_int !== null
                         ? `${size.size_int}/${size.size_eu}/${size.size_uk}`
                         : `${size.age_child}`
-                      : category === '2' || itemInfos?.id_size_type === 1
+                      : category === 2 || itemInfos?.id_size_type === 1
                       ? `${size.size_eu}`
-                      : ''}
+                      : 0}
                   </option>
                 ))}
             </select>
@@ -660,13 +673,14 @@ const UpdateOffer = () => {
             Couleur 1
           </label>
           <select
-            onChange={(e) => setColor1(e.target.value)}
+            onChange={(e) => setColor1(Number(e.target.value))}
             value={color1 || ''}
             className="updateOfferForm__select"
-            id="color1">
+            id="color1"
+          >
             <option value=""></option>
-            {colorList &&
-              colorList.map((color, index) => (
+            {colors &&
+              colors.map((color, index) => (
                 <option key={index} value={color.id_color}>
                   {color.name}
                 </option>
@@ -679,13 +693,14 @@ const UpdateOffer = () => {
             Couleur 2
           </label>
           <select
-            onChange={(e) => setColor2(e.target.value)}
+            onChange={(e) => setColor2(Number(e.target.value))}
             value={color2 || ''}
             className="updateOfferForm__select"
-            id="color2">
+            id="color2"
+          >
             <option value=""></option>
-            {colorList &&
-              colorList.map((color, index) => (
+            {colors &&
+              colors.map((color, index) => (
                 <option key={index} value={color.id_color}>
                   {color.name}
                 </option>
@@ -698,13 +713,14 @@ const UpdateOffer = () => {
             État du produit
           </label>
           <select
-            onChange={(e) => setCondition(e.target.value)}
+            onChange={(e) => setCondition(Number(e.target.value))}
             value={condition}
             className="updateOfferForm__select"
-            id="conditions">
+            id="conditions"
+          >
             <option value=""></option>
-            {conditionList &&
-              conditionList.map((condition, index) => (
+            {conditions &&
+              conditions.map((condition, index) => (
                 <option key={index} value={condition.id_condition}>
                   {condition.name}
                 </option>
@@ -796,7 +812,7 @@ const UpdateOffer = () => {
           <span className="updateOfferForm__switchContainer__span">
             Modes de livraison :
           </span>
-          <div className="delivererList">
+          <div className="deliverers">
             <div className="updateOfferForm__switchContainer">
               <span className="updateOfferForm__switchContainer__span">
                 Remise en main propre:
@@ -812,12 +828,13 @@ const UpdateOffer = () => {
                 <span className="slider round"></span>
               </label>
             </div>
-            {delivererList &&
+            {deliverers &&
               deliverersArray &&
-              delivererList.map((deliverer) => (
+              deliverers.map((deliverer) => (
                 <div
                   key={deliverer.id_deliverer}
-                  className="updateOfferForm__switchContainer">
+                  className="updateOfferForm__switchContainer"
+                >
                   <span className="updateOfferForm__switchContainer__span">
                     {deliverer.name}
                   </span>

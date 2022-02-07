@@ -1,22 +1,18 @@
 import axios from 'axios';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import PhotoDefault from '../../../../resources/photoDefault.png';
-import CurrentUserContext from '../../../contexts/CurrentUser';
-import IUserLog from '../../../interfaces/IUser';
+import IUser from '../../../interfaces/IUser';
 
 const HeaderProfil = () => {
+  const [user, setUser] = useState<IUser>([]);
+  // Url back
   const urlBack = import.meta.env.VITE_URL_BACK;
-
-  const { idUser, setUser, user } = useContext(CurrentUserContext);
-
+  // Axios call for user infos
   useEffect(() => {
     axios
-      .get<IUserLog>(`${urlBack}/users/${idUser}`, { withCredentials: true })
-      .then((res) => {
-        setUser(res.data);
-      })
-      .catch((err) => err);
+      .get(`${urlBack}/users/${sessionStorage.getItem('id')}`)
+      .then((res) => setUser(res.data));
   }, []);
 
   return (
@@ -24,7 +20,7 @@ const HeaderProfil = () => {
       <div className="headerProfil__intro">
         <div className="headerProfil__intro__photo">
           <img
-            src={user.picture}
+            src={user.picture ? user.picture : PhotoDefault}
             onError={(e) => {
               e.currentTarget.onerror = null;
               e.currentTarget.src = PhotoDefault;
