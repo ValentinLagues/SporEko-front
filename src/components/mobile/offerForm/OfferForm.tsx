@@ -266,11 +266,6 @@ const OfferForm = () => {
     }
   };
 
-  console.log(genderIsChild);
-  console.log(category);
-  console.log(category == '1' && genderIsChild);
-  console.log(sizeList);
-
   // Function axios to add pictures on offer.
   const handleFileInput = (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;

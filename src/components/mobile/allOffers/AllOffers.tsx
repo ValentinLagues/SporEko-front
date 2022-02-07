@@ -362,7 +362,8 @@ const AllOffers = () => {
                   </li>
                 )}
                 <li className="allOffers__container__offer__detail__brand">
-                  {brandsList.find((brand) => brand.id_brand === offer.id_brand)?.name}
+                  {brandsList.find((brand) => brand.id_brand === offer.id_brand)?.name ||
+                    'inconnu'}
                 </li>
                 <li className="allOffers__container__offer__detail__size">
                   M/S{offer.id_size}
