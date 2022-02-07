@@ -6,12 +6,12 @@ import { useParams } from 'react-router';
 
 import cards from '../../../../resources/cards.png';
 import CurrentUserContext from '../../../contexts/CurrentUser';
-
 // import des interfaces
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
 import IDelivererPrice from '../../../interfaces/IDelivererPrice';
 import IOffer from '../../../interfaces/IOffer';
+import IOfferDeliverer from '../../../interfaces/IOfferDeliverer';
 import ISize from '../../../interfaces/ISize';
 import IUser from '../../../interfaces/IUser';
 import IUserLog from '../../../interfaces/IUser';
@@ -50,7 +50,7 @@ const ConfirmationOrder = () => {
       .then((res) => setUserInfos(res.data));
     // recuperer la liste des livreurs de l'offre et la mettre dans un tableau
     axios
-      .get(`${urlBack}/offers/${id}/offer_deliverers`)
+      .get<IDeliverer[]>(`${urlBack}/offers/${id}/deliverers`)
       .then((res) => setDeliverersList(res.data));
   }, []);
 
@@ -127,10 +127,8 @@ const ConfirmationOrder = () => {
             </label>
             {!handDelivery &&
               deliverersList.map((deliverer, index) => (
-                <>
-                  <span
-                    key={index}
-                    className="confirmedOrder__confirmedOrderContainer__span">
+                <div key={index}>
+                  <span className="confirmedOrder__confirmedOrderContainer__span">
                     {deliverer.name}
                   </span>
                   <label className="switch">
@@ -144,7 +142,7 @@ const ConfirmationOrder = () => {
                     />
                     <span className="slider round"> </span>
                   </label>
-                </>
+                </div>
               ))}
           </div>
         </div>

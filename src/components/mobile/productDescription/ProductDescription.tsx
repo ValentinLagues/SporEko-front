@@ -8,8 +8,6 @@ import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
 import IOffer from '../../../interfaces/IOffer';
-import Ioffer from '../../../interfaces/IOffer';
-import IOfferDeliverer from '../../../interfaces/IOfferDeliverer';
 import ISize from '../../../interfaces/ISize';
 import ISport from '../../../interfaces/ISport';
 import IUserLog from '../../../interfaces/IUser';
@@ -17,13 +15,12 @@ import IUserLog from '../../../interfaces/IUser';
 const urlBack = import.meta.env.VITE_URL_BACK;
 
 const ProductDescription = () => {
-  const [offer, setOffer] = useState<Ioffer>([]);
+  const [offer, setOffer] = useState<IOffer>();
   const [brand, setBrand] = useState<IBrand>();
   const [size, setSize] = useState<ISize>();
   const [condition, setCondition] = useState<ICondition>();
   const [sport, setSport] = useState<ISport>();
-  const [deliverer, setDeliverer] = useState<IDeliverer[]>([]);
-  const [offerDeliverer, setOfferDeliverer] = useState<IOfferDeliverer[]>([]);
+  const [deliverers, setDeliverers] = useState<IDeliverer[]>([]);
   const [handDeliverer, setHandDeliverer] = useState('');
   const [color1, setColor1] = useState<IColor>();
   const [color2, setColor2] = useState<IColor>();
@@ -34,12 +31,8 @@ const ProductDescription = () => {
 
   useEffect(() => {
     axios
-      .get(`${urlBack}/offers/${id}/offer_deliverers`)
-      .then((res) =>
-        setOfferDeliverer(
-          res.data.map((deliverer: { id_deliverer: number }) => deliverer.id_deliverer),
-        ),
-      );
+      .get(`${urlBack}/offers/${id}/deliverers`)
+      .then((res) => setDeliverers(res.data));
 
     axios
       .get<IOffer>(`${urlBack}/offers/${id}`)
@@ -89,7 +82,6 @@ const ProductDescription = () => {
         axios
           .get(`${urlBack}/conditions/${data.id_condition}`)
           .then((res) => setCondition(res.data));
-        axios.get(`${urlBack}/deliverers`).then((res) => setDeliverer(res.data));
 
         data.hand_delivery === 0
           ? setHandDeliverer(
@@ -189,13 +181,8 @@ const ProductDescription = () => {
             <p>{handDeliverer && handDeliverer}</p>
             <p>Localisation du produit: {user && user.city}</p>
             <h4>Options d&apos;envois disponibles</h4>
-            {offerDeliverer &&
-              deliverer &&
-              deliverer
-                .filter((allDeliverer: any) =>
-                  offerDeliverer.includes(allDeliverer.id_deliverer),
-                )
-                .map((delive, index) => <p key={index}>{delive.name}</p>)}
+            {deliverers &&
+              deliverers.map((delive, index) => <p key={index}>{delive.name}</p>)}
           </div>
           <div className="product-description__container-text__container4__delivery__btn">
             <Link className="btn" type="submit" to={`/confirmation-order/${id}`}>
