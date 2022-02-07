@@ -66,7 +66,7 @@ const ConfirmationOrder = () => {
         setConfirmedDelivererPrice(res.data);
       });
   }, [confirmedDelivererPrice]);
-console.log(confirmedDelivererPrice);
+
   return (
     <div className="confirmedOrder">
       <div className="confirmedOrder__confirmedOrderContainer">
@@ -162,7 +162,7 @@ console.log(confirmedDelivererPrice);
             </label>
           </div>
           {!handDelivery &&
-            confirmedDelivererPrice.map((deliverer, index) => <p key={index}>{deliverer.name}{deliverer.}</p>)}
+            deliverersList.map((deliverer, index) => <p key={index}>{deliverer.name}</p>)}
         </div>
         <div className="confirmedOrder__confirmedOrderContainer__box">
           <h3>Résumé de la commande</h3>
