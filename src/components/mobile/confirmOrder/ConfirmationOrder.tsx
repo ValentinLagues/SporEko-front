@@ -9,8 +9,9 @@ import CurrentUserContext from '../../../contexts/CurrentUser';
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
 import IDelivererPrice from '../../../interfaces/IDelivererPrice';
+// import IDelivererPrice from '../../../interfaces/IDelivererPrice';
 import IOffer from '../../../interfaces/IOffer';
-import IOfferDeliverer from '../../../interfaces/IOfferDeliverer';
+// import IOfferDeliverer from '../../../interfaces/IOfferDeliverer';
 import ISize from '../../../interfaces/ISize';
 import IUser from '../../../interfaces/IUser';
 import IUserLog from '../../../interfaces/IUser';
@@ -23,17 +24,13 @@ const ConfirmationOrder = () => {
   const [confirmedOrder, setConfirmedOrder] = useState<IOffer>();
   const [confirmedAdress, setConfirmedAdress] = useState<IUserLog>();
   const [confirmedSize, setConfirmedSize] = useState<ISize>();
-  const [_confirmedDeliverer, setConfirmedDeliverer] = useState<IOfferDeliverer>();
-  const [confirmedDelivererPrice, setConfirmedDelivererPrice] =
-    useState<IDelivererPrice>();
   const [confirmedCondition, setConfirmedCondition] = useState<ICondition>();
   const [deliverersList, setDeliverersList] = useState<IDeliverer[]>([]);
 
-  // const [totalOrder, setTotalOrder] = useState([]);
+  const [selectedDeliverer, setSelectedDeliverer] = useState<number>(0);
+  const [delivererPrice, setDelivererPrice] = useState<number>(0);
 
-  const [handDelivery, setHandDelivery] = useState(0);
-  const [colissimoDelivery, setColissimoDelivery] = useState(0);
-  const [mondialRelayDelivery, setMondialRelayDelivery] = useState(0);
+  const [handDelivery, setHandDelivery] = useState<number>(0);
 
   useEffect(() => {
     axios.get<IOffer>(`${urlBack}/offers/${id}`).then((res) => {
@@ -48,25 +45,21 @@ const ConfirmationOrder = () => {
     axios
       .get<IUser>(`${urlBack}/users/${idUser}`, { withCredentials: true })
       .then((res) => setConfirmedAdress(res.data));
-    axios.get(`${urlBack}/offer_deliverers`).then((res) => {
-      setConfirmedDeliverer(res.data);
-      axios.get(`${urlBack}/deliverers`).then((res) => setDeliverersList(res.data));
-    });
+    // recuperer la liste des livreurs de l'offre et la mettre dans un tableau
     axios
-      .get<IDelivererPrice>(`${urlBack}/deliverer_price`)
-      .then((res) => setConfirmedDelivererPrice(res.data));
+      .get(`${urlBack}/offers/${id}/offer_deliverers`)
+      .then((res) => setDeliverersList(res.data));
   }, []);
 
   useEffect(() => {
     axios
-      .get(
-        `${urlBack}/deliverer_prices?idDeliverer=${confirmedDelivererPrice?.id_deliverer}&weight=${confirmedOrder?.weight}`,
+      .get<IDelivererPrice[]>(
+        `${urlBack}/deliverer_prices?idDeliverer=${selectedDeliverer}&weight=${confirmedOrder?.weight}`,
       )
       .then((res) => {
-        setConfirmedDelivererPrice(res.data);
+        setDelivererPrice(res.data[0].price);
       });
-  }, [confirmedDelivererPrice]);
-
+  }, [selectedDeliverer]);
   return (
     <div className="confirmedOrder">
       <div className="confirmedOrder__confirmedOrderContainer">
@@ -130,39 +123,28 @@ const ConfirmationOrder = () => {
               />
               <span className="slider round"> </span>
             </label>
-            <span className="confirmedOrder__confirmedOrderContainer__span">
-              Colissimo
-            </span>
-            <label className="switch">
-              <input
-                checked={colissimoDelivery ? true : false}
-                onChange={() => {
-                  colissimoDelivery ? setColissimoDelivery(0) : setColissimoDelivery(1);
-                }}
-                type="checkbox"
-                name="colissimoDelivery"
-              />
-              <span className="slider round"> </span>
-            </label>
-            <span className="confirmedOrder__confirmedOrderContainer__span">
-              Mondial Relay
-            </span>
-            <label className="switch">
-              <input
-                checked={mondialRelayDelivery ? true : false}
-                onChange={() => {
-                  mondialRelayDelivery
-                    ? setMondialRelayDelivery(0)
-                    : setMondialRelayDelivery(1);
-                }}
-                type="checkbox"
-                name="mondialRelayDelivery"
-              />
-              <span className="slider round"> </span>
-            </label>
+            {!handDelivery &&
+              deliverersList.map((deliverer, index) => (
+                <>
+                  <span
+                    key={index}
+                    className="confirmedOrder__confirmedOrderContainer__span">
+                    {deliverer.name}
+                  </span>
+                  <label className="switch">
+                    <input
+                      checked={selectedDeliverer === deliverer.id_deliverer}
+                      onChange={() => {
+                        setSelectedDeliverer(deliverer.id_deliverer);
+                      }}
+                      type="checkbox"
+                      name={deliverer.name}
+                    />
+                    <span className="slider round"> </span>
+                  </label>
+                </>
+              ))}
           </div>
-          {!handDelivery &&
-            deliverersList.map((deliverer, index) => <p key={index}>{deliverer.name}</p>)}
         </div>
         <div className="confirmedOrder__confirmedOrderContainer__box">
           <h3>Résumé de la commande</h3>
@@ -173,12 +155,12 @@ const ConfirmationOrder = () => {
                 Montant : {confirmedOrder.price} €
               </p>
               <p className="confirmedOrder__confirmedOrderContainer__box__orderDetails">
-                Frais de port : {confirmedDelivererPrice?.price}
+                Frais de port : {delivererPrice} €
               </p>
               <p className="confirmedOrder__confirmedOrderContainer__box__orderDetails">
                 Frais de protection acheteurs : 1 €
               </p>
-              {/* <p className="confirmedOrder__confirmedOrderContainer__box__orderDetails">TOTAL : {totalOrder.reduce() €</p> */}
+              Total : {confirmedOrder.price + delivererPrice + 1} €
             </div>
           )}
         </div>
