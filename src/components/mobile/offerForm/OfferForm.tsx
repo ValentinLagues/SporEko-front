@@ -83,13 +83,11 @@ const OfferForm = () => {
   useEffect(() => {
     let filters = ``;
     let oneValue = false;
-
-    if (gender) {
-      filters += `?id_gender=${gender}`;
-      oneValue = true;
-    }
     if (genderIsChild) {
       filters += oneValue ? `&is_child=1` : `?is_child=1`;
+      oneValue = true;
+    } else if (gender) {
+      filters += `?id_gender=${gender}`;
       oneValue = true;
     }
     item
@@ -158,8 +156,6 @@ const OfferForm = () => {
   }, [deliverersArray]);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('enlever le prevent');
     let errors = false;
     let errorsDescription: HTMLElement | null =
       document.getElementById('errorsDescription');
@@ -269,6 +265,11 @@ const OfferForm = () => {
       setOffer(newOffer);
     }
   };
+
+  console.log(genderIsChild);
+  console.log(category);
+  console.log(category == '1' && genderIsChild);
+  console.log(sizeList);
 
   // Function axios to add pictures on offer.
   const handleFileInput = (event: React.ChangeEvent) => {
@@ -434,7 +435,7 @@ const OfferForm = () => {
             className="offerForm__select"
             name="genders"
             id="genders">
-            <option value=""></option>
+            <option value={0}></option>
             <option value={1}>Femme</option>
             <option value={2}>Homme</option>
             <option value={4}>Enfant</option>
@@ -449,7 +450,7 @@ const OfferForm = () => {
               }}
               value={Number(genderChild)}
               className="offerForm__select">
-              <option value="">Tous</option>
+              <option value={0}>Tous</option>
               <option value={1}>Fille</option>
               <option value={2}>Garçon</option>
             </select>
@@ -474,7 +475,7 @@ const OfferForm = () => {
             className="offerForm__select"
             name="categories"
             id="categories">
-            <option value=""></option>
+            <option value={0}></option>
             {categoryList &&
               categoryList.map((category, index) => (
                 <option key={index} value={category.id_category}>
@@ -565,18 +566,18 @@ const OfferForm = () => {
               id="sizes">
               <option value=""></option>
               {sizeList &&
-                sizeList.map((size, index) => (
-                  <option key={index} value={size.id_size}>
-                    {(category === '1' && genderIsChild) || itemInfos?.id_size_type === 6
-                      ? `${size.age_child}`
-                      : category === '1' ||
-                        itemInfos?.id_size_type === 2 ||
-                        itemInfos?.id_size_type === 3
-                      ? size.size_int !== null
-                        ? `${size.size_int}/${size.size_eu}/${size.size_uk}`
-                        : `${size.age_child}`
-                      : category === '2' || itemInfos?.id_size_type === 1
-                      ? `${size.size_eu}`
+                sizeList.map((sizeToDisplay, index) => (
+                  <option key={index} value={sizeToDisplay.id_size}>
+                    {(category == '1' && genderIsChild) || itemInfos?.id_size_type == 6
+                      ? `${sizeToDisplay.age_child}`
+                      : category == '1' ||
+                        itemInfos?.id_size_type == 2 ||
+                        itemInfos?.id_size_type == 3
+                      ? sizeToDisplay.size_int !== null
+                        ? `${sizeToDisplay.size_int}/${sizeToDisplay.size_eu}/${sizeToDisplay.size_uk}`
+                        : `${sizeToDisplay.age_child}`
+                      : category == '2' || itemInfos?.id_size_type == 1
+                      ? `${sizeToDisplay.size_eu}`
                       : ''}
                   </option>
                 ))}
