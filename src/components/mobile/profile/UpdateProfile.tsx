@@ -89,7 +89,7 @@ const UpdateProfile = () => {
       setGoodEntryPassword(0);
     }
   }, [password]);
-  console.log(disableBtn);
+
   // Useeffect to disable click on button
   useEffect(() => {
     if (
