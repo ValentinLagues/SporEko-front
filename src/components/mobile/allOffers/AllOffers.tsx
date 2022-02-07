@@ -185,7 +185,7 @@ const AllOffers = () => {
       oneValue = true;
     }
     if (genderIsChild) {
-      filters += oneValue ? `&ischild=${1}` : `?ischild=${1}`;
+      filters += oneValue ? `&is_child=${1}` : `?is_child=${1}`;
       oneValue = true;
     }
     if (category) {
