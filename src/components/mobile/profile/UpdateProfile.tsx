@@ -65,7 +65,6 @@ const UpdateProfile = () => {
 
   // Url to axios call
   const urlBack = import.meta.env.VITE_URL_BACK;
-  console.log(pseudo);
   // UseEffect to admin right format of password .
   useEffect(() => {
     if (password?.length != undefined && password.length > 7) {
