@@ -6,12 +6,12 @@ import { useParams } from 'react-router';
 
 import cards from '../../../../resources/cards.png';
 import CurrentUserContext from '../../../contexts/CurrentUser';
+
+// import des interfaces
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
 import IDelivererPrice from '../../../interfaces/IDelivererPrice';
-// import IDelivererPrice from '../../../interfaces/IDelivererPrice';
 import IOffer from '../../../interfaces/IOffer';
-// import IOfferDeliverer from '../../../interfaces/IOfferDeliverer';
 import ISize from '../../../interfaces/ISize';
 import IUser from '../../../interfaces/IUser';
 import IUserLog from '../../../interfaces/IUser';
@@ -21,30 +21,33 @@ const urlBack = import.meta.env.VITE_URL_BACK;
 const ConfirmationOrder = () => {
   const { id } = useParams();
   const { idUser } = useContext(CurrentUserContext);
-  const [confirmedOrder, setConfirmedOrder] = useState<IOffer>();
-  const [confirmedAdress, setConfirmedAdress] = useState<IUserLog>();
-  const [confirmedSize, setConfirmedSize] = useState<ISize>();
-  const [confirmedCondition, setConfirmedCondition] = useState<ICondition>();
-  const [deliverersList, setDeliverersList] = useState<IDeliverer[]>([]);
+  // states pour le récap de la commande et l'adresse de l'utilisateur
+  const [offerInfos, setOfferInfos] = useState<IOffer>();
+  const [userInfos, setUserInfos] = useState<IUserLog>();
+  const [sizeInfos, setSizeInfos] = useState<ISize>();
+  const [conditionInfos, setConditionInfos] = useState<ICondition>();
 
+  // boolean pour la remise en main propre
+  const [handDelivery, setHandDelivery] = useState<number>(0);
+
+  // states pour recuperer les infos pour les prix
+  const [deliverersList, setDeliverersList] = useState<IDeliverer[]>([]);
   const [selectedDeliverer, setSelectedDeliverer] = useState<number>(0);
   const [delivererPrice, setDelivererPrice] = useState<number>(0);
 
-  const [handDelivery, setHandDelivery] = useState<number>(0);
-
   useEffect(() => {
     axios.get<IOffer>(`${urlBack}/offers/${id}`).then((res) => {
-      setConfirmedOrder(res.data);
+      setOfferInfos(res.data);
       axios
         .get<ISize>(`${urlBack}/sizes/${res.data.id_size}`)
-        .then((res) => setConfirmedSize(res.data));
+        .then((res) => setSizeInfos(res.data));
       axios
         .get<ICondition>(`${urlBack}/conditions/${res.data.id_condition}`)
-        .then((res) => setConfirmedCondition(res.data));
+        .then((res) => setConditionInfos(res.data));
     });
     axios
       .get<IUser>(`${urlBack}/users/${idUser}`, { withCredentials: true })
-      .then((res) => setConfirmedAdress(res.data));
+      .then((res) => setUserInfos(res.data));
     // recuperer la liste des livreurs de l'offre et la mettre dans un tableau
     axios
       .get(`${urlBack}/offers/${id}/offer_deliverers`)
@@ -52,9 +55,10 @@ const ConfirmationOrder = () => {
   }, []);
 
   useEffect(() => {
+    // recuperer les prix des livreurs selon le poids
     axios
       .get<IDelivererPrice[]>(
-        `${urlBack}/deliverer_prices?idDeliverer=${selectedDeliverer}&weight=${confirmedOrder?.weight}`,
+        `${urlBack}/deliverer_prices?idDeliverer=${selectedDeliverer}&weight=${offerInfos?.weight}`,
       )
       .then((res) => {
         setDelivererPrice(res.data[0].price);
@@ -78,31 +82,29 @@ const ConfirmationOrder = () => {
         </div>
         <div className="confirmedOrder__confirmedOrderContainer__box">
           <h3>COMMANDE</h3>
-          {confirmedOrder && (
+          {offerInfos && (
             <div>
-              <img src={confirmedOrder.picture1} alt="picture1" />
-              <h4>{confirmedOrder.title}</h4>
-              <p>
-                {confirmedSize && confirmedSize.size_fr}
-                {confirmedCondition && confirmedCondition.name}
-              </p>
-              <h3>{confirmedOrder.price} €</h3>
+              <img src={offerInfos.picture1} alt="picture1" />
+              <h4>{offerInfos.title}</h4>
+              <p>Taille : {sizeInfos && sizeInfos.size_fr}</p>
+              <p>Etat : {conditionInfos && conditionInfos.name}</p>
+              <h3>{offerInfos.price} €</h3>
             </div>
           )}
         </div>
         <div className="confirmedOrder__confirmedOrderContainer__box">
           <h3>VOS COORDONNEES</h3>
-          {confirmedAdress && (
+          {userInfos && (
             <div>
               <h4>
-                {confirmedAdress.firstname} {confirmedAdress.lastname}
+                {userInfos.firstname} {userInfos.lastname}
               </h4>
-              <p>{confirmedAdress.address}</p>
-              <p>{confirmedAdress.address_complement}</p>
+              <p>{userInfos.address}</p>
+              <p>{userInfos.address_complement}</p>
               <p>
-                {confirmedAdress.zipcode} {confirmedAdress.city}
+                {userInfos.zipcode} {userInfos.city}
               </p>
-              <p>{confirmedAdress.country}</p>
+              <p>{userInfos.country}</p>
             </div>
           )}
         </div>
@@ -148,11 +150,11 @@ const ConfirmationOrder = () => {
         </div>
         <div className="confirmedOrder__confirmedOrderContainer__box">
           <h3>Résumé de la commande</h3>
-          {confirmedOrder && (
+          {offerInfos && (
             <div>
-              <img src={confirmedOrder.picture1} alt="picturetotal" />
+              <img src={offerInfos.picture1} alt="picturetotal" />
               <p className="confirmedOrder__confirmedOrderContainer__box__orderDetails">
-                Montant : {confirmedOrder.price} €
+                Montant : {offerInfos.price} €
               </p>
               <p className="confirmedOrder__confirmedOrderContainer__box__orderDetails">
                 Frais de port : {delivererPrice} €
@@ -160,7 +162,9 @@ const ConfirmationOrder = () => {
               <p className="confirmedOrder__confirmedOrderContainer__box__orderDetails">
                 Frais de protection acheteurs : 1 €
               </p>
-              Total : {confirmedOrder.price + delivererPrice + 1} €
+              <h3 className="confirmedOrder__confirmedOrderContainer__box__orderTotal">
+                Total : {offerInfos.price + delivererPrice + 1} €
+              </h3>
             </div>
           )}
         </div>
