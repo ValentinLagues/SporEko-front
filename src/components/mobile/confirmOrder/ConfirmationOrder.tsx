@@ -49,7 +49,7 @@ const ConfirmationOrder = () => {
       axios.get(`${urlBack}/deliverers`).then((res) => setDeliverersList(res.data));
     });
     axios
-      .get<IDelivererPrice>(`${urlBack}/deliverer_price`)
+      .get<IDelivererPrice>(`${urlBack}/deliverer_prices`)
       .then((res) => setConfirmedDelivererPrice(res.data));
   }, []);
 

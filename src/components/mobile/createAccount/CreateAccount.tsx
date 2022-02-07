@@ -87,7 +87,7 @@ const CreateAccount = () => {
     user &&
       axios
         .post<IUser>(`${urlBack}/users`, user)
-        .then((res) => res && navigate('/'))
+        .then((res) => res && navigate('/login'))
         .catch((err) => {
           if (err.response.data.message === 'Pseudo already exists') {
             setMessage('');
