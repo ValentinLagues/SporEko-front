@@ -11,7 +11,6 @@ import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
 import IDelivererPrice from '../../../interfaces/IDelivererPrice';
 import IOffer from '../../../interfaces/IOffer';
-import IOfferDeliverer from '../../../interfaces/IOfferDeliverer';
 import ISize from '../../../interfaces/ISize';
 import IUser from '../../../interfaces/IUser';
 import IUserLog from '../../../interfaces/IUser';
@@ -56,13 +55,15 @@ const ConfirmationOrder = () => {
 
   useEffect(() => {
     // recuperer les prix des livreurs selon le poids
-    axios
-      .get<IDelivererPrice[]>(
-        `${urlBack}/deliverer_prices?idDeliverer=${selectedDeliverer}&weight=${offerInfos?.weight}`,
-      )
-      .then((res) => {
-        setDelivererPrice(res.data[0].price);
-      });
+    selectedDeliverer &&
+      offerInfos?.weight &&
+      axios
+        .get<IDelivererPrice[]>(
+          `${urlBack}/deliverer_prices?idDeliverer=${selectedDeliverer}&weight=${offerInfos?.weight}`,
+        )
+        .then((res) => {
+          setDelivererPrice(res.data[0].price);
+        });
   }, [selectedDeliverer]);
   return (
     <div className="confirmedOrder">
