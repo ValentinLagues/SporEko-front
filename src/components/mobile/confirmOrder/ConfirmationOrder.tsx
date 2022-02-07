@@ -21,12 +21,13 @@ const ConfirmationOrder = () => {
   const { idUser } = useContext(CurrentUserContext);
   const [confirmedOrder, setConfirmedOrder] = useState<IOffer>();
   const [confirmedAdress, setConfirmedAdress] = useState<IUserLog>();
+  const [confirmedCondition, setConfirmedCondition] = useState<ICondition>();
+  const [confirmedSize, setConfirmedSize] = useState<ISize>();
+
   const [_confirmedDeliverer, setConfirmedDeliverer] = useState<IOffer_deliverer>();
   const [confirmedDelivererPrice, setConfirmedDelivererPrice] =
     useState<IDeliverer_price>();
-  const [confirmedCondition, setConfirmedCondition] = useState<ICondition>();
   const [deliverersList, setDeliverersList] = useState<IDeliverer[]>([]);
-  const [confirmedSize, setConfirmedSize] = useState<ISize>();
 
   // const [totalOrder, setTotalOrder] = useState([]);
 
@@ -65,7 +66,7 @@ const ConfirmationOrder = () => {
         setConfirmedDelivererPrice(res.data);
       });
   }, [confirmedDelivererPrice]);
-
+console.log(confirmedDelivererPrice);
   return (
     <div className="confirmedOrder">
       <div className="confirmedOrder__confirmedOrderContainer">
@@ -161,7 +162,7 @@ const ConfirmationOrder = () => {
             </label>
           </div>
           {!handDelivery &&
-            deliverersList.map((deliverer, index) => <p key={index}>{deliverer.name}</p>)}
+            confirmedDelivererPrice.map((deliverer, index) => <p key={index}>{deliverer.name}{deliverer.}</p>)}
         </div>
         <div className="confirmedOrder__confirmedOrderContainer__box">
           <h3>Résumé de la commande</h3>
