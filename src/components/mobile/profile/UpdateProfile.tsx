@@ -198,8 +198,7 @@ const UpdateProfile = () => {
       });
   };
   // Function to update user
-  const updatedUser = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const updatedUser = () => {
     if (password === confirmPassword) {
       const newUpdateUser = {
         pseudo,
@@ -261,7 +260,7 @@ const UpdateProfile = () => {
   return (
     <div className="updateProfile">
       <HeaderProfil />
-      <form onSubmit={(e) => updatedUser(e)} className="updateProfile__container">
+      <form onSubmit={() => updatedUser()} className="updateProfile__container">
         {/*------------------------Input pseudo----------------------------- */}
         <div className="updateProfile__container__content">
           <label htmlFor="pseudo">Pseudo :</label>
