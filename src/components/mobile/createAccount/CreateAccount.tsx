@@ -321,7 +321,7 @@ const CreateAccount = () => {
           <input className="checkboxCgv__createAccount__input" required type="checkbox" />
           <div className="checkboxCgv__createAccount__label">
             En créant votre compte vous acceptez notre
-            <a href="#!">politique de confidentialité</a>
+            <a href="#!"> politique de confidentialité</a>
           </div>
         </div>
         {message != '' && <p style={{ color: 'green' }}>{message}</p>}
