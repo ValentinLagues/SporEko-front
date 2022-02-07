@@ -59,9 +59,23 @@ const UpdateProfile = () => {
   // Display error or confirmation message
   const [messageError, setMessageError] = useState<string>('');
   const [message, setMessage] = useState<string>('');
-  // Object send to axios put
+  // Variable to display info user all ready exists
   const [updateUser, setUpdateUser] = useState<IUser>();
   const [displayBirthday, setDisplayBirthday] = useState<string>();
+  const [displayPseudo, setDisplayPseudo] = useState<string>();
+  const [displayLastname, setDisplayLastname] = useState<string>();
+  const [displayFirstname, setDisplayFirstname] = useState<string>();
+  const [displayAddress, setDisplayAddress] = useState<string>();
+  const [displayAddressComplement, setDisplayAddressComplement] = useState<string>();
+  const [displayZipcode, setDisplayZipcode] = useState<number>();
+  const [displayCity, setDisplayCity] = useState<string>();
+  const [displayIdCountry, setDisplayIdCountry] = useState<number>();
+  const [displayPhone, setDisplayPhone] = useState<string>();
+  const [displayEmail, setDisplayEmail] = useState<string>();
+  const [displayIdGender, setDisplayIdGender] = useState<number>();
+  const [displayIdAthletic, setDisplayIdAthletic] = useState<number>();
+  // Variable to disable button if entry is empty
+  const [disableBtn, setDisableBtn] = useState<boolean>(true);
 
   // Url to axios call
   const urlBack = import.meta.env.VITE_URL_BACK;
@@ -76,25 +90,44 @@ const UpdateProfile = () => {
     }
   }, [password]);
 
-  // Axios call to user informations
+  // Useeffect to disable click on button
   useEffect(() => {
-    axios.get<IUser>(`${urlBack}/users/${idUser}`).then((res) => {
-      setPseudo(res.data.pseudo);
-      setFirstname(res.data.firstname);
-      setLastname(res.data.lastname);
-      setAddress(res.data.address);
-      setAddressComplement(res.data.address_complement);
-      setZipcode(res.data.zipcode);
-      setEmail(res.data.email);
-      setCity(res.data.city);
-      setDisplayBirthday(res.data.birthday);
-      setPhone(res.data.phone);
-      setIdAthletic(res.data.id_athletic);
-      setIdGender(res.data.id_gender);
-      setIdCountry(res.data.id_country);
-    });
-  }, []);
-
+    if (
+      pseudo !== undefined ||
+      lastname !== undefined ||
+      firstname !== undefined ||
+      address !== undefined ||
+      zipcode !== undefined ||
+      city !== undefined ||
+      email !== undefined ||
+      password !== undefined ||
+      idGender !== undefined ||
+      idCountry !== undefined ||
+      addressComplement !== undefined ||
+      idAthletic !== undefined ||
+      birthday !== undefined ||
+      phone !== undefined
+    ) {
+      setDisableBtn(false);
+    } else {
+      setDisableBtn(true);
+    }
+  }, [
+    pseudo,
+    lastname,
+    firstname,
+    address,
+    zipcode,
+    city,
+    email,
+    password,
+    idGender,
+    idCountry,
+    addressComplement,
+    idAthletic,
+    birthday,
+    phone,
+  ]);
   // UseEffect for verify the concordance of password
   useEffect(() => {
     if (
@@ -113,6 +146,25 @@ const UpdateProfile = () => {
       setGoodEntryVerifyPassword(0);
     }
   }, [password, confirmPassword]);
+
+  // Axios call to user informations
+  useEffect(() => {
+    axios.get<IUser>(`${urlBack}/users/${idUser}`).then((res) => {
+      setDisplayPseudo(res.data.pseudo);
+      setDisplayFirstname(res.data.firstname);
+      setDisplayLastname(res.data.lastname);
+      setDisplayAddress(res.data.address);
+      setDisplayAddressComplement(res.data.address_complement);
+      setDisplayZipcode(res.data.zipcode);
+      setDisplayEmail(res.data.email);
+      setDisplayCity(res.data.city);
+      setDisplayBirthday(res.data.birthday);
+      setDisplayPhone(res.data.phone);
+      setDisplayIdAthletic(res.data.id_athletic);
+      setDisplayIdGender(res.data.id_gender);
+      setDisplayIdCountry(res.data.id_country);
+    });
+  }, []);
 
   // Function axios to change picture of user
   const handleFileInput = (event: React.ChangeEvent) => {
@@ -162,7 +214,7 @@ const UpdateProfile = () => {
         id_country: idCountry,
         address_complement: addressComplement,
         id_athletic: idAthletic,
-        birthday: birthday,
+        birthday,
         phone,
       } as unknown as IUser;
       setUpdateUser(newUpdateUser);
@@ -189,7 +241,7 @@ const UpdateProfile = () => {
         .catch((err) => {
           if (err.response.data.message === 'Pseudo already exists') {
             setMessage('');
-            setMessageError("Ce pseudo n'est pas disponible!");
+            setMessageError("Ce pseudo n'est pas disponible !");
           } else if (err.response.data.message === 'Email already exists') {
             setMessage('');
             setMessageError('Cette adresse e-mail est déjà utilisée');
@@ -216,7 +268,7 @@ const UpdateProfile = () => {
           <FiUserMinus className="updateProfile__container__content__icons" />
           <input
             id="pseudo"
-            placeholder={pseudo ? pseudo : 'Votre pseudo'}
+            placeholder={displayPseudo ? displayPseudo : 'Votre pseudo'}
             onChange={(e) => setPseudo(e.target.value)}
           />
           <hr />
@@ -227,7 +279,7 @@ const UpdateProfile = () => {
           <FiMeh className="updateProfile__container__content__icons" id="prenom" />
           <input
             type="text"
-            placeholder={firstname ? firstname : 'Votre Prénom'}
+            placeholder={displayFirstname ? displayFirstname : 'Votre Prénom'}
             onChange={(e) => setFirstname(e.target.value)}
           />
           <hr />
@@ -239,7 +291,7 @@ const UpdateProfile = () => {
           <input
             type="text"
             id="nom"
-            placeholder={lastname ? lastname : 'Votre nom'}
+            placeholder={displayLastname ? displayLastname : 'Votre nom'}
             onChange={(e) => setLastname(e.target.value)}
           />
           <hr />
@@ -251,7 +303,7 @@ const UpdateProfile = () => {
           <input
             id="adresse"
             type="text"
-            placeholder={address ? address : 'Votre adresse'}
+            placeholder={displayAddress ? displayAddress : 'Votre adresse'}
             onChange={(e) => setAddress(e.target.value)}
           />
           <hr />
@@ -267,7 +319,7 @@ const UpdateProfile = () => {
           <input
             type="text"
             id="address-complement"
-            placeholder={addressComplement}
+            placeholder={displayAddressComplement}
             onChange={(e) => setAddressComplement(e.target.value)}
           />
           <hr />
@@ -279,7 +331,7 @@ const UpdateProfile = () => {
           <input
             type="text"
             id="ville"
-            placeholder={city}
+            placeholder={displayCity ? displayCity : 'Votre ville'}
             onChange={(e) => setCity(e.target.value)}
           />
           <hr />
@@ -293,7 +345,7 @@ const UpdateProfile = () => {
             id="zip-code"
             min="0"
             max="99999"
-            placeholder={zipcode ? `${zipcode}` : 'Code postal'}
+            placeholder={displayZipcode ? `${displayZipcode}` : 'Code postal'}
             onChange={(e) => setZipcode(Number(e.target.valueAsNumber))}
           />
           <hr />
@@ -304,7 +356,7 @@ const UpdateProfile = () => {
           <FiMap className="updateProfile__container__content__icons" />
           <select onChange={(e) => setIdCountry(Number(e.target.value))} id="pays">
             {countries
-              .filter((el) => el.id_country == idCountry)
+              .filter((el) => el.id_country == displayIdCountry)
               .map((el, index) => (
                 <option key={index} defaultValue={el.id_country}>
                   {el.name}
@@ -325,7 +377,7 @@ const UpdateProfile = () => {
           <input
             type="email"
             id="email"
-            placeholder={email ? email : 'Entrez votre email'}
+            placeholder={displayEmail ? displayEmail : 'Entrez votre email'}
             onChange={(e) => setEmail(e.target.value)}
           />
           <hr />
@@ -407,7 +459,7 @@ const UpdateProfile = () => {
             type="tel"
             id="phone"
             pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
-            placeholder={phone ? phone : 'Entrer votre téléphone'}
+            placeholder={displayPhone ? displayPhone : 'Entrer votre téléphone'}
             onChange={(e) => setPhone(e.target.value)}
           />
           <hr />
@@ -415,7 +467,10 @@ const UpdateProfile = () => {
         {/*------------------------Input birthday date----------------------------- */}
         <div className="updateProfile__container__content">
           <label htmlFor="birthday">
-            Date de naissance : {new Date(displayBirthday || '').toLocaleDateString()}
+            Date de naissance :{' '}
+            {displayBirthday
+              ? new Date(displayBirthday || '').toLocaleDateString()
+              : 'JJ/MM/AA'}
           </label>
           <FiCalendar className="updateProfile__container__content__icons" />
           <input
@@ -433,7 +488,7 @@ const UpdateProfile = () => {
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <select onChange={(e) => setIdAthletic(Number(e.target.value))}>
             {athletics
-              .filter((el) => el.id_athletic == idAthletic)
+              .filter((el) => el.id_athletic == displayIdAthletic)
               .map((el, index) => (
                 <option key={index} defaultValue={el.id_athletic}>
                   {el.name}
@@ -457,7 +512,7 @@ const UpdateProfile = () => {
           </div>
           <select onChange={(e) => setIdGender(Number(e.currentTarget.value))}>
             {genders
-              .filter((el) => el.id_gender == idGender)
+              .filter((el) => el.id_gender == displayIdGender)
               .map((el, index) => (
                 <option key={index} defaultValue={el.id_gender}>
                   {el.adult_name}
@@ -483,7 +538,9 @@ const UpdateProfile = () => {
           />
         </div>
 
-        <button type="submit">Modifier vos données</button>
+        <button type="submit" disabled={disableBtn}>
+          Modifier vos données
+        </button>
         {message != '' && <p style={{ color: 'green' }}>{message}</p>}
         {messageError != '' && <p style={{ color: 'red' }}>{messageError}</p>}
       </form>
