@@ -20,44 +20,59 @@ import { HiEye } from 'react-icons/hi';
 import { ImCancelCircle, ImCheckmark } from 'react-icons/im';
 
 import CurrentUserContext from '../../../contexts/CurrentUser';
+import IAthletic from '../../../interfaces/IAthletic';
+import ICountry from '../../../interfaces/ICountry';
+import IGender from '../../../interfaces/IGender';
 import IUser from '../../../interfaces/IUser';
 import IUserLog from '../../../interfaces/IUser';
 import HeaderProfil from '../layout/HeaderProfil';
 
 const UpdateProfile = () => {
   // User context
-  const { user, idUser } = useContext(CurrentUserContext);
-
-  const [gender, setGender] = useState<Array<any>>([]);
-  const [athletic, setAthletic] = useState<Array<any>>([]);
-  const [country, setCountry] = useState<Array<any>>([]);
-  const [pseudo, setPseudo] = useState<string | undefined>(user.pseudo);
-  const [lastname, setLastName] = useState<string | undefined>(user.lastname);
-  const [firstname, setFirstname] = useState<string | undefined>();
-  const [address, setAddress] = useState<string | undefined>();
-  const [address_complement, setAddress_complement] = useState<string>();
-  const [zipcode, setZipcode] = useState<number | undefined>();
-  const [city, setCity] = useState<string | undefined>();
-  const [id_country, setId_country] = useState<string | undefined>();
-  const [phone, setPhone] = useState<string | undefined>();
-  const [email, setEmail] = useState<string | undefined>();
-  const [birthday, setBirthday] = useState<string | undefined>();
-  const [id_gender, setId_gender] = useState<string | undefined>();
-  const [id_athletic, setId_athletic] = useState<string | undefined>();
-  const [password, setPassword] = useState<string | undefined>();
-  const [verifyPassword, setVerifyPassword] = useState<string | undefined>();
+  const { idUser } = useContext(CurrentUserContext);
+  // Icon eye to password
   const [hiEye, setHiEye] = useState<boolean>(true);
   const [hiEye2, setHiEye2] = useState<boolean>(true);
+  // Array of axios response
+  const [gender, setGender] = useState<IGender[]>([]);
+  const [user, setUser] = useState<IUser>([]);
+  const [athletic, setAthletic] = useState<Array<any>>([]);
+  const [country, setCountry] = useState<Array<any>>([]);
+  // Variable of Form to update user
+  const [pseudo, setPseudo] = useState<string>(user.pseudo);
+  const [lastname, setLastname] = useState<string>(user.lastname);
+  const [firstname, setFirstname] = useState<string>(user.firstname);
+  const [address, setAddress] = useState<string>(user.address);
+  const [addressComplement, setAddressComplement] = useState<string>(
+    user.address_complement,
+  );
+  const [zipcode, setZipcode] = useState<number>(user.zipcode);
+  const [city, setCity] = useState<string>(user.city);
+  const [idCountry, setId_country] = useState<number>(user.id_country);
+  const [phone, setPhone] = useState<string>(user.phone);
+  const [email, setEmail] = useState<string>(user.email);
+  const [birthday, setBirthday] = useState<string>(user.birthday);
+  const [idGender, setIdGender] = useState<number>(user.id_gender);
+  const [idAthletic, setIdAthletic] = useState<number>(user.id_athletic);
+  const [password, setPassword] = useState<string>();
+  const [confirmPassword, setConfirmPassword] = useState<string>();
+  // Display icon to good entry between password and confirm password
   const [goodEntryVerifyPassword, setGoodEntryVerifyPassword] = useState<number>(0);
   const [goodEntryPassword, setGoodEntryPassword] = useState<number>(0);
+  // Display error or confirmation message
   const [messageError, setMessageError] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+  // Object send to axios put
   const [updateUser, setUpdateUser] = useState<IUser>();
+  // Hide button for Form when empty entry
+  const [hideBtn, setHideBtn] = useState<boolean>(true);
 
   // Format to birthday date
   const date = new Date(user.birthday).toLocaleDateString();
+
   // Url to axios call
   const urlBack = import.meta.env.VITE_URL_BACK;
+
   // UseEffect to admin right format of password .
   useEffect(() => {
     if (password?.length != undefined && password.length > 7) {
@@ -69,27 +84,72 @@ const UpdateProfile = () => {
     }
   }, [password]);
 
+  // Axios call to user informations
+  useEffect(() => {
+    axios.get<IUser>(`${urlBack}/users/${idUser}`).then((res) => setUser(res.data));
+  }, []);
+
+  // UseEffect to hide button if Form is empty
+  useEffect(() => {
+    if (
+      pseudo !== undefined ||
+      lastname !== undefined ||
+      firstname !== undefined ||
+      address !== undefined ||
+      zipcode !== undefined ||
+      city !== undefined ||
+      email !== undefined ||
+      password !== undefined ||
+      idGender !== undefined ||
+      idCountry !== undefined ||
+      addressComplement !== undefined ||
+      idAthletic !== undefined ||
+      birthday !== undefined ||
+      phone !== undefined ||
+      pseudo !== undefined
+    ) {
+      setHideBtn(false);
+    } else {
+      setHideBtn(true);
+    }
+  }, [
+    pseudo,
+    lastname,
+    firstname,
+    address,
+    zipcode,
+    city,
+    email,
+    password,
+    idGender,
+    idCountry,
+    addressComplement,
+    idAthletic,
+    birthday,
+    phone,
+    pseudo,
+  ]);
+
   // UseEffect for verify the concordance of password
   useEffect(() => {
     if (
-      password === verifyPassword &&
-      verifyPassword?.length != undefined &&
-      verifyPassword.length > 0
+      password === confirmPassword &&
+      confirmPassword?.length != undefined &&
+      confirmPassword.length > 0
     ) {
       setGoodEntryVerifyPassword(1);
     } else if (
-      verifyPassword?.length != undefined &&
-      password != verifyPassword &&
-      verifyPassword.length > 0
+      confirmPassword?.length != undefined &&
+      password != confirmPassword &&
+      confirmPassword.length > 0
     ) {
       setGoodEntryVerifyPassword(2);
     } else {
       setGoodEntryVerifyPassword(0);
     }
-  }, [password, verifyPassword]);
+  }, [password, confirmPassword]);
 
   // Function axios to change picture of user
-
   const handleFileInput = (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
@@ -113,31 +173,31 @@ const UpdateProfile = () => {
         setMessageError('');
       })
       .catch((err) => {
-        console.error(err);
+        err;
         setMessage('');
         setMessageError(
           "Le fichier est trop volumineux ou n'est pas au bon format (jpeg/jpg/png)",
         );
       });
   };
-
+  // Function to update user
   const updatedUser = () => {
-    if (password === verifyPassword) {
+    if (password === confirmPassword) {
       const newUpdateUser = {
-        lastname,
-        firstname,
-        address,
-        zipcode,
-        city,
-        email,
-        password,
-        id_gender,
-        id_country,
-        address_complement,
-        id_athletic,
-        birthday,
-        phone,
-        pseudo,
+        lastname: lastname,
+        firstname: firstname,
+        address: address,
+        zipcode: zipcode,
+        city: city,
+        email: email,
+        password: password,
+        id_gender: idGender,
+        id_country: idCountry,
+        address_complement: addressComplement,
+        id_athletic: idAthletic,
+        birthday: birthday,
+        phone: phone,
+        pseudo: pseudo,
       } as unknown as IUser;
       setUpdateUser(newUpdateUser);
     }
@@ -147,7 +207,7 @@ const UpdateProfile = () => {
   useEffect(() => {
     updateUser &&
       axios
-        .put<IUserLog>(
+        .put<IUser>(
           `${urlBack}/users/${idUser}`,
           updateUser,
 
@@ -172,11 +232,12 @@ const UpdateProfile = () => {
           }
         });
   }, [updateUser]);
+
   // Axios call to display select
   useEffect(() => {
-    axios.get(`${urlBack}/genders`).then((res) => setGender(res.data));
-    axios.get(`${urlBack}/athletics`).then((res) => setAthletic(res.data));
-    axios.get(`${urlBack}/countries`).then((res) => setCountry(res.data));
+    axios.get<IGender[]>(`${urlBack}/genders`).then((res) => setGender(res.data));
+    axios.get<IAthletic[]>(`${urlBack}/athletics`).then((res) => setAthletic(res.data));
+    axios.get<ICountry[]>(`${urlBack}/countries`).then((res) => setCountry(res.data));
   }, []);
 
   return (
@@ -213,7 +274,7 @@ const UpdateProfile = () => {
             type="text"
             id="nom"
             placeholder={user.lastname ? user.lastname : 'Votre nom'}
-            onChange={(e) => setLastName(e.target.value)}
+            onChange={(e) => setLastname(e.target.value)}
           />
           <hr />
         </div>
@@ -241,7 +302,7 @@ const UpdateProfile = () => {
             type="text"
             id="address-complement"
             placeholder={user.address_complement}
-            onChange={(e) => setAddress_complement(e.target.value)}
+            onChange={(e) => setAddressComplement(e.target.value)}
           />
           <hr />
         </div>
@@ -266,8 +327,8 @@ const UpdateProfile = () => {
             id="zip-code"
             min="0"
             max="99999"
-            placeholder={user.zipcode ? user.zipcode : 'Code postal'}
-            onChange={(e) => setZipcode(e.target.valueAsNumber)}
+            placeholder={user.zipcode ? `${user.zipcode}` : 'Code postal'}
+            onChange={(e) => setZipcode(Number(e.target.valueAsNumber))}
           />
           <hr />
         </div>
@@ -275,16 +336,16 @@ const UpdateProfile = () => {
         <div className="updateProfile__container__content">
           <label htmlFor="pays">Pays :</label>
           <FiMap className="updateProfile__container__content__icons" />
-          <select onChange={(e) => setId_country(e.target.value)} id="pays">
+          <select onChange={(e) => setId_country(Number(e.target.value))} id="pays">
             {country
-              .filter((el) => el.id_country == user.id_country)
+              .filter((el) => el.idCountry == user.id_country)
               .map((el, index) => (
-                <option key={index} defaultValue={el.id_country}>
+                <option key={index} defaultValue={el.idCountry}>
                   {el.name}
                 </option>
               ))}
             {country.map((el, index) => (
-              <option key={index} defaultValue={el.id_country}>
+              <option key={index} value={el.idCountry}>
                 {el.name}
               </option>
             ))}
@@ -307,12 +368,22 @@ const UpdateProfile = () => {
         <div className="updateProfile__container__content">
           {goodEntryPassword === 1 && (
             <ImCheckmark
-              style={{ right: '16vw', position: 'absolute', color: 'green' }}
+              style={{
+                right: '16vw',
+                bottom: '2.2vh',
+                position: 'absolute',
+                color: 'green',
+              }}
             />
           )}
           {goodEntryPassword === 2 && (
             <ImCancelCircle
-              style={{ right: '16vw', position: 'absolute', color: 'red' }}
+              style={{
+                right: '16vw',
+                bottom: '2.2vh',
+                position: 'absolute',
+                color: 'red',
+              }}
             />
           )}
           <label htmlFor="password">Mot de passe :</label>
@@ -332,12 +403,22 @@ const UpdateProfile = () => {
         <div className="updateProfile__container__content">
           {goodEntryVerifyPassword === 1 && (
             <ImCheckmark
-              style={{ right: '16vw', position: 'absolute', color: 'green' }}
+              style={{
+                right: '16vw',
+                bottom: '2.2vh',
+                position: 'absolute',
+                color: 'green',
+              }}
             />
           )}
           {goodEntryVerifyPassword === 2 && (
             <ImCancelCircle
-              style={{ right: '16vw', position: 'absolute', color: 'red' }}
+              style={{
+                right: '16vw',
+                bottom: '2.2vh',
+                position: 'absolute',
+                color: 'red',
+              }}
             />
           )}
           <label htmlFor="password">Confirmation mot de passe :</label>
@@ -346,7 +427,7 @@ const UpdateProfile = () => {
             placeholder="Confirmer votre mot de passe"
             type={`${hiEye2 ? 'password' : 'text'}`}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setVerifyPassword(e.currentTarget.value)
+              setConfirmPassword(e.currentTarget.value)
             }
           />
           <HiEye className="inputIcon right" onClick={() => setHiEye2(!hiEye2)} />
@@ -381,7 +462,7 @@ const UpdateProfile = () => {
           <label htmlFor="birthday">Quel genre de sportifs êtes-vous ?</label>
           <BiRun className="updateProfile__container__content__icons" />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <select onChange={(e) => setId_athletic(e.target.value)}>
+          <select onChange={(e) => setIdAthletic(Number(e.target.value))}>
             {athletic
               .filter((el) => el.id_athletic == user.id_athletic)
               .map((el, index) => (
@@ -390,7 +471,7 @@ const UpdateProfile = () => {
                 </option>
               ))}
             {athletic.map((el, index) => (
-              <option key={index} value={el.id_athletic}>
+              <option key={index} value={Number(el.id_athletic)}>
                 {el.name}
               </option>
             ))}
@@ -405,7 +486,7 @@ const UpdateProfile = () => {
             <BsGenderMale />
             <BsGenderAmbiguous />
           </div>
-          <select onChange={(e) => setId_gender(e.currentTarget.value)}>
+          <select onChange={(e) => setIdGender(Number(e.currentTarget.value))}>
             {gender
               .filter((el) => el.id_gender == user.id_gender)
               .map((el, index) => (
@@ -428,12 +509,12 @@ const UpdateProfile = () => {
           <input
             id="imageUser"
             type="file"
-            style={{ height: 'auto', fontSize: '2.2vh' }}
+            style={{ height: 'auto', fontSize: '2.2vh', marginBottom: '2vh' }}
             onChange={(e) => handleFileInput(e)}
           />
         </div>
 
-        <button type="submit">Modifier vos données</button>
+        {!hideBtn && <button type="submit">Modifier vos données</button>}
         {message != '' && <p style={{ color: 'green' }}>{message}</p>}
         {messageError != '' && <p style={{ color: 'red' }}>{messageError}</p>}
       </form>

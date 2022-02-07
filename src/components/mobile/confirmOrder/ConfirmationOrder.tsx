@@ -8,10 +8,11 @@ import cards from '../../../../resources/cards.png';
 import CurrentUserContext from '../../../contexts/CurrentUser';
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
-import IDeliverer_price from '../../../interfaces/IDeliverer_price';
+import IDelivererPrice from '../../../interfaces/IDelivererPrice';
 import IOffer from '../../../interfaces/IOffer';
-import IOffer_deliverer from '../../../interfaces/IOffer_deliverer';
+import IOfferDeliverer from '../../../interfaces/IOfferDeliverer';
 import ISize from '../../../interfaces/ISize';
+import IUser from '../../../interfaces/IUser';
 import IUserLog from '../../../interfaces/IUser';
 
 const urlBack = import.meta.env.VITE_URL_BACK;
@@ -21,12 +22,11 @@ const ConfirmationOrder = () => {
   const { idUser } = useContext(CurrentUserContext);
   const [confirmedOrder, setConfirmedOrder] = useState<IOffer>();
   const [confirmedAdress, setConfirmedAdress] = useState<IUserLog>();
-  const [confirmedCondition, setConfirmedCondition] = useState<ICondition>();
   const [confirmedSize, setConfirmedSize] = useState<ISize>();
-
-  const [_confirmedDeliverer, setConfirmedDeliverer] = useState<IOffer_deliverer>();
+  const [_confirmedDeliverer, setConfirmedDeliverer] = useState<IOfferDeliverer>();
   const [confirmedDelivererPrice, setConfirmedDelivererPrice] =
-    useState<IDeliverer_price>();
+    useState<IDelivererPrice>();
+  const [confirmedCondition, setConfirmedCondition] = useState<ICondition>();
   const [deliverersList, setDeliverersList] = useState<IDeliverer[]>([]);
 
   // const [totalOrder, setTotalOrder] = useState([]);
@@ -36,24 +36,24 @@ const ConfirmationOrder = () => {
   const [mondialRelayDelivery, setMondialRelayDelivery] = useState(0);
 
   useEffect(() => {
-    axios.get(`${urlBack}/offers/${id}`).then((res) => {
+    axios.get<IOffer>(`${urlBack}/offers/${id}`).then((res) => {
       setConfirmedOrder(res.data);
       axios
-        .get(`${urlBack}/sizes/${res.data.id_size}`)
+        .get<ISize>(`${urlBack}/sizes/${res.data.id_size}`)
         .then((res) => setConfirmedSize(res.data));
       axios
-        .get(`${urlBack}/conditions/${res.data.id_condition}`)
+        .get<ICondition>(`${urlBack}/conditions/${res.data.id_condition}`)
         .then((res) => setConfirmedCondition(res.data));
     });
     axios
-      .get(`${urlBack}/users/${idUser}`, { withCredentials: true })
+      .get<IUser>(`${urlBack}/users/${idUser}`, { withCredentials: true })
       .then((res) => setConfirmedAdress(res.data));
     axios.get(`${urlBack}/offer_deliverers`).then((res) => {
       setConfirmedDeliverer(res.data);
       axios.get(`${urlBack}/deliverers`).then((res) => setDeliverersList(res.data));
     });
     axios
-      .get(`${urlBack}/deliverer_price`)
+      .get<IDelivererPrice>(`${urlBack}/deliverer_price`)
       .then((res) => setConfirmedDelivererPrice(res.data));
   }, []);
 
