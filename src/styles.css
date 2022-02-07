@@ -1378,7 +1378,7 @@ h4 {
 
 .updateProfile__container button {
   font-size: 2.5vh;
-  margin: 8vh auto 3vh auto;
+  margin: 4vh auto 3vh auto;
   padding: 2vh;
   border-radius: 10px;
   -webkit-box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
@@ -1814,6 +1814,14 @@ h4 {
   border-width: 1px;
   border-color: gray;
   margin: 2vh 0vw;
+}
+
+.confirmedOrder__confirmedOrderContainer__box__orderDetails {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
 }
 
 .confirmedOrder__confirmedOrderContainer .delivererList {
