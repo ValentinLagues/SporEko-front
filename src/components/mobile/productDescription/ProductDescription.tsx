@@ -7,8 +7,9 @@ import IBrand from '../../../interfaces/IBrand';
 import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
+import IOffer from '../../../interfaces/IOffer';
 import Ioffer from '../../../interfaces/IOffer';
-import IOffer_deliverer from '../../../interfaces/IOffer_deliverer';
+import IOfferDeliverer from '../../../interfaces/IOfferDeliverer';
 import ISize from '../../../interfaces/ISize';
 import ISport from '../../../interfaces/ISport';
 import IUserLog from '../../../interfaces/IUser';
@@ -22,7 +23,7 @@ const ProductDescription = () => {
   const [condition, setCondition] = useState<ICondition>();
   const [sport, setSport] = useState<ISport>();
   const [deliverer, setDeliverer] = useState<IDeliverer[]>([]);
-  const [offerDeliverer, setOfferDeliverer] = useState<IOffer_deliverer[]>([]);
+  const [offerDeliverer, setOfferDeliverer] = useState<IOfferDeliverer[]>([]);
   const [handDeliverer, setHandDeliverer] = useState('');
   const [color1, setColor1] = useState<IColor>();
   const [color2, setColor2] = useState<IColor>();
@@ -41,31 +42,31 @@ const ProductDescription = () => {
       );
 
     axios
-      .get(`${urlBack}/offers/${id}`)
+      .get<IOffer>(`${urlBack}/offers/${id}`)
       .then((res) => res.data)
       .then((data) => {
         setOffer(data);
-        setPictures({
-          picture2: data.picture2,
-          picture3: data.picture3,
-          picture4: data.picture4,
-          picture5: data.picture5,
-          picture6: data.picture6,
-          picture7: data.picture7,
-          picture8: data.picture8,
-          picture9: data.picture9,
-          picture10: data.picture10,
-          picture11: data.picture11,
-          picture12: data.picture12,
-          picture13: data.picture13,
-          picture14: data.picture14,
-          picture15: data.picture15,
-          picture16: data.picture16,
-          picture17: data.picture17,
-          picture18: data.picture18,
-          picture19: data.picture19,
-          picture20: data.picture20,
-        });
+        setPictures([
+          data.picture2,
+          data.picture3,
+          data.picture4,
+          data.picture5,
+          data.picture6,
+          data.picture7,
+          data.picture8,
+          data.picture9,
+          data.picture10,
+          data.picture11,
+          data.picture12,
+          data.picture13,
+          data.picture14,
+          data.picture15,
+          data.picture16,
+          data.picture17,
+          data.picture18,
+          data.picture19,
+          data.picture20,
+        ]);
 
         data.id_brand &&
           axios
@@ -104,9 +105,7 @@ const ProductDescription = () => {
 
   color1 && (color1.style = { backgroundColor: color1?.color_code });
   color2 && (color2.style = { backgroundColor: color2?.color_code });
-  let images = Object.keys(pictures).map(function (key: any) {
-    return [Number(key), pictures[key]];
-  });
+
   return (
     <div className="product-description">
       <div className="product-description__container-picture">
@@ -119,16 +118,16 @@ const ProductDescription = () => {
 
         <div className="product-description__container-picture__all-picture">
           {offer &&
-            images.map((picture: Array<any>, index: any) => (
+            pictures.map((picture, index) => (
               <img
                 className={
-                  picture[1] !== null
+                  picture !== null
                     ? 'product-description__container-picture__all-picture'
                     : 'product-description__container-picture__all-picture__invisible'
                 }
                 key={index}
-                src={picture[1]}
-                alt=""
+                src={picture}
+                alt={`vue n° ${index}`}
               />
             ))}
         </div>

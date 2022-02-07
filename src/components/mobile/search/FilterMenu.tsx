@@ -11,11 +11,11 @@ import ISport from '../../../interfaces/ISport';
 import ITextile from '../../../interfaces/ITextile';
 
 interface Props {
-  itemInfos: IItem | undefined;
+  itemInfos: IItem;
   categoryIsClothes: boolean;
   setCategoryIsClothes: React.Dispatch<React.SetStateAction<boolean>>;
-  price: number | null;
-  setPrice: React.Dispatch<React.SetStateAction<number | null>>;
+  price: number;
+  setPrice: React.Dispatch<React.SetStateAction<number>>;
   size: string;
   setSize: React.Dispatch<React.SetStateAction<string>>;
   showSizes: boolean;
@@ -26,19 +26,19 @@ interface Props {
   setCondition: React.Dispatch<React.SetStateAction<string>>;
   textile: string;
   setTextile: React.Dispatch<React.SetStateAction<string>>;
-  color1: number | null;
-  setColor1: React.Dispatch<React.SetStateAction<number | null>>;
+  color1: number;
+  setColor1: React.Dispatch<React.SetStateAction<number>>;
   colorName: string;
   setColorName: React.Dispatch<React.SetStateAction<string>>;
   orderBy: string;
   setOrderBy: React.Dispatch<React.SetStateAction<string>>;
-  colorsList: Array<IColor>;
-  showColorsList: boolean;
-  setShowColorsList: React.Dispatch<React.SetStateAction<boolean>>;
-  conditionsList: Array<ICondition>;
-  brandsList: Array<IBrand>;
-  sizesList: Array<ISize>;
-  textilesList: Array<ITextile>;
+  colors: IColor[];
+  showColors: boolean;
+  setShowColors: React.Dispatch<React.SetStateAction<boolean>>;
+  conditions: ICondition[];
+  brands: IBrand[];
+  sizes: ISize[];
+  textiles: ITextile[];
   item: string;
   setItem: React.Dispatch<React.SetStateAction<string>>;
   category: string;
@@ -47,14 +47,14 @@ interface Props {
   setSport: React.Dispatch<React.SetStateAction<string>>;
   genderIsChild: boolean;
   setGenderIsChild: React.Dispatch<React.SetStateAction<boolean>>;
-  genderAdult: number | null;
-  setGenderAdult: React.Dispatch<React.SetStateAction<number | null>>;
-  genderChild: number | null;
-  setGenderChild: React.Dispatch<React.SetStateAction<number | null>>;
-  setGender: React.Dispatch<React.SetStateAction<number | null>>;
-  categoriesList: Array<ICategory>;
-  itemsList: Array<IItem>;
-  sportsList: Array<ISport>;
+  genderAdult: number;
+  setGenderAdult: React.Dispatch<React.SetStateAction<number>>;
+  genderChild: number;
+  setGenderChild: React.Dispatch<React.SetStateAction<number>>;
+  setGender: React.Dispatch<React.SetStateAction<number>>;
+  categories: ICategory[];
+  items: IItem[];
+  sports: ISport[];
   handleSubmit: () => void;
   handleItemSelected: (_e: string) => void;
   handleReset: () => void;
@@ -95,22 +95,21 @@ const FilterMenu: React.FC<Props> = ({
   genderChild,
   setGenderChild,
   setGender,
-  categoriesList,
-  colorsList,
-  showColorsList,
-  setShowColorsList,
-  conditionsList,
-  brandsList,
-  sizesList,
-  textilesList,
-  itemsList,
-  sportsList,
+  categories,
+  colors,
+  showColors,
+  setShowColors,
+  conditions,
+  brands,
+  sizes,
+  textiles,
+  items,
+  sports,
   handleReset,
   handleSubmit,
   handleItemSelected,
 }) => {
-  colorsList &&
-    colorsList.map((color) => (color.style = { backgroundColor: color.color_code }));
+  colors && colors.map((color) => (color.style = { backgroundColor: color.color_code }));
 
   return (
     <form onSubmit={() => handleSubmit()} className="filterMenu" id="filterMenuMobile">
@@ -129,8 +128,8 @@ const FilterMenu: React.FC<Props> = ({
           name="sports"
           id="sports">
           <option value="">Tous</option>
-          {sportsList &&
-            sportsList.map((sport, index) => (
+          {sports &&
+            sports.map((sport, index) => (
               <option key={index} value={sport.id_sport}>
                 {sport.name}
               </option>
@@ -143,7 +142,7 @@ const FilterMenu: React.FC<Props> = ({
           onChange={(e) => {
             setGenderAdult(Number(e.target.value));
             e.target.value === '4'
-              ? (setGenderIsChild(true), setGender(null), setGenderChild(null))
+              ? (setGenderIsChild(true), setGender(0), setGenderChild(0))
               : (setGenderIsChild(false), setGender(Number(e.target.value)));
           }}
           value={Number(genderAdult)}
@@ -176,7 +175,6 @@ const FilterMenu: React.FC<Props> = ({
           onChange={(e) => {
             setItem('');
             setCategory(e.target.value);
-            // e.target.value === '' ? setItem('') : '';
             e.target.value === '1'
               ? (setCategoryIsClothes(true), setShowSizes(true))
               : setCategoryIsClothes(false);
@@ -188,8 +186,8 @@ const FilterMenu: React.FC<Props> = ({
           name="categories"
           id="categories">
           <option value="">Toutes</option>
-          {categoriesList &&
-            categoriesList.map((category, index) => (
+          {categories &&
+            categories.map((category, index) => (
               <option key={index} value={category.id_category}>
                 {category.name}
               </option>
@@ -210,12 +208,12 @@ const FilterMenu: React.FC<Props> = ({
               : setShowSizes(false);
           }}
           value={item}
-          className=""
+          className="filterMenu__itemList"
           name="items"
           id="items">
           <option value="">Tous</option>
-          {itemsList &&
-            itemsList.map((item, index) => (
+          {items &&
+            items.map((item, index) => (
               <option key={index} value={item.id_item}>
                 {item.name}
               </option>
@@ -232,8 +230,8 @@ const FilterMenu: React.FC<Props> = ({
             name="textile"
             id="textile">
             <option value="">Toutes matières</option>
-            {textilesList &&
-              textilesList.map((textile, index) => (
+            {textiles &&
+              textiles.map((textile, index) => (
                 <option key={index} value={textile.id_textile}>
                   {textile.name}
                 </option>
@@ -250,8 +248,8 @@ const FilterMenu: React.FC<Props> = ({
           name="conditions"
           id="conditions">
           <option value="">Tous</option>
-          {conditionsList &&
-            conditionsList.map((condition, index) => (
+          {conditions &&
+            conditions.map((condition, index) => (
               <option key={index} value={condition.id_condition}>
                 {condition.name}
               </option>
@@ -259,20 +257,20 @@ const FilterMenu: React.FC<Props> = ({
         </select>
       </div>
       <div
-        onKeyPress={() => setShowColorsList(!showColorsList)}
+        onKeyPress={() => setShowColors(!showColors)}
         role="button"
         tabIndex={0}
         className="filterMenu__item"
-        onClick={() => setShowColorsList(!showColorsList)}
+        onClick={() => setShowColors(!showColors)}
         id="colors">
         <span>Couleur</span>
         <div className="iconChevronDownContainer">
           {color1 ? colorName : 'Toutes'}{' '}
           <HiChevronDown className="iconChevronDownContainer__icon" />
         </div>
-        {showColorsList && (
+        {showColors && (
           <div className="colorList">
-            {colorsList.map((color, index) => (
+            {colors.map((color, index) => (
               <div
                 onKeyPress={() => (setColor1(color.id_color), setColorName(color.name))}
                 role="button"
@@ -296,8 +294,8 @@ const FilterMenu: React.FC<Props> = ({
           name="brands"
           id="brands">
           <option value="">Toutes</option>
-          {brandsList &&
-            brandsList.map((brand, index) => (
+          {brands &&
+            brands.map((brand, index) => (
               <option key={index} value={brand.id_brand}>
                 {brand.name}
               </option>
@@ -314,8 +312,8 @@ const FilterMenu: React.FC<Props> = ({
             name="sizes"
             id="sizes">
             <option value="">Toutes</option>
-            {sizesList &&
-              sizesList.map((size, index) => (
+            {sizes &&
+              sizes.map((size, index) => (
                 <option key={index} value={size.id_size}>
                   {(category === '1' && genderIsChild) || itemInfos?.id_size_type === 6
                     ? `${size.age_child}`
@@ -350,7 +348,7 @@ const FilterMenu: React.FC<Props> = ({
           type="range"
           value={Number(price)}
           onChange={(e) => {
-            e.target.value === '0' ? setPrice(null) : setPrice(Number(e.target.value));
+            e.target.value === '0' ? setPrice(0) : setPrice(Number(e.target.value));
           }}
         />
       </div>

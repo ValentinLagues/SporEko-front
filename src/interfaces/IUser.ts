@@ -1,12 +1,4 @@
 export default interface IUser {
-  id: number;
-  userImage: string;
-  token: string;
-  pseudo: string;
-  admin: number;
-  userIn: boolean;
-}
-export default interface IUserLog {
   id_user: number;
   lastname: string;
   firstname: string;
@@ -17,8 +9,8 @@ export default interface IUserLog {
   password: string;
   hash_password: string;
   picture: string;
-  isadmin: number;
-  isarchived: number;
+  is_admin: number;
+  is_archived: number;
   id_gender: number;
   id_country: number;
   address_complement: string;

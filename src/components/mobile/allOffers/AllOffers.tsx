@@ -22,14 +22,14 @@ import SearchBar from '../search/SearchBar';
 const AllOffers = () => {
   const { idUser } = useContext(CurrentUserContext);
 
-  const [sportsList, setSportsList] = useState<ISport[]>([]);
-  const [categoriesList, setCategoriesList] = useState<ICategory[]>([]);
-  const [itemsList, setItemsList] = useState<IItem[]>([]);
-  const [conditionsList, setConditionsList] = useState<ICondition[]>([]);
-  const [textilesList, setTextilesList] = useState<ITextile[]>([]);
-  const [colorsList, setColorsList] = useState<IColor[]>([]);
-  const [brandsList, setBrandsList] = useState<IBrand[]>([]);
-  const [sizesList, setSizesList] = useState<ISize[]>([]);
+  const [sports, setSports] = useState<ISport[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [items, setItems] = useState<IItem[]>([]);
+  const [conditions, setConditions] = useState<ICondition[]>([]);
+  const [textiles, setTextiles] = useState<ITextile[]>([]);
+  const [colors, setColors] = useState<IColor[]>([]);
+  const [brands, setBrands] = useState<IBrand[]>([]);
+  const [sizes, setSizes] = useState<ISize[]>([]);
   const [allOffers, setAllOffers] = useState<IOffer[]>([]);
   const [userFavorites, setUserFavorites] = useState<IFavorite[]>([]);
 
@@ -39,9 +39,9 @@ const AllOffers = () => {
   const [hideFilters, setHideFilters] = useState<boolean>(false);
 
   const [sport, setSport] = useState<string>('');
-  const [gender, setGender] = useState<number | null>(null);
-  const [genderAdult, setGenderAdult] = useState<number | null>(null);
-  const [genderChild, setGenderChild] = useState<number | null>(null);
+  const [gender, setGender] = useState<number>(0);
+  const [genderAdult, setGenderAdult] = useState<number>(0);
+  const [genderChild, setGenderChild] = useState<number>(0);
   const [genderIsChild, setGenderIsChild] = useState<boolean>(false);
   const [category, setCategory] = useState<string>('');
   const [item, setItem] = useState<string>('');
@@ -49,33 +49,37 @@ const AllOffers = () => {
   const [categoryIsClothes, setCategoryIsClothes] = useState<boolean>(false);
   const [condition, setCondition] = useState<string>('');
   const [textile, setTextile] = useState<string>('');
-  const [showColorsList, setShowColorsList] = useState<boolean>(false);
-  const [color1, setColor1] = useState<number | null>(null);
+  const [showColors, setShowColors] = useState<boolean>(false);
+  const [color1, setColor1] = useState<number>(0);
   const [colorName, setColorName] = useState<string>('');
   const [brand, setBrand] = useState<string>('');
   const [showSizes, setShowSizes] = useState<boolean>(false);
   const [size, setSize] = useState<string>('');
-  const [price, setPrice] = useState<number | null>(null);
+  const [price, setPrice] = useState<number>(0);
   const [orderBy, setOrderBy] = useState<string>('');
 
   useEffect(() => {
-    axios.get(`${urlBack}/sports`).then((res) => setSportsList(res.data));
-    axios.get(`${urlBack}/categories`).then((res) => setCategoriesList(res.data));
-    axios.get(`${urlBack}/conditions`).then((res) => setConditionsList(res.data));
-    axios.get(`${urlBack}/textiles`).then((res) => setTextilesList(res.data));
-    axios.get(`${urlBack}/colors`).then((res) => setColorsList(res.data));
-    axios.get(`${urlBack}/brands`).then((res) => setBrandsList(res.data));
-    axios.get(`${urlBack}/sizes`).then((res) => setSizesList(res.data));
+    axios.get<ISport[]>(`${urlBack}/sports`).then((res) => setSports(res.data));
+    axios
+      .get<ICategory[]>(`${urlBack}/categories`)
+      .then((res) => setCategories(res.data));
+    axios
+      .get<ICondition[]>(`${urlBack}/conditions`)
+      .then((res) => setConditions(res.data));
+    axios.get<ITextile[]>(`${urlBack}/textiles`).then((res) => setTextiles(res.data));
+    axios.get<IColor[]>(`${urlBack}/colors`).then((res) => setColors(res.data));
+    axios.get<IBrand[]>(`${urlBack}/brands`).then((res) => setBrands(res.data));
+    axios.get<ISize[]>(`${urlBack}/sizes`).then((res) => setSizes(res.data));
   }, []);
 
   // if a category is chosen, itemList is 'filtered' by category
   //else itemList contains all items
   useEffect(() => {
     category
-      ? axios.get(`${urlBack}/categories/${category}/items`).then((res) => {
-          setItemsList(res.data);
+      ? axios.get<IItem[]>(`${urlBack}/categories/${category}/items`).then((res) => {
+          setItems(res.data);
         })
-      : axios.get(`${urlBack}/items`).then((res) => setItemsList(res.data));
+      : axios.get<IItem[]>(`${urlBack}/items`).then((res) => setItems(res.data));
   }, [category]);
 
   //if category is clothes or shoes, or if item is a shoe or a clothes, sizeList is shown with appropriate sizes
@@ -92,19 +96,21 @@ const AllOffers = () => {
       oneValue = true;
     }
     item
-      ? axios.get(`${urlBack}/items/${item}/sizes${filters}`).then((res) => {
-          setSizesList(res.data);
+      ? axios.get<ISize[]>(`${urlBack}/items/${item}/sizes${filters}`).then((res) => {
+          setSizes(res.data);
         })
       : category
-      ? axios.get(`${urlBack}/categories/${category}/sizes${filters}`).then((res) => {
-          setSizesList(res.data);
-        })
-      : (setSizesList([]), setShowSizes(false));
+      ? axios
+          .get<ISize[]>(`${urlBack}/categories/${category}/sizes${filters}`)
+          .then((res) => {
+            setSizes(res.data);
+          })
+      : (setSizes([]), setShowSizes(false));
   }, [item, gender, genderIsChild, category]);
 
   const handleItemSelected = (id: string) => {
     axios
-      .get(`${urlBack}/items/${id}`)
+      .get<IItem>(`${urlBack}/items/${id}`)
       .then((item) => {
         setItemInfos(item.data);
         return item.data;
@@ -121,21 +127,21 @@ const AllOffers = () => {
 
   const handleReset = () => {
     setSport('');
-    setGender(null);
-    setGenderAdult(null);
-    setGenderChild(null);
+    setGender(0);
+    setGenderAdult(0);
+    setGenderChild(0);
     setGenderIsChild(false);
     setCategory('');
     setItem('');
     setCategoryIsClothes(false);
     setCondition('');
     setTextile('');
-    setShowColorsList(false);
-    setColor1(null);
+    setShowColors(false);
+    setColor1(0);
     setColorName('');
     setBrand('');
     setSize('');
-    setPrice(null);
+    setPrice(0);
     setOrderBy('');
   };
 
@@ -143,7 +149,7 @@ const AllOffers = () => {
 
   const addFavorite = (idOffer: number) => {
     axios
-      .post(`${urlBack}/users/${idUser}/favorites`, {
+      .post<IFavorite>(`${urlBack}/users/${idUser}/favorites`, {
         id_user: Number(idUser),
         id_offer: idOffer,
       })
@@ -164,10 +170,10 @@ const AllOffers = () => {
   const urlBack = import.meta.env.VITE_URL_BACK;
 
   useEffect(() => {
-    axios.get(`${urlBack}/offers`).then((res) => setAllOffers(res.data));
+    axios.get<IOffer[]>(`${urlBack}/offers`).then((res) => setAllOffers(res.data));
     idUser &&
       axios
-        .get(`${urlBack}/users/${idUser}/favorites`)
+        .get<IFavorite[]>(`${urlBack}/users/${idUser}/favorites`)
         .then((res) => setUserFavorites(res.data))
         .then(() => setIsFavorite(false));
   }, [isFavorite]);
@@ -289,16 +295,16 @@ const AllOffers = () => {
           genderChild={genderChild}
           setGenderChild={setGenderChild}
           setGender={setGender}
-          categoriesList={categoriesList}
-          colorsList={colorsList}
-          showColorsList={showColorsList}
-          setShowColorsList={setShowColorsList}
-          conditionsList={conditionsList}
-          brandsList={brandsList}
-          sizesList={sizesList}
-          textilesList={textilesList}
-          itemsList={itemsList}
-          sportsList={sportsList}
+          categories={categories}
+          colors={colors}
+          showColors={showColors}
+          setShowColors={setShowColors}
+          conditions={conditions}
+          brands={brands}
+          sizes={sizes}
+          textiles={textiles}
+          items={items}
+          sports={sports}
           handleReset={handleReset}
           handleSubmit={handleSubmit}
           handleItemSelected={handleItemSelected}
@@ -321,9 +327,9 @@ const AllOffers = () => {
           genderChild={genderChild}
           setGenderChild={setGenderChild}
           setGender={setGender}
-          categoriesList={categoriesList}
-          itemsList={itemsList}
-          sportsList={sportsList}
+          categories={categories}
+          items={items}
+          sports={sports}
           handleSubmit={handleSubmit}
           handleItemSelected={handleItemSelected}
         />
@@ -362,8 +368,7 @@ const AllOffers = () => {
                   </li>
                 )}
                 <li className="allOffers__container__offer__detail__brand">
-                  {brandsList.find((brand) => brand.id_brand === offer.id_brand)?.name ||
-                    'inconnu'}
+                  {brands.find((brand) => brand.id_brand === offer.id_brand)?.name}
                 </li>
                 <li className="allOffers__container__offer__detail__size">
                   M/S{offer.id_size}

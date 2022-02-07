@@ -15,14 +15,14 @@ interface Props {
   setSport: React.Dispatch<React.SetStateAction<string>>;
   genderIsChild: boolean;
   setGenderIsChild: React.Dispatch<React.SetStateAction<boolean>>;
-  genderAdult: number | null;
-  setGenderAdult: React.Dispatch<React.SetStateAction<number | null>>;
-  genderChild: number | null;
-  setGenderChild: React.Dispatch<React.SetStateAction<number | null>>;
-  setGender: React.Dispatch<React.SetStateAction<number | null>>;
-  categoriesList: Array<ICategory>;
-  itemsList: Array<IItem>;
-  sportsList: Array<ISport>;
+  genderAdult: number;
+  setGenderAdult: React.Dispatch<React.SetStateAction<number>>;
+  genderChild: number;
+  setGenderChild: React.Dispatch<React.SetStateAction<number>>;
+  setGender: React.Dispatch<React.SetStateAction<number>>;
+  categories: ICategory[];
+  items: IItem[];
+  sports: ISport[];
   handleSubmit: () => void;
   handleItemSelected: (_e: string) => void;
 }
@@ -43,9 +43,9 @@ const Search: React.FC<Props> = ({
   genderChild,
   setGenderChild,
   setGender,
-  categoriesList,
-  itemsList,
-  sportsList,
+  categories,
+  items,
+  sports,
   handleSubmit,
   handleItemSelected,
 }) => {
@@ -60,8 +60,8 @@ const Search: React.FC<Props> = ({
             className="search__menu__item__select"
             name="sports">
             <option value="">Tous</option>
-            {sportsList &&
-              sportsList.map((sport, index) => (
+            {sports &&
+              sports.map((sport, index) => (
                 <option key={index} value={sport.id_sport}>
                   {sport.name}
                 </option>
@@ -74,7 +74,7 @@ const Search: React.FC<Props> = ({
             onChange={(e) => {
               setGenderAdult(Number(e.target.value));
               e.target.value === '4'
-                ? (setGenderIsChild(true), setGender(null))
+                ? (setGenderIsChild(true), setGender(0))
                 : (setGenderIsChild(false), setGender(Number(e.target.value)));
             }}
             value={Number(genderAdult)}
@@ -112,8 +112,8 @@ const Search: React.FC<Props> = ({
             name="categories"
             id="categories">
             <option value="">Toutes</option>
-            {categoriesList &&
-              categoriesList.map((category, index) => (
+            {categories &&
+              categories.map((category, index) => (
                 <option key={index} value={category.id_category}>
                   {category.name}
                 </option>
@@ -132,8 +132,8 @@ const Search: React.FC<Props> = ({
             name="items"
             id="items">
             <option value="">Tous</option>
-            {itemsList &&
-              itemsList.map((item, index) => (
+            {items &&
+              items.map((item, index) => (
                 <option key={index} value={item.id_item}>
                   {item.name}
                 </option>

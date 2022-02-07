@@ -1,4 +1,4 @@
-export default interface IDeliverer_price {
+export default interface IDelivererPrice {
   id_item: number;
   name: string;
   min_weight: number;

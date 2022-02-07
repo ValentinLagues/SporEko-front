@@ -20,42 +20,49 @@ import { HiEye } from 'react-icons/hi';
 import { ImCancelCircle, ImCheckmark } from 'react-icons/im';
 
 import CurrentUserContext from '../../../contexts/CurrentUser';
+import IAthletic from '../../../interfaces/IAthletic';
+import ICountry from '../../../interfaces/ICountry';
+import IGender from '../../../interfaces/IGender';
 import IUser from '../../../interfaces/IUser';
 import IUserLog from '../../../interfaces/IUser';
 import HeaderProfil from '../layout/HeaderProfil';
 
 const UpdateProfile = () => {
   // User context
-  const { user, idUser } = useContext(CurrentUserContext);
-
-  const [gender, setGender] = useState<Array<any>>([]);
-  const [athletic, setAthletic] = useState<Array<any>>([]);
-  const [country, setCountry] = useState<Array<any>>([]);
-  const [pseudo, setPseudo] = useState<string | undefined>(user.pseudo);
-  const [lastname, setLastName] = useState<string | undefined>(user.lastname);
-  const [firstname, setFirstname] = useState<string | undefined>();
-  const [address, setAddress] = useState<string | undefined>();
-  const [address_complement, setAddress_complement] = useState<string>();
-  const [zipcode, setZipcode] = useState<number | undefined>();
-  const [city, setCity] = useState<string | undefined>();
-  const [id_country, setId_country] = useState<string | undefined>();
-  const [phone, setPhone] = useState<string | undefined>();
-  const [email, setEmail] = useState<string | undefined>();
-  const [birthday, setBirthday] = useState<string | undefined>();
-  const [id_gender, setId_gender] = useState<string | undefined>();
-  const [id_athletic, setId_athletic] = useState<string | undefined>();
-  const [password, setPassword] = useState<string | undefined>();
-  const [verifyPassword, setVerifyPassword] = useState<string | undefined>();
+  const { idUser } = useContext(CurrentUserContext);
+  // Icon eye to password
   const [hiEye, setHiEye] = useState<boolean>(true);
   const [hiEye2, setHiEye2] = useState<boolean>(true);
+  // Array of axios response
+  const [genders, setGender] = useState<IGender[]>([]);
+  const [athletics, setAthletic] = useState<IAthletic[]>([]);
+  const [countries, setCountry] = useState<ICountry[]>([]);
+  // Variable of Form to update user
+  const [pseudo, setPseudo] = useState<string>();
+  const [lastname, setLastname] = useState<string>();
+  const [firstname, setFirstname] = useState<string>();
+  const [address, setAddress] = useState<string>();
+  const [addressComplement, setAddressComplement] = useState<string>();
+  const [zipcode, setZipcode] = useState<number>();
+  const [city, setCity] = useState<string>();
+  const [idCountry, setIdCountry] = useState<number>();
+  const [phone, setPhone] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [birthday, setBirthday] = useState<string>();
+  const [idGender, setIdGender] = useState<number>();
+  const [idAthletic, setIdAthletic] = useState<number>();
+  const [password, setPassword] = useState<string>();
+  const [confirmPassword, setConfirmPassword] = useState<string>();
+  // Display icon to good entry between password and confirm password
   const [goodEntryVerifyPassword, setGoodEntryVerifyPassword] = useState<number>(0);
   const [goodEntryPassword, setGoodEntryPassword] = useState<number>(0);
+  // Display error or confirmation message
   const [messageError, setMessageError] = useState<string>('');
   const [message, setMessage] = useState<string>('');
+  // Object send to axios put
   const [updateUser, setUpdateUser] = useState<IUser>();
+  const [displayBirthday, setDisplayBirthday] = useState<string>();
 
-  // Format to birthday date
-  const date = new Date(user.birthday).toLocaleDateString();
   // Url to axios call
   const urlBack = import.meta.env.VITE_URL_BACK;
   // UseEffect to admin right format of password .
@@ -69,27 +76,45 @@ const UpdateProfile = () => {
     }
   }, [password]);
 
+  // Axios call to user informations
+  useEffect(() => {
+    axios.get<IUser>(`${urlBack}/users/${idUser}`).then((res) => {
+      setPseudo(res.data.pseudo);
+      setFirstname(res.data.firstname);
+      setLastname(res.data.lastname);
+      setAddress(res.data.address);
+      setAddressComplement(res.data.address_complement);
+      setZipcode(res.data.zipcode);
+      setEmail(res.data.email);
+      setCity(res.data.city);
+      setDisplayBirthday(res.data.birthday);
+      setPhone(res.data.phone);
+      setIdAthletic(res.data.id_athletic);
+      setIdGender(res.data.id_gender);
+      setIdCountry(res.data.id_country);
+    });
+  }, []);
+
   // UseEffect for verify the concordance of password
   useEffect(() => {
     if (
-      password === verifyPassword &&
-      verifyPassword?.length != undefined &&
-      verifyPassword.length > 0
+      password === confirmPassword &&
+      confirmPassword?.length != undefined &&
+      confirmPassword.length > 0
     ) {
       setGoodEntryVerifyPassword(1);
     } else if (
-      verifyPassword?.length != undefined &&
-      password != verifyPassword &&
-      verifyPassword.length > 0
+      confirmPassword?.length != undefined &&
+      password != confirmPassword &&
+      confirmPassword.length > 0
     ) {
       setGoodEntryVerifyPassword(2);
     } else {
       setGoodEntryVerifyPassword(0);
     }
-  }, [password, verifyPassword]);
+  }, [password, confirmPassword]);
 
   // Function axios to change picture of user
-
   const handleFileInput = (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
@@ -113,17 +138,19 @@ const UpdateProfile = () => {
         setMessageError('');
       })
       .catch((err) => {
-        console.error(err);
+        err;
         setMessage('');
         setMessageError(
           "Le fichier est trop volumineux ou n'est pas au bon format (jpeg/jpg/png)",
         );
       });
   };
-
-  const updatedUser = () => {
-    if (password === verifyPassword) {
+  // Function to update user
+  const updatedUser = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (password === confirmPassword) {
       const newUpdateUser = {
+        pseudo,
         lastname,
         firstname,
         address,
@@ -131,13 +158,12 @@ const UpdateProfile = () => {
         city,
         email,
         password,
-        id_gender,
-        id_country,
-        address_complement,
-        id_athletic,
-        birthday,
+        id_gender: idGender,
+        id_country: idCountry,
+        address_complement: addressComplement,
+        id_athletic: idAthletic,
+        birthday: birthday,
         phone,
-        pseudo,
       } as unknown as IUser;
       setUpdateUser(newUpdateUser);
     }
@@ -147,7 +173,7 @@ const UpdateProfile = () => {
   useEffect(() => {
     updateUser &&
       axios
-        .put<IUserLog>(
+        .put<IUser>(
           `${urlBack}/users/${idUser}`,
           updateUser,
 
@@ -172,24 +198,25 @@ const UpdateProfile = () => {
           }
         });
   }, [updateUser]);
+
   // Axios call to display select
   useEffect(() => {
-    axios.get(`${urlBack}/genders`).then((res) => setGender(res.data));
-    axios.get(`${urlBack}/athletics`).then((res) => setAthletic(res.data));
-    axios.get(`${urlBack}/countries`).then((res) => setCountry(res.data));
+    axios.get<IGender[]>(`${urlBack}/genders`).then((res) => setGender(res.data));
+    axios.get<IAthletic[]>(`${urlBack}/athletics`).then((res) => setAthletic(res.data));
+    axios.get<ICountry[]>(`${urlBack}/countries`).then((res) => setCountry(res.data));
   }, []);
 
   return (
     <div className="updateProfile">
       <HeaderProfil />
-      <form onSubmit={() => updatedUser()} className="updateProfile__container">
+      <form onSubmit={(e) => updatedUser(e)} className="updateProfile__container">
         {/*------------------------Input pseudo----------------------------- */}
         <div className="updateProfile__container__content">
           <label htmlFor="pseudo">Pseudo :</label>
           <FiUserMinus className="updateProfile__container__content__icons" />
           <input
             id="pseudo"
-            placeholder={user.pseudo ? user.pseudo : 'Votre pseudo'}
+            placeholder={pseudo ? pseudo : 'Votre pseudo'}
             onChange={(e) => setPseudo(e.target.value)}
           />
           <hr />
@@ -200,7 +227,7 @@ const UpdateProfile = () => {
           <FiMeh className="updateProfile__container__content__icons" id="prenom" />
           <input
             type="text"
-            placeholder={user.firstname ? user.firstname : 'Votre Prénom'}
+            placeholder={firstname ? firstname : 'Votre Prénom'}
             onChange={(e) => setFirstname(e.target.value)}
           />
           <hr />
@@ -212,8 +239,8 @@ const UpdateProfile = () => {
           <input
             type="text"
             id="nom"
-            placeholder={user.lastname ? user.lastname : 'Votre nom'}
-            onChange={(e) => setLastName(e.target.value)}
+            placeholder={lastname ? lastname : 'Votre nom'}
+            onChange={(e) => setLastname(e.target.value)}
           />
           <hr />
         </div>
@@ -224,7 +251,7 @@ const UpdateProfile = () => {
           <input
             id="adresse"
             type="text"
-            placeholder={user.address ? user.address : 'Votre adresse'}
+            placeholder={address ? address : 'Votre adresse'}
             onChange={(e) => setAddress(e.target.value)}
           />
           <hr />
@@ -240,8 +267,8 @@ const UpdateProfile = () => {
           <input
             type="text"
             id="address-complement"
-            placeholder={user.address_complement}
-            onChange={(e) => setAddress_complement(e.target.value)}
+            placeholder={addressComplement}
+            onChange={(e) => setAddressComplement(e.target.value)}
           />
           <hr />
         </div>
@@ -252,7 +279,7 @@ const UpdateProfile = () => {
           <input
             type="text"
             id="ville"
-            placeholder={user.city}
+            placeholder={city}
             onChange={(e) => setCity(e.target.value)}
           />
           <hr />
@@ -266,8 +293,8 @@ const UpdateProfile = () => {
             id="zip-code"
             min="0"
             max="99999"
-            placeholder={user.zipcode ? user.zipcode : 'Code postal'}
-            onChange={(e) => setZipcode(e.target.valueAsNumber)}
+            placeholder={zipcode ? `${zipcode}` : 'Code postal'}
+            onChange={(e) => setZipcode(Number(e.target.valueAsNumber))}
           />
           <hr />
         </div>
@@ -275,16 +302,16 @@ const UpdateProfile = () => {
         <div className="updateProfile__container__content">
           <label htmlFor="pays">Pays :</label>
           <FiMap className="updateProfile__container__content__icons" />
-          <select onChange={(e) => setId_country(e.target.value)} id="pays">
-            {country
-              .filter((el) => el.id_country == user.id_country)
+          <select onChange={(e) => setIdCountry(Number(e.target.value))} id="pays">
+            {countries
+              .filter((el) => el.id_country == idCountry)
               .map((el, index) => (
                 <option key={index} defaultValue={el.id_country}>
                   {el.name}
                 </option>
               ))}
-            {country.map((el, index) => (
-              <option key={index} defaultValue={el.id_country}>
+            {countries.map((el, index) => (
+              <option key={index} value={el.id_country}>
                 {el.name}
               </option>
             ))}
@@ -298,7 +325,7 @@ const UpdateProfile = () => {
           <input
             type="email"
             id="email"
-            placeholder={user.email ? user.email : 'Entrez votre email'}
+            placeholder={email ? email : 'Entrez votre email'}
             onChange={(e) => setEmail(e.target.value)}
           />
           <hr />
@@ -307,12 +334,22 @@ const UpdateProfile = () => {
         <div className="updateProfile__container__content">
           {goodEntryPassword === 1 && (
             <ImCheckmark
-              style={{ right: '16vw', position: 'absolute', color: 'green' }}
+              style={{
+                right: '16vw',
+                bottom: '2.2vh',
+                position: 'absolute',
+                color: 'green',
+              }}
             />
           )}
           {goodEntryPassword === 2 && (
             <ImCancelCircle
-              style={{ right: '16vw', position: 'absolute', color: 'red' }}
+              style={{
+                right: '16vw',
+                bottom: '2.2vh',
+                position: 'absolute',
+                color: 'red',
+              }}
             />
           )}
           <label htmlFor="password">Mot de passe :</label>
@@ -332,12 +369,22 @@ const UpdateProfile = () => {
         <div className="updateProfile__container__content">
           {goodEntryVerifyPassword === 1 && (
             <ImCheckmark
-              style={{ right: '16vw', position: 'absolute', color: 'green' }}
+              style={{
+                right: '16vw',
+                bottom: '2.2vh',
+                position: 'absolute',
+                color: 'green',
+              }}
             />
           )}
           {goodEntryVerifyPassword === 2 && (
             <ImCancelCircle
-              style={{ right: '16vw', position: 'absolute', color: 'red' }}
+              style={{
+                right: '16vw',
+                bottom: '2.2vh',
+                position: 'absolute',
+                color: 'red',
+              }}
             />
           )}
           <label htmlFor="password">Confirmation mot de passe :</label>
@@ -346,7 +393,7 @@ const UpdateProfile = () => {
             placeholder="Confirmer votre mot de passe"
             type={`${hiEye2 ? 'password' : 'text'}`}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setVerifyPassword(e.currentTarget.value)
+              setConfirmPassword(e.currentTarget.value)
             }
           />
           <HiEye className="inputIcon right" onClick={() => setHiEye2(!hiEye2)} />
@@ -360,44 +407,47 @@ const UpdateProfile = () => {
             type="tel"
             id="phone"
             pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
-            placeholder={user.phone ? user.phone : 'Entrer votre téléphone'}
+            placeholder={phone ? phone : 'Entrer votre téléphone'}
             onChange={(e) => setPhone(e.target.value)}
           />
           <hr />
         </div>
         {/*------------------------Input birthday date----------------------------- */}
         <div className="updateProfile__container__content">
-          <label htmlFor="birthday">Date de naissance : {date}</label>
+          <label htmlFor="birthday">
+            Date de naissance : {new Date(displayBirthday || '').toLocaleDateString()}
+          </label>
           <FiCalendar className="updateProfile__container__content__icons" />
           <input
             id="birthday"
             type="date"
+            value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
           />
           <hr />
         </div>
-        {/*------------------------Select athletic style----------------------------- */}
+        {/*------------------------Select athletics style----------------------------- */}
         <div className="updateProfile__container__content">
           <label htmlFor="birthday">Quel genre de sportifs êtes-vous ?</label>
           <BiRun className="updateProfile__container__content__icons" />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <select onChange={(e) => setId_athletic(e.target.value)}>
-            {athletic
-              .filter((el) => el.id_athletic == user.id_athletic)
+          <select onChange={(e) => setIdAthletic(Number(e.target.value))}>
+            {athletics
+              .filter((el) => el.id_athletic == idAthletic)
               .map((el, index) => (
                 <option key={index} defaultValue={el.id_athletic}>
                   {el.name}
                 </option>
               ))}
-            {athletic.map((el, index) => (
-              <option key={index} value={el.id_athletic}>
+            {athletics.map((el, index) => (
+              <option key={index} value={Number(el.id_athletic)}>
                 {el.name}
               </option>
             ))}
           </select>
           <hr />
         </div>
-        {/*------------------------Select gender----------------------------- */}
+        {/*------------------------Select genders----------------------------- */}
         <div className="updateProfile__container__content">
           <label htmlFor="gender">Genre :</label>
           <div className="updateProfile__container__content__icons">
@@ -405,15 +455,15 @@ const UpdateProfile = () => {
             <BsGenderMale />
             <BsGenderAmbiguous />
           </div>
-          <select onChange={(e) => setId_gender(e.currentTarget.value)}>
-            {gender
-              .filter((el) => el.id_gender == user.id_gender)
+          <select onChange={(e) => setIdGender(Number(e.currentTarget.value))}>
+            {genders
+              .filter((el) => el.id_gender == idGender)
               .map((el, index) => (
                 <option key={index} defaultValue={el.id_gender}>
                   {el.adult_name}
                 </option>
               ))}
-            {gender.map((el, index) => (
+            {genders.map((el, index) => (
               <option key={index} value={el.id_gender}>
                 {el.adult_name}
               </option>
@@ -428,7 +478,7 @@ const UpdateProfile = () => {
           <input
             id="imageUser"
             type="file"
-            style={{ height: 'auto', fontSize: '2.2vh' }}
+            style={{ height: 'auto', fontSize: '2.2vh', marginBottom: '2vh' }}
             onChange={(e) => handleFileInput(e)}
           />
         </div>
