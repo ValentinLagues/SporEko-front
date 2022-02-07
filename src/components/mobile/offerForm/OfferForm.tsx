@@ -89,13 +89,11 @@ const OfferForm = () => {
   useEffect(() => {
     let filters = ``;
     let oneValue = false;
-
-    if (gender) {
-      filters += `?id_gender=${gender}`;
-      oneValue = true;
-    }
     if (genderIsChild) {
       filters += oneValue ? `&is_child=1` : `?is_child=1`;
+      oneValue = true;
+    } else if (gender) {
+      filters += `?id_gender=${gender}`;
       oneValue = true;
     }
     item
@@ -439,7 +437,7 @@ const OfferForm = () => {
             className="offerForm__select"
             name="genders"
             id="genders">
-            <option value=""></option>
+            <option value={0}></option>
             <option value={1}>Femme</option>
             <option value={2}>Homme</option>
             <option value={4}>Enfant</option>
@@ -454,7 +452,7 @@ const OfferForm = () => {
               }}
               value={Number(genderChild)}
               className="offerForm__select">
-              <option value="">Tous</option>
+              <option value={0}>Tous</option>
               <option value={1}>Fille</option>
               <option value={2}>Garçon</option>
             </select>

@@ -34,26 +34,23 @@ const UpdateProfile = () => {
   const [hiEye, setHiEye] = useState<boolean>(true);
   const [hiEye2, setHiEye2] = useState<boolean>(true);
   // Array of axios response
-  const [gender, setGender] = useState<IGender[]>([]);
-  const [user, setUser] = useState<IUser>([]);
-  const [athletic, setAthletic] = useState<Array<any>>([]);
-  const [country, setCountry] = useState<Array<any>>([]);
+  const [genders, setGender] = useState<IGender[]>([]);
+  const [athletics, setAthletic] = useState<IAthletic[]>([]);
+  const [countries, setCountry] = useState<ICountry[]>([]);
   // Variable of Form to update user
-  const [pseudo, setPseudo] = useState<string>(user.pseudo);
-  const [lastname, setLastname] = useState<string>(user.lastname);
-  const [firstname, setFirstname] = useState<string>(user.firstname);
-  const [address, setAddress] = useState<string>(user.address);
-  const [addressComplement, setAddressComplement] = useState<string>(
-    user.address_complement,
-  );
-  const [zipcode, setZipcode] = useState<number>(user.zipcode);
-  const [city, setCity] = useState<string>(user.city);
-  const [idCountry, setId_country] = useState<number>(user.id_country);
-  const [phone, setPhone] = useState<string>(user.phone);
-  const [email, setEmail] = useState<string>(user.email);
-  const [birthday, setBirthday] = useState<string>(user.birthday);
-  const [idGender, setIdGender] = useState<number>(user.id_gender);
-  const [idAthletic, setIdAthletic] = useState<number>(user.id_athletic);
+  const [pseudo, setPseudo] = useState<string>();
+  const [lastname, setLastname] = useState<string>();
+  const [firstname, setFirstname] = useState<string>();
+  const [address, setAddress] = useState<string>();
+  const [addressComplement, setAddressComplement] = useState<string>();
+  const [zipcode, setZipcode] = useState<number>();
+  const [city, setCity] = useState<string>();
+  const [idCountry, setIdCountry] = useState<number>();
+  const [phone, setPhone] = useState<string>();
+  const [email, setEmail] = useState<string>();
+  const [birthday, setBirthday] = useState<string>();
+  const [idGender, setIdGender] = useState<number>();
+  const [idAthletic, setIdAthletic] = useState<number>();
   const [password, setPassword] = useState<string>();
   const [confirmPassword, setConfirmPassword] = useState<string>();
   // Display icon to good entry between password and confirm password
@@ -64,15 +61,10 @@ const UpdateProfile = () => {
   const [message, setMessage] = useState<string>('');
   // Object send to axios put
   const [updateUser, setUpdateUser] = useState<IUser>();
-  // Hide button for Form when empty entry
-  const [hideBtn, setHideBtn] = useState<boolean>(true);
-
-  // Format to birthday date
-  const date = new Date(user.birthday).toLocaleDateString();
+  const [displayBirthday, setDisplayBirthday] = useState<string>();
 
   // Url to axios call
   const urlBack = import.meta.env.VITE_URL_BACK;
-
   // UseEffect to admin right format of password .
   useEffect(() => {
     if (password?.length != undefined && password.length > 7) {
@@ -86,49 +78,22 @@ const UpdateProfile = () => {
 
   // Axios call to user informations
   useEffect(() => {
-    axios.get<IUser>(`${urlBack}/users/${idUser}`).then((res) => setUser(res.data));
+    axios.get<IUser>(`${urlBack}/users/${idUser}`).then((res) => {
+      setPseudo(res.data.pseudo);
+      setFirstname(res.data.firstname);
+      setLastname(res.data.lastname);
+      setAddress(res.data.address);
+      setAddressComplement(res.data.address_complement);
+      setZipcode(res.data.zipcode);
+      setEmail(res.data.email);
+      setCity(res.data.city);
+      setDisplayBirthday(res.data.birthday);
+      setPhone(res.data.phone);
+      setIdAthletic(res.data.id_athletic);
+      setIdGender(res.data.id_gender);
+      setIdCountry(res.data.id_country);
+    });
   }, []);
-
-  // UseEffect to hide button if Form is empty
-  useEffect(() => {
-    if (
-      pseudo !== undefined ||
-      lastname !== undefined ||
-      firstname !== undefined ||
-      address !== undefined ||
-      zipcode !== undefined ||
-      city !== undefined ||
-      email !== undefined ||
-      password !== undefined ||
-      idGender !== undefined ||
-      idCountry !== undefined ||
-      addressComplement !== undefined ||
-      idAthletic !== undefined ||
-      birthday !== undefined ||
-      phone !== undefined ||
-      pseudo !== undefined
-    ) {
-      setHideBtn(false);
-    } else {
-      setHideBtn(true);
-    }
-  }, [
-    pseudo,
-    lastname,
-    firstname,
-    address,
-    zipcode,
-    city,
-    email,
-    password,
-    idGender,
-    idCountry,
-    addressComplement,
-    idAthletic,
-    birthday,
-    phone,
-    pseudo,
-  ]);
 
   // UseEffect for verify the concordance of password
   useEffect(() => {
@@ -181,23 +146,24 @@ const UpdateProfile = () => {
       });
   };
   // Function to update user
-  const updatedUser = () => {
+  const updatedUser = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (password === confirmPassword) {
       const newUpdateUser = {
-        lastname: lastname,
-        firstname: firstname,
-        address: address,
-        zipcode: zipcode,
-        city: city,
-        email: email,
-        password: password,
+        pseudo,
+        lastname,
+        firstname,
+        address,
+        zipcode,
+        city,
+        email,
+        password,
         id_gender: idGender,
         id_country: idCountry,
         address_complement: addressComplement,
         id_athletic: idAthletic,
         birthday: birthday,
-        phone: phone,
-        pseudo: pseudo,
+        phone,
       } as unknown as IUser;
       setUpdateUser(newUpdateUser);
     }
@@ -243,14 +209,14 @@ const UpdateProfile = () => {
   return (
     <div className="updateProfile">
       <HeaderProfil />
-      <form onSubmit={() => updatedUser()} className="updateProfile__container">
+      <form onSubmit={(e) => updatedUser(e)} className="updateProfile__container">
         {/*------------------------Input pseudo----------------------------- */}
         <div className="updateProfile__container__content">
           <label htmlFor="pseudo">Pseudo :</label>
           <FiUserMinus className="updateProfile__container__content__icons" />
           <input
             id="pseudo"
-            placeholder={user.pseudo ? user.pseudo : 'Votre pseudo'}
+            placeholder={pseudo ? pseudo : 'Votre pseudo'}
             onChange={(e) => setPseudo(e.target.value)}
           />
           <hr />
@@ -261,7 +227,7 @@ const UpdateProfile = () => {
           <FiMeh className="updateProfile__container__content__icons" id="prenom" />
           <input
             type="text"
-            placeholder={user.firstname ? user.firstname : 'Votre Prénom'}
+            placeholder={firstname ? firstname : 'Votre Prénom'}
             onChange={(e) => setFirstname(e.target.value)}
           />
           <hr />
@@ -273,7 +239,7 @@ const UpdateProfile = () => {
           <input
             type="text"
             id="nom"
-            placeholder={user.lastname ? user.lastname : 'Votre nom'}
+            placeholder={lastname ? lastname : 'Votre nom'}
             onChange={(e) => setLastname(e.target.value)}
           />
           <hr />
@@ -285,7 +251,7 @@ const UpdateProfile = () => {
           <input
             id="adresse"
             type="text"
-            placeholder={user.address ? user.address : 'Votre adresse'}
+            placeholder={address ? address : 'Votre adresse'}
             onChange={(e) => setAddress(e.target.value)}
           />
           <hr />
@@ -301,7 +267,7 @@ const UpdateProfile = () => {
           <input
             type="text"
             id="address-complement"
-            placeholder={user.address_complement}
+            placeholder={addressComplement}
             onChange={(e) => setAddressComplement(e.target.value)}
           />
           <hr />
@@ -313,7 +279,7 @@ const UpdateProfile = () => {
           <input
             type="text"
             id="ville"
-            placeholder={user.city}
+            placeholder={city}
             onChange={(e) => setCity(e.target.value)}
           />
           <hr />
@@ -327,7 +293,7 @@ const UpdateProfile = () => {
             id="zip-code"
             min="0"
             max="99999"
-            placeholder={user.zipcode ? `${user.zipcode}` : 'Code postal'}
+            placeholder={zipcode ? `${zipcode}` : 'Code postal'}
             onChange={(e) => setZipcode(Number(e.target.valueAsNumber))}
           />
           <hr />
@@ -336,16 +302,16 @@ const UpdateProfile = () => {
         <div className="updateProfile__container__content">
           <label htmlFor="pays">Pays :</label>
           <FiMap className="updateProfile__container__content__icons" />
-          <select onChange={(e) => setId_country(Number(e.target.value))} id="pays">
-            {country
-              .filter((el) => el.idCountry == user.id_country)
+          <select onChange={(e) => setIdCountry(Number(e.target.value))} id="pays">
+            {countries
+              .filter((el) => el.id_country == idCountry)
               .map((el, index) => (
-                <option key={index} defaultValue={el.idCountry}>
+                <option key={index} defaultValue={el.id_country}>
                   {el.name}
                 </option>
               ))}
-            {country.map((el, index) => (
-              <option key={index} value={el.idCountry}>
+            {countries.map((el, index) => (
+              <option key={index} value={el.id_country}>
                 {el.name}
               </option>
             ))}
@@ -359,7 +325,7 @@ const UpdateProfile = () => {
           <input
             type="email"
             id="email"
-            placeholder={user.email ? user.email : 'Entrez votre email'}
+            placeholder={email ? email : 'Entrez votre email'}
             onChange={(e) => setEmail(e.target.value)}
           />
           <hr />
@@ -441,36 +407,39 @@ const UpdateProfile = () => {
             type="tel"
             id="phone"
             pattern="[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}"
-            placeholder={user.phone ? user.phone : 'Entrer votre téléphone'}
+            placeholder={phone ? phone : 'Entrer votre téléphone'}
             onChange={(e) => setPhone(e.target.value)}
           />
           <hr />
         </div>
         {/*------------------------Input birthday date----------------------------- */}
         <div className="updateProfile__container__content">
-          <label htmlFor="birthday">Date de naissance : {date}</label>
+          <label htmlFor="birthday">
+            Date de naissance : {new Date(displayBirthday || '').toLocaleDateString()}
+          </label>
           <FiCalendar className="updateProfile__container__content__icons" />
           <input
             id="birthday"
             type="date"
+            value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
           />
           <hr />
         </div>
-        {/*------------------------Select athletic style----------------------------- */}
+        {/*------------------------Select athletics style----------------------------- */}
         <div className="updateProfile__container__content">
           <label htmlFor="birthday">Quel genre de sportifs êtes-vous ?</label>
           <BiRun className="updateProfile__container__content__icons" />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <select onChange={(e) => setIdAthletic(Number(e.target.value))}>
-            {athletic
-              .filter((el) => el.id_athletic == user.id_athletic)
+            {athletics
+              .filter((el) => el.id_athletic == idAthletic)
               .map((el, index) => (
                 <option key={index} defaultValue={el.id_athletic}>
                   {el.name}
                 </option>
               ))}
-            {athletic.map((el, index) => (
+            {athletics.map((el, index) => (
               <option key={index} value={Number(el.id_athletic)}>
                 {el.name}
               </option>
@@ -478,7 +447,7 @@ const UpdateProfile = () => {
           </select>
           <hr />
         </div>
-        {/*------------------------Select gender----------------------------- */}
+        {/*------------------------Select genders----------------------------- */}
         <div className="updateProfile__container__content">
           <label htmlFor="gender">Genre :</label>
           <div className="updateProfile__container__content__icons">
@@ -487,14 +456,14 @@ const UpdateProfile = () => {
             <BsGenderAmbiguous />
           </div>
           <select onChange={(e) => setIdGender(Number(e.currentTarget.value))}>
-            {gender
-              .filter((el) => el.id_gender == user.id_gender)
+            {genders
+              .filter((el) => el.id_gender == idGender)
               .map((el, index) => (
                 <option key={index} defaultValue={el.id_gender}>
                   {el.adult_name}
                 </option>
               ))}
-            {gender.map((el, index) => (
+            {genders.map((el, index) => (
               <option key={index} value={el.id_gender}>
                 {el.adult_name}
               </option>
@@ -514,7 +483,7 @@ const UpdateProfile = () => {
           />
         </div>
 
-        {!hideBtn && <button type="submit">Modifier vos données</button>}
+        <button type="submit">Modifier vos données</button>
         {message != '' && <p style={{ color: 'green' }}>{message}</p>}
         {messageError != '' && <p style={{ color: 'red' }}>{messageError}</p>}
       </form>
