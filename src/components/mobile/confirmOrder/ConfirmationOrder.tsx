@@ -49,19 +49,21 @@ const ConfirmationOrder = () => {
       .then((res) => setUserInfos(res.data));
     // recuperer la liste des livreurs de l'offre et la mettre dans un tableau
     axios
-      .get<IDeliverer[]>(`${urlBack}/offers/${id}/offer_deliverers`)
+      .get<IDeliverer[]>(`${urlBack}/offers/${id}/deliverers`)
       .then((res) => setDeliverersList(res.data));
   }, []);
 
   useEffect(() => {
     // recuperer les prix des livreurs selon le poids
-    axios
-      .get<IDelivererPrice[]>(
-        `${urlBack}/deliverer_prices?idDeliverer=${selectedDeliverer}&weight=${offerInfos?.weight}`,
-      )
-      .then((res) => {
-        setDelivererPrice(res.data[0].price);
-      });
+    selectedDeliverer &&
+      offerInfos?.weight &&
+      axios
+        .get<IDelivererPrice[]>(
+          `${urlBack}/deliverer_prices?idDeliverer=${selectedDeliverer}&weight=${offerInfos?.weight}`,
+        )
+        .then((res) => {
+          setDelivererPrice(res.data[0].price);
+        });
   }, [selectedDeliverer]);
   return (
     <div className="confirmedOrder">
@@ -126,10 +128,8 @@ const ConfirmationOrder = () => {
             </label>
             {!handDelivery &&
               deliverersList.map((deliverer, index) => (
-                <>
-                  <span
-                    key={index}
-                    className="confirmedOrder__confirmedOrderContainer__span">
+                <div key={index}>
+                  <span className="confirmedOrder__confirmedOrderContainer__span">
                     {deliverer.name}
                   </span>
                   <label className="switch">
@@ -143,7 +143,7 @@ const ConfirmationOrder = () => {
                     />
                     <span className="slider round"> </span>
                   </label>
-                </>
+                </div>
               ))}
           </div>
         </div>
