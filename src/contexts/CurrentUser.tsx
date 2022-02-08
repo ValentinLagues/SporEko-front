@@ -88,7 +88,8 @@ export const CurrentUserContextProvider: React.FC<Props> = ({ children }) => {
         admin,
         setAdmin,
         logout,
-      }}>
+      }}
+    >
       {children}
     </CurrentUserContext.Provider>
   );

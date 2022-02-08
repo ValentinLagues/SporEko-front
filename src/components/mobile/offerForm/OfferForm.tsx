@@ -323,7 +323,8 @@ const OfferForm = () => {
         id="offerForm"
         onSubmit={(e: React.FormEvent) => handleSubmit(e)}
         className="offerForm__form"
-        action="">
+        action=""
+      >
         <div>Ajoute jusqu&apos;à 20 photos</div>
         <div id="addPhotoContainer">
           <label id="labelPhoto1" htmlFor="photo1">
@@ -341,7 +342,8 @@ const OfferForm = () => {
             role="button"
             onKeyPress={() => togglePhotoTipsContent()}
             onClick={() => togglePhotoTipsContent()}
-            className="photoTips">
+            className="photoTips"
+          >
             Nos astuces photos
           </div>
           <div id="photoTipsContent" className="invisible">
@@ -392,7 +394,8 @@ const OfferForm = () => {
             role="button"
             onKeyPress={() => toggleDescriptionTipsContent()}
             onClick={() => toggleDescriptionTipsContent()}
-            className="descriptionTips">
+            className="descriptionTips"
+          >
             Conseils pour bien décrire votre article
           </div>
           <div id="descriptionTipsContent" className="invisible">
@@ -411,7 +414,8 @@ const OfferForm = () => {
             value={sport}
             className="offerForm__select"
             name="sports"
-            id="sports">
+            id="sports"
+          >
             <option value="" id="sport"></option>
             {sports &&
               sports.map((sport, index) => (
@@ -436,7 +440,8 @@ const OfferForm = () => {
             value={Number(genderAdult)}
             className="offerForm__select"
             name="genders"
-            id="genders">
+            id="genders"
+          >
             <option value={0}></option>
             <option value={1}>Femme</option>
             <option value={2}>Homme</option>
@@ -451,7 +456,8 @@ const OfferForm = () => {
                 setGenderChild(Number(e.target.value)), setGender(Number(e.target.value));
               }}
               value={Number(genderChild)}
-              className="offerForm__select">
+              className="offerForm__select"
+            >
               <option value={0}>Tous</option>
               <option value={1}>Fille</option>
               <option value={2}>Garçon</option>
@@ -476,7 +482,8 @@ const OfferForm = () => {
             value={category}
             className="offerForm__select"
             name="categories"
-            id="categories">
+            id="categories"
+          >
             <option value=""></option>
             {categories &&
               categories.map((category, index) => (
@@ -496,7 +503,8 @@ const OfferForm = () => {
               value={textile}
               className="offerForm__select"
               name="textile"
-              id="textile">
+              id="textile"
+            >
               <option value=""></option>
               {textiles &&
                 textiles.map((textile, index) => (
@@ -525,7 +533,8 @@ const OfferForm = () => {
             }}
             value={item}
             className="offerForm__select"
-            id="items">
+            id="items"
+          >
             <option value=""></option>
             {items &&
               items.map((item, index) => (
@@ -544,7 +553,8 @@ const OfferForm = () => {
             value={brand}
             className="offerForm__select"
             name="brands"
-            id="brands">
+            id="brands"
+          >
             <option value=""></option>
             {brands &&
               brands.map((brand, index) => (
@@ -565,7 +575,8 @@ const OfferForm = () => {
               value={size}
               className="offerForm__select"
               name="sizes"
-              id="sizes">
+              id="sizes"
+            >
               <option value=""></option>
               {sizes &&
                 sizes.map((size, index) => (
@@ -595,7 +606,8 @@ const OfferForm = () => {
             value={color1}
             className="offerForm__select"
             name="color1"
-            id="color1">
+            id="color1"
+          >
             <option value=""></option>
             {colors &&
               colors.map((color, index) => (
@@ -614,7 +626,8 @@ const OfferForm = () => {
             value={color2}
             className="offerForm__select"
             name="color2"
-            id="color2">
+            id="color2"
+          >
             <option value=""></option>
             {colors &&
               colors.map((color, index) => (
@@ -634,7 +647,8 @@ const OfferForm = () => {
             value={condition}
             className="offerForm__select"
             name="conditions"
-            id="conditions">
+            id="conditions"
+          >
             <option value=""></option>
             {conditions &&
               conditions.map((condition, index) => (
