@@ -4,6 +4,7 @@ import { AiFillHeart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 import CurrentUserContext from '../../../contexts/CurrentUser';
+import IBrand from '../../../interfaces/IBrand';
 import IFavorite from '../../../interfaces/IFavorite';
 import IOffer from '../../../interfaces/IOffer';
 
@@ -11,8 +12,13 @@ const Favorites = () => {
   const [favOffers, setFavOffers] = useState<IOffer[]>([]);
   const [userFavorites, setUserFavorites] = useState<IFavorite[]>([]);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [brands, setBrands] = useState<IBrand[]>([]);
   const { idUser } = useContext(CurrentUserContext);
   const urlBack = import.meta.env.VITE_URL_BACK;
+
+  useEffect(() => {
+    axios.get<IBrand[]>(`${urlBack}/brands`).then((res) => setBrands(res.data));
+  }, []);
 
   // Delete a favorite by id//
   const deleteFavorite = (idOfferFav: number) => {
@@ -75,11 +81,9 @@ const Favorites = () => {
                       </li>
                     )}
                     <li className="favorites__offers__detail__brand">
-                      Nike{offer.id_brand}
+                      {brands.find((brand) => brand.id_brand === offer.id_brand)?.name}
                     </li>
-                    <li className="favorites__offers__detail__size">
-                      M/S{offer.id_size}
-                    </li>
+                    <li className="favorites__offers__detail__size">{offer.size}</li>
                   </ul>
                 )}
             </div>
@@ -87,7 +91,7 @@ const Favorites = () => {
         })
       ) : (
         <div className="favorites__empty">
-          <h2>Vous n avez aucun favori</h2>
+          <h2>Vous n&apos;avez aucun favori</h2>
           <Link to="/offers">
             <button type="button" className="btn">
               Consultez les offres et trouvez votre bonheur !
