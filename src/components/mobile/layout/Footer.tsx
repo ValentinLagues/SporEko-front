@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import CurrentUserContext from '../../../contexts/CurrentUser';
 
 const Footer = () => {
-  const { idUser } = useContext(CurrentUserContext);
+  const { idUser, accepted } = useContext(CurrentUserContext);
   return (
     <div className="footer">
       <ul className="footer__footerContainer">
@@ -33,7 +33,7 @@ const Footer = () => {
           </Link>
         </li>
         <li>
-          {idUser ? (
+          {idUser || accepted ? (
             <Link to="/profile">
               <CgProfile className="footer__footerContainer__footerIcons" />
               Profil

@@ -43,4 +43,5 @@ export default interface IOffer {
   picture18: string;
   picture19: string;
   picture20: string;
+  size: string;
 }
