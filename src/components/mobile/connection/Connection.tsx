@@ -75,8 +75,7 @@ const Connection = () => {
       <form
         className="connectionPage__form"
         action=""
-        onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleLogin(e)}
-      >
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleLogin(e)}>
         <div className="connectionPage__form__inputsContainer">
           <div>
             <CgProfile className="inputIcon" />

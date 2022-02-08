@@ -23,8 +23,7 @@ const LogOut = () => {
         onClick={() => {
           logout();
           redirectHome();
-        }}
-      >
+        }}>
         <p>
           Se déconnecter <FiLogOut />
         </p>

@@ -58,8 +58,7 @@ const Search: React.FC<Props> = ({
             onChange={(e) => setSport(e.target.value)}
             value={sport}
             className="search__menu__item__select"
-            name="sports"
-          >
+            name="sports">
             <option value="">Tous</option>
             {sports &&
               sports.map((sport, index) => (
@@ -80,8 +79,7 @@ const Search: React.FC<Props> = ({
             }}
             value={Number(genderAdult)}
             className="search__menu__item__select"
-            id=""
-          >
+            id="">
             <option value={''}>Tous</option>
             <option value={1}>Femme</option>
             <option value={2}>Homme</option>
@@ -96,8 +94,7 @@ const Search: React.FC<Props> = ({
               }}
               value={Number(genderChild)}
               className="search__menu__item__select"
-              id=""
-            >
+              id="">
               <option value="">Tous</option>
               <option value={1}>Fille</option>
               <option value={2}>Garçon</option>
@@ -113,8 +110,7 @@ const Search: React.FC<Props> = ({
             value={category}
             className="search__menu__item__select"
             name="categories"
-            id="categories"
-          >
+            id="categories">
             <option value="">Toutes</option>
             {categories &&
               categories.map((category, index) => (
@@ -134,8 +130,7 @@ const Search: React.FC<Props> = ({
             value={item}
             className="search__menu__item__select"
             name="items"
-            id="items"
-          >
+            id="items">
             <option value="">Tous</option>
             {items &&
               items.map((item, index) => (
@@ -152,8 +147,7 @@ const Search: React.FC<Props> = ({
         onClick={() => {
           setHideFilters(!hideFilters);
           handleSubmit();
-        }}
-      >
+        }}>
         Rechercher
       </button>
     </div>

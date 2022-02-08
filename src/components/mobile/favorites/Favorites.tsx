@@ -53,8 +53,7 @@ const Favorites = () => {
                     <li className="favorites__offers__detail__mainPicture">
                       <Link
                         to={`/offer/${offer.id_offer}`}
-                        className="favorites__offers__detail__linkOfferDetails"
-                      >
+                        className="favorites__offers__detail__linkOfferDetails">
                         <img src={offer.picture1} alt={`profile`} />
                       </Link>
                     </li>
