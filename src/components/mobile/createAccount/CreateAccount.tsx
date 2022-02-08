@@ -260,7 +260,6 @@ const CreateAccount = () => {
           </h3>
           <div className="btn__container__profil">
             <input
-              defaultChecked
               required
               value="Particulier"
               onChange={() => setProfil(Number(0))}
@@ -307,7 +306,6 @@ const CreateAccount = () => {
           </div>
           <div className="btn__container__genre">
             <input
-              defaultChecked
               value="Neutre"
               onChange={() => setGender(Number(3))}
               type="radio"
