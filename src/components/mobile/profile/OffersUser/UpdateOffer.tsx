@@ -298,25 +298,25 @@ const UpdateOffer = () => {
         hand_delivery: handDelivery,
         is_archived: 0,
         is_draft: isDraft,
-        picture2: pictures[1] ? pictures[1] : 'null',
-        picture3: pictures[2] ? pictures[2] : 'null',
-        picture4: pictures[3] ? pictures[3] : 'null',
-        picture5: pictures[4] ? pictures[4] : 'null',
-        picture6: pictures[5] ? pictures[5] : 'null',
-        picture7: pictures[6] ? pictures[6] : 'null',
-        picture8: pictures[7] ? pictures[7] : 'null',
-        picture9: pictures[8] ? pictures[8] : 'null',
-        picture10: pictures[9] ? pictures[9] : 'null',
-        picture11: pictures[10] ? pictures[10] : 'null',
-        picture12: pictures[11] ? pictures[11] : 'null',
-        picture13: pictures[12] ? pictures[12] : 'null',
-        picture14: pictures[13] ? pictures[13] : 'null',
-        picture15: pictures[14] ? pictures[14] : 'null',
-        picture16: pictures[15] ? pictures[15] : 'null',
-        picture17: pictures[16] ? pictures[16] : 'null',
-        picture18: pictures[17] ? pictures[17] : 'null',
-        picture19: pictures[18] ? pictures[18] : 'null',
-        picture20: pictures[19] ? pictures[19] : 'null',
+        picture2: pictures[1] && pictures[1],
+        picture3: pictures[2] && pictures[2],
+        picture4: pictures[3] && pictures[3],
+        picture5: pictures[4] && pictures[4],
+        picture6: pictures[5] && pictures[5],
+        picture7: pictures[6] && pictures[6],
+        picture8: pictures[7] && pictures[7],
+        picture9: pictures[8] && pictures[8],
+        picture10: pictures[9] && pictures[9],
+        picture11: pictures[10] && pictures[10],
+        picture12: pictures[11] && pictures[11],
+        picture13: pictures[12] && pictures[12],
+        picture14: pictures[13] && pictures[13],
+        picture15: pictures[14] && pictures[14],
+        picture16: pictures[15] && pictures[15],
+        picture17: pictures[16] && pictures[16],
+        picture18: pictures[17] && pictures[17],
+        picture19: pictures[18] && pictures[18],
+        picture20: pictures[19] && pictures[19],
       } as unknown as IOffer;
       setOffer(newOffer);
     }
@@ -799,7 +799,7 @@ const UpdateOffer = () => {
             Modes de livraison :
           </span>
           <div className="deliverers">
-            <div className="updateOfferForm__switchContainer">
+            {/* <div className="updateOfferForm__switchContainer">
               <span className="updateOfferForm__switchContainer__span">
                 Remise en main propre:
               </span>
@@ -813,7 +813,7 @@ const UpdateOffer = () => {
                 />
                 <span className="slider round"></span>
               </label>
-            </div>
+            </div> */}
             {deliverers &&
               deliverersArray &&
               deliverers.map((deliverer) => (

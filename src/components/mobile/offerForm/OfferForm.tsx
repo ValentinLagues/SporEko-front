@@ -53,8 +53,8 @@ const OfferForm = () => {
   const [showSizes, setShowSizes] = useState(false);
   const [size, setSize] = useState('');
   const [weight, setWeight] = useState<number | null>(null);
-  const [weightRequired, setWeightRequired] = useState(false);
-  const [handDelivery, setHandDelivery] = useState(0);
+  const [_weightRequired, setWeightRequired] = useState(false);
+  const [handDelivery, _setHandDelivery] = useState(0);
   const [chosenDeliverers, setChosenDeliverers] = useState<Array<number>>([]);
   const [isDraft, setIsDraft] = useState(0);
   const [offer, setOffer] = useState<IOffer>();
@@ -156,7 +156,7 @@ const OfferForm = () => {
   };
 
   useEffect(() => {
-    if (deliverersArray.length != 0) {
+    if (deliverersArray.filter((weight) => weight !== 1)) {
       setWeightRequired(true);
     } else {
       setWeightRequired(false);
@@ -661,7 +661,7 @@ const OfferForm = () => {
         </div>
         <div className="offerForm__weight">
           <label className="offerForm__label" htmlFor="weight">
-            {weightRequired && <MdStarRate className="iconRequired" />} Format du colis{' '}
+            {deliverersArray && <MdStarRate className="iconRequired" />} Format du colis{' '}
             <FaQuestionCircle
               className="questionIcon"
               onClick={() => toggleWeightTipsContent()}
@@ -729,7 +729,7 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" /> Modes de livraison :
           </span>
           <div className="deliverers">
-            <div className="offerForm__switchContainer">
+            {/* <div className="offerForm__switchContainer">
               <span className="offerForm__switchContainer__span">
                 Remise en main propre :
               </span>
@@ -744,7 +744,7 @@ const OfferForm = () => {
                 />
                 <span className="slider round"></span>
               </label>
-            </div>
+            </div> */}
             {deliverers &&
               deliverers.map((deliverer) => (
                 <div key={deliverer.id_deliverer} className="offerForm__switchContainer">
