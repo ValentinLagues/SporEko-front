@@ -3,16 +3,19 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import CurrentUserContext from '../../../../contexts/CurrentUser';
+import IBrand from '../../../../interfaces/IBrand';
 import IOffer from '../../../../interfaces/IOffer';
 
 const OffersUser = () => {
   const [allOffers, setAllOffers] = useState<IOffer[]>([]);
+  const [brands, setBrands] = useState<IBrand[]>([]);
   const { idUser } = useContext(CurrentUserContext);
 
   // useEffect offers, sports, users //
   const urlBack = import.meta.env.VITE_URL_BACK;
 
   useEffect(() => {
+    axios.get<IBrand[]>(`${urlBack}/brands`).then((res) => setBrands(res.data));
     axios
       .get<IOffer[]>(`${urlBack}/users/${idUser}/offers`)
       .then((res) => setAllOffers(res.data));
@@ -44,8 +47,10 @@ const OffersUser = () => {
                       <li>
                         <img src={offer.picture1} alt={`annonce ${offer.id_offer}`} />
                       </li>
-                      <li> Nike{offer.id_brand}</li>
-                      <li>M/S{offer.id_size}</li>
+                      <li>
+                        {brands.find((brand) => brand.id_brand === offer.id_brand)?.name}
+                      </li>
+                      <li>{offer.size}</li>
                       <li>
                         <strong>{offer.price} €</strong>
                       </li>
@@ -92,8 +97,10 @@ const OffersUser = () => {
                   <li>
                     <img src={offer.picture1} alt={` annonce ${offer.id_offer}`} />
                   </li>
-                  <li> Nike{offer.id_brand}</li>
-                  <li>M/S{offer.id_size}</li>
+                  <li>
+                    {brands.find((brand) => brand.id_brand === offer.id_brand)?.name}
+                  </li>
+                  <li>{offer.size}</li>
                   <li>
                     <strong>{offer.price} €</strong>
                   </li>
