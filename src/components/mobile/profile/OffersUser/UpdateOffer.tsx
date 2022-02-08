@@ -310,7 +310,7 @@ const UpdateOffer = () => {
     }
   };
   let images = Object.keys(pictures).map(function (key) {
-    return [Number(key), pictures[key]];
+    return [key, pictures[Number(key)]];
   });
   // Function axios to add pictures on offer.
   const handleFileInput = (event: React.ChangeEvent) => {
@@ -327,7 +327,7 @@ const UpdateOffer = () => {
         },
       })
       .then((res) => setPictures(res.data))
-      .catch((err) => console.error({ ...err }));
+      .catch((err) => err);
   };
 
   useEffect(() => {
@@ -337,7 +337,7 @@ const UpdateOffer = () => {
         .then((res) => {
           res;
         })
-        .catch((err) => console.log({ ...err }));
+        .catch((err) => err);
     {
       deliverersArrayInitial[0] === undefined
         ? deliverersArray.map((deliverer) => {
