@@ -7,8 +7,7 @@ import IBrand from '../../../interfaces/IBrand';
 import IColor from '../../../interfaces/IColor';
 import ICondition from '../../../interfaces/ICondition';
 import IDeliverer from '../../../interfaces/IDeliverer';
-import Ioffer from '../../../interfaces/IOffer';
-import IOffer_deliverer from '../../../interfaces/IOffer_deliverer';
+import IOffer from '../../../interfaces/IOffer';
 import ISize from '../../../interfaces/ISize';
 import ISport from '../../../interfaces/ISport';
 import IUserLog from '../../../interfaces/IUser';
@@ -16,31 +15,51 @@ import IUserLog from '../../../interfaces/IUser';
 const urlBack = import.meta.env.VITE_URL_BACK;
 
 const ProductDescription = () => {
-  const [offer, setOffer] = useState<Ioffer>();
+  const [offer, setOffer] = useState<IOffer>();
   const [brand, setBrand] = useState<IBrand>();
   const [size, setSize] = useState<ISize>();
   const [condition, setCondition] = useState<ICondition>();
   const [sport, setSport] = useState<ISport>();
-  const [deliverer, setDeliverer] = useState<IDeliverer[]>([]);
-  const [offerDeliverer, setOfferDeliverer] = useState<IOffer_deliverer[]>([]);
+  const [deliverers, setDeliverers] = useState<IDeliverer[]>([]);
   const [handDeliverer, setHandDeliverer] = useState('');
   const [color1, setColor1] = useState<IColor>();
   const [color2, setColor2] = useState<IColor>();
   const [user, setUser] = useState<IUserLog>();
+  const [pictures, setPictures] = useState<Array<string>>([]);
+
   const { id } = useParams();
 
   useEffect(() => {
     axios
-      .get(`${urlBack}/offers/${id}/offer_deliverers`)
-      .then((res) =>
-        setOfferDeliverer(res.data.map((deliverer) => deliverer.id_deliverer)),
-      );
+      .get(`${urlBack}/offers/${id}/deliverers`)
+      .then((res) => setDeliverers(res.data));
 
     axios
-      .get(`${urlBack}/offers/${id}`)
+      .get<IOffer>(`${urlBack}/offers/${id}`)
       .then((res) => res.data)
       .then((data) => {
         setOffer(data);
+        setPictures([
+          data.picture2,
+          data.picture3,
+          data.picture4,
+          data.picture5,
+          data.picture6,
+          data.picture7,
+          data.picture8,
+          data.picture9,
+          data.picture10,
+          data.picture11,
+          data.picture12,
+          data.picture13,
+          data.picture14,
+          data.picture15,
+          data.picture16,
+          data.picture17,
+          data.picture18,
+          data.picture19,
+          data.picture20,
+        ]);
 
         data.id_brand &&
           axios
@@ -63,7 +82,6 @@ const ProductDescription = () => {
         axios
           .get(`${urlBack}/conditions/${data.id_condition}`)
           .then((res) => setCondition(res.data));
-        axios.get(`${urlBack}/deliverers`).then((res) => setDeliverer(res.data));
 
         data.hand_delivery === 0
           ? setHandDeliverer(
@@ -76,6 +94,7 @@ const ProductDescription = () => {
           .then((res) => setUser(res.data));
       });
   }, []);
+
   color1 && (color1.style = { backgroundColor: color1?.color_code });
   color2 && (color2.style = { backgroundColor: color2?.color_code });
 
@@ -88,101 +107,22 @@ const ProductDescription = () => {
           src={offer && offer.picture1}
           alt=""
         />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture2}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture3}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture4}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture5}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture6}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture7}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture8}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture9}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture10}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture11}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture12}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture13}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture14}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture15}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture16}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture17}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture18}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture19}
-          alt=""
-        />
-        <img
-          className="product-description__container-picture__all-picture"
-          src={offer && offer.picture20}
-          alt=""
-        />
+
+        <div className="product-description__container-picture__all-picture">
+          {offer &&
+            pictures.map((picture, index) => (
+              <img
+                className={
+                  picture !== null
+                    ? 'product-description__container-picture__all-picture'
+                    : 'product-description__container-picture__all-picture__invisible'
+                }
+                key={index}
+                src={picture}
+                alt={`vue n° ${index}`}
+              />
+            ))}
+        </div>
         <div className="product-description__container-picture__favorite"></div>
       </div>
       <div className="product-description__container-text">
@@ -241,13 +181,8 @@ const ProductDescription = () => {
             <p>{handDeliverer && handDeliverer}</p>
             <p>Localisation du produit: {user && user.city}</p>
             <h4>Options d&apos;envois disponibles</h4>
-            {offerDeliverer &&
-              deliverer &&
-              deliverer
-                .filter((allDeliverer: any) =>
-                  offerDeliverer.includes(allDeliverer.id_deliverer),
-                )
-                .map((delive, index) => <p key={index}>{delive.name}</p>)}
+            {deliverers &&
+              deliverers.map((delive, index) => <p key={index}>{delive.name}</p>)}
           </div>
           <div className="product-description__container-text__container4__delivery__btn">
             <Link className="btn" type="submit" to={`/confirmation-order/${id}`}>

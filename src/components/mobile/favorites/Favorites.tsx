@@ -20,7 +20,7 @@ const Favorites = () => {
       userFavorites?.find((fav) => fav.id_offer === idOfferFav)?.id_favorite || 0;
     idUser &&
       axios
-        .delete(`${urlBack}/users/${idUser}/favorites/${idFavorite}`)
+        .delete<IFavorite>(`${urlBack}/users/${idUser}/favorites/${idFavorite}`)
         .then(() => setIsFavorite(true));
   };
 
@@ -33,7 +33,7 @@ const Favorites = () => {
 
         const allOffers: IOffer[] = [];
         res.data.map((fav) =>
-          axios.get(`${urlBack}/offers/${fav.id_offer}`).then((res) => {
+          axios.get<IOffer>(`${urlBack}/offers/${fav.id_offer}`).then((res) => {
             allOffers.push(res.data);
 
             setFavOffers(allOffers.map<IOffer>((offer) => offer));
