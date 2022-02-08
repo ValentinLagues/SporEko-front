@@ -59,6 +59,7 @@ const AllOffers = () => {
   const [orderBy, setOrderBy] = useState<string>('');
 
   useEffect(() => {
+
     axios.get<ISport[]>(`${urlBack}/sports`).then((res) => setSports(res.data));
     axios
       .get<ICategory[]>(`${urlBack}/categories`)
@@ -371,7 +372,7 @@ const AllOffers = () => {
                   {brands.find((brand) => brand.id_brand === offer.id_brand)?.name}
                 </li>
                 <li className="allOffers__container__offer__detail__size">
-                  M/S{offer.id_size}
+                  {offer.size}
                 </li>
               </ul>
             </div>
