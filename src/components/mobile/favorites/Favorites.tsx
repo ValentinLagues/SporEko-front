@@ -24,6 +24,8 @@ const Favorites = () => {
         .then(() => setIsFavorite(true));
   };
 
+  // Get Favorites by user, get offers favorite
+
   useEffect(() => {
     idUser &&
       axios.get<IFavorite[]>(`${urlBack}/users/${idUser}/favorites`).then((res) => {

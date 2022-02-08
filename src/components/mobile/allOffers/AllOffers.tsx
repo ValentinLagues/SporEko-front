@@ -65,7 +65,7 @@ const AllOffers = () => {
     axios.get(`${urlBack}/textiles`).then((res) => setTextilesList(res.data));
     axios.get(`${urlBack}/colors`).then((res) => setColorsList(res.data));
     axios.get(`${urlBack}/brands`).then((res) => setBrandsList(res.data));
-    axios.get(`${urlBack}/sizes`).then((res) => setSizesList(res.data));
+    axios.get(`${urlBack}/offers`).then((res) => setAllOffers(res.data));
   }, []);
 
   // if a category is chosen, itemList is 'filtered' by category
@@ -164,7 +164,6 @@ const AllOffers = () => {
   const urlBack = import.meta.env.VITE_URL_BACK;
 
   useEffect(() => {
-    axios.get(`${urlBack}/offers`).then((res) => setAllOffers(res.data));
     idUser &&
       axios
         .get(`${urlBack}/users/${idUser}/favorites`)
@@ -366,7 +365,7 @@ const AllOffers = () => {
                     'inconnu'}
                 </li>
                 <li className="allOffers__container__offer__detail__size">
-                  M/S{offer.id_size}
+                  {offer.size}
                 </li>
               </ul>
             </div>
