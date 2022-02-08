@@ -309,6 +309,9 @@ const UpdateOffer = () => {
       setOffer(newOffer);
     }
   };
+  let images = Object.keys(pictures).map(function (key) {
+    return [Number(key), pictures[key]];
+  });
   // Function axios to add pictures on offer.
   const handleFileInput = (event: React.ChangeEvent) => {
     const target = event.target as HTMLInputElement;
@@ -318,17 +321,11 @@ const UpdateOffer = () => {
     arrayFiles.map((el) => formData.append('imagesOffers', el));
 
     axios
-      .post(
-        `${urlBack}/offers/images`,
-
-        formData,
-
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+      .post(`${urlBack}/offers/images`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
-      )
+      })
       .then((res) => setPictures(res.data))
       .catch((err) => console.error({ ...err }));
   };
@@ -409,14 +406,15 @@ const UpdateOffer = () => {
         </div>
 
         <div className="photosContainer">
-          {pictures.map((image, index) => (
-            <img
-              className={image !== null ? 'image' : 'invisible'}
-              key={index}
-              src={image}
-              alt={`n°${index} de l'annonce`}
-            />
-          ))}
+          {pictures &&
+            images.map((image, index) => (
+              <img
+                className={image[1] !== null ? 'image' : 'invisible'}
+                key={image[0]}
+                src={image[1]}
+                alt={`n°${index} de l'annonce`}
+              />
+            ))}
         </div>
         {/* ---------------------------Input for title offer------------------------ */}
         <div>
