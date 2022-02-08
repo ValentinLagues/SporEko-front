@@ -78,7 +78,7 @@ const ProductDescription = () => {
             setSport(res.data);
           });
         data.id_size &&
-          axios.get(`${urlBack}/sizes/${data.id_size}`).then((res) => setSize(res.data));
+          axios.get(`${urlBack}/sizes?id_size=${data.id_size}&id_item=${data.id_item}`).then((res) => setSize(res.data[0].size));
         axios
           .get(`${urlBack}/conditions/${data.id_condition}`)
           .then((res) => setCondition(res.data));
@@ -143,7 +143,7 @@ const ProductDescription = () => {
           <div className="product-description__container-text__container3__size">
             <h3>Taille</h3>
             <p>
-              {size && size.id_size} {size && size.size_eu}
+              {size && size}
             </p>
           </div>
           <div className="product-description__container-text__container3__condition">
