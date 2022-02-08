@@ -26,9 +26,6 @@ const ConfirmationOrder = () => {
   const [sizeInfos, setSizeInfos] = useState<ISize>();
   const [conditionInfos, setConditionInfos] = useState<ICondition>();
 
-  // boolean pour la remise en main propre
-  const [handDelivery, setHandDelivery] = useState<number>(0);
-
   // states pour recuperer les infos pour les prix
   const [deliverers, setDeliverers] = useState<IDeliverer[]>([]);
   const [selectedDeliverer, setSelectedDeliverer] = useState<number>(0);
