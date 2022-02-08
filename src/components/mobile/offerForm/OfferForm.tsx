@@ -53,8 +53,6 @@ const OfferForm = () => {
   const [showSizes, setShowSizes] = useState(false);
   const [size, setSize] = useState('');
   const [weight, setWeight] = useState<number | null>(null);
-  const [weightRequired, setWeightRequired] = useState(false);
-  const [handDelivery, setHandDelivery] = useState(0);
   const [chosenDeliverers, setChosenDeliverers] = useState<Array<number>>([]);
   const [isDraft, setIsDraft] = useState(0);
   const [offer, setOffer] = useState<IOffer>();
@@ -155,14 +153,6 @@ const OfferForm = () => {
     }
   };
 
-  useEffect(() => {
-    if (deliverersArray.length != 0) {
-      setWeightRequired(true);
-    } else {
-      setWeightRequired(false);
-    }
-  }, [deliverersArray]);
-
   const handleSubmit = (e: React.FormEvent) => {
     let errors = false;
     let errorsDescription: HTMLElement | null =
@@ -206,11 +196,11 @@ const OfferForm = () => {
       errorsMessage.push("Veuillez renseigner le prix de l'article");
       errors = true;
     }
-    if (deliverersArray.length === 0 && !handDelivery) {
+    if (deliverersArray.length === 0) {
       errorsMessage.push('Veuillez sélectionner au moins un mode de livraison');
       errors = true;
     }
-    if (deliverersArray.length != 0 && weight === null) {
+    if (deliverersArray.filter((el) => el != 1).length && weight === null) {
       errorsMessage.push("Veuillez renseigner le poids de l'article");
       errors = true;
     }
@@ -246,7 +236,6 @@ const OfferForm = () => {
         id_condition: parseInt(condition),
         price: Number(Number(price).toFixed(2)),
         weight: Number(Number(weight).toFixed(0)),
-        hand_delivery: handDelivery,
         is_archived: 0,
         is_draft: isDraft,
         picture2: pictures[1],
@@ -661,7 +650,10 @@ const OfferForm = () => {
         </div>
         <div className="offerForm__weight">
           <label className="offerForm__label" htmlFor="weight">
-            {weightRequired && <MdStarRate className="iconRequired" />} Format du colis{' '}
+            {deliverersArray.filter((weight) => weight !== 1).length !== 0 && (
+              <MdStarRate className="iconRequired" />
+            )}
+            Format du colis&nbsp;
             <FaQuestionCircle
               className="questionIcon"
               onClick={() => toggleWeightTipsContent()}
@@ -729,7 +721,7 @@ const OfferForm = () => {
             <MdStarRate className="iconRequired" /> Modes de livraison :
           </span>
           <div className="deliverers">
-            <div className="offerForm__switchContainer">
+            {/* <div className="offerForm__switchContainer">
               <span className="offerForm__switchContainer__span">
                 Remise en main propre :
               </span>
@@ -744,7 +736,7 @@ const OfferForm = () => {
                 />
                 <span className="slider round"></span>
               </label>
-            </div>
+            </div> */}
             {deliverers &&
               deliverers.map((deliverer) => (
                 <div key={deliverer.id_deliverer} className="offerForm__switchContainer">
