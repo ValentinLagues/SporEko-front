@@ -58,8 +58,6 @@ const UpdateOffer = () => {
   const [showSizes, setShowSizes] = useState<boolean>(false);
   const [size, setSize] = useState<number>(0);
   const [weight, setWeight] = useState<number>(0);
-  const [weightRequired, setWeightRequired] = useState<boolean>(false);
-  const [handDelivery, setHandDelivery] = useState<number>(0);
   const [isDraft, setIsDraft] = useState<number>(0);
   const [offer, setOffer] = useState<IOffer>();
   const [deliverersArray, setDeliverersArray] = useState<Array<number>>([]);
@@ -105,7 +103,6 @@ const UpdateOffer = () => {
       setCondition(res.data.id_condition);
       setPrice(res.data.price);
       setWeight(res.data.weight);
-      setHandDelivery(res.data.hand_delivery);
       setIsDraft(res.data.is_draft);
       setPictures([
         res.data.picture1,
@@ -210,14 +207,6 @@ const UpdateOffer = () => {
     }
   };
 
-  useEffect(() => {
-    if (deliverersArray.length != 0) {
-      setWeightRequired(true);
-    } else {
-      setWeightRequired(false);
-    }
-  }, [deliverersArray]);
-
   const handleSubmit = (e: React.FormEvent) => {
     let errors = false;
     let errorsDescription: HTMLElement | null =
@@ -257,11 +246,11 @@ const UpdateOffer = () => {
       errorsMessage.push("Veuillez renseigner le prix de l'article");
       errors = true;
     }
-    if (deliverersArray.length === 0 && !handDelivery) {
+    if (deliverersArray.length === 0) {
       errorsMessage.push('Veuillez sélectionner au moins un mode de livraison');
       errors = true;
     }
-    if (deliverersArray.length !== 0 && weight === null) {
+    if (deliverersArray.filter((el) => el != 1).length && weight === null) {
       errorsMessage.push("Veuillez renseigner le poids de l'article");
       errors = true;
     }
@@ -295,7 +284,6 @@ const UpdateOffer = () => {
         id_condition: condition,
         price: Number(Number(price).toFixed(2)),
         weight: Number(Number(weight).toFixed(0)),
-        hand_delivery: handDelivery,
         is_archived: 0,
         is_draft: isDraft,
         picture2: pictures[1] && pictures[1],
@@ -731,18 +719,20 @@ const UpdateOffer = () => {
         {/* ---------------------------Input for weight------------------------ */}
         <div className="updateOfferForm__weight">
           <label className="updateOfferForm__label" htmlFor="weight">
-            {weightRequired && <MdStarRate className="iconRequired" />} Format du colis{' '}
+            {deliverersArray.filter((weight) => weight !== 1).length !== 0 && (
+              <MdStarRate className="iconRequired" />
+            )}
+            Format du colis&nbsp;
             <FaQuestionCircle
               className="questionIcon"
               onClick={() => toggleWeightTipsContent()}
             />
           </label>
           <input
-            value={weight || ''}
+            value={weight || 0}
             onChange={(e) => setWeight(Number(e.target.value))}
             className="updateOfferForm__input"
             type="number"
-            step={1}
             id="weight"
           />
           g
@@ -799,21 +789,6 @@ const UpdateOffer = () => {
             Modes de livraison :
           </span>
           <div className="deliverers">
-            {/* <div className="updateOfferForm__switchContainer">
-              <span className="updateOfferForm__switchContainer__span">
-                Remise en main propre:
-              </span>
-              <label className="switch">
-                <input
-                  checked={handDelivery ? true : false}
-                  onChange={() => {
-                    handDelivery ? setHandDelivery(0) : setHandDelivery(1);
-                  }}
-                  type="checkbox"
-                />
-                <span className="slider round"></span>
-              </label>
-            </div> */}
             {deliverers &&
               deliverersArray &&
               deliverers.map((deliverer) => (
