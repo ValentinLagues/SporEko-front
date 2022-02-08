@@ -15,12 +15,6 @@ type Menu = {
 
 const menuList: Menu[] = [
   {
-    path: '/',
-    titleFr: 'Accueil',
-    titleEn: 'Home',
-    Component: Home,
-  },
-  {
     path: '/offers',
     titleFr: 'Annonces',
     titleEn: 'Offers',
@@ -43,6 +37,12 @@ const menuList: Menu[] = [
     titleFr: 'Annonce',
     titleEn: 'Offer',
     Component: ProductDescription,
+  },
+  {
+    path: '/',
+    titleFr: 'Accueil',
+    titleEn: 'Home',
+    Component: Home,
   },
 ];
 

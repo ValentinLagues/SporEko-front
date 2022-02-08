@@ -30,7 +30,7 @@ const ConfirmationOrder = () => {
   const [handDelivery, setHandDelivery] = useState<number>(0);
 
   // states pour recuperer les infos pour les prix
-  const [deliverersList, setDeliverersList] = useState<IDeliverer[]>([]);
+  const [deliverers, setDeliverers] = useState<IDeliverer[]>([]);
   const [selectedDeliverer, setSelectedDeliverer] = useState<number>(0);
   const [delivererPrice, setDelivererPrice] = useState<number>(0);
 
@@ -48,11 +48,11 @@ const ConfirmationOrder = () => {
       .get<IUser>(`${urlBack}/users/${idUser}`, { withCredentials: true })
       .then((res) => setUserInfos(res.data));
     // recuperer la liste des livreurs de l'offre et la mettre dans un tableau
-    axios
-      .get<IDeliverer[]>(`${urlBack}/offers/${id}/deliverers`)
-      .then((res) => setDeliverersList(res.data));
+    axios.get<IDeliverer[]>(`${urlBack}/offers/${id}/deliverers`).then((res) => {
+      setDeliverers(res.data);
+    });
   }, []);
-
+  console.log(deliverers);
   useEffect(() => {
     // recuperer les prix des livreurs selon le poids
     selectedDeliverer &&
@@ -112,22 +112,8 @@ const ConfirmationOrder = () => {
         <div className="confirmedOrder__confirmedOrderContainer__box">
           <h3>OPTIONS DE LIVRAISON</h3>
           <div className="delivererList">
-            <span className="confirmedOrder__confirmedOrderContainer__span">
-              Remise en main propre
-            </span>
-            <label className="switch">
-              <input
-                checked={handDelivery ? true : false}
-                onChange={() => {
-                  handDelivery ? setHandDelivery(0) : setHandDelivery(1);
-                }}
-                type="checkbox"
-                name="handDelivery"
-              />
-              <span className="slider round"> </span>
-            </label>
-            {!handDelivery &&
-              deliverersList.map((deliverer, index) => (
+            {deliverers &&
+              deliverers.map((deliverer, index) => (
                 <div key={index}>
                   <span className="confirmedOrder__confirmedOrderContainer__span">
                     {deliverer.name}
