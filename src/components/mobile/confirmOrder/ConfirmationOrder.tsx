@@ -62,6 +62,7 @@ const ConfirmationOrder = () => {
           setDelivererPrice(res.data[0].price);
         });
   }, [selectedDeliverer]);
+  console.log(delivererPrice);
   return (
     <div className="confirmedOrder">
       <div className="confirmedOrder__confirmedOrderContainer">
