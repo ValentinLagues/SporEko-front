@@ -49,7 +49,7 @@ const ConfirmationOrder = () => {
       setDeliverers(res.data);
     });
   }, []);
-  console.log(deliverers);
+
   useEffect(() => {
     // recuperer les prix des livreurs selon le poids
     selectedDeliverer &&
