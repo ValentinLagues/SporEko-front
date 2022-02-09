@@ -281,11 +281,11 @@ const OfferForm = () => {
         },
       )
       .then((res) => (setPictures(res.data), setPhotoAdded(true)))
-      .catch((err) => console.error({ ...err }));
+      .catch((err) => err);
   };
 
-  let images = Object.keys(pictures).map(function (key: any) {
-    return [Number(key), pictures[key]];
+  let images = Object.keys(pictures).map(function (key) {
+    return [key, pictures[Number(key)]];
   });
 
   useEffect(() => {
@@ -302,7 +302,7 @@ const OfferForm = () => {
             });
           });
         })
-        .catch((err) => console.log({ ...err }));
+        .catch((err) => err);
   }, [offer]);
 
   return (
