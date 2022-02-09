@@ -170,7 +170,7 @@ const ProductDescription = () => {
         <div className="product-description__container-text__container4">
           <div className="product-description__container-text__container4__delivery">
             <h3>Livraison</h3>
-            <p>Localisation du produit: {user && user.city}</p>
+            <p>Localisation du produit : {user && user.city}</p>
             <h4>Options d&apos;envois disponibles</h4>
             {deliverers &&
               deliverers.map((delive, index) => <p key={index}>{delive.name}</p>)}
