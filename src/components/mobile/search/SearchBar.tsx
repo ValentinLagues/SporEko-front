@@ -5,12 +5,16 @@ interface Props {
   showFilterMenu: boolean;
   setShowFilterMenu: React.Dispatch<React.SetStateAction<boolean>>;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmit: () => void;
 }
 
-const SearchBar: React.FC<Props> = ({ setShowFilterMenu, showFilterMenu, setSearch }) => {
+const SearchBar: React.FC<Props> = ({   handleSubmit, setShowFilterMenu, showFilterMenu, setSearch }) => {
   return (
     <div>
-      <form className="search__bar">
+      <form className="search__bar" onSubmit={(e) => {
+        e.preventDefault()
+          handleSubmit();
+        }}>
         <input
           className="btn"
           type="text"
