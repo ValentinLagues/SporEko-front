@@ -96,7 +96,7 @@ const CreateAccount = () => {
             setMessage('');
             setMessageError('Cette adresse e-mail est déjà utilisée');
           } else {
-            console.log({ ...err });
+            err;
           }
         });
   }, [user]);
