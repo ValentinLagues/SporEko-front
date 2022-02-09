@@ -349,7 +349,7 @@ const AllOffers = () => {
                 <li className="allOffers__container__offer__detail__price">
                   <strong>{offer.price} €</strong>
                 </li>
-                {idUser && (
+                {idUser ? (
                   <li className="allOffers__container__offer__detail__fav">
                     {userFavorites.find((fav) => fav.id_offer === offer.id_offer) ? (
                       <AiFillHeart
@@ -366,6 +366,8 @@ const AllOffers = () => {
                       />
                     )}
                   </li>
+                ) : (
+                  ''
                 )}
                 <li className="allOffers__container__offer__detail__brand">
                   {brands.find((brand) => brand.id_brand === offer.id_brand)?.name}
