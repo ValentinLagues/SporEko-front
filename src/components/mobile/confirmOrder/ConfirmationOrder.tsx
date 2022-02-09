@@ -110,9 +110,11 @@ const ConfirmationOrder = () => {
           <h3>OPTIONS DE LIVRAISON</h3>
           <div className="delivererList">
             {deliverers &&
-              deliverers.map((deliverer, index) => (
-                <div key={index}>
-                  <span className="confirmedOrder__confirmedOrderContainer__span">
+              deliverers.map((deliverer) => (
+                <div
+                  key={deliverer.id_deliverer}
+                  className="confirmedOrder__confirmedOrderContainer__delivererDetails">
+                  <span className="confirmedOrder__confirmedOrderContainer__delivererDetails__span">
                     {deliverer.name}
                   </span>
                   <label className="switch">
