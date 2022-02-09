@@ -8,11 +8,18 @@ interface Props {
   handleSubmit: () => void;
 }
 
-const SearchBar: React.FC<Props> = ({   handleSubmit, setShowFilterMenu, showFilterMenu, setSearch }) => {
+const SearchBar: React.FC<Props> = ({
+  handleSubmit,
+  setShowFilterMenu,
+  showFilterMenu,
+  setSearch,
+}) => {
   return (
     <div>
-      <form className="search__bar" onSubmit={(e) => {
-        e.preventDefault()
+      <form
+        className="search__bar"
+        onSubmit={(e) => {
+          e.preventDefault();
           handleSubmit();
         }}>
         <input
