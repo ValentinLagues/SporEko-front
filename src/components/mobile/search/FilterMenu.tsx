@@ -11,7 +11,7 @@ import ISport from '../../../interfaces/ISport';
 import ITextile from '../../../interfaces/ITextile';
 
 interface Props {
-  itemInfos: IItem;
+  itemInfos: IItem | undefined;
   categoryIsClothes: boolean;
   setCategoryIsClothes: React.Dispatch<React.SetStateAction<boolean>>;
   price: number;

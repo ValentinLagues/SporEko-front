@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Logo from '../../../../resources/Logo_dark.png';
 
@@ -9,9 +10,11 @@ const Home = () => {
         <img src={Logo} alt="Sporeko" />
 
         <p>Dépensez moins, pour vous dépenser plus !</p>
-        <form>
-          <input className="btn" type="text" placeholder="Recherchez sur SPOREKO" />
-        </form>
+        <Link to="/offers">
+          <button type="button" className="btn">
+            Consultez les offres et trouvez votre bonheur !
+          </button>
+        </Link>
       </div>
     </div>
   );

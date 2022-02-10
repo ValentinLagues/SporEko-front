@@ -21,7 +21,6 @@ const ProductDescription = () => {
   const [condition, setCondition] = useState<ICondition>();
   const [sport, setSport] = useState<ISport>();
   const [deliverers, setDeliverers] = useState<IDeliverer[]>([]);
-  const [handDeliverer, setHandDeliverer] = useState('');
   const [color1, setColor1] = useState<IColor>();
   const [color2, setColor2] = useState<IColor>();
   const [user, setUser] = useState<IUserLog>();
@@ -84,13 +83,6 @@ const ProductDescription = () => {
         axios
           .get(`${urlBack}/conditions/${data.id_condition}`)
           .then((res) => setCondition(res.data));
-
-        data.hand_delivery === 0
-          ? setHandDeliverer(
-              'La remise en main propre pour se produit n est pas disponible',
-            )
-          : setHandDeliverer('La remise en main propre pour se produit est disponible');
-
         axios
           .get(`${urlBack}/users/${data.id_user_seller}`, { withCredentials: true })
           .then((res) => setUser(res.data));
@@ -178,8 +170,7 @@ const ProductDescription = () => {
         <div className="product-description__container-text__container4">
           <div className="product-description__container-text__container4__delivery">
             <h3>Livraison</h3>
-            <p>{handDeliverer && handDeliverer}</p>
-            <p>Localisation du produit: {user && user.city}</p>
+            <p>Localisation du produit : {user && user.city}</p>
             <h4>Options d&apos;envois disponibles</h4>
             {deliverers &&
               deliverers.map((delive, index) => <p key={index}>{delive.name}</p>)}

@@ -59,7 +59,6 @@ const AllOffers = () => {
   const [orderBy, setOrderBy] = useState<string>('');
 
   useEffect(() => {
-
     axios.get<ISport[]>(`${urlBack}/sports`).then((res) => setSports(res.data));
     axios
       .get<ICategory[]>(`${urlBack}/categories`)
@@ -256,6 +255,7 @@ const AllOffers = () => {
   return (
     <div className="allOffers">
       <SearchBar
+        handleSubmit={handleSubmit}
         showFilterMenu={showFilterMenu}
         setShowFilterMenu={setShowFilterMenu}
         setSearch={setSearchByTitle}

@@ -235,7 +235,7 @@ const UpdateProfile = () => {
         .then((res) => {
           res;
           setMessageError('');
-          setMessage('Vos données, on été mise à jour');
+          setMessage('Vos données, on été mises à jour');
         })
         .catch((err) => {
           if (err.response.data.message === 'Pseudo already exists') {
@@ -245,7 +245,7 @@ const UpdateProfile = () => {
             setMessage('');
             setMessageError('Cette adresse e-mail est déjà utilisée');
           } else {
-            console.log({ ...err });
+            err;
           }
         });
   }, [updateUser]);
