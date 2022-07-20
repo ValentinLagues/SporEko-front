@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 
 import authMenu from './auth';
 import Connection from './components/mobile/connection/Connection';
@@ -12,7 +12,7 @@ function App() {
   const { idUser, accepted } = useContext(CurrentUserContext);
   return (
     <div className="App">
-      <BrowserRouter basename="/">
+      <Router basename="/">
         <Header />
         <Routes>
           {menuList.map(({ path, Component }, index) => (
@@ -27,7 +27,7 @@ function App() {
             ))}
         </Routes>
         <Footer />
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }
